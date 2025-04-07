@@ -1,12 +1,23 @@
 const fs = require('fs');
 const { context } = require('esbuild');
 const dotenv = require('dotenv');
+const path = require('path');
 
-// Load environment variables from .env file
-dotenv.config();
+// Try to load environment variables from .env file, but don't fail if it doesn't exist
+try {
+  const envPath = path.resolve(process.cwd(), '.env');
+  if (fs.existsSync(envPath)) {
+    dotenv.config({ path: envPath });
+    console.log('Loaded environment variables from .env file');
+  } else {
+    console.log('No .env file found, using process environment variables');
+  }
+} catch (error) {
+  console.log('Error loading .env file:', error.message);
+}
 
-// Debug: Log environment variables (without sensitive values)
-console.log('Environment variables present:', {
+// Debug: Log environment variables presence (not values)
+console.log('Environment variables status:', {
   FIREBASE_API_KEY: !!process.env.FIREBASE_API_KEY,
   FIREBASE_AUTH_DOMAIN: !!process.env.FIREBASE_AUTH_DOMAIN,
   FIREBASE_PROJECT_ID: !!process.env.FIREBASE_PROJECT_ID,
@@ -32,6 +43,15 @@ const envVars = {
   DISCORD_SERVER: process.env.DISCORD_SERVER || '',
   MIN_HUMAN_PLAYERS: process.env.MIN_HUMAN_PLAYERS || '1',
 };
+
+// Log if we're using any fallback values
+const missingVars = Object.entries(envVars)
+  .filter(([key, value]) => value.startsWith('MISSING_'))
+  .map(([key]) => key);
+
+if (missingVars.length > 0) {
+  console.warn('Warning: Missing required environment variables:', missingVars);
+}
 
 let hashIndexPlugin = {
   name: 'hash-index-plugin',
