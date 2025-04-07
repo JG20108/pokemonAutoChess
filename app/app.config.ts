@@ -1,60 +1,60 @@
-import path from "path"
-import { monitor } from "@colyseus/monitor"
-import config from "@colyseus/tools"
+import path from 'path';
+import { monitor } from '@colyseus/monitor';
+import config from '@colyseus/tools';
 import {
   Presence,
   RedisDriver,
   RedisPresence,
   ServerOptions,
-  matchMaker
-} from "colyseus"
-import helmet from "helmet"
-import cors from "cors"
-import express, { ErrorRequestHandler } from "express"
-import basicAuth from "express-basic-auth"
-import admin from "firebase-admin"
-import { connect } from "mongoose"
-import pkg from "../package.json"
-import { initTilemap } from "./core/design"
-import { GameRecord } from "./models/colyseus-models/game-record"
-import DetailledStatistic from "./models/mongo-models/detailled-statistic-v2"
-import Meta from "./models/mongo-models/meta"
-import TitleStatistic from "./models/mongo-models/title-statistic"
-import { PRECOMPUTED_POKEMONS_PER_TYPE } from "./models/precomputed/precomputed-types"
-import AfterGameRoom from "./rooms/after-game-room"
-import CustomLobbyRoom from "./rooms/custom-lobby-room"
-import GameRoom from "./rooms/game-room"
-import PreparationRoom from "./rooms/preparation-room"
-import { getBotData, getBotsList } from "./services/bots"
-import { discordService } from "./services/discord"
-import { getLeaderboard } from "./services/leaderboard"
-import { getMetaItems, getMetaPokemons } from "./services/meta"
-import { pastebinService } from "./services/pastebin"
+  matchMaker,
+} from 'colyseus';
+import helmet from 'helmet';
+import cors from 'cors';
+import express, { ErrorRequestHandler } from 'express';
+import basicAuth from 'express-basic-auth';
+import admin from 'firebase-admin';
+import { connect } from 'mongoose';
+import pkg from '../package.json';
+import { initTilemap } from './core/design';
+import { GameRecord } from './models/colyseus-models/game-record';
+import DetailledStatistic from './models/mongo-models/detailled-statistic-v2';
+import Meta from './models/mongo-models/meta';
+import TitleStatistic from './models/mongo-models/title-statistic';
+import { PRECOMPUTED_POKEMONS_PER_TYPE } from './models/precomputed/precomputed-types';
+import AfterGameRoom from './rooms/after-game-room';
+import CustomLobbyRoom from './rooms/custom-lobby-room';
+import GameRoom from './rooms/game-room';
+import PreparationRoom from './rooms/preparation-room';
+import { getBotData, getBotsList } from './services/bots';
+import { discordService } from './services/discord';
+import { getLeaderboard } from './services/leaderboard';
+import { getMetaItems, getMetaPokemons } from './services/meta';
+import { pastebinService } from './services/pastebin';
 import {
   MAX_CONCURRENT_PLAYERS_ON_SERVER,
   MAX_POOL_CONNECTIONS_SIZE,
-  SynergyTriggers
-} from "./types/Config"
-import { DungeonPMDO } from "./types/enum/Dungeon"
-import { Item } from "./types/enum/Item"
-import { Pkm, PkmIndex } from "./types/enum/Pokemon"
-import { logger } from "./utils/logger"
-import chatV2 from "./models/mongo-models/chat-v2"
+  SynergyTriggers,
+} from './types/Config';
+import { DungeonPMDO } from './types/enum/Dungeon';
+import { Item } from './types/enum/Item';
+import { Pkm, PkmIndex } from './types/enum/Pokemon';
+import { logger } from './utils/logger';
+import chatV2 from './models/mongo-models/chat-v2';
 
-const clientSrc = __dirname.includes("server")
-  ? path.join(__dirname, "..", "..", "client")
-  : path.join(__dirname, "public", "dist", "client")
-const viewsSrc = path.join(clientSrc, "index.html")
+const clientSrc = __dirname.includes('server')
+  ? path.join(__dirname, '..', '..', 'client')
+  : path.join(__dirname, 'public', 'dist', 'client');
+const viewsSrc = path.join(clientSrc, 'index.html');
 
 /**
  * Import your Room files
  */
 
-let gameOptions: ServerOptions = {}
+let gameOptions: ServerOptions = {};
 
 if (process.env.NODE_APP_INSTANCE) {
-  const processNumber = Number(process.env.NODE_APP_INSTANCE || "0")
-  const port = (Number(process.env.PORT) || 2567) + processNumber
+  const processNumber = Number(process.env.NODE_APP_INSTANCE || '0');
+  const port = (Number(process.env.PORT) || 2567) + processNumber;
   gameOptions = {
     presence: new RedisPresence(
       process.env.REDIS_URI
@@ -65,25 +65,24 @@ if (process.env.NODE_APP_INSTANCE) {
       roomName: string,
       clientOptions: any
     ) {
-      if (roomName === "lobby") {
-        const lobbies = await matchMaker.query({ name: "lobby" })
+      if (roomName === 'lobby') {
+        const lobbies = await matchMaker.query({ name: 'lobby' });
         if (lobbies.length !== 0) {
-          throw "Attempt to create one lobby"
+          throw 'Attempt to create one lobby';
         }
       }
-      const stats = await matchMaker.stats.fetchAll()
+      const stats = await matchMaker.stats.fetchAll();
       stats.sort((p1, p2) =>
         p1.roomCount !== p2.roomCount
           ? p1.roomCount - p2.roomCount
           : p1.ccu - p2.ccu
-      )
+      );
       if (stats.length === 0) {
-        return undefined // no process available, will trigger a ServerError
-      } else {
-        return stats[0]?.processId
+        throw new Error('No process available');
       }
-    }
-  }
+      return stats[0].processId;
+    },
+  };
 }
 
 export default config({
@@ -92,10 +91,10 @@ export default config({
     /**
      * Define your room handlers:
      */
-    gameServer.define("after-game", AfterGameRoom)
-    gameServer.define("lobby", CustomLobbyRoom)
-    gameServer.define("preparation", PreparationRoom).enableRealtimeListing()
-    gameServer.define("game", GameRoom).enableRealtimeListing()
+    gameServer.define('after-game', AfterGameRoom);
+    gameServer.define('lobby', CustomLobbyRoom);
+    gameServer.define('preparation', PreparationRoom).enableRealtimeListing();
+    gameServer.define('game', GameRoom).enableRealtimeListing();
   },
 
   initializeExpress: (app) => {
@@ -111,167 +110,167 @@ export default config({
           directives: {
             defaultSrc: [
               "'self'",
-              "https://*.pokemon-auto-chess.com",
-              "wss://*.pokemon-auto-chess.com",
-              "https://*.firebaseapp.com",
-              "https://apis.google.com",
-              "https://*.googleapis.com",
-              "https://*.githubusercontent.com",
-              "http://raw.githubusercontent.com",
-              "https://*.youtube.com",
-              "https://pokemon.darkatek7.com",
-              "https://eternara.site",
-              "https://www.penumbra-autochess.com",
-              "https://pokechess.com.br",
-              "https://uruwhy.online",
-              "https://koala-pac.com"
+              'https://*.pokemon-auto-chess.com',
+              'wss://*.pokemon-auto-chess.com',
+              'https://*.firebaseapp.com',
+              'https://apis.google.com',
+              'https://*.googleapis.com',
+              'https://*.githubusercontent.com',
+              'http://raw.githubusercontent.com',
+              'https://*.youtube.com',
+              'https://pokemon.darkatek7.com',
+              'https://eternara.site',
+              'https://www.penumbra-autochess.com',
+              'https://pokechess.com.br',
+              'https://uruwhy.online',
+              'https://koala-pac.com',
             ],
             scriptSrc: [
               "'self'",
               "'unsafe-inline'",
               "'unsafe-eval'",
-              "https://apis.google.com",
-              "https://*.googleapis.com"
+              'https://apis.google.com',
+              'https://*.googleapis.com',
             ],
             imgSrc: [
               "'self'",
-              "data:",
-              "blob:",
-              "https://www.gstatic.com",
-              "http://raw.githubusercontent.com"
-            ]
-          }
-        }
+              'data:',
+              'blob:',
+              'https://www.gstatic.com',
+              'http://raw.githubusercontent.com',
+            ],
+          },
+        },
       })
-    )
+    );
 
     app.use(((err, req, res, next) => {
-      res.status(err.status).json(err)
-    }) as ErrorRequestHandler)
+      res.status(err.status).json(err);
+    }) as ErrorRequestHandler);
 
-    app.use(cors())
-    app.use(express.json())
-    app.use(express.static(clientSrc))
+    app.use(cors());
+    app.use(express.json());
+    app.use(express.static(clientSrc));
 
-    app.get("/", (req, res) => {
-      res.sendFile(viewsSrc)
-    })
+    app.get('/', (req, res) => {
+      res.sendFile(viewsSrc);
+    });
 
-    app.get("/auth", (req, res) => {
-      res.sendFile(viewsSrc)
-    })
+    app.get('/auth', (req, res) => {
+      res.sendFile(viewsSrc);
+    });
 
-    app.get("/lobby", (req, res) => {
-      res.sendFile(viewsSrc)
-    })
+    app.get('/lobby', (req, res) => {
+      res.sendFile(viewsSrc);
+    });
 
-    app.get("/preparation", (req, res) => {
-      res.sendFile(viewsSrc)
-    })
+    app.get('/preparation', (req, res) => {
+      res.sendFile(viewsSrc);
+    });
 
-    app.get("/game", (req, res) => {
-      res.sendFile(viewsSrc)
-    })
+    app.get('/game', (req, res) => {
+      res.sendFile(viewsSrc);
+    });
 
-    app.get("/after", (req, res) => {
-      res.sendFile(viewsSrc)
-    })
+    app.get('/after', (req, res) => {
+      res.sendFile(viewsSrc);
+    });
 
-    app.get("/bot-builder", (req, res) => {
-      res.sendFile(viewsSrc)
-    })
+    app.get('/bot-builder', (req, res) => {
+      res.sendFile(viewsSrc);
+    });
 
-    app.get("/bot-admin", (req, res) => {
-      res.sendFile(viewsSrc)
-    })
+    app.get('/bot-admin', (req, res) => {
+      res.sendFile(viewsSrc);
+    });
 
-    app.get("/sprite-viewer", (req, res) => {
-      res.sendFile(viewsSrc)
-    })
+    app.get('/sprite-viewer', (req, res) => {
+      res.sendFile(viewsSrc);
+    });
 
-    app.get("/map-viewer", (req, res) => {
-      res.sendFile(viewsSrc)
-    })
+    app.get('/map-viewer', (req, res) => {
+      res.sendFile(viewsSrc);
+    });
 
-    app.get("/gameboy", (req, res) => {
-      res.sendFile(viewsSrc)
-    })
+    app.get('/gameboy', (req, res) => {
+      res.sendFile(viewsSrc);
+    });
 
-    app.get("/pokemons", (req, res) => {
-      res.send(Pkm)
-    })
+    app.get('/pokemons', (req, res) => {
+      res.send(Pkm);
+    });
 
-    app.get("/pokemons-index", (req, res) => {
-      res.send(PkmIndex)
-    })
+    app.get('/pokemons-index', (req, res) => {
+      res.send(PkmIndex);
+    });
 
-    app.get("/types", (req, res) => {
-      res.send(PRECOMPUTED_POKEMONS_PER_TYPE)
-    })
+    app.get('/types', (req, res) => {
+      res.send(PRECOMPUTED_POKEMONS_PER_TYPE);
+    });
 
-    app.get("/items", (req, res) => {
-      res.send(Item)
-    })
+    app.get('/items', (req, res) => {
+      res.send(Item);
+    });
 
-    app.get("/types-trigger", (req, res) => {
-      res.send(SynergyTriggers)
-    })
+    app.get('/types-trigger', (req, res) => {
+      res.send(SynergyTriggers);
+    });
 
-    app.get("/meta", async (req, res) => {
-      res.set("Cache-Control", "no-cache")
+    app.get('/meta', async (req, res) => {
+      res.set('Cache-Control', 'no-cache');
       res.send(
         await Meta.find({}, [
-          "cluster_id",
-          "count",
-          "ratio",
-          "winrate",
-          "mean_rank",
-          "types",
-          "pokemons",
-          "x",
-          "y"
+          'cluster_id',
+          'count',
+          'ratio',
+          'winrate',
+          'mean_rank',
+          'types',
+          'pokemons',
+          'x',
+          'y',
         ])
-      )
-    })
+      );
+    });
 
-    app.get("/titles", async (req, res) => {
-      res.send(await TitleStatistic.find())
-    })
+    app.get('/titles', async (req, res) => {
+      res.send(await TitleStatistic.find());
+    });
 
-    app.get("/meta/items", async (req, res) => {
+    app.get('/meta/items', async (req, res) => {
       // Set Cache-Control header for 24 hours (86400 seconds)
-      res.set("Cache-Control", "max-age=86400")
-      res.send(getMetaItems())
-    })
+      res.set('Cache-Control', 'max-age=86400');
+      res.send(getMetaItems());
+    });
 
-    app.get("/meta/pokemons", async (req, res) => {
+    app.get('/meta/pokemons', async (req, res) => {
       // Set Cache-Control header for 24 hours (86400 seconds)
-      res.set("Cache-Control", "max-age=86400")
-      res.send(getMetaPokemons())
-    })
+      res.set('Cache-Control', 'max-age=86400');
+      res.send(getMetaPokemons());
+    });
 
-    app.get("/tilemap/:map", async (req, res) => {
-      const tilemap = initTilemap(req.params.map as DungeonPMDO)
-      res.send(tilemap)
-    })
+    app.get('/tilemap/:map', async (req, res) => {
+      const tilemap = initTilemap(req.params.map as DungeonPMDO);
+      res.send(tilemap);
+    });
 
-    app.get("/leaderboards", async (req, res) => {
-      res.set("Cache-Control", "no-cache")
-      res.send(getLeaderboard())
-    })
+    app.get('/leaderboards', async (req, res) => {
+      res.set('Cache-Control', 'no-cache');
+      res.send(getLeaderboard());
+    });
 
-    app.get("/game-history/:playerUid", async (req, res) => {
-      res.set("Cache-Control", "no-cache")
-      const { playerUid } = req.params
-      const { page = 1 } = req.query
-      const limit = 10
-      const skip = (Number(page) - 1) * limit
+    app.get('/game-history/:playerUid', async (req, res) => {
+      res.set('Cache-Control', 'no-cache');
+      const { playerUid } = req.params;
+      const { page = 1 } = req.query;
+      const limit = 10;
+      const skip = (Number(page) - 1) * limit;
 
       const stats = await DetailledStatistic.find(
         { playerId: playerUid },
-        ["pokemons", "time", "rank", "elo"],
+        ['pokemons', 'time', 'rank', 'elo'],
         { limit: limit, skip: skip, sort: { time: -1 } }
-      )
+      );
       if (stats) {
         const records = stats.map(
           (record) =>
@@ -281,86 +280,84 @@ export default config({
               record.elo,
               record.pokemons
             )
-        )
+        );
 
         // Return the records as the response
-        return res.status(200).json(records)
+        return res.status(200).json(records);
       }
 
       // If no records found, return an empty array
-      return res.status(200).json([])
-    })
+      return res.status(200).json([]);
+    });
 
-    app.get("/chat-history/:playerUid", async (req, res) => {
-      res.set("Cache-Control", "no-cache")
-      const { playerUid } = req.params
-      const { page = 1 } = req.query
-      const limit = 30
-      const skip = (Number(page) - 1) * limit
+    app.get('/chat-history/:playerUid', async (req, res) => {
+      res.set('Cache-Control', 'no-cache');
+      const { playerUid } = req.params;
+      const { page = 1 } = req.query;
+      const limit = 30;
+      const skip = (Number(page) - 1) * limit;
       const messages = await chatV2.find({ authorId: playerUid }, undefined, {
         limit: limit,
         skip: skip,
-        sort: { time: -1 }
-      })
-      return res.status(200).json(messages ?? [])
-    })
+        sort: { time: -1 },
+      });
+      return res.status(200).json(messages ?? []);
+    });
 
-    app.get("/bots", async (req, res) => {
-      const botsData = await getBotsList({
-        withSteps: req.query.withSteps === "true"
-      })
-      res.send(botsData)
-    })
+    app.get('/bots', async (req, res) => {
+      const botsData = await getBotsList();
+      res.send(botsData);
+    });
 
-    app.post("/bots", async (req, res) => {
+    app.post('/bots', async (req, res) => {
       // get json from body
       try {
-        const { bot, author } = req.body
+        const { bot, author } = req.body;
         const pastebinUrl = (await pastebinService.createPaste(
           `${author} has uploaded BOT ${bot.name}`,
           JSON.stringify(bot, null, 2)
-        )) as string
+        )) as string;
 
         logger.debug(
           `bot ${bot.name} created by ${author} with pastebin url ${pastebinUrl}`
-        )
+        );
 
-        discordService.announceBotCreation(bot, pastebinUrl, author)
-        res.status(201).send(pastebinUrl)
+        discordService.announceBotCreation(bot, pastebinUrl, author);
+        res.status(201).send(pastebinUrl);
       } catch (error) {
-        logger.error(error)
-        res.status(500).send("Internal server error")
+        logger.error(error);
+        res.status(500).send('Internal server error');
       }
-    })
+    });
 
-    app.get("/bots/:id", async (req, res) => {
-      res.send(await getBotData(req.params.id))
-    })
+    app.get('/bots/:id', async (req, res) => {
+      res.send(await getBotData(req.params.id));
+    });
 
-    app.get("/status", async (req, res) => {
-      const ccu = await matchMaker.stats.getGlobalCCU()
-      const version = pkg.version
-      res.send({ ccu, maxCcu: MAX_CONCURRENT_PLAYERS_ON_SERVER, version })
-    })
+    app.get('/status', async (req, res) => {
+      const ccu = await matchMaker.stats.getGlobalCCU();
+      const version = pkg.version;
+      res.send({ ccu, maxCcu: MAX_CONCURRENT_PLAYERS_ON_SERVER, version });
+    });
 
     const basicAuthMiddleware = basicAuth({
       // list of users and passwords
       users: {
         admin: process.env.ADMIN_PASSWORD
           ? process.env.ADMIN_PASSWORD
-          : "Default Admin Password"
+          : 'Default Admin Password',
       },
-      challenge: true
-    })
+      challenge: true,
+    });
 
-    app.use("/colyseus", basicAuthMiddleware, monitor())
+    app.use('/colyseus', basicAuthMiddleware, monitor());
 
     /**
      * Use @colyseus/monitor
      * It is recommended to protect this route with a password
      * Read more: https://docs.colyseus.io/tools/monitor/#restrict-access-to-the-panel-using-a-password
      */
-    app.use("/colyseus", monitor())
+    app.use('/colyseus', monitor());
   },
 
   beforeListen: () => {
@@ -369,14 +366,14 @@ export default config({
      */
     connect(process.env.MONGO_URI!, {
       maxPoolSize: MAX_POOL_CONNECTIONS_SIZE,
-      socketTimeoutMS: 45000
-    })
+      socketTimeoutMS: 45000,
+    });
     admin.initializeApp({
       credential: admin.credential.cert({
         projectId: process.env.FIREBASE_PROJECT_ID!,
         clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, "\n")
-      })
-    })
-  }
-})
+        privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, '\n'),
+      }),
+    });
+  },
+});
