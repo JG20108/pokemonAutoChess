@@ -364,15 +364,20 @@ export default config({
     /**
      * Before before gameServer.listen() is called.
      */
-    connect(process.env.MONGO_URI!, {
-      maxPoolSize: MAX_POOL_CONNECTIONS_SIZE,
-      socketTimeoutMS: 45000,
-    });
+    connect(
+      'mongodb+srv://joseosgui:F1Wy7S9l0uOs6hgI@cluster0.andeznt.mongodb.net/dev?retryWrites=true&w=majority',
+      {
+        maxPoolSize: MAX_POOL_CONNECTIONS_SIZE,
+        socketTimeoutMS: 45000,
+      }
+    );
     admin.initializeApp({
       credential: admin.credential.cert({
-        projectId: process.env.FIREBASE_PROJECT_ID!,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, '\n'),
+        projectId: 'pac-linkersito',
+        clientEmail:
+          'firebase-adminsdk-fbsvc@pac-linkersito.iam.gserviceaccount.com',
+        privateKey:
+          '-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDnMtOraErNVI9P\nSCIkmNzpw1e1qEvoPOGC1JBdDjCDWky7S7HeqZXTJOYcIGAsk5OM/Z5YhsxQHRiy\nRL9bMKIpDFXVMZhH44Sc2BM6rKbRNYa4wtEjEMGPQMkX5xvzCp+WXWgGaaxgEQHn\nDu8FNHgljY03CPqXiPBsJSM9k5gc1XSwUue4hUEjhovPCR36HeWEfQYDIDlCZvzL\nr0LPyQAq4NC8HOl069sO0XzoVHS3aXIZL/kYB/a8ILPY3OpV0Ndro1pLeWIAPv9s\nhJ9PaNoVviN1Uq16EXesf0zJHgVeGysVClpXXB/92Z32BBJjw8yEGnVpcHOInLVg\ndGHHWdL5AgMBAAECggEAAzwl1A8ohMj7HFvhBmwRI0A1ePg636wCZ8c7oeGx8hSQ\nYEqF2Zy72PF6OsiFL/p8pQtjbM+uCizuDIiDuO3sRvDCPrJr9A2N7HflhPundePu\n16T6Miho3O1GIwx7yqHKa9swum4+GDYEtcvysjryt2vMnwmEIBytaIX4gUMQbM7U\n/K6TjYkXZbCDfxNXpuGMRQMTjSUo60jNmM2RuFg407fJTDBbQqRWRuEbD0gZuLaK\n4fkrP6h0oya92b5kgyhZClbQZJqUF5YChJr/bA6ADLhweZsgp4kFe3tkYBRiXoer\n9oUX76tkE9tGG2XHl5ENeb1HUKoS/GyVDsVtcFT5AQKBgQD5l5fZq1EqiMcmvkHF\n2IK1XY381O4I7nm8Huh5hBidHG/ut/9ibMXHU2QVT9SncdGV6FVaEbDcAVsQG+Pb\nmwd1IIM45eBnLKCJ1KR2HQgiy3/El+rKWO4Aqn2PQswHJgSgPkMQ9br/ZlNJOUMK\nhtP87SB2b2aQF2aohnQvYDGpGQKBgQDtIlgpqIWgBJQSRDDyc1j7gvayBGansGj1\naJzDvH2HpQWtQneTCWC5x1Mt+nGQL3cH4HAx6sjsfzPpZT7HYyp68qs7hbXRvhgm\nIwm/7x6F0Krp4SVfLPRHr/cr8d5KdO+ZlODX0ykngIjajVOZNu3YTVgPvi/0Darj\nb4BHIPhU4QKBgQCH241LbWYz6dnFbABvSef0AuWbvueGsxBOZuCR7GZddrIy1bLM\nh3qsgebTdu3A60Jy/9Edws1rI83GmffQfLV1euoSmYYpgvArtjSDGlBoaC62+x5R\nYFDEygioZ2qZZYdVFi75V1ifVrp0/BdS7osLfKOT9BV2z1YQ24b4lrrRWQKBgF1G\n3C0Ox/kos+H3htVnwAG3AzkE+ChQAQk/bCKmWy5nIDOF6Kki0DRjjnmQgOk5cnXb\nt+Y6t2wnoRDWrXoarNQN7oMMVne5caBWufgQpA35BbHXyS6F7VThh7V2f30EQFdG\nM6dRvWd3bN2jJ9YlwCsMSW5v3kb+tVCfRHM2KdihAoGAflYkWiNAL04z09ncC+1w\nmK+cKwc5sme8X+YrFSwH+2TS60/xMl6ewUFNgcMU2idxok+896afjIcvOURw23uD\nL3iBZF3N+LCYE3r/Blp+eoA0s7oXE/pPQ6zUhShFTT+buiq53eyYJosmlBvo3SHL\nlQwVRIYHoIgdiSsu7sh6bj4=\n-----END PRIVATE KEY-----\n',
       }),
     });
   },

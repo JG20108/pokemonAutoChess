@@ -15,6 +15,8 @@ const envVars = {
   FIREBASE_APP_ID: '1:433303508688:web:e9d9c93919d665225db0d5',
   DISCORD_SERVER: '',
   MIN_HUMAN_PLAYERS: '1',
+  MONGO_URI:
+    'mongodb+srv://joseosgui:F1Wy7S9l0uOs6hgI@cluster0.andeznt.mongodb.net/dev?retryWrites=true&w=majority',
 };
 
 console.log('Using hardcoded environment variables');
@@ -72,6 +74,7 @@ context({
     'process.env.FIREBASE_APP_ID': JSON.stringify(envVars.FIREBASE_APP_ID),
     'process.env.DISCORD_SERVER': JSON.stringify(envVars.DISCORD_SERVER),
     'process.env.MIN_HUMAN_PLAYERS': JSON.stringify(envVars.MIN_HUMAN_PLAYERS),
+    'process.env.MONGO_URI': JSON.stringify(envVars.MONGO_URI),
   },
 })
   .then((context) => {
