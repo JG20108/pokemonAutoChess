@@ -60,9 +60,11 @@ context({
       process.env.FIREBASE_MESSAGING_SENDER_ID
     ),
     'process.env.FIREBASE_APP_ID': JSON.stringify(process.env.FIREBASE_APP_ID),
-    'process.env.DISCORD_SERVER': JSON.stringify(process.env.DISCORD_SERVER),
+    'process.env.DISCORD_SERVER': JSON.stringify(
+      process.env.DISCORD_SERVER || '' // Default empty string if undefined
+    ),
     'process.env.MIN_HUMAN_PLAYERS': JSON.stringify(
-      process.env.MIN_HUMAN_PLAYERS
+      process.env.MIN_HUMAN_PLAYERS || '0' // Default to '1' if undefined
     ),
   },
 })
