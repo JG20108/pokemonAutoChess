@@ -2,10 +2,36 @@ const fs = require('fs');
 const { context } = require('esbuild');
 const dotenv = require('dotenv');
 
+// Load environment variables from .env file
 dotenv.config();
+
+// Debug: Log environment variables (without sensitive values)
+console.log('Environment variables present:', {
+  FIREBASE_API_KEY: !!process.env.FIREBASE_API_KEY,
+  FIREBASE_AUTH_DOMAIN: !!process.env.FIREBASE_AUTH_DOMAIN,
+  FIREBASE_PROJECT_ID: !!process.env.FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKET: !!process.env.FIREBASE_STORAGE_BUCKET,
+  FIREBASE_MESSAGING_SENDER_ID: !!process.env.FIREBASE_MESSAGING_SENDER_ID,
+  FIREBASE_APP_ID: !!process.env.FIREBASE_APP_ID,
+});
 
 const isDev = process.argv[2] === '--dev';
 const isProdBuild = process.argv[2] === '--build';
+
+// Ensure all required environment variables have fallbacks
+const envVars = {
+  FIREBASE_API_KEY: process.env.FIREBASE_API_KEY || 'MISSING_API_KEY',
+  FIREBASE_AUTH_DOMAIN:
+    process.env.FIREBASE_AUTH_DOMAIN || 'MISSING_AUTH_DOMAIN',
+  FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID || 'MISSING_PROJECT_ID',
+  FIREBASE_STORAGE_BUCKET:
+    process.env.FIREBASE_STORAGE_BUCKET || 'MISSING_STORAGE_BUCKET',
+  FIREBASE_MESSAGING_SENDER_ID:
+    process.env.FIREBASE_MESSAGING_SENDER_ID || 'MISSING_SENDER_ID',
+  FIREBASE_APP_ID: process.env.FIREBASE_APP_ID || 'MISSING_APP_ID',
+  DISCORD_SERVER: process.env.DISCORD_SERVER || '',
+  MIN_HUMAN_PLAYERS: process.env.MIN_HUMAN_PLAYERS || '1',
+};
 
 let hashIndexPlugin = {
   name: 'hash-index-plugin',
@@ -44,28 +70,22 @@ context({
   plugins: [hashIndexPlugin],
   target: 'es2016',
   define: {
-    'process.env.FIREBASE_API_KEY': JSON.stringify(
-      process.env.FIREBASE_API_KEY
-    ),
+    'process.env.FIREBASE_API_KEY': JSON.stringify(envVars.FIREBASE_API_KEY),
     'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(
-      process.env.FIREBASE_AUTH_DOMAIN
+      envVars.FIREBASE_AUTH_DOMAIN
     ),
     'process.env.FIREBASE_PROJECT_ID': JSON.stringify(
-      process.env.FIREBASE_PROJECT_ID
+      envVars.FIREBASE_PROJECT_ID
     ),
     'process.env.FIREBASE_STORAGE_BUCKET': JSON.stringify(
-      process.env.FIREBASE_STORAGE_BUCKET
+      envVars.FIREBASE_STORAGE_BUCKET
     ),
     'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(
-      process.env.FIREBASE_MESSAGING_SENDER_ID
+      envVars.FIREBASE_MESSAGING_SENDER_ID
     ),
-    'process.env.FIREBASE_APP_ID': JSON.stringify(process.env.FIREBASE_APP_ID),
-    'process.env.DISCORD_SERVER': JSON.stringify(
-      process.env.DISCORD_SERVER || '' // Default empty string if undefined
-    ),
-    'process.env.MIN_HUMAN_PLAYERS': JSON.stringify(
-      process.env.MIN_HUMAN_PLAYERS || '0' // Default to '1' if undefined
-    ),
+    'process.env.FIREBASE_APP_ID': JSON.stringify(envVars.FIREBASE_APP_ID),
+    'process.env.DISCORD_SERVER': JSON.stringify(envVars.DISCORD_SERVER),
+    'process.env.MIN_HUMAN_PLAYERS': JSON.stringify(envVars.MIN_HUMAN_PLAYERS),
   },
 })
   .then((context) => {
