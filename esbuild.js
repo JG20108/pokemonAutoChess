@@ -1,57 +1,23 @@
 const fs = require('fs');
 const { context } = require('esbuild');
-const dotenv = require('dotenv');
 const path = require('path');
-
-// Try to load environment variables from .env file, but don't fail if it doesn't exist
-try {
-  const envPath = path.resolve(process.cwd(), '.env');
-  if (fs.existsSync(envPath)) {
-    dotenv.config({ path: envPath });
-    console.log('Loaded environment variables from .env file');
-  } else {
-    console.log('No .env file found, using process environment variables');
-  }
-} catch (error) {
-  console.log('Error loading .env file:', error.message);
-}
-
-// Debug: Log environment variables presence (not values)
-console.log('Environment variables status:', {
-  FIREBASE_API_KEY: !!process.env.FIREBASE_API_KEY,
-  FIREBASE_AUTH_DOMAIN: !!process.env.FIREBASE_AUTH_DOMAIN,
-  FIREBASE_PROJECT_ID: !!process.env.FIREBASE_PROJECT_ID,
-  FIREBASE_STORAGE_BUCKET: !!process.env.FIREBASE_STORAGE_BUCKET,
-  FIREBASE_MESSAGING_SENDER_ID: !!process.env.FIREBASE_MESSAGING_SENDER_ID,
-  FIREBASE_APP_ID: !!process.env.FIREBASE_APP_ID,
-});
 
 const isDev = process.argv[2] === '--dev';
 const isProdBuild = process.argv[2] === '--build';
 
-// Ensure all required environment variables have fallbacks
+// Hardcoded environment variables
 const envVars = {
-  FIREBASE_API_KEY: process.env.FIREBASE_API_KEY || 'MISSING_API_KEY',
-  FIREBASE_AUTH_DOMAIN:
-    process.env.FIREBASE_AUTH_DOMAIN || 'MISSING_AUTH_DOMAIN',
-  FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID || 'MISSING_PROJECT_ID',
-  FIREBASE_STORAGE_BUCKET:
-    process.env.FIREBASE_STORAGE_BUCKET || 'MISSING_STORAGE_BUCKET',
-  FIREBASE_MESSAGING_SENDER_ID:
-    process.env.FIREBASE_MESSAGING_SENDER_ID || 'MISSING_SENDER_ID',
-  FIREBASE_APP_ID: process.env.FIREBASE_APP_ID || 'MISSING_APP_ID',
-  DISCORD_SERVER: process.env.DISCORD_SERVER || '',
-  MIN_HUMAN_PLAYERS: process.env.MIN_HUMAN_PLAYERS || '1',
+  FIREBASE_API_KEY: 'AIzaSyD-3kpfTO0svOqq2q3HiItCsGfdnZdBtsM',
+  FIREBASE_AUTH_DOMAIN: 'pac-linkersito.firebaseapp.com',
+  FIREBASE_PROJECT_ID: 'pac-linkersito',
+  FIREBASE_STORAGE_BUCKET: 'pac-linkersito.firebasestorage.app',
+  FIREBASE_MESSAGING_SENDER_ID: '433303508688',
+  FIREBASE_APP_ID: '1:433303508688:web:e9d9c93919d665225db0d5',
+  DISCORD_SERVER: '',
+  MIN_HUMAN_PLAYERS: '1',
 };
 
-// Log if we're using any fallback values
-const missingVars = Object.entries(envVars)
-  .filter(([key, value]) => value.startsWith('MISSING_'))
-  .map(([key]) => key);
-
-if (missingVars.length > 0) {
-  console.warn('Warning: Missing required environment variables:', missingVars);
-}
+console.log('Using hardcoded environment variables');
 
 let hashIndexPlugin = {
   name: 'hash-index-plugin',
