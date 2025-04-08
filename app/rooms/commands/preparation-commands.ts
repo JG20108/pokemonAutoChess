@@ -24,6 +24,48 @@ import { cleanProfanity } from '../../utils/profanity-filter';
 import { pickRandomIn } from '../../utils/random';
 import { entries, values } from '../../utils/schemas';
 import PreparationRoom from '../preparation-room';
+import { Schema, type, MapSchema } from '@colyseus/schema';
+
+export abstract class PreparationCommand extends Command<PreparationRoom> {
+  static readonly CHANGE_SPECIAL_RULE = 'CHANGE_SPECIAL_RULE';
+  static readonly ADD_BOT = 'ADD_BOT';
+  static readonly REMOVE_BOT = 'REMOVE_BOT';
+  static readonly TOGGLE_READY = 'TOGGLE_READY';
+  static readonly CHANGE_GAME_MODE = 'CHANGE_GAME_MODE';
+  static readonly CHANGE_MIN_RANK = 'CHANGE_MIN_RANK';
+  static readonly CHANGE_MAX_RANK = 'CHANGE_MAX_RANK';
+  static readonly TOGGLE_NO_ELO = 'TOGGLE_NO_ELO';
+  static readonly CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+  static readonly CHANGE_NAME = 'CHANGE_NAME';
+}
+
+export class PreparationState extends Schema {
+  @type('string') ownerId: string = '';
+  @type('string') ownerName: string = '';
+  @type('string') gameMode: GameMode = GameMode.CUSTOM_LOBBY;
+  @type('boolean') noElo: boolean = false;
+  @type('string') minRank: EloRank | null = null;
+  @type('string') maxRank: EloRank | null = null;
+  @type('string') specialGameRule: SpecialGameRule | null = null;
+  @type('number') gameStartedAt: number | null = null;
+  @type({ map: GameUser }) users = new MapSchema<GameUser>();
+  @type('string') password: string | null = null;
+  @type('string') name: string = '';
+
+  abortOnPlayerLeave?: AbortController;
+
+  isOwner(client: Client<any>): boolean {
+    return client.auth?.uid === this.ownerId;
+  }
+
+  addMessage(message: { authorId: string; payload: string; avatar?: string }) {
+    // Implementation can be added here if needed
+  }
+
+  removeMessage(messageId: string) {
+    // Implementation can be added here if needed
+  }
+}
 
 export class OnJoinCommand extends Command<
   PreparationRoom,
@@ -35,15 +77,6 @@ export class OnJoinCommand extends Command<
 > {
   async execute({ client, options, auth }) {
     try {
-      const pendingGameId = await this.room.presence.hget(
-        client.auth.uid,
-        'pending_game_id'
-      );
-      if (pendingGameId != null) {
-        client.leave(CloseCodes.USER_IN_ANOTHER_GAME);
-        return;
-      }
-
       if (
         this.state.ownerId == '' &&
         this.state.gameMode === GameMode.CUSTOM_LOBBY
@@ -415,26 +448,15 @@ export class OnRoomChangeSpecialRule extends Command<
 > {
   execute({ client, specialRule }) {
     try {
-      if (client.auth?.uid == this.state.ownerId) {
-        this.state.specialGameRule = specialRule;
-        if (specialRule != null) {
-          this.state.noElo = true;
-          this.room.setNoElo(true);
-        }
-        const leader = this.state.users.get(client.auth.uid);
-        this.room.state.addMessage({
-          author: 'Server',
-          authorId: 'server',
-          payload: `Room leader ${
-            specialRule ? 'enabled' : 'disabled'
-          } Smeargle's Scribble for this game. Players need to ready again.`,
-          avatar: leader?.avatar,
-        });
+      const isAdmin =
+        this.state.users.get(client.auth?.uid)?.role === Role.ADMIN;
+      const isOwner = client.auth?.uid === this.state.ownerId;
 
-        this.state.users.forEach((user) => {
-          if (!user.isBot) user.ready = false;
-        });
+      if (!isOwner && !isAdmin) {
+        return;
       }
+      this.room.state.specialGameRule = specialRule;
+      this.room.broadcast(PreparationCommand.CHANGE_SPECIAL_RULE, specialRule);
     } catch (error) {
       logger.error(error);
     }
@@ -629,7 +651,11 @@ export class CheckAutoStartRoom extends Command<PreparationRoom, void> {
         payload: 'Starting match...',
       });
 
-      if ([GameMode.RANKED, GameMode.SCRIBBLE].includes(this.state.gameMode)) {
+      if (
+        [GameMode.RANKED, GameMode.SCRIBBLE].includes(
+          this.state.gameMode as GameMode
+        )
+      ) {
         // open another one
         this.room.presence.publish('lobby-full', {
           gameMode: this.state.gameMode,

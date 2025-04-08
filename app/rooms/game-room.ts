@@ -46,7 +46,11 @@ import {
   PortalCarouselStages,
   UniquePool,
 } from '../types/Config';
-import { GameMode, PokemonActionState } from '../types/enum/Game';
+import {
+  GameMode,
+  GamePhaseState,
+  PokemonActionState,
+} from '../types/enum/Game';
 import { Item } from '../types/enum/Item';
 import { Passive } from '../types/enum/Passive';
 import {
@@ -86,6 +90,7 @@ import {
 } from './commands/game-commands';
 import GameState from './states/game-state';
 import { CloseCodes } from '../types/enum/CloseCodes';
+import { Weather } from '../types/enum/Weather';
 
 export default class GameRoom extends Room<GameState> {
   dispatcher: Dispatcher<this>;
@@ -138,13 +143,20 @@ export default class GameRoom extends Room<GameState> {
     });
     // logger.debug(options);
     this.state = new GameState(
-      options.preparationId,
-      options.name,
-      options.noElo,
-      options.gameMode,
-      options.minRank,
-      options.maxRank,
-      options.specialGameRule
+      {
+        preparationId: options.preparationId,
+        name: options.name,
+        noElo: options.noElo,
+        minRank: options.minRank,
+        maxRank: options.maxRank,
+        weather: Weather.NEUTRAL,
+        phase: GamePhaseState.TOWN,
+        PICK_PHASE_DURATION: 30000,
+        status: 'LOADING',
+      },
+      [],
+      options.gameMode as unknown as GameMode,
+      options.specialGameRule || undefined
     );
     this.miniGame.create(
       this.state.avatars,
@@ -712,7 +724,7 @@ export default class GameRoom extends Room<GameState> {
                 botPlayer.rank,
                 bot.elo,
                 players,
-                this.state.gameMode
+                this.state.gameMode as GameMode
               );
               bot.save();
             }
@@ -828,7 +840,7 @@ export default class GameRoom extends Room<GameState> {
           rank,
           usr.elo,
           humans.map((p) => this.transformToSimplePlayer(p)),
-          this.state.gameMode
+          this.state.gameMode as GameMode
         );
         if (elo) {
           if (elo >= 1100) {
