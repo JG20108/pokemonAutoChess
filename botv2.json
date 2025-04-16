@@ -1,0 +1,1788 @@
+{
+  "steps": [
+    {
+      "roundsRequired": 1,
+      "board": []
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "PICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "PICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "MAREEP",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "ALOLAN_GEODUDE",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "PICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "MAREEP",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "ALOLAN_GEODUDE",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "MAREEP",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "ALOLAN_GEODUDE",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "PIKACHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "MAREEP",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "ALOLAN_GEODUDE",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "PIKACHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL"
+          ]
+        },
+        {
+          "name": "VOLTORB",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 3,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "MAREEP",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "ALOLAN_GEODUDE",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "PIKACHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL"
+          ]
+        },
+        {
+          "name": "VOLTORB",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 3,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "MAREEP",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "PIKACHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "VOLTORB",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "KOFFING",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "PIKACHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "VOLTORB",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "KOFFING",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "FLAFFY",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "PIKACHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "KOFFING",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "NOSEPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "PIKACHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "KOFFING",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "NOSEPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "KOFFING",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "PIKACHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "KOFFING",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "WEEZING",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "WEEZING",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "GOLETT",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 1,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "WEEZING",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "GOLETT",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 1,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "WEEZING",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "GOLETT",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 1,
+          "y": 3,
+          "items": []
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "WEEZING",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 1,
+          "y": 3,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "MEWTWO",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 2,
+          "items": [
+            "TINY_MUSHROOM",
+            "UPGRADE"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "MEWTWO",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 2,
+          "items": [
+            "TINY_MUSHROOM",
+            "UPGRADE"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "MEWTWO",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 2,
+          "items": [
+            "TINY_MUSHROOM",
+            "UPGRADE"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER",
+            "ASSAULT_VEST"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "MEWTWO",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 2,
+          "items": [
+            "TINY_MUSHROOM",
+            "UPGRADE"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER",
+            "ASSAULT_VEST"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "MEWTWO",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 2,
+          "items": [
+            "TINY_MUSHROOM",
+            "UPGRADE"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER",
+            "ASSAULT_VEST"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "MEWTWO",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 2,
+          "items": [
+            "TINY_MUSHROOM",
+            "UPGRADE"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER",
+            "ASSAULT_VEST"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "MEWTWO",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 2,
+          "items": [
+            "TINY_MUSHROOM",
+            "UPGRADE"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER",
+            "ASSAULT_VEST",
+            "POWER_LENS"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "MEWTWO",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 2,
+          "items": [
+            "TINY_MUSHROOM",
+            "UPGRADE"
+          ]
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER",
+            "ASSAULT_VEST",
+            "POWER_LENS"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "MEWTWO",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 2,
+          "items": [
+            "TINY_MUSHROOM",
+            "UPGRADE",
+            "THUNDER_STONE"
+          ]
+        },
+        {
+          "name": "SHINX",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 1,
+          "y": 3,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER",
+            "ASSAULT_VEST",
+            "POWER_LENS"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "MEWTWO",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 2,
+          "items": [
+            "TINY_MUSHROOM",
+            "UPGRADE",
+            "THUNDER_STONE"
+          ]
+        },
+        {
+          "name": "SHINX",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 1,
+          "y": 3,
+          "items": []
+        }
+      ]
+    },
+    {
+      "roundsRequired": 1,
+      "board": [
+        {
+          "name": "ELECTRODE",
+          "emotion": "Special0",
+          "shiny": true,
+          "x": 4,
+          "y": 3,
+          "items": [
+            "STAR_DUST"
+          ]
+        },
+        {
+          "name": "PROBOPASS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "IRON_HANDS",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 5,
+          "y": 3,
+          "items": [
+            "HARD_STONE",
+            "KINGS_ROCK",
+            "DEFENSIVE_RIBBON"
+          ]
+        },
+        {
+          "name": "RAICHU",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 3,
+          "y": 3,
+          "items": [
+            "POKE_DOLL",
+            "SHELL_BELL",
+            "BIG_NUGGET"
+          ]
+        },
+        {
+          "name": "GOLURK",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER",
+            "ASSAULT_VEST",
+            "POWER_LENS"
+          ]
+        },
+        {
+          "name": "WORMADAM_TRASH",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 4,
+          "y": 2,
+          "items": []
+        },
+        {
+          "name": "MEWTWO",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 2,
+          "y": 2,
+          "items": [
+            "TINY_MUSHROOM",
+            "UPGRADE",
+            "THUNDER_STONE"
+          ]
+        },
+        {
+          "name": "LUXIO",
+          "emotion": "Normal",
+          "shiny": false,
+          "x": 1,
+          "y": 3,
+          "items": [
+            "GRACIDEA_FLOWER"
+          ]
+        }
+      ]
+    }
+  ],
+  "avatar": "0101/0000/0001/Special0",
+  "author": "Duke",
+  "elo": 1000,
+  "name": "ELECTRODE",
+  "id": ""
+}
