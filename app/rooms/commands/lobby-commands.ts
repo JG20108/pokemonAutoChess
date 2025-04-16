@@ -737,6 +737,7 @@ export class UnlockAllEmotionsCommand extends Command<
         // Update the user's collection in memory
         let pokemonCollectionItem = user.pokemonCollection.get(index);
         if (!pokemonCollectionItem) {
+          // Create new collection item if it doesn't exist
           pokemonCollectionItem = {
             id: index,
             dust: 20000,
@@ -747,13 +748,14 @@ export class UnlockAllEmotionsCommand extends Command<
           };
           user.pokemonCollection.set(index, pokemonCollectionItem);
         } else {
+          // Update existing collection item
           pokemonCollectionItem.dust = 20000;
           availableEmotions.forEach((emotion) => {
-            if (!pokemonCollectionItem.emotions.includes(emotion)) {
-              pokemonCollectionItem.emotions.push(emotion);
+            if (!pokemonCollectionItem?.emotions.includes(emotion)) {
+              pokemonCollectionItem?.emotions.push(emotion);
             }
-            if (!pokemonCollectionItem.shinyEmotions.includes(emotion)) {
-              pokemonCollectionItem.shinyEmotions.push(emotion);
+            if (!pokemonCollectionItem?.shinyEmotions.includes(emotion)) {
+              pokemonCollectionItem?.shinyEmotions.push(emotion);
             }
           });
         }
