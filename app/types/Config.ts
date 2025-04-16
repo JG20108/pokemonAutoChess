@@ -1,18 +1,18 @@
-import { Emotion } from "."
-import { EloRank } from "./enum/EloRank"
-import { AttackType, Rarity, Stat } from "./enum/Game"
-import { FishingRod, Item } from "./enum/Item"
-import { Pkm, PkmDuo, PkmProposition } from "./enum/Pokemon"
-import { Synergy } from "./enum/Synergy"
-import { Weather } from "./enum/Weather"
+import { Emotion } from '.';
+import { EloRank } from './enum/EloRank';
+import { AttackType, Rarity, Stat } from './enum/Game';
+import { FishingRod, Item } from './enum/Item';
+import { Pkm, PkmDuo, PkmProposition } from './enum/Pokemon';
+import { Synergy } from './enum/Synergy';
+import { Weather } from './enum/Weather';
 
-export const ON_ATTACK_MANA = 5
-export const MANA_SCARF_MANA = 8
-export const SCOPE_LENS_MANA = 15
-export const ARMOR_FACTOR = 0.05
-export const BOARD_WIDTH = 8
-export const BOARD_HEIGHT = 6
-export const BOARD_SIDE_HEIGHT = 4 // 0 = bench
+export const ON_ATTACK_MANA = 5;
+export const MANA_SCARF_MANA = 8;
+export const SCOPE_LENS_MANA = 15;
+export const ARMOR_FACTOR = 0.05;
+export const BOARD_WIDTH = 8;
+export const BOARD_HEIGHT = 6;
+export const BOARD_SIDE_HEIGHT = 4; // 0 = bench
 
 export const RarityHpCost: { [key in Rarity]: number } = Object.freeze({
   [Rarity.COMMON]: 1,
@@ -23,8 +23,8 @@ export const RarityHpCost: { [key in Rarity]: number } = Object.freeze({
   [Rarity.UNIQUE]: 3,
   [Rarity.LEGENDARY]: 3,
   [Rarity.SPECIAL]: 1,
-  [Rarity.HATCH]: 4
-})
+  [Rarity.HATCH]: 4,
+});
 
 // used to evaluate unit value, even if some categories are not found in shop
 export const RarityCost: { [key in Rarity]: number } = Object.freeze({
@@ -36,34 +36,34 @@ export const RarityCost: { [key in Rarity]: number } = Object.freeze({
   [Rarity.ULTRA]: 5,
   [Rarity.HATCH]: 9,
   [Rarity.UNIQUE]: 10,
-  [Rarity.LEGENDARY]: 20
-})
+  [Rarity.LEGENDARY]: 20,
+});
 
 export const EmotionCost: { [key in Emotion]: number } = {
-  [Emotion.NORMAL]: 50,
-  [Emotion.HAPPY]: 100,
-  [Emotion.PAIN]: 100,
-  [Emotion.ANGRY]: 100,
-  [Emotion.WORRIED]: 100,
-  [Emotion.SAD]: 100,
-  [Emotion.CRYING]: 100,
-  [Emotion.SHOUTING]: 150,
-  [Emotion.TEARY_EYED]: 150,
-  [Emotion.DETERMINED]: 150,
-  [Emotion.JOYOUS]: 150,
-  [Emotion.INSPIRED]: 150,
-  [Emotion.SURPRISED]: 150,
-  [Emotion.DIZZY]: 150,
-  [Emotion.SPECIAL0]: 200,
-  [Emotion.SPECIAL1]: 200,
-  [Emotion.SIGH]: 200,
-  [Emotion.STUNNED]: 200,
-  [Emotion.SPECIAL2]: 200,
-  [Emotion.SPECIAL3]: 200
-}
+  [Emotion.NORMAL]: 0,
+  [Emotion.HAPPY]: 0,
+  [Emotion.PAIN]: 0,
+  [Emotion.ANGRY]: 0,
+  [Emotion.WORRIED]: 0,
+  [Emotion.SAD]: 0,
+  [Emotion.CRYING]: 0,
+  [Emotion.SHOUTING]: 0,
+  [Emotion.TEARY_EYED]: 0,
+  [Emotion.DETERMINED]: 0,
+  [Emotion.JOYOUS]: 0,
+  [Emotion.INSPIRED]: 0,
+  [Emotion.SURPRISED]: 0,
+  [Emotion.DIZZY]: 0,
+  [Emotion.SPECIAL0]: 0,
+  [Emotion.SPECIAL1]: 0,
+  [Emotion.SIGH]: 0,
+  [Emotion.STUNNED]: 0,
+  [Emotion.SPECIAL2]: 0,
+  [Emotion.SPECIAL3]: 0,
+};
 
 export function getEmotionCost(emotion: Emotion, isShiny: boolean): number {
-  return isShiny ? EmotionCost[emotion] * 3 : EmotionCost[emotion]
+  return 0; // Always return 0 regardless of emotion type or shiny status
 }
 
 export const ExpTable: { [key: number]: number } = Object.freeze({
@@ -75,8 +75,8 @@ export const ExpTable: { [key: number]: number } = Object.freeze({
   6: 34,
   7: 52,
   8: 72,
-  9: 255
-})
+  9: 255,
+});
 
 export const SynergyTriggers: { [key in Synergy]: number[] } = {
   [Synergy.NORMAL]: [3, 5, 7, 9],
@@ -109,25 +109,25 @@ export const SynergyTriggers: { [key in Synergy]: number[] } = {
   [Synergy.LIGHT]: [2, 3, 4, 5],
   [Synergy.WILD]: [2, 4, 6, 9],
   [Synergy.AMORPHOUS]: [3, 5, 7],
-  [Synergy.GOURMET]: [3, 4, 5]
-}
+  [Synergy.GOURMET]: [3, 4, 5],
+};
 
 // games that finish before level 10 are not counted for XP and ELO to avoid potential abuse
-export const MinStageLevelForGameToCount = 10
+export const MinStageLevelForGameToCount = 10;
 
-export const ExpPlace = [700, 400, 350, 300, 250, 200, 200, 200]
+export const ExpPlace = [700, 400, 350, 300, 250, 200, 200, 200];
 
 export const RarityColor: { [key in Rarity]: string } = {
-  [Rarity.COMMON]: "#a0a0a0",
-  [Rarity.UNCOMMON]: "#3bc95e",
-  [Rarity.RARE]: "#41bfcc",
-  [Rarity.EPIC]: "#927FFF",
-  [Rarity.ULTRA]: "#E53B3B",
-  [Rarity.UNIQUE]: "#ffffff",
-  [Rarity.LEGENDARY]: "#e6cb49",
-  [Rarity.SPECIAL]: "#E58EE5",
-  [Rarity.HATCH]: "#b9915a"
-}
+  [Rarity.COMMON]: '#a0a0a0',
+  [Rarity.UNCOMMON]: '#3bc95e',
+  [Rarity.RARE]: '#41bfcc',
+  [Rarity.EPIC]: '#927FFF',
+  [Rarity.ULTRA]: '#E53B3B',
+  [Rarity.UNIQUE]: '#ffffff',
+  [Rarity.LEGENDARY]: '#e6cb49',
+  [Rarity.SPECIAL]: '#E58EE5',
+  [Rarity.HATCH]: '#b9915a',
+};
 
 export const BoosterRarityProbability: { [key in Rarity]: number } = {
   [Rarity.COMMON]: 0.12,
@@ -138,8 +138,8 @@ export const BoosterRarityProbability: { [key in Rarity]: number } = {
   [Rarity.UNIQUE]: 0.1,
   [Rarity.LEGENDARY]: 0.05,
   [Rarity.HATCH]: 0.06,
-  [Rarity.SPECIAL]: 0.03
-}
+  [Rarity.SPECIAL]: 0.03,
+};
 
 // should be proportional to rarity, see above
 export const BoosterPriceByRarity: { [key in Rarity]: number } = {
@@ -151,18 +151,18 @@ export const BoosterPriceByRarity: { [key in Rarity]: number } = {
   [Rarity.UNIQUE]: 500,
   [Rarity.LEGENDARY]: 250,
   [Rarity.HATCH]: 300,
-  [Rarity.SPECIAL]: 500 // special is a bit more expensive due to unowns farming
-}
+  [Rarity.SPECIAL]: 500, // special is a bit more expensive due to unowns farming
+};
 
-export const DITTO_RATE = 0.005
-export const KECLEON_RATE = 1 / 100
-export const ARCEUS_RATE = 1 / 100
+export const DITTO_RATE = 0.005;
+export const KECLEON_RATE = 1 / 100;
+export const ARCEUS_RATE = 1 / 100;
 
 export const AttackTypeColor: { [key in AttackType] } = {
-  [AttackType.PHYSICAL]: "#FF6E55",
-  [AttackType.SPECIAL]: "#7FC9FF",
-  [AttackType.TRUE]: "#FFD800"
-}
+  [AttackType.PHYSICAL]: '#FF6E55',
+  [AttackType.SPECIAL]: '#7FC9FF',
+  [AttackType.TRUE]: '#FFD800',
+};
 
 export const RarityProbabilityPerLevel: { [key: number]: number[] } = {
   1: [1, 0, 0, 0, 0],
@@ -173,13 +173,13 @@ export const RarityProbabilityPerLevel: { [key: number]: number[] } = {
   6: [0.25, 0.4, 0.3, 0.05, 0],
   7: [0.16, 0.33, 0.35, 0.15, 0.01],
   8: [0.11, 0.27, 0.35, 0.22, 0.05],
-  9: [0.05, 0.2, 0.35, 0.3, 0.1]
-}
+  9: [0.05, 0.2, 0.35, 0.3, 0.1],
+};
 
 export const EvolutionTime = {
   EGG_HATCH: 5,
-  EVOLVE_HATCH: 5
-}
+  EVOLVE_HATCH: 5,
+};
 
 export const PoolSize: { [key in Rarity]: [number, number, number] } = {
   [Rarity.COMMON]: [1, 18, 29],
@@ -190,8 +190,8 @@ export const PoolSize: { [key in Rarity]: [number, number, number] } = {
   [Rarity.UNIQUE]: [1, 1, 1],
   [Rarity.LEGENDARY]: [1, 1, 1],
   [Rarity.SPECIAL]: [0, 0, 0],
-  [Rarity.HATCH]: [0, 0, 0]
-}
+  [Rarity.HATCH]: [0, 0, 0],
+};
 
 export const UniquePool = new Array<PkmProposition>(
   Pkm.AERODACTYL,
@@ -290,7 +290,7 @@ export const UniquePool = new Array<PkmProposition>(
   Pkm.MILCERY,
   Pkm.VELUZA,
   Pkm.DURALUDON
-)
+);
 
 export const LegendaryPool = new Array<PkmProposition>(
   Pkm.KYUREM,
@@ -353,54 +353,54 @@ export const LegendaryPool = new Array<PkmProposition>(
   Pkm.KELDEO,
   Pkm.PECHARUNT,
   Pkm.ROARING_MOON
-)
+);
 
-export const NB_UNIQUE_PROPOSITIONS = 6
-export const SHOP_SIZE = 6
+export const NB_UNIQUE_PROPOSITIONS = 6;
+export const SHOP_SIZE = 6;
 
 export const FishRarityProbability: {
   [rod in FishingRod]: {
-    [key in Rarity]?: number
-  }
+    [key in Rarity]?: number;
+  };
 } = {
   [Item.OLD_ROD]: {
     [Rarity.SPECIAL]: 0.55,
     [Rarity.COMMON]: 0.35,
     [Rarity.UNCOMMON]: 0.1,
     [Rarity.RARE]: 0,
-    [Rarity.EPIC]: 0
+    [Rarity.EPIC]: 0,
   },
   [Item.GOOD_ROD]: {
     [Rarity.SPECIAL]: 0.3,
     [Rarity.COMMON]: 0.3,
     [Rarity.UNCOMMON]: 0.3,
     [Rarity.RARE]: 0.1,
-    [Rarity.EPIC]: 0
+    [Rarity.EPIC]: 0,
   },
   [Item.SUPER_ROD]: {
     [Rarity.SPECIAL]: 0.35,
     [Rarity.COMMON]: 0.05,
     [Rarity.UNCOMMON]: 0.25,
     [Rarity.RARE]: 0.25,
-    [Rarity.EPIC]: 0.1
-  }
-}
+    [Rarity.EPIC]: 0.1,
+  },
+};
 
-export const MAX_POOL_CONNECTIONS_SIZE = 16
-export const MAX_CONCURRENT_PLAYERS_ON_SERVER = 1000
-export const MAX_CONCURRENT_PLAYERS_ON_LOBBY = 500
-export const MAX_PLAYERS_PER_GAME = 8
+export const MAX_POOL_CONNECTIONS_SIZE = 16;
+export const MAX_CONCURRENT_PLAYERS_ON_SERVER = 1000;
+export const MAX_CONCURRENT_PLAYERS_ON_LOBBY = 500;
+export const MAX_PLAYERS_PER_GAME = 8;
 export const MIN_HUMAN_PLAYERS = process.env.MIN_HUMAN_PLAYERS
   ? parseInt(process.env.MIN_HUMAN_PLAYERS)
-  : 1
-export const INACTIVITY_TIMEOUT = 60 * 1000 * 30 // 30 minutes
+  : 1;
+export const INACTIVITY_TIMEOUT = 60 * 1000 * 30; // 30 minutes
 
-export const DEFAULT_SPEED = 50
-export const DEFAULT_CRIT_CHANCE = 10
-export const DEFAULT_CRIT_POWER = 2
-export const PROJECTILE_SPEED = 4
+export const DEFAULT_SPEED = 50;
+export const DEFAULT_CRIT_CHANCE = 10;
+export const DEFAULT_CRIT_POWER = 2;
+export const PROJECTILE_SPEED = 4;
 
-export const StageDuration: Record<number | "DEFAULT", number> = {
+export const StageDuration: Record<number | 'DEFAULT', number> = {
   0: 23, // adjusted for treasure town theme
   1: 30,
   3: 40,
@@ -412,16 +412,16 @@ export const StageDuration: Record<number | "DEFAULT", number> = {
   15: 40,
   19: 40,
   20: 50,
-  DEFAULT: 30
-}
-export const FIGHTING_PHASE_DURATION = 40000
-export const ITEM_CAROUSEL_BASE_DURATION = 15000
-export const PORTAL_CAROUSEL_BASE_DURATION = 23000
+  DEFAULT: 30,
+};
+export const FIGHTING_PHASE_DURATION = 40000;
+export const ITEM_CAROUSEL_BASE_DURATION = 15000;
+export const PORTAL_CAROUSEL_BASE_DURATION = 23000;
 
-export const ItemCarouselStages = [4, 12, 17, 22, 27, 34]
-export const ItemProposalStages = [3, 15]
-export const AdditionalPicksStages = [5, 8, 11]
-export const PortalCarouselStages = [0, 10, 20]
+export const ItemCarouselStages = [4, 12, 17, 22, 27, 34];
+export const ItemProposalStages = [3, 15];
+export const AdditionalPicksStages = [5, 8, 11];
+export const PortalCarouselStages = [0, 10, 20];
 
 export const EloRankThreshold: { [key in EloRank]: number } = {
   [EloRank.LEVEL_BALL]: 0,
@@ -434,8 +434,8 @@ export const EloRankThreshold: { [key in EloRank]: number } = {
   [EloRank.SUPER_BALL]: 1350,
   [EloRank.ULTRA_BALL]: 1400,
   [EloRank.MASTER_BALL]: 1500,
-  [EloRank.BEAST_BALL]: 1700
-}
+  [EloRank.BEAST_BALL]: 1700,
+};
 
 export const WeatherThreshold: { [weather in Weather]: number } = {
   [Weather.MISTY]: 8,
@@ -448,8 +448,8 @@ export const WeatherThreshold: { [weather in Weather]: number } = {
   [Weather.STORM]: 8,
   [Weather.SUN]: 8,
   [Weather.WINDY]: 8,
-  [Weather.SMOG]: 8
-}
+  [Weather.SMOG]: 8,
+};
 
 // 4  A  1
 // D  X  B
@@ -503,63 +503,63 @@ export const MaskCoordinate: { [key in Mask]: { x: number; y: number } } =
     A1B2CD4: { x: 1, y: 5 },
     A1BC3D: { x: 4, y: 7 },
     AB2CD4: { x: 5, y: 7 },
-    A1B2C3D4: { x: 1, y: 1 }
-  })
+    A1B2C3D4: { x: 1, y: 1 },
+  });
 
 export enum Mask {
-  X = "X",
-  A = "A",
-  B = "B",
-  C = "C",
-  D = "D",
-  AB = "AB",
-  AC = "AC",
-  AD = "AD",
-  BC = "BC",
-  BD = "BD",
-  CD = "CD",
-  ABC = "ABC",
-  ABD = "ABD",
-  ACD = "ACD",
-  BCD = "BCD",
-  ABCD = "ABCD",
-  A1B = "A1B",
-  B2C = "B2C",
-  C3D = "C3D",
-  AD4 = "AD4",
-  A1BC = "A1BC",
-  AB2C = "AB2C",
-  B2CD = "B2CD",
-  BC3D = "BC3D",
-  AC3D = "AC3D",
-  ACD4 = "ACD4",
-  A1BD = "A1BD",
-  ABD4 = "ABD4",
-  A1B2C = "A1B2C",
-  B2C3D = "B2C3D",
-  AC3D4 = "AC3D4",
-  A1BD4 = "A1BD4",
-  A1BCD = "A1BCD",
-  AB2CD = "AB2CD",
-  ABC3D = "ABC3D",
-  ABCD4 = "ABCD4",
-  A1B2CD = "A1B2CD",
-  AB2C3D = "AB2C3D",
-  ABC3D4 = "ABC3D4",
-  A1BCD4 = "A1BCD4",
-  A1B2C3D = "A1B2C3D",
-  AB2C3D4 = "AB2C3D4",
-  A1BC3D4 = "A1BC3D4",
-  A1B2CD4 = "A1B2CD4",
-  A1BC3D = "A1BC3D",
-  AB2CD4 = "AB2CD4",
-  A1B2C3D4 = "A1B2C3D4"
+  X = 'X',
+  A = 'A',
+  B = 'B',
+  C = 'C',
+  D = 'D',
+  AB = 'AB',
+  AC = 'AC',
+  AD = 'AD',
+  BC = 'BC',
+  BD = 'BD',
+  CD = 'CD',
+  ABC = 'ABC',
+  ABD = 'ABD',
+  ACD = 'ACD',
+  BCD = 'BCD',
+  ABCD = 'ABCD',
+  A1B = 'A1B',
+  B2C = 'B2C',
+  C3D = 'C3D',
+  AD4 = 'AD4',
+  A1BC = 'A1BC',
+  AB2C = 'AB2C',
+  B2CD = 'B2CD',
+  BC3D = 'BC3D',
+  AC3D = 'AC3D',
+  ACD4 = 'ACD4',
+  A1BD = 'A1BD',
+  ABD4 = 'ABD4',
+  A1B2C = 'A1B2C',
+  B2C3D = 'B2C3D',
+  AC3D4 = 'AC3D4',
+  A1BD4 = 'A1BD4',
+  A1BCD = 'A1BCD',
+  AB2CD = 'AB2CD',
+  ABC3D = 'ABC3D',
+  ABCD4 = 'ABCD4',
+  A1B2CD = 'A1B2CD',
+  AB2C3D = 'AB2C3D',
+  ABC3D4 = 'ABC3D4',
+  A1BCD4 = 'A1BCD4',
+  A1B2C3D = 'A1B2C3D',
+  AB2C3D4 = 'AB2C3D4',
+  A1BC3D4 = 'A1BC3D4',
+  A1B2CD4 = 'A1B2CD4',
+  A1BC3D = 'A1BC3D',
+  AB2CD4 = 'AB2CD4',
+  A1B2C3D4 = 'A1B2C3D4',
 }
 
 export enum TerrainType {
   WALL,
   WATER,
-  GROUND
+  GROUND,
 }
 
 export const IdTable: { [key: number]: Mask } = {
@@ -609,62 +609,62 @@ export const IdTable: { [key: number]: Mask } = {
   191: Mask.A1B2CD4,
   95: Mask.A1BC3D,
   175: Mask.AB2CD4,
-  255: Mask.A1B2C3D4
-}
+  255: Mask.A1B2C3D4,
+};
 
 export type TilesetExchangeFile = {
-  tileset_0: DtefTileset | undefined
-  tileset_1: DtefTileset | undefined
-  tileset_2: DtefTileset | undefined
-}
+  tileset_0: DtefTileset | undefined;
+  tileset_1: DtefTileset | undefined;
+  tileset_2: DtefTileset | undefined;
+};
 
 export type DtefTileset = {
-  static: StaticFrame
-  animation: AnimatedFrame[]
-}
+  static: StaticFrame;
+  animation: AnimatedFrame[];
+};
 
 export type StaticFrame = {
-  firstgid: number
-  name: string
-  maskDefinition: MaskDefinition
-}
+  firstgid: number;
+  name: string;
+  maskDefinition: MaskDefinition;
+};
 
 export type MaskDefinition = {
-  [TerrainType.GROUND]: Mask[]
-  [TerrainType.WALL]: Mask[]
-  [TerrainType.WATER]: Mask[]
-}
+  [TerrainType.GROUND]: Mask[];
+  [TerrainType.WALL]: Mask[];
+  [TerrainType.WATER]: Mask[];
+};
 
 export type AnimatedFrame = {
-  frameDuration: number
-  numberOfFrames: number
-  name: string
-  maskDefinition: MaskDefinition
-  firstgid: number
-}
+  frameDuration: number;
+  numberOfFrames: number;
+  name: string;
+  maskDefinition: MaskDefinition;
+  firstgid: number;
+};
 
-export const DTEF_WIDTH = 144
-export const DTEF_HEIGHT = 192
-export const DTEF_TILESET_WIDTH = 6
-export const DTEF_TILESET_HEIGHT = 8
-export const DTEF_TILESET_TILE_WIDTH = 24
+export const DTEF_WIDTH = 144;
+export const DTEF_HEIGHT = 192;
+export const DTEF_TILESET_WIDTH = 6;
+export const DTEF_TILESET_HEIGHT = 8;
+export const DTEF_TILESET_TILE_WIDTH = 24;
 
-export const SCRIBBLE_LOBBY_CRON = "0 0 0-20/4 * * *" // every four hours from 00h to 20h
-export const GREATBALL_RANKED_LOBBY_CRON = "0 0 2,6,14,18 * * *" // every four hours from 2h to 22h
-export const ULTRABALL_RANKED_LOBBY_CRON = "0 0 22 * * *" // every day 22h
+export const SCRIBBLE_LOBBY_CRON = '0 0 0-20/4 * * *'; // every four hours from 00h to 20h
+export const GREATBALL_RANKED_LOBBY_CRON = '0 0 2,6,14,18 * * *'; // every four hours from 2h to 22h
+export const ULTRABALL_RANKED_LOBBY_CRON = '0 0 22 * * *'; // every day 22h
 
-export const DUST_PER_BOOSTER = 50
-export const DUST_PER_SHINY = 250
+export const DUST_PER_BOOSTER = 50;
+export const DUST_PER_SHINY = 250;
 
-export const TOURNAMENT_REGISTRATION_TIME = 60 * 60 * 1000 // 1 hour
-export const TOURNAMENT_CLEANUP_DELAY = 24 * 60 * 60 * 1000 // 1 day
+export const TOURNAMENT_REGISTRATION_TIME = 60 * 60 * 1000; // 1 hour
+export const TOURNAMENT_CLEANUP_DELAY = 24 * 60 * 60 * 1000; // 1 day
 
-export const MAX_SIMULATION_DELTA_TIME = 50 // milliseconds
+export const MAX_SIMULATION_DELTA_TIME = 50; // milliseconds
 
-export const CRON_ELO_DECAY_DELAY = 86400 * 1000 * 15 // 15 days
-export const CRON_ELO_DECAY_MINIMUM_ELO = 1100
-export const CRON_HISTORY_CLEANUP_DELAY = 86400 * 1000 * 30 // 30 days
+export const CRON_ELO_DECAY_DELAY = 86400 * 1000 * 15; // 15 days
+export const CRON_ELO_DECAY_MINIMUM_ELO = 1100;
+export const CRON_HISTORY_CLEANUP_DELAY = 86400 * 1000 * 30; // 30 days
 
-export const BOTS_ENABLED = true
+export const BOTS_ENABLED = true;
 
-export { EloRank }
+export { EloRank };

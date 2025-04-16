@@ -697,6 +697,95 @@ export class BuyEmotionCommand extends Command<
   }
 }
 
+export class UnlockAllEmotionsCommand extends Command<
+  CustomLobbyRoom,
+  { client: Client }
+> {
+  async execute({ client }: { client: Client }) {
+    try {
+      const user = this.room.users.get(client.auth.uid);
+      if (!user) return;
+
+      const mongoUser = await UserMetadata.findOne({ uid: client.auth.uid });
+      if (!mongoUser) return;
+
+      // Create an update object for MongoDB
+      const updates = {};
+
+      // Iterate through all available Pokemon
+      Object.values(Pkm).forEach((pkm) => {
+        const index = PkmIndex[pkm];
+        if (!index) return; // Skip if invalid Pokemon
+
+        // Get all available emotions for this Pokemon
+        const availableEmotions: Emotion[] = Object.values(Emotion).filter(
+          (e, i) => PRECOMPUTED_EMOTIONS_PER_POKEMON_INDEX[index]?.[i] === 1
+        );
+
+        if (availableEmotions.length === 0) return; // Skip if no emotions available
+
+        // Set up the update for this Pokemon
+        updates[`pokemonCollection.${index}`] = {
+          id: index,
+          dust: 20000,
+          emotions: availableEmotions,
+          shinyEmotions: availableEmotions,
+          selectedEmotion: Emotion.NORMAL,
+          selectedShiny: false,
+        };
+
+        // Update the user's collection in memory
+        let pokemonCollectionItem = user.pokemonCollection.get(index);
+        if (!pokemonCollectionItem) {
+          pokemonCollectionItem = {
+            id: index,
+            dust: 20000,
+            emotions: availableEmotions,
+            shinyEmotions: availableEmotions,
+            selectedEmotion: Emotion.NORMAL,
+            selectedShiny: false,
+          };
+          user.pokemonCollection.set(index, pokemonCollectionItem);
+        } else {
+          pokemonCollectionItem.dust = 20000;
+          availableEmotions.forEach((emotion) => {
+            if (!pokemonCollectionItem.emotions.includes(emotion)) {
+              pokemonCollectionItem.emotions.push(emotion);
+            }
+            if (!pokemonCollectionItem.shinyEmotions.includes(emotion)) {
+              pokemonCollectionItem.shinyEmotions.push(emotion);
+            }
+          });
+        }
+      });
+
+      // Update MongoDB document
+      await UserMetadata.updateOne({ uid: client.auth.uid }, { $set: updates });
+
+      // Add titles
+      const titles = [
+        Title.SHINY_SEEKER,
+        Title.DUKE,
+        Title.DUCHESS,
+        Title.ARCHEOLOGIST,
+      ];
+      for (const title of titles) {
+        if (!mongoUser.titles.includes(title)) {
+          mongoUser.titles.push(title);
+          if (!user.titles.includes(title)) {
+            user.titles.push(title);
+          }
+        }
+      }
+
+      await mongoUser.save();
+      client.send(Transfer.USER_PROFILE, mongoUser);
+    } catch (error) {
+      logger.error(error);
+    }
+  }
+}
+
 export class BuyBoosterCommand extends Command<
   CustomLobbyRoom,
   { client: Client; index: string }
