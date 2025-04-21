@@ -46,8 +46,10 @@ export const CDN_URL =
 
 export const USERNAME_REGEXP = /^(\p{Letter}|[0-9]|\.|-|_){3,24}$/u;
 
-export type PkmCustom = { shiny?: boolean; emotion?: Emotion };
-export type PkmWithCustom = { name: Pkm } & PkmCustom;
+export type PkmCustom = { shiny?: boolean; emotion?: Emotion }
+export interface PkmWithCustom extends PkmCustom {
+  name: Pkm
+}
 
 export enum Role {
   ADMIN = 'ADMIN',
@@ -571,66 +573,66 @@ export interface IPokemonEntity {
     caster: IPokemonEntity,
     apBoost: number,
     crit: boolean
-  ): void;
-  addItem(item: Item, permanent?: boolean): void;
-  removeItem(item: Item, permanent?: boolean): void;
-  update(dt: number, board: Board, player: Player | undefined): void;
-  skydiveTo(x: number, y: number, board: Board): void;
-  toIdleState(): void;
-  toMovingState(): void;
-  physicalDamage: number;
-  specialDamage: number;
-  trueDamage: number;
-  physicalDamageReduced: number;
-  specialDamageReduced: number;
-  shieldDamageTaken: number;
-  shieldDone: number;
-  positionX: number;
-  positionY: number;
-  action: PokemonActionState;
-  index: string;
-  id: string;
-  orientation: Orientation;
-  critChance: number;
-  hp: number;
-  pp: number;
-  maxPP: number;
-  atk: number;
-  def: number;
-  speDef: number;
-  luck: number;
-  baseAtk: number;
-  baseDef: number;
-  baseSpeDef: number;
-  attackType: AttackType;
-  life: number;
-  shield: number;
-  team: number;
-  range: number;
-  speed: number;
-  targetX: number;
-  targetY: number;
-  attackSprite: AttackSprite;
-  rarity: Rarity;
-  name: Pkm;
-  effects: SetSchema<Effect>;
-  items: SetSchema<Item>;
-  types: SetSchema<Synergy>;
-  stars: number;
-  skill: Ability;
-  passive: Passive;
-  status: Status;
-  count: Count;
-  critPower: number;
-  ap: number;
-  healDone: number;
-  shiny: boolean;
-  emotion: Emotion;
-  isClone: boolean;
-  commands: ISimulationCommand[];
-  effectsSet: Set<EffectClass>;
-  flyingProtection: number;
-  inSpotlight: boolean;
+  ): void
+  addItem(item: Item, permanent?: boolean): void
+  removeItem(item: Item, permanent?: boolean): void
+  update(dt: number, board: Board, player: Player | undefined): void
+  skydiveTo(x: number, y: number, board: Board): void
+  toIdleState(): void
+  toMovingState(): void
+  physicalDamage: number
+  specialDamage: number
+  trueDamage: number
+  physicalDamageReduced: number
+  specialDamageReduced: number
+  shieldDamageTaken: number
+  shieldDone: number
+  positionX: number
+  positionY: number
+  action: PokemonActionState
+  index: string
+  id: string
+  orientation: Orientation
+  critChance: number
+  hp: number
+  pp: number
+  maxPP: number
+  atk: number
+  def: number
+  speDef: number
+  luck: number
+  baseAtk: number
+  baseDef: number
+  baseSpeDef: number
+  attackType: AttackType
+  life: number
+  shield: number
+  team: number
+  range: number
+  speed: number
+  targetX: number
+  targetY: number
+  attackSprite: AttackSprite
+  rarity: Rarity
+  name: Pkm
+  effects: SetSchema<Effect>
+  items: SetSchema<Item>
+  types: SetSchema<Synergy>
+  stars: number
+  skill: Ability
+  passive: Passive
+  status: Status
+  count: Count
+  critPower: number
+  ap: number
+  healDone: number
+  shiny: boolean
+  emotion: Emotion
+  isSpawn: boolean
+  commands: ISimulationCommand[]
+  effectsSet: Set<EffectClass>
+  flyingProtection: number
+  inSpotlight: boolean
 }
 
 export interface IStatus {

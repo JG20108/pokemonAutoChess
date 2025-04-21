@@ -73,17 +73,17 @@ import { shuffleArray } from '../utils/random';
 import { values } from '../utils/schemas';
 import {
   OnDragDropCombineCommand,
-  OnDragDropCommand,
+  OnDragDropPokemonCommand,
   OnDragDropItemCommand,
   OnJoinCommand,
   OnLevelUpCommand,
   OnLockCommand,
   OnPickBerryCommand,
   OnPokemonCatchCommand,
-  OnRefreshCommand,
+  OnShopRerollCommand,
   OnRemoveFromShopCommand,
-  OnSellDropCommand,
-  OnShopCommand,
+  OnSellPokemonCommand,
+  OnBuyPokemonCommand,
   OnSpectateCommand,
   OnSwitchBenchAndBoardCommand,
   OnUpdateCommand,
@@ -265,7 +265,7 @@ export default class GameRoom extends Room<GameState> {
     this.onMessage(Transfer.SHOP, (client, message) => {
       if (!this.state.gameFinished && client.auth) {
         try {
-          this.dispatcher.dispatch(new OnShopCommand(), {
+          this.dispatcher.dispatch(new OnBuyPokemonCommand(), {
             playerId: client.auth.uid,
             index: message.id,
           });
@@ -301,7 +301,7 @@ export default class GameRoom extends Room<GameState> {
     this.onMessage(Transfer.DRAG_DROP, (client, message: IDragDropMessage) => {
       if (!this.state.gameFinished) {
         try {
-          this.dispatcher.dispatch(new OnDragDropCommand(), {
+          this.dispatcher.dispatch(new OnDragDropPokemonCommand(), {
             client: client,
             detail: message,
           });
@@ -374,7 +374,7 @@ export default class GameRoom extends Room<GameState> {
     this.onMessage(Transfer.SELL_POKEMON, (client, pokemonId: string) => {
       if (!this.state.gameFinished && client.auth) {
         try {
-          this.dispatcher.dispatch(new OnSellDropCommand(), {
+          this.dispatcher.dispatch(new OnSellPokemonCommand(), {
             client,
             pokemonId,
           });
@@ -387,7 +387,7 @@ export default class GameRoom extends Room<GameState> {
     this.onMessage(Transfer.REFRESH, (client, message) => {
       if (!this.state.gameFinished && client.auth) {
         try {
-          this.dispatcher.dispatch(new OnRefreshCommand(), client.auth.uid);
+          this.dispatcher.dispatch(new OnShopRerollCommand(), client.auth.uid)
         } catch (error) {
           logger.error('refresh error', message);
         }
@@ -870,7 +870,8 @@ export default class GameRoom extends Room<GameState> {
           playerId: dbrecord.id,
           elo: elo,
           synergies: synergiesMap,
-        });
+          gameMode: this.state.gameMode
+        })
       }
 
       if (player.life === 100 && rank === 1) {
@@ -1146,8 +1147,8 @@ export default class GameRoom extends Room<GameState> {
     let damage = Math.ceil(stageLevel / 2);
     if (opponentTeam.size > 0) {
       opponentTeam.forEach((pokemon) => {
-        if (!pokemon.isClone && pokemon.passive !== Passive.INANIMATE) {
-          damage += 1;
+        if (!pokemon.isSpawn && pokemon.passive !== Passive.INANIMATE) {
+          damage += 1
         }
       });
     }

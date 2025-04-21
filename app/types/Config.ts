@@ -92,7 +92,7 @@ export const SynergyTriggers: { [key in Synergy]: number[] } = {
   [Synergy.POISON]: [3, 5, 7],
   [Synergy.DRAGON]: [3, 5, 7],
   [Synergy.FIELD]: [3, 6, 9],
-  [Synergy.MONSTER]: [2, 4, 6, 9],
+  [Synergy.MONSTER]: [2, 4, 6, 8],
   [Synergy.HUMAN]: [2, 4, 6],
   [Synergy.AQUATIC]: [2, 4, 6],
   [Synergy.BUG]: [2, 4, 6, 8],
@@ -154,9 +154,9 @@ export const BoosterPriceByRarity: { [key in Rarity]: number } = {
   [Rarity.SPECIAL]: 500, // special is a bit more expensive due to unowns farming
 };
 
-export const DITTO_RATE = 0.005;
-export const KECLEON_RATE = 1 / 100;
-export const ARCEUS_RATE = 1 / 100;
+export const DITTO_RATE = 0.005
+export const KECLEON_RATE = 1 / 150
+export const ARCEUS_RATE = 1 / 150
 
 export const AttackTypeColor: { [key in AttackType] } = {
   [AttackType.PHYSICAL]: '#FF6E55',
@@ -182,7 +182,7 @@ export const EvolutionTime = {
 };
 
 export const PoolSize: { [key in Rarity]: [number, number, number] } = {
-  [Rarity.COMMON]: [1, 18, 29],
+  [Rarity.COMMON]: [1, 18, 27],
   [Rarity.UNCOMMON]: [1, 13, 22],
   [Rarity.RARE]: [1, 9, 18],
   [Rarity.EPIC]: [1, 7, 14],
@@ -289,8 +289,9 @@ export const UniquePool = new Array<PkmProposition>(
   Pkm.APPLIN,
   Pkm.MILCERY,
   Pkm.VELUZA,
-  Pkm.DURALUDON
-);
+  Pkm.DURALUDON,
+  Pkm.CHARCADET
+)
 
 export const LegendaryPool = new Array<PkmProposition>(
   Pkm.KYUREM,
@@ -402,8 +403,9 @@ export const PROJECTILE_SPEED = 4;
 
 export const StageDuration: Record<number | 'DEFAULT', number> = {
   0: 23, // adjusted for treasure town theme
-  1: 30,
-  3: 40,
+  1: 20,
+  2: 20,
+  3: 20,
   5: 40,
   8: 40,
   9: 40,

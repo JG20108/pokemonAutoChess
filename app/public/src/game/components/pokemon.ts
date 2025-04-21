@@ -269,7 +269,10 @@ export default class PokemonSprite extends DraggableObject {
       }
     }
 
-    this.draggable = playerId === scene.uid && !inBattle
+    this.draggable =
+      playerId === scene.uid &&
+      !inBattle &&
+      (scene as GameScene).spectate === false
     if (isEntity(pokemon)) {
       this.pp = pokemon.pp
       this.team = pokemon.team
@@ -389,6 +392,7 @@ export default class PokemonSprite extends DraggableObject {
       this.stars,
       getPokemonData(this.name as Pkm).stages,
       this.evolution,
+      this.itemsContainer.items,
       this.inBattle
     )
     this.detail
@@ -678,7 +682,6 @@ export default class PokemonSprite extends DraggableObject {
       )
       this.lifebar.setAmount(pokemon.life)
       this.lifebar.setShieldAmount(pokemon.shield)
-      this.lifebar.setDepth(DEPTH.POKEMON_HP_BAR)
       this.add(this.lifebar)
     }
   }
@@ -693,7 +696,6 @@ export default class PokemonSprite extends DraggableObject {
         pokemon.maxPP
       )
       this.powerbar.setAmount(pokemon.pp)
-      this.powerbar.setDepth(DEPTH.POKEMON_HP_BAR)
       this.add(this.powerbar)
     }
   }
@@ -1095,9 +1097,9 @@ export default class PokemonSprite extends DraggableObject {
   addSpikeArmor() {
     if (!this.spikeArmor) {
       this.spikeArmor = this.scene.add
-        .sprite(0, -5, "abilities", `${Ability.SPIKE_ARMOR}/000.png`)
+        .sprite(0, -5, "abilities", `${Ability.SPIKY_SHIELD}/000.png`)
         .setScale(2)
-      this.spikeArmor.anims.play(Ability.SPIKE_ARMOR)
+      this.spikeArmor.anims.play(Ability.SPIKY_SHIELD)
       this.add(this.spikeArmor)
     }
   }
@@ -1112,7 +1114,7 @@ export default class PokemonSprite extends DraggableObject {
   addMagicBounce() {
     if (!this.magicBounce) {
       this.magicBounce = this.scene.add
-        .sprite(0, -5, "abilities", `${Ability.SPIKE_ARMOR}/000.png`)
+        .sprite(0, -5, "abilities", `${Ability.SPIKY_SHIELD}/000.png`)
         .setScale(2)
         .setTint(0xffa0ff)
       this.magicBounce.anims.play(Ability.MAGIC_BOUNCE)

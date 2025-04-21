@@ -11,28 +11,30 @@ import {
   ICustomLobbyState,
   Role,
   Title,
-  Transfer,
-} from '../../../types';
-import { EloRank } from '../../../types/Config';
-import { BotDifficulty } from '../../../types/enum/Game';
-import { Item } from '../../../types/enum/Item';
-import { Language } from '../../../types/enum/Language';
-import { PkmProposition } from '../../../types/enum/Pokemon';
-import { SpecialGameRule } from '../../../types/enum/SpecialGameRule';
-import { logger } from '../../../utils/logger';
-import { getAvatarString } from '../../../utils/avatar';
+  Transfer
+} from "../../../types"
+import { EloRank } from "../../../types/Config"
+import { ConnectionStatus } from "../../../types/enum/ConnectionStatus"
+import { BotDifficulty } from "../../../types/enum/Game"
+import { Item } from "../../../types/enum/Item"
+import { Language } from "../../../types/enum/Language"
+import { PkmProposition } from "../../../types/enum/Pokemon"
+import { SpecialGameRule } from "../../../types/enum/SpecialGameRule"
+import { logger } from "../../../utils/logger"
+import { getAvatarString } from "../../../utils/avatar"
 
 export interface INetwork {
-  client: Client;
-  lobby: Room<ICustomLobbyState> | undefined;
-  preparation: Room<PreparationState> | undefined;
-  game: Room<GameState> | undefined;
-  after: Room<AfterGameState> | undefined;
-  uid: string;
-  displayName: string;
-  profile: IUserMetadata | undefined;
-  pendingGameId: string | null;
-  error: string | null;
+  client: Client
+  lobby: Room<ICustomLobbyState> | undefined
+  preparation: Room<PreparationState> | undefined
+  game: Room<GameState> | undefined
+  after: Room<AfterGameState> | undefined
+  uid: string
+  displayName: string
+  profile: IUserMetadata | undefined
+  pendingGameId: string | null
+  connectionStatus: ConnectionStatus
+  error: string | null
 }
 
 const endpoint = `${window.location.protocol.replace('http', 'ws')}//${
@@ -51,7 +53,8 @@ const initalState: INetwork = {
   profile: undefined,
   pendingGameId: null,
   error: null,
-};
+  connectionStatus: ConnectionStatus.PENDING
+}
 
 export const networkSlice = createSlice({
   name: 'network',
@@ -302,6 +305,9 @@ export const networkSlice = createSlice({
     setErrorAlertMessage: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
+    setConnectionStatus: (state, action: PayloadAction<ConnectionStatus>) => {
+      state.connectionStatus = action.payload
+    },
     setPendingGameId: (state, action: PayloadAction<string | null>) => {
       state.pendingGameId = action.payload;
     },
@@ -359,6 +365,7 @@ export const {
   setTitle,
   kick,
   createTournament,
+  setConnectionStatus,
   setErrorAlertMessage,
   deleteAccount,
   setPendingGameId,

@@ -30,6 +30,7 @@ import {
   AdditionalPicksStages,
   BOARD_SIDE_HEIGHT,
   BOARD_WIDTH,
+  EvolutionTime,
   FIGHTING_PHASE_DURATION,
   ITEM_CAROUSEL_BASE_DURATION,
   ItemCarouselStages,
@@ -52,6 +53,7 @@ import {
   AbilityPerTM,
   ArtificialItems,
   Berries,
+  CharcadetArmors,
   CraftableItems,
   Dishes,
   FishingRods,
@@ -97,7 +99,7 @@ import { resetArraySchema, values } from '../../utils/schemas';
 import { getWeather } from '../../utils/weather';
 import GameRoom from '../game-room';
 
-export class OnShopCommand extends Command<
+export class OnBuyPokemonCommand extends Command<
   GameRoom,
   {
     playerId: string;
@@ -180,9 +182,9 @@ export class OnRemoveFromShopCommand extends Command<
 
     const cost = getBuyPrice(name, this.state.specialGameRule);
     if (player.money >= cost) {
-      player.shop[index] = Pkm.DEFAULT;
-      player.shopLocked = true;
-      this.state.shop.releasePokemon(name, player);
+      player.shop[index] = Pkm.DEFAULT
+      player.shopLocked = true
+      this.state.shop.releasePokemon(name, player, this.state)
     }
   }
 }
@@ -220,7 +222,7 @@ export class OnPokemonCatchCommand extends Command<
   }
 }
 
-export class OnDragDropCommand extends Command<
+export class OnDragDropPokemonCommand extends Command<
   GameRoom,
   {
     client: IClient;
@@ -330,7 +332,12 @@ export class OnDragDropCommand extends Command<
           } else if (
             pokemon.canBePlaced &&
             (!target || target.canBeBenched) &&
-            !(dropFromBench && dropToEmptyPlace && isBoardFull)
+            !(
+              dropFromBench &&
+              dropToEmptyPlace &&
+              isBoardFull &&
+              pokemon.doesCountForTeamSize
+            )
           ) {
             // Prevents a pokemon to go on the board only if it's adding a pokemon from the bench on a full board
             this.room.swap(player, pokemon, x, y);
@@ -383,10 +390,14 @@ export class OnSwitchBenchAndBoardCommand extends Command<
         getMaxTeamSize(
           player.experienceManager.level,
           this.room.state.specialGameRule
-        );
-      const destination = getFirstAvailablePositionOnBoard(player.board);
-      if (pokemon.canBePlaced && destination && !isBoardFull) {
-        const [dx, dy] = destination;
+        )
+      const destination = getFirstAvailablePositionOnBoard(player.board)
+      if (
+        pokemon.canBePlaced &&
+        destination &&
+        !(isBoardFull && pokemon.doesCountForTeamSize)
+      ) {
+        const [dx, dy] = destination
 
         this.room.swap(player, pokemon, dx, dy);
         pokemon.onChangePosition(dx, dy, player);
@@ -568,6 +579,14 @@ export class OnDragDropItemCommand extends Command<
       return;
     }
 
+    if (
+      CharcadetArmors.includes(item) &&
+      pokemon.passive !== Passive.CHARCADET
+    ) {
+      client.send(Transfer.DRAG_DROP_FAILED, message)
+      return
+    }
+
     if (OgerponMasks.includes(item)) {
       if (
         pokemon.passive === Passive.OGERPON_TEAL ||
@@ -645,6 +664,30 @@ export class OnDragDropItemCommand extends Command<
     ) {
       client.send(Transfer.DRAG_DROP_FAILED, message);
       return;
+    }
+
+    if (item === Item.PICNIC_SET) {
+      if (pokemon.meal == "") {
+        values(player.board).forEach((pkm) => {
+          if (
+            pkm.meal === "" &&
+            pkm.canHoldItems &&
+            pokemon &&
+            distanceC(
+              pkm.positionX,
+              pkm.positionY,
+              pokemon.positionX,
+              pokemon.positionY
+            ) <= 1
+          ) {
+            pkm.meal = Item.SANDWICH
+            pkm.action = PokemonActionState.EAT
+          }
+        })
+        removeInArray(player.items, item)
+      }
+      client.send(Transfer.DRAG_DROP_FAILED, message)
+      return
     }
 
     if (item === Item.EVIOLITE && !pokemon.hasEvolution) {
@@ -788,7 +831,7 @@ export class OnDragDropItemCommand extends Command<
   }
 }
 
-export class OnSellDropCommand extends Command<
+export class OnSellPokemonCommand extends Command<
   GameRoom,
   {
     client: Client;
@@ -817,9 +860,9 @@ export class OnSellDropCommand extends Command<
     }
 
     if (pokemon) {
-      this.state.shop.releasePokemon(pokemon.name, player);
-      const sellPrice = getSellPrice(pokemon, this.state.specialGameRule);
-      player.addMoney(sellPrice, false, null);
+      this.state.shop.releasePokemon(pokemon.name, player, this.state)
+      const sellPrice = getSellPrice(pokemon, this.state.specialGameRule)
+      player.addMoney(sellPrice, false, null)
       pokemon.items.forEach((it) => {
         player.items.push(it);
       });
@@ -833,7 +876,7 @@ export class OnSellDropCommand extends Command<
   }
 }
 
-export class OnRefreshCommand extends Command<GameRoom, string> {
+export class OnShopRerollCommand extends Command<GameRoom, string> {
   execute(id) {
     const player = this.state.players.get(id);
     if (!player || !player.alive) return;
@@ -1239,11 +1282,11 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
       if (player.life <= 0 && player.alive) {
         if (!player.isBot) {
           player.shop.forEach((pkm) => {
-            this.state.shop.releasePokemon(pkm, player);
-          });
+            this.state.shop.releasePokemon(pkm, player, this.state)
+          })
           player.board.forEach((pokemon) => {
-            this.state.shop.releasePokemon(pokemon.name, player);
-          });
+            this.state.shop.releasePokemon(pokemon.name, player, this.state)
+          })
         }
         player.alive = false;
         const client = this.room.clients.find(
@@ -1396,9 +1439,11 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
         const gourmetLevel = player.synergies.getSynergyStep(Synergy.GOURMET);
         const nbDishes = [0, 1, 2, 2][gourmetLevel] ?? 2;
         for (const chef of chefs) {
-          let dish = DishByPkm[chef.name];
-          if (chef.name === Pkm.ARCEUS || chef.name === Pkm.KECLEON) {
-            dish = Item.BERRIES;
+          let dish = DishByPkm[chef.name]
+          if (chef.items.has(Item.COOKING_POT)) {
+            dish = Item.HEARTY_STEW
+          } else if (chef.name === Pkm.ARCEUS || chef.name === Pkm.KECLEON) {
+            dish = Item.SANDWICH
           }
 
           if (chef.passive === Passive.GLUTTON) {

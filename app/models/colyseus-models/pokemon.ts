@@ -43,11 +43,13 @@ import {
   AllItems,
   ArtificialItems,
   Berries,
+  CharcadetArmors,
   Flavors,
   Item,
   ItemComponents,
   ItemRecipe,
   OgerponMasks,
+  SynergyFlavors,
   SynergyGivenByItem,
   SynergyItems
 } from "../../types/enum/Item"
@@ -152,7 +154,10 @@ export class Pokemon extends Schema implements IPokemon {
   }
 
   get doesCountForTeamSize(): boolean {
-    return this.passive !== Passive.INANIMATE
+    return (
+      this.passive !== Passive.INANIMATE &&
+      this.items.has(Item.GOLD_BOW) === false
+    )
   }
 
   get luck(): number {
@@ -301,7 +306,7 @@ export class Egg extends Pokemon {
   skill = Ability.DEFAULT
   passive = Passive.EGG
   attackSprite = AttackSprite.NORMAL_MELEE
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EGG_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   canHoldItems = false
 }
 
@@ -785,7 +790,7 @@ export class Onix extends Pokemon {
   speDef = 8
   maxPP = 100
   range = 1
-  skill = Ability.SPIKE_ARMOR
+  skill = Ability.SPIKY_SHIELD
   attackSprite = AttackSprite.ROCK_MELEE
   additional = true
 }
@@ -802,7 +807,7 @@ export class Steelix extends Pokemon {
   speDef = 10
   maxPP = 100
   range = 1
-  skill = Ability.SPIKE_ARMOR
+  skill = Ability.SPIKY_SHIELD
   attackSprite = AttackSprite.ROCK_MELEE
   additional = true
 }
@@ -819,7 +824,7 @@ export class MegaSteelix extends Pokemon {
   maxPP = 100
   range = 1
   skill = Ability.DEFAULT
-  //skill = Ability.SPIKE_ARMOR
+  //skill = Ability.SPIKY_SHIELD
   attackSprite = AttackSprite.ROCK_MELEE
   additional = true
 }
@@ -1102,7 +1107,7 @@ export class Tympole extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.PALPITOAD
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 80
   atk = 7
   speed = 49
@@ -1124,7 +1129,7 @@ export class Palpitoad extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.SEISMITOAD
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 130
   atk = 16
   speed = 49
@@ -1981,49 +1986,61 @@ export class Leavanny extends Pokemon {
 }
 
 export class Turtwig extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.GROUND])
+  types = new SetSchema<Synergy>([
+    Synergy.GRASS,
+    Synergy.GROUND,
+    Synergy.MONSTER
+  ])
   rarity = Rarity.RARE
   stars = 1
   evolution = Pkm.GROTLE
   hp = 80
   atk = 5
   speed = 43
-  def = 6
-  speDef = 6
+  def = 7
+  speDef = 5
   maxPP = 100
   range = 1
-  skill = Ability.GROWTH
+  skill = Ability.BULLDOZE
   attackSprite = AttackSprite.GRASS_MELEE
 }
 
 export class Grotle extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.GROUND])
+  types = new SetSchema<Synergy>([
+    Synergy.GRASS,
+    Synergy.GROUND,
+    Synergy.MONSTER
+  ])
   rarity = Rarity.RARE
   stars = 2
   evolution = Pkm.TORTERRA
   hp = 150
   atk = 9
   speed = 43
-  def = 10
-  speDef = 8
+  def = 12
+  speDef = 6
   maxPP = 100
   range = 1
-  skill = Ability.GROWTH
+  skill = Ability.BULLDOZE
   attackSprite = AttackSprite.GRASS_MELEE
 }
 
 export class Torterra extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.GROUND])
+  types = new SetSchema<Synergy>([
+    Synergy.GRASS,
+    Synergy.GROUND,
+    Synergy.MONSTER
+  ])
   rarity = Rarity.RARE
   stars = 3
   hp = 280
   atk = 21
   speed = 43
-  def = 14
-  speDef = 10
+  def = 16
+  speDef = 8
   maxPP = 100
   range = 1
-  skill = Ability.GROWTH
+  skill = Ability.BULLDOZE
   attackSprite = AttackSprite.GRASS_MELEE
 }
 
@@ -2406,7 +2423,7 @@ export class AlolanMarowak extends Pokemon {
 export class Axew extends Pokemon {
   types = new SetSchema<Synergy>([Synergy.DRAGON])
   rarity = Rarity.HATCH
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   stars = 1
   evolution = Pkm.FRAXURE
   hp = 80
@@ -2424,7 +2441,7 @@ export class Axew extends Pokemon {
 export class Fraxure extends Pokemon {
   types = new SetSchema<Synergy>([Synergy.DRAGON])
   rarity = Rarity.HATCH
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   stars = 2
   evolution = Pkm.HAXORUS
   hp = 130
@@ -3059,7 +3076,7 @@ export class Vanillite extends Pokemon {
   speDef = 4
   maxPP = 100
   range = 3
-  skill = Ability.SLEEP
+  skill = Ability.SING
   attackSprite = AttackSprite.ICE_RANGE
 }
 
@@ -3079,7 +3096,7 @@ export class Vanillish extends Pokemon {
   speDef = 4
   maxPP = 100
   range = 3
-  skill = Ability.SLEEP
+  skill = Ability.SING
   attackSprite = AttackSprite.ICE_RANGE
 }
 
@@ -3098,7 +3115,7 @@ export class Vanilluxe extends Pokemon {
   speDef = 4
   maxPP = 100
   range = 3
-  skill = Ability.SLEEP
+  skill = Ability.SING
   attackSprite = AttackSprite.ICE_RANGE
 }
 
@@ -3292,7 +3309,7 @@ export class Igglybuff extends Pokemon {
   speDef = 2
   maxPP = 90
   range = 2
-  skill = Ability.SLEEP
+  skill = Ability.SING
   attackSprite = AttackSprite.SOUND_RANGE
 }
 
@@ -3308,7 +3325,7 @@ export class Jigglypuff extends Pokemon {
   speDef = 4
   maxPP = 90
   range = 2
-  skill = Ability.SLEEP
+  skill = Ability.SING
   attackSprite = AttackSprite.SOUND_RANGE
 }
 
@@ -3323,7 +3340,7 @@ export class Wigglytuff extends Pokemon {
   speDef = 6
   maxPP = 90
   range = 2
-  skill = Ability.SLEEP
+  skill = Ability.SING
   attackSprite = AttackSprite.SOUND_RANGE
 }
 
@@ -4327,8 +4344,8 @@ export class Blastoise extends Pokemon {
   types = new SetSchema<Synergy>([Synergy.WATER, Synergy.FIELD])
   rarity = Rarity.COMMON
   stars = 3
-  hp = 190
-  atk = 19
+  hp = 200
+  atk = 20
   speed = 50
   def = 4
   speDef = 4
@@ -4343,7 +4360,7 @@ export class Bellsprout extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.WEEPINBELL
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 70
   atk = 6
   speed = 47
@@ -4351,7 +4368,7 @@ export class Bellsprout extends Pokemon {
   speDef = 4
   maxPP = 100
   range = 1
-  skill = Ability.ROOT
+  skill = Ability.INGRAIN
   passive = Passive.HATCH
   attackSprite = AttackSprite.GRASS_MELEE
 }
@@ -4361,7 +4378,7 @@ export class Weepinbell extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.VICTREEBEL
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 160
   atk = 12
   speed = 47
@@ -4369,7 +4386,7 @@ export class Weepinbell extends Pokemon {
   speDef = 6
   maxPP = 100
   range = 1
-  skill = Ability.ROOT
+  skill = Ability.INGRAIN
   passive = Passive.HATCH
   attackSprite = AttackSprite.GRASS_MELEE
 }
@@ -4385,7 +4402,7 @@ export class Victreebel extends Pokemon {
   speDef = 8
   maxPP = 100
   range = 1
-  skill = Ability.ROOT
+  skill = Ability.INGRAIN
   attackSprite = AttackSprite.GRASS_MELEE
 }
 
@@ -4898,6 +4915,10 @@ export class Pidgey extends Pokemon {
   range = 2
   skill = Ability.HURRICANE
   attackSprite = AttackSprite.FLYING_RANGE
+  regional = true
+  isInRegion(map: DungeonPMDO, state?: GameState) {
+    return Object.keys(DungeonPMDO).indexOf(map) % 3 === 0
+  }
 }
 
 export class Pidgeotto extends Pokemon {
@@ -4914,6 +4935,10 @@ export class Pidgeotto extends Pokemon {
   range = 2
   skill = Ability.HURRICANE
   attackSprite = AttackSprite.FLYING_RANGE
+  regional = true
+  isInRegion(map: DungeonPMDO, state?: GameState) {
+    return Object.keys(DungeonPMDO).indexOf(map) % 3 === 0
+  }
 }
 
 export class Pidgeot extends Pokemon {
@@ -4929,6 +4954,10 @@ export class Pidgeot extends Pokemon {
   range = 2
   skill = Ability.HURRICANE
   attackSprite = AttackSprite.FLYING_RANGE
+  regional = true
+  isInRegion(map: DungeonPMDO, state?: GameState) {
+    return Object.keys(DungeonPMDO).indexOf(map) % 3 === 0
+  }
 }
 
 export class Hoppip extends Pokemon {
@@ -7062,10 +7091,10 @@ export class RoaringMoon extends Pokemon {
   types = new SetSchema<Synergy>([Synergy.DRAGON, Synergy.DARK, Synergy.FOSSIL])
   rarity = Rarity.LEGENDARY
   stars = 3
-  hp = 280
+  hp = 200
   atk = 25
   speed = 61
-  def = 9
+  def = 6
   speDef = 9
   maxPP = 140
   range = 3
@@ -8298,7 +8327,7 @@ export class TapuKoko extends Pokemon {
   def = 6
   speDef = 6
   maxPP = 100
-  range = 3
+  range = 2
   skill = Ability.ELECTRIC_SURGE
   passive = Passive.ELECTRIC_TERRAIN
   attackSprite = AttackSprite.ELECTRIC_RANGE
@@ -8313,7 +8342,7 @@ export class TapuLele extends Pokemon {
   speed = 55
   def = 6
   speDef = 6
-  maxPP = 100
+  maxPP = 80
   range = 3
   skill = Ability.PSYCHIC_SURGE
   passive = Passive.PSYCHIC_TERRAIN
@@ -9255,7 +9284,7 @@ export class Salandit extends Pokemon {
   speDef = 4
   maxPP = 60
   range = 2
-  skill = Ability.POISON
+  skill = Ability.TOXIC
   additional = true
   attackSprite = AttackSprite.FIRE_RANGE
 }
@@ -9271,7 +9300,7 @@ export class Salazzle extends Pokemon {
   speDef = 8
   maxPP = 60
   range = 2
-  skill = Ability.POISON
+  skill = Ability.TOXIC
   additional = true
   attackSprite = AttackSprite.FIRE_RANGE
 }
@@ -9804,7 +9833,7 @@ export class Tentacool extends Pokemon {
   speDef = 8
   maxPP = 85
   range = 1
-  skill = Ability.POISON
+  skill = Ability.TOXIC
   additional = true
   attackSprite = AttackSprite.WATER_MELEE
 }
@@ -9824,7 +9853,7 @@ export class Tentacruel extends Pokemon {
   speDef = 14
   maxPP = 85
   range = 1
-  skill = Ability.POISON
+  skill = Ability.TOXIC
   additional = true
   attackSprite = AttackSprite.WATER_MELEE
 }
@@ -10254,7 +10283,7 @@ export class Dreepy extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.DRAKLOAK
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 90
   atk = 5
   speed = 71
@@ -10272,7 +10301,7 @@ export class Drakloak extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.DRAGAPULT
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 140
   atk = 12
   speed = 71
@@ -10305,7 +10334,7 @@ export class Snivy extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.SERVINE
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 90
   atk = 4
   speed = 61
@@ -10323,7 +10352,7 @@ export class Servine extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.SERPERIOR
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 160
   atk = 11
   speed = 61
@@ -10366,6 +10395,9 @@ export class Starly extends Pokemon {
   skill = Ability.BRAVE_BIRD
   attackSprite = AttackSprite.FLYING_MELEE
   regional = true
+  isInRegion(map: DungeonPMDO, state?: GameState) {
+    return Object.keys(DungeonPMDO).indexOf(map) % 3 === 1
+  }
 }
 
 export class Staravia extends Pokemon {
@@ -10383,6 +10415,9 @@ export class Staravia extends Pokemon {
   skill = Ability.BRAVE_BIRD
   attackSprite = AttackSprite.FLYING_MELEE
   regional = true
+  isInRegion(map: DungeonPMDO, state?: GameState) {
+    return Object.keys(DungeonPMDO).indexOf(map) % 3 === 1
+  }
 }
 
 export class Staraptor extends Pokemon {
@@ -10399,6 +10434,9 @@ export class Staraptor extends Pokemon {
   skill = Ability.BRAVE_BIRD
   attackSprite = AttackSprite.FLYING_MELEE
   regional = true
+  isInRegion(map: DungeonPMDO, state?: GameState) {
+    return Object.keys(DungeonPMDO).indexOf(map) % 3 === 1
+  }
 }
 
 export class Scorbunny extends Pokemon {
@@ -10406,7 +10444,7 @@ export class Scorbunny extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.RABOOT
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 75
   atk = 5
   speed = 63
@@ -10424,7 +10462,7 @@ export class Raboot extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.CINDERACE
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 130
   atk = 10
   speed = 63
@@ -10519,7 +10557,7 @@ export class Popplio extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.BRIONNE
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 65
   atk = 5
   speed = 44
@@ -10537,7 +10575,7 @@ export class Brionne extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.PRIMARINA
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 130
   atk = 10
   speed = 44
@@ -10570,7 +10608,7 @@ export class Gothita extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.GOTHORITA
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 70
   atk = 5
   speed = 46
@@ -10588,7 +10626,7 @@ export class Gothorita extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.GOTHITELLE
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 120
   atk = 12
   speed = 46
@@ -11353,7 +11391,7 @@ export class Rowlet extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.DARTIX
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 70
   atk = 5
   speed = 47
@@ -11371,7 +11409,7 @@ export class Dartix extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.DECIDUEYE
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 130
   atk = 9
   speed = 47
@@ -11652,7 +11690,7 @@ export class Froakie extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.FROGADIER
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 80
   atk = 6
   speed = 64
@@ -11670,7 +11708,7 @@ export class Frogadier extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.GRENINJA
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 140
   atk = 12
   speed = 64
@@ -11707,7 +11745,7 @@ export class Chingling extends Pokemon {
   hp = 150
   atk = 10
   speed = 46
-  def = 4
+  def = 7
   speDef = 8
   maxPP = 80
   range = 3
@@ -11723,7 +11761,7 @@ export class Chimecho extends Pokemon {
   hp = 200
   atk = 15
   speed = 46
-  def = 6
+  def = 10
   speDef = 12
   maxPP = 80
   range = 3
@@ -11816,7 +11854,7 @@ export class Hitmonchan extends Pokemon {
   speDef = 14
   maxPP = 100
   range = 1
-  skill = Ability.UPPERCUT
+  skill = Ability.MEGA_PUNCH
   attackSprite = AttackSprite.FIGHTING_MELEE
 }
 
@@ -11956,7 +11994,7 @@ export class Tepig extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.PIGNITE
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 70
   atk = 7
   speed = 46
@@ -11974,7 +12012,7 @@ export class Pignite extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.EMBOAR
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 140
   atk = 12
   speed = 46
@@ -12037,7 +12075,7 @@ export class Silcoon extends Pokemon {
   speDef = 12
   maxPP = 100
   range = 1
-  skill = Ability.SPIKE_ARMOR
+  skill = Ability.SPIKY_SHIELD
   attackSprite = AttackSprite.BUG_MELEE
 }
 
@@ -12068,7 +12106,7 @@ export class Cascoon extends Pokemon {
   speDef = 12
   maxPP = 100
   range = 1
-  skill = Ability.SPIKE_ARMOR
+  skill = Ability.SPIKY_SHIELD
   attackSprite = AttackSprite.BUG_MELEE
   regional = true
   isInRegion(map: DungeonPMDO, state: GameState) {
@@ -12155,7 +12193,7 @@ export class Maractus extends Pokemon {
   speDef = 8
   maxPP = 90
   range = 1
-  skill = Ability.SPIKE_ARMOR
+  skill = Ability.SPIKY_SHIELD
   attackSprite = AttackSprite.GRASS_MELEE
 }
 
@@ -12515,7 +12553,7 @@ export class Exeggcute extends Pokemon {
   speDef = 6
   maxPP = 100
   range = 3
-  skill = Ability.EGGSPLOSION
+  skill = Ability.EGG_BOMB
   additional = true
   attackSprite = AttackSprite.GRASS_MELEE
 }
@@ -12531,7 +12569,7 @@ export class Exeggutor extends Pokemon {
   speDef = 10
   maxPP = 100
   range = 1
-  skill = Ability.EGGSPLOSION
+  skill = Ability.EGG_BOMB
   additional = true
   attackSprite = AttackSprite.GRASS_MELEE
 }
@@ -12551,7 +12589,7 @@ export class AlolanExeggutor extends Pokemon {
   speDef = 6
   maxPP = 100
   range = 1
-  skill = Ability.EGGSPLOSION
+  skill = Ability.EGG_BOMB
   regional = true
   additional = true
   attackSprite = AttackSprite.GRASS_MELEE
@@ -13446,7 +13484,7 @@ export class Nihilego extends Pokemon {
   speDef = 10
   maxPP = 80
   range = 3
-  skill = Ability.EMPTY_LIGHT
+  skill = Ability.ACID_SPRAY
   passive = Passive.BEAST_BOOST_AP
   attackSprite = AttackSprite.POISON_RANGE
 }
@@ -14658,7 +14696,7 @@ export class Solgaleo extends Pokemon {
   stars = 3
   hp = 300
   atk = 27
-  speed = 37
+  speed = 56
   def = 12
   speDef = 8
   maxPP = 110
@@ -14681,7 +14719,7 @@ export class Lunala extends Pokemon {
   stars = 3
   hp = 300
   atk = 27
-  speed = 37
+  speed = 56
   def = 6
   speDef = 6
   maxPP = 100
@@ -15458,13 +15496,13 @@ export class Grubbin extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.CHARJABUG
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
-  hp = 80
-  atk = 6
+  evolutionRule = new HatchEvolutionRule()
+  hp = 75
+  atk = 5
   speed = 39
   def = 4
   speDef = 4
-  maxPP = 80
+  maxPP = 100
   range = 3
   skill = Ability.ZAP_CANNON
   passive = Passive.HATCH
@@ -15476,13 +15514,13 @@ export class Charjabug extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.VIKAVOLT
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
-  hp = 140
-  atk = 14
+  evolutionRule = new HatchEvolutionRule()
+  hp = 130
+  atk = 13
   speed = 39
   def = 6
   speDef = 6
-  maxPP = 80
+  maxPP = 100
   range = 3
   skill = Ability.ZAP_CANNON
   passive = Passive.HATCH
@@ -15493,12 +15531,12 @@ export class Vikavolt extends Pokemon {
   types = new SetSchema<Synergy>([Synergy.BUG, Synergy.ELECTRIC])
   rarity = Rarity.HATCH
   stars = 3
-  hp = 190
-  atk = 27
+  hp = 180
+  atk = 24
   speed = 39
   def = 8
   speDef = 8
-  maxPP = 80
+  maxPP = 100
   range = 3
   skill = Ability.ZAP_CANNON
   attackSprite = AttackSprite.ELECTRIC_RANGE
@@ -16146,7 +16184,7 @@ export class Sandile extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.KROKOROK
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 80
   atk = 6
   speed = 54
@@ -16168,7 +16206,7 @@ export class Krokorok extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.KROOKODILE
-  evolutionRule = new HatchEvolutionRule(EvolutionTime.EVOLVE_HATCH)
+  evolutionRule = new HatchEvolutionRule()
   hp = 150
   atk = 12
   speed = 54
@@ -17793,7 +17831,7 @@ export class Veluza extends Pokemon {
   speed = 45
   def = 5
   speDef = 4
-  maxPP = 80
+  maxPP = 100
   range = 1
   skill = Ability.FILLET_AWAY
   attackSprite = AttackSprite.WATER_MELEE
@@ -17875,6 +17913,199 @@ export class Lurantis extends Pokemon {
   skill = Ability.SOLAR_BLADE
   additional = true
   attackSprite = AttackSprite.GRASS_MELEE
+}
+
+export class Charcadet extends Pokemon {
+  types = new SetSchema<Synergy>([Synergy.FIRE, Synergy.BABY])
+  rarity = Rarity.UNIQUE
+  stars = 2
+  evolutions = [Pkm.ARMAROUGE, Pkm.CERULEDGE]
+  evolutionRule = new ItemEvolutionRule(
+    CharcadetArmors,
+    (pokemon, player, item_) => {
+      const item = item_ as Item
+      if (item === Item.AUSPICIOUS_ARMOR) {
+        return Pkm.ARMAROUGE
+      }
+      if (item === Item.MALICIOUS_ARMOR) {
+        return Pkm.CERULEDGE
+      }
+      return Pkm.ARMAROUGE
+    }
+  )
+  hp = 150
+  atk = 15
+  speed = 33
+  def = 4
+  speDef = 4
+  maxPP = 100
+  range = 1
+  skill = Ability.FLAME_CHARGE
+  passive = Passive.CHARCADET
+  attackSprite = AttackSprite.FIRE_MELEE
+  onAcquired = (player) => {
+    player.items.push(Item.AUSPICIOUS_ARMOR)
+    player.items.push(Item.MALICIOUS_ARMOR)
+  }
+}
+
+export class Armarouge extends Pokemon {
+  types = new SetSchema<Synergy>([Synergy.FIRE, Synergy.PSYCHIC])
+  rarity = Rarity.UNIQUE
+  stars = 3
+  hp = 200
+  atk = 16
+  speed = 51
+  def = 8
+  speDef = 8
+  maxPP = 100
+  range = 2
+  skill = Ability.ARMOR_CANNON
+  attackSprite = AttackSprite.FIRE_RANGE
+  onAcquired = (player) => {
+    this.items.delete(Item.AUSPICIOUS_ARMOR)
+    removeInArray(player.items, Item.MALICIOUS_ARMOR)
+  }
+}
+
+export class Ceruledge extends Pokemon {
+  types = new SetSchema<Synergy>([Synergy.FIRE, Synergy.GHOST])
+  rarity = Rarity.UNIQUE
+  stars = 3
+  hp = 200
+  atk = 20
+  speed = 51
+  def = 10
+  speDef = 12
+  maxPP = 100
+  range = 1
+  skill = Ability.BITTER_BLADE
+  attackSprite = AttackSprite.FIRE_MELEE
+  onAcquired = (player) => {
+    this.items.delete(Item.MALICIOUS_ARMOR)
+    removeInArray(player.items, Item.AUSPICIOUS_ARMOR)
+  }
+}
+
+export class Tynamo extends Pokemon {
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.AQUATIC,
+    Synergy.AMORPHOUS
+  ])
+  rarity = Rarity.UNCOMMON
+  stars = 1
+  evolution = Pkm.EELEKTRIK
+  hp = 50
+  atk = 6
+  speed = 41
+  def = 4
+  speDef = 4
+  maxPP = 90
+  range = 1
+  skill = Ability.SUCTION_HEAL
+  attackSprite = AttackSprite.ELECTRIC_MELEE
+  regional = true
+}
+
+export class Eelektrik extends Pokemon {
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.AQUATIC,
+    Synergy.AMORPHOUS
+  ])
+  rarity = Rarity.UNCOMMON
+  stars = 2
+  evolution = Pkm.EELEKTROSS
+  hp = 150
+  atk = 12
+  speed = 41
+  def = 8
+  speDef = 8
+  maxPP = 90
+  range = 1
+  skill = Ability.SUCTION_HEAL
+  attackSprite = AttackSprite.ELECTRIC_MELEE
+  regional = true
+}
+
+export class Eelektross extends Pokemon {
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.AQUATIC,
+    Synergy.AMORPHOUS
+  ])
+  rarity = Rarity.UNCOMMON
+  stars = 3
+  hp = 250
+  atk = 24
+  speed = 41
+  def = 12
+  speDef = 12
+  maxPP = 90
+  range = 1
+  skill = Ability.SUCTION_HEAL
+  attackSprite = AttackSprite.ELECTRIC_MELEE
+  regional = true
+}
+
+export class Pidove extends Pokemon {
+  types = new SetSchema<Synergy>([Synergy.NORMAL, Synergy.FLYING])
+  rarity = Rarity.COMMON
+  stars = 1
+  evolution = Pkm.TRANQUILL
+  hp = 50
+  atk = 5
+  speed = 64
+  def = 2
+  speDef = 1
+  maxPP = 100
+  range = 1
+  skill = Ability.ROOST
+  attackSprite = AttackSprite.FLYING_MELEE
+  regional = true
+  isInRegion(map: DungeonPMDO, state?: GameState) {
+    return Object.keys(DungeonPMDO).indexOf(map) % 3 === 2
+  }
+}
+
+export class Tranquill extends Pokemon {
+  types = new SetSchema<Synergy>([Synergy.NORMAL, Synergy.FLYING])
+  rarity = Rarity.COMMON
+  stars = 2
+  evolution = Pkm.UNFEZANT
+  hp = 100
+  atk = 8
+  speed = 64
+  def = 3
+  speDef = 2
+  maxPP = 100
+  range = 1
+  skill = Ability.ROOST
+  attackSprite = AttackSprite.FLYING_MELEE
+  regional = true
+  isInRegion(map: DungeonPMDO, state?: GameState) {
+    return Object.keys(DungeonPMDO).indexOf(map) % 3 === 2
+  }
+}
+
+export class Unfezant extends Pokemon {
+  types = new SetSchema<Synergy>([Synergy.NORMAL, Synergy.FLYING])
+  rarity = Rarity.COMMON
+  stars = 3
+  hp = 170
+  atk = 16
+  speed = 64
+  def = 4
+  speDef = 3
+  maxPP = 100
+  range = 1
+  skill = Ability.ROOST
+  attackSprite = AttackSprite.FLYING_MELEE
+  regional = true
+  isInRegion(map: DungeonPMDO, state?: GameState) {
+    return Object.keys(DungeonPMDO).indexOf(map) % 3 === 2
+  }
 }
 
 export const PokemonClasses: Record<
@@ -18820,7 +19051,16 @@ export const PokemonClasses: Record<
   [Pkm.MEOWSCARADA]: Meowscarada,
   [Pkm.FOMANTIS]: Fomantis,
   [Pkm.LURANTIS]: Lurantis,
-  [Pkm.ROARING_MOON]: RoaringMoon
+  [Pkm.ROARING_MOON]: RoaringMoon,
+  [Pkm.CHARCADET]: Charcadet,
+  [Pkm.ARMAROUGE]: Armarouge,
+  [Pkm.CERULEDGE]: Ceruledge,
+  [Pkm.TYNAMO]: Tynamo,
+  [Pkm.EELEKTRIK]: Eelektrik,
+  [Pkm.EELEKTROSS]: Eelektross,
+  [Pkm.PIDOVE]: Pidove,
+  [Pkm.TRANQUILL]: Tranquill,
+  [Pkm.UNFEZANT]: Unfezant
 }
 
 // declare all the classes in colyseus schema TypeRegistry
