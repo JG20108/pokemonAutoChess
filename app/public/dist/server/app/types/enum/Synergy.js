@@ -1,0 +1,38 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Synergy = void 0;
+var Synergy;
+(function (Synergy) {
+    Synergy["NORMAL"] = "NORMAL";
+    Synergy["GRASS"] = "GRASS";
+    Synergy["FIRE"] = "FIRE";
+    Synergy["WATER"] = "WATER";
+    Synergy["ELECTRIC"] = "ELECTRIC";
+    Synergy["FIGHTING"] = "FIGHTING";
+    Synergy["PSYCHIC"] = "PSYCHIC";
+    Synergy["DARK"] = "DARK";
+    Synergy["STEEL"] = "STEEL";
+    Synergy["GROUND"] = "GROUND";
+    Synergy["POISON"] = "POISON";
+    Synergy["DRAGON"] = "DRAGON";
+    Synergy["FIELD"] = "FIELD";
+    Synergy["MONSTER"] = "MONSTER";
+    Synergy["HUMAN"] = "HUMAN";
+    Synergy["AQUATIC"] = "AQUATIC";
+    Synergy["BUG"] = "BUG";
+    Synergy["FLYING"] = "FLYING";
+    Synergy["FLORA"] = "FLORA";
+    Synergy["ROCK"] = "ROCK";
+    Synergy["GHOST"] = "GHOST";
+    Synergy["FAIRY"] = "FAIRY";
+    Synergy["ICE"] = "ICE";
+    Synergy["FOSSIL"] = "FOSSIL";
+    Synergy["SOUND"] = "SOUND";
+    Synergy["ARTIFICIAL"] = "ARTIFICIAL";
+    Synergy["LIGHT"] = "LIGHT";
+    Synergy["WILD"] = "WILD";
+    Synergy["BABY"] = "BABY";
+    Synergy["AMORPHOUS"] = "AMORPHOUS";
+    Synergy["GOURMET"] = "GOURMET";
+})(Synergy || (exports.Synergy = Synergy = {}));
+//# sourceMappingURL=Synergy.js.map
