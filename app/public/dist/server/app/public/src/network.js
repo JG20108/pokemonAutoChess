@@ -50,6 +50,7 @@ exports.heapSnapshot = heapSnapshot;
 exports.deleteAccount = deleteAccount;
 exports.giveRole = giveRole;
 exports.giveTitle = giveTitle;
+exports.giveAllPortraits = giveAllPortraits;
 exports.kick = kick;
 exports.searchMessages = searchMessages;
 exports.renameAccount = renameAccount;
@@ -282,6 +283,10 @@ function giveRole(params) {
 function giveTitle(params) {
     var _a;
     (_a = exports.rooms.lobby) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.GIVE_TITLE, params);
+}
+function giveAllPortraits(params) {
+    var _a;
+    (_a = exports.rooms.lobby) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.GIVE_ALL_PORTRAITS, params);
 }
 function kick(playerId) {
     var _a;

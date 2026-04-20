@@ -8,6 +8,7 @@ import { debounce } from "../../../../../utils/function"
 import { useAppDispatch, useAppSelector } from "../../../hooks"
 import {
   ban,
+  giveAllPortraits,
   giveBooster,
   giveRole,
   giveTitle,
@@ -199,6 +200,24 @@ function OtherProfileActions(props: {
       </button>
     ) : null
 
+  const givePortraitsButton =
+    user && role && role === Role.ADMIN ? (
+      <button
+        className="bubbly green"
+        onClick={() => {
+          const confirmed = confirm(
+            `Unlock all portraits for ${user.displayName}? This cannot be undone.`
+          )
+          if (confirmed) {
+            giveAllPortraits({ uid: user.uid })
+            alert(`All portraits unlocked for ${user.displayName}.`)
+          }
+        }}
+      >
+        {t("give_all_portraits")}
+      </button>
+    ) : null
+
   const banButton =
     user && role && (role === Role.ADMIN || role === Role.MODERATOR) ? (
       <button
@@ -306,6 +325,7 @@ function OtherProfileActions(props: {
   return role === Role.ADMIN || role === Role.MODERATOR ? (
     <>
       {giveButton}
+      {givePortraitsButton}
       {roleButton}
       {titleButton}
       {user?.banned ? unbanButton : banButton}

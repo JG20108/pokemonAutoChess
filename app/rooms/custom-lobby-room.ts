@@ -34,6 +34,7 @@ import {
   ChangeTitleCommand,
   DeleteAccountCommand,
   DeleteRoomCommand,
+  GiveAllPortraitsCommand,
   GiveBoostersCommand,
   GiveRoleCommand,
   GiveTitleCommand,
@@ -285,6 +286,16 @@ export default class CustomLobbyRoom extends Room {
       Transfer.GIVE_TITLE,
       (client, { uid, title }: { uid: string; title: Title }) => {
         this.dispatcher.dispatch(new GiveTitleCommand(), { client, uid, title })
+      }
+    )
+
+    this.onMessage(
+      Transfer.GIVE_ALL_PORTRAITS,
+      (client, { uid }: { uid: string }) => {
+        this.dispatcher.dispatch(new GiveAllPortraitsCommand(), {
+          client,
+          uid
+        })
       }
     )
 

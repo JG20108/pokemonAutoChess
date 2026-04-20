@@ -42,7 +42,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteRoomCommand = exports.OpenGameCommand = exports.JoinOrOpenRoomCommand = exports.SelectLanguageCommand = exports.UnbanUserCommand = exports.BanUserCommand = exports.OnSearchByIdCommand = exports.BuyBoosterCommand = exports.BuyEmotionCommand = exports.ChangeAvatarCommand = exports.ChangeSelectedEmotionCommand = exports.ChangeTitleCommand = exports.ChangeNameCommand = exports.OpenBoosterCommand = exports.RemoveMessageCommand = exports.OnNewMessageCommand = exports.GiveRoleCommand = exports.GiveBoostersCommand = exports.HeapSnapshotCommand = exports.DeleteAccountCommand = exports.GiveTitleCommand = exports.OnLeaveCommand = exports.OnJoinCommand = void 0;
+exports.DeleteRoomCommand = exports.OpenGameCommand = exports.JoinOrOpenRoomCommand = exports.SelectLanguageCommand = exports.UnbanUserCommand = exports.BanUserCommand = exports.OnSearchByIdCommand = exports.BuyBoosterCommand = exports.BuyEmotionCommand = exports.ChangeAvatarCommand = exports.ChangeSelectedEmotionCommand = exports.ChangeTitleCommand = exports.ChangeNameCommand = exports.OpenBoosterCommand = exports.RemoveMessageCommand = exports.OnNewMessageCommand = exports.GiveRoleCommand = exports.GiveAllPortraitsCommand = exports.GiveBoostersCommand = exports.HeapSnapshotCommand = exports.DeleteAccountCommand = exports.GiveTitleCommand = exports.OnLeaveCommand = exports.OnJoinCommand = void 0;
 const command_1 = require("@colyseus/command");
 const colyseus_1 = require("colyseus");
 const v8_1 = require("v8");
@@ -50,6 +50,7 @@ const config_1 = require("../../config");
 const collection_1 = require("../../core/collection");
 const pending_game_manager_1 = require("../../core/pending-game-manager");
 const user_metadata_1 = __importStar(require("../../models/mongo-models/user-metadata"));
+const precomputed_emotions_1 = require("../../models/precomputed/precomputed-emotions");
 const precomputed_pokemon_data_1 = require("../../models/precomputed/precomputed-pokemon-data");
 const discord_1 = require("../../services/discord");
 const notifications_1 = require("../../services/notifications");
@@ -212,6 +213,65 @@ class GiveBoostersCommand extends command_1.Command {
     }
 }
 exports.GiveBoostersCommand = GiveBoostersCommand;
+class GiveAllPortraitsCommand extends command_1.Command {
+    execute(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ client, uid }) {
+            try {
+                const requester = this.room.users.get(client.auth.uid);
+                if (!requester || requester.role !== types_1.Role.ADMIN) {
+                    return;
+                }
+                const user = yield user_metadata_1.default.findOne({ uid });
+                if (!user) {
+                    logger_1.logger.warn(`GiveAllPortraitsCommand: target user ${uid} not found in DB`);
+                    return;
+                }
+                const allPkm = Object.values(Pokemon_1.Pkm);
+                let modifiedCount = 0;
+                for (const pkm of allPkm) {
+                    const index = Pokemon_1.PkmIndex[pkm];
+                    if (!index)
+                        continue;
+                    const availableNormal = (0, precomputed_emotions_1.getAvailableEmotions)(index, false);
+                    const availableShiny = (0, precomputed_emotions_1.getAvailableEmotions)(index, true);
+                    if (availableNormal.length === 0 &&
+                        availableShiny.length === 0) {
+                        continue;
+                    }
+                    const mask = Buffer.alloc(5, 0);
+                    for (const emotion of availableNormal) {
+                        collection_1.CollectionUtils.unlockEmotion(mask, emotion, false);
+                    }
+                    for (const emotion of availableShiny) {
+                        collection_1.CollectionUtils.unlockEmotion(mask, emotion, true);
+                    }
+                    const existing = user.pokemonCollection.get(index);
+                    if (existing) {
+                        existing.unlocked = mask;
+                    }
+                    else {
+                        user.pokemonCollection.set(index, {
+                            id: index,
+                            unlocked: mask,
+                            dust: 0,
+                            selectedEmotion: types_1.Emotion.NORMAL,
+                            selectedShiny: false,
+                            played: 0
+                        });
+                    }
+                    modifiedCount++;
+                }
+                user.markModified("pokemonCollection");
+                yield user.save();
+                logger_1.logger.info(`Admin ${client.auth.uid} unlocked all portraits for ${uid} (${modifiedCount} Pokémon touched)`);
+            }
+            catch (error) {
+                logger_1.logger.error("GiveAllPortraitsCommand failed:", error);
+            }
+        });
+    }
+}
+exports.GiveAllPortraitsCommand = GiveAllPortraitsCommand;
 class GiveRoleCommand extends command_1.Command {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ client, uid, role }) {

@@ -76,6 +76,7 @@ const meta_1 = require("./services/meta");
 const twitch_1 = require("./services/twitch");
 const types_1 = require("./types");
 const Dungeon_1 = require("./types/enum/Dungeon");
+const Game_1 = require("./types/enum/Game");
 const Item_1 = require("./types/enum/Item");
 const Pokemon_1 = require("./types/enum/Pokemon");
 const logger_1 = require("./utils/logger");
@@ -335,7 +336,10 @@ exports.server = (0, colyseus_1.defineServer)(Object.assign(Object.assign({}, ga
             }
             const stats = yield detailled_statistic_v2_1.default.find(params, ["pokemons", "time", "rank", "elo", "gameMode"], { limit: limit, skip: skip, sort: { time: -1 } });
             if (stats) {
-                const records = stats.map((record) => new game_record_1.GameRecord(record.time, record.rank, record.elo, record.pokemons, record.gameMode));
+                const records = stats.map((record) => {
+                    var _a;
+                    return new game_record_1.GameRecord(record.time, record.rank, record.elo, record.pokemons, (_a = record.gameMode) !== null && _a !== void 0 ? _a : Game_1.GameMode.CUSTOM_LOBBY);
+                });
                 return res.status(200).json(records);
             }
             return res.status(200).json([]);

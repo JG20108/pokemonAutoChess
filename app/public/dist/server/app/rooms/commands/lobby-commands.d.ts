@@ -56,6 +56,15 @@ export declare class GiveBoostersCommand extends Command<CustomLobbyRoom, {
         numberOfBoosters: number;
     }): Promise<void>;
 }
+export declare class GiveAllPortraitsCommand extends Command<CustomLobbyRoom, {
+    client: Client;
+    uid: string;
+}> {
+    execute({ client, uid }: {
+        client: Client;
+        uid: string;
+    }): Promise<void>;
+}
 export declare class GiveRoleCommand extends Command<CustomLobbyRoom, {
     client: Client;
     uid: string;

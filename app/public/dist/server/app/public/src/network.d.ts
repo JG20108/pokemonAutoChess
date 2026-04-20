@@ -243,6 +243,9 @@ export declare function giveTitle(params: {
     uid: string;
     title: Title;
 }): void;
+export declare function giveAllPortraits(params: {
+    uid: string;
+}): void;
 export declare function kick(playerId: string): void;
 export declare function searchMessages(query: string): Promise<import("../../types").IChatV2[]>;
 export declare function renameAccount(uid: string, newName: string): Promise<{

@@ -278,6 +278,10 @@ export function giveTitle(params: { uid: string; title: Title }) {
   rooms.lobby?.send(Transfer.GIVE_TITLE, params)
 }
 
+export function giveAllPortraits(params: { uid: string }) {
+  rooms.lobby?.send(Transfer.GIVE_ALL_PORTRAITS, params)
+}
+
 export function kick(playerId: string) {
   rooms.preparation?.send(Transfer.KICK, playerId)
 }

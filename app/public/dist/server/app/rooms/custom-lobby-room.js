@@ -225,6 +225,12 @@ class CustomLobbyRoom extends colyseus_1.Room {
             this.onMessage(types_1.Transfer.GIVE_TITLE, (client, { uid, title }) => {
                 this.dispatcher.dispatch(new lobby_commands_1.GiveTitleCommand(), { client, uid, title });
             });
+            this.onMessage(types_1.Transfer.GIVE_ALL_PORTRAITS, (client, { uid }) => {
+                this.dispatcher.dispatch(new lobby_commands_1.GiveAllPortraitsCommand(), {
+                    client,
+                    uid
+                });
+            });
             this.onMessage(types_1.Transfer.DELETE_ACCOUNT, (client) => {
                 this.dispatcher.dispatch(new lobby_commands_1.DeleteAccountCommand(), { client });
             });

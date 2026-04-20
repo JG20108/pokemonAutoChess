@@ -60,6 +60,7 @@ import {
 } from "./services/twitch"
 import { ISuggestionUser, Role } from "./types"
 import { DungeonPMDO } from "./types/enum/Dungeon"
+import { GameMode } from "./types/enum/Game"
 import { Item } from "./types/enum/Item"
 import { Pkm, PkmIndex } from "./types/enum/Pokemon"
 import { logger } from "./utils/logger"
@@ -396,6 +397,10 @@ export const server = defineServer({
         { limit: limit, skip: skip, sort: { time: -1 } }
       )
       if (stats) {
+        // Legacy records predate the gameMode field, so default to CUSTOM_LOBBY
+        // at the API boundary. Keeps IGameRecord.gameMode strictly typed for
+        // every downstream consumer (client renders GameModeIcon without a
+        // runtime undefined-check).
         const records = stats.map(
           (record) =>
             new GameRecord(
@@ -403,7 +408,7 @@ export const server = defineServer({
               record.rank,
               record.elo,
               record.pokemons,
-              record.gameMode
+              record.gameMode ?? GameMode.CUSTOM_LOBBY
             )
         )
 

@@ -18,6 +18,7 @@ import { getPendingGame } from "../../core/pending-game-manager"
 import UserMetadata, {
   toUserMetadataJSON
 } from "../../models/mongo-models/user-metadata"
+import { getAvailableEmotions } from "../../models/precomputed/precomputed-emotions"
 import { getPokemonData } from "../../models/precomputed/precomputed-pokemon-data"
 import { discordService } from "../../services/discord"
 import { notificationsService } from "../../services/notifications"
@@ -240,6 +241,95 @@ export class GiveBoostersCommand extends Command<
       }
     } catch (error) {
       logger.error(error)
+    }
+  }
+}
+
+/**
+ * Unlock every portrait (emotion + shiny variant) for the target user.
+ *
+ * Admin-only. Follows the same shape as GiveBoostersCommand /
+ * GiveTitleCommand: role guard at entry, single `UserMetadata.findOne`,
+ * mutate + save, log.
+ *
+ * Precision: for every Pokémon in the game we look up the set of emotions
+ * that actually exist (normal and shiny) via getAvailableEmotions, and flip
+ * only those bits in the 5-byte packed mask. We do NOT just set the mask to
+ * 0xFF across the board because that would leave the collection field in a
+ * state that does not model reality (some Pokémon lack certain emotions).
+ *
+ * If the target already has a collection item for a given Pokémon we
+ * overwrite `unlocked` with the fully-unlocked mask while preserving
+ * dust/played/selection fields. If they have no entry yet we create one
+ * with sane defaults.
+ */
+export class GiveAllPortraitsCommand extends Command<
+  CustomLobbyRoom,
+  { client: Client; uid: string }
+> {
+  async execute({ client, uid }: { client: Client; uid: string }) {
+    try {
+      const requester = this.room.users.get(client.auth.uid)
+      if (!requester || requester.role !== Role.ADMIN) {
+        return
+      }
+
+      const user = await UserMetadata.findOne({ uid })
+      if (!user) {
+        logger.warn(
+          `GiveAllPortraitsCommand: target user ${uid} not found in DB`
+        )
+        return
+      }
+
+      const allPkm = Object.values(Pkm) as Pkm[]
+      let modifiedCount = 0
+
+      for (const pkm of allPkm) {
+        const index = PkmIndex[pkm]
+        if (!index) continue
+
+        const availableNormal = getAvailableEmotions(index, false)
+        const availableShiny = getAvailableEmotions(index, true)
+        if (
+          availableNormal.length === 0 &&
+          availableShiny.length === 0
+        ) {
+          continue
+        }
+
+        const mask = Buffer.alloc(5, 0)
+        for (const emotion of availableNormal) {
+          CollectionUtils.unlockEmotion(mask, emotion, false)
+        }
+        for (const emotion of availableShiny) {
+          CollectionUtils.unlockEmotion(mask, emotion, true)
+        }
+
+        const existing = user.pokemonCollection.get(index)
+        if (existing) {
+          existing.unlocked = mask
+        } else {
+          user.pokemonCollection.set(index, {
+            id: index,
+            unlocked: mask,
+            dust: 0,
+            selectedEmotion: Emotion.NORMAL,
+            selectedShiny: false,
+            played: 0
+          } as IPokemonCollectionItemMongo)
+        }
+        modifiedCount++
+      }
+
+      user.markModified("pokemonCollection")
+      await user.save()
+
+      logger.info(
+        `Admin ${client.auth.uid} unlocked all portraits for ${uid} (${modifiedCount} Pokémon touched)`
+      )
+    } catch (error) {
+      logger.error("GiveAllPortraitsCommand failed:", error)
     }
   }
 }

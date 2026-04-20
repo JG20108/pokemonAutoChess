@@ -77,6 +77,7 @@ var Transfer;
     Transfer["GIVE_BOOSTER"] = "GIVE_BOOSTER";
     Transfer["SET_ROLE"] = "SET_ROLE";
     Transfer["GIVE_TITLE"] = "GIVE_TITLE";
+    Transfer["GIVE_ALL_PORTRAITS"] = "GIVE_ALL_PORTRAITS";
     Transfer["POKEMON_PROPOSITION"] = "POKEMON_PROPOSITION";
     Transfer["KICK"] = "KICK";
     Transfer["DELETE_ROOM"] = "DELETE_ROOM";

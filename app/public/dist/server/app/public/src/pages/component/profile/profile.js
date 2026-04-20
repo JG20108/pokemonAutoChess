@@ -123,6 +123,13 @@ function OtherProfileActions(props) {
                 uid: user.uid
             });
         }, children: t("give_boosters") })) : null;
+    const givePortraitsButton = user && role && role === types_1.Role.ADMIN ? ((0, jsx_runtime_1.jsx)("button", { className: "bubbly green", onClick: () => {
+            const confirmed = confirm(`Unlock all portraits for ${user.displayName}? This cannot be undone.`);
+            if (confirmed) {
+                (0, network_1.giveAllPortraits)({ uid: user.uid });
+                alert(`All portraits unlocked for ${user.displayName}.`);
+            }
+        }, children: t("give_all_portraits") })) : null;
     const banButton = user && role && (role === types_1.Role.ADMIN || role === types_1.Role.MODERATOR) ? ((0, jsx_runtime_1.jsx)("button", { className: "bubbly red", onClick: () => {
             const reason = prompt(`Reason for the ban:`);
             (0, network_1.ban)({ uid: user.uid, reason: reason !== null && reason !== void 0 ? reason : "" });
@@ -149,6 +156,6 @@ function OtherProfileActions(props) {
                 }, children: t("give_title") }), (0, jsx_runtime_1.jsx)("select", { value: title, onChange: (e) => {
                     setTitle(e.target.value);
                 }, children: Object.keys(types_1.Title).map((ti) => ((0, jsx_runtime_1.jsx)("option", { value: ti, children: ti }, ti))) })] })) : null;
-    return role === types_1.Role.ADMIN || role === types_1.Role.MODERATOR ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [giveButton, roleButton, titleButton, (user === null || user === void 0 ? void 0 : user.banned) ? unbanButton : banButton, props.rightPanel === "game" ? chatHistoryButton : gameHistoryButton, currentUid && user && user.uid !== currentUid && ((0, jsx_runtime_1.jsx)("button", { className: "bubbly blue", onClick: () => (0, network_1.searchById)(currentUid), children: t("back_to_my_profile") }))] })) : null;
+    return role === types_1.Role.ADMIN || role === types_1.Role.MODERATOR ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [giveButton, givePortraitsButton, roleButton, titleButton, (user === null || user === void 0 ? void 0 : user.banned) ? unbanButton : banButton, props.rightPanel === "game" ? chatHistoryButton : gameHistoryButton, currentUid && user && user.uid !== currentUid && ((0, jsx_runtime_1.jsx)("button", { className: "bubbly blue", onClick: () => (0, network_1.searchById)(currentUid), children: t("back_to_my_profile") }))] })) : null;
 }
 //# sourceMappingURL=profile.js.map
