@@ -1,0 +1,31 @@
+import { Dispatcher } from "@colyseus/command";
+import { Client, IRoomCache, Room } from "colyseus";
+import { CronJob } from "cron";
+import admin from "firebase-admin";
+import { ITournament } from "../types/interfaces/Tournament";
+import { IUserMetadataMongo } from "../types/interfaces/UserMetadata";
+import LobbyState from "./states/lobby-state";
+export default class CustomLobbyRoom extends Room {
+    state: LobbyState;
+    unsubscribeLobby: (() => void) | undefined;
+    rooms: IRoomCache[] | undefined;
+    dispatcher: Dispatcher<this>;
+    tournamentCronJobs: Map<string, CronJob>;
+    cleanUpCronJobs: CronJob[];
+    users: Map<string, IUserMetadataMongo>;
+    constructor();
+    removeRoom(index: number, roomId: string): void;
+    addRoom(roomId: string, data: IRoomCache): void;
+    changeRoom(index: number, roomId: string, data: IRoomCache): void;
+    onCreate(): Promise<void>;
+    onAuth(client: Client, options: any, context: any): Promise<admin.auth.UserRecord>;
+    onJoin(client: Client): Promise<void>;
+    onDrop(client: Client, code: number): Promise<void>;
+    onReconnect(client: Client): Promise<void>;
+    onLeave(client: Client, code: number): Promise<void>;
+    onDispose(): void;
+    fetchChat(): Promise<void>;
+    fetchTournaments(): Promise<void>;
+    startTournament(tournament: ITournament): void;
+    initCronJobs(): void;
+}

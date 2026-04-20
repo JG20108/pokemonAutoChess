@@ -1,0 +1,82 @@
+import { MapSchema, Schema } from "@colyseus/schema";
+import Player from "../models/colyseus-models/player";
+import { Pokemon } from "../models/colyseus-models/pokemon";
+import GameRoom from "../rooms/game-room";
+import { IPokemon, IPokemonEntity, ISimulation, Transfer } from "../types";
+import { Ability } from "../types/enum/Ability";
+import { EffectEnum } from "../types/enum/Effect";
+import { Team } from "../types/enum/Game";
+import { Item } from "../types/enum/Item";
+import { Synergy } from "../types/enum/Synergy";
+import { Weather } from "../types/enum/Weather";
+import { Board } from "./board";
+import Dps from "./dps";
+import { PokemonEntity } from "./pokemon-entity";
+export default class Simulation extends Schema implements ISimulation {
+    weather: Weather;
+    winnerId: string;
+    blueTeam: MapSchema<IPokemonEntity, string>;
+    redTeam: MapSchema<IPokemonEntity, string>;
+    blueDpsMeter: MapSchema<Dps, string>;
+    redDpsMeter: MapSchema<Dps, string>;
+    id: string;
+    bluePlayerId: string;
+    redPlayerId: string;
+    isGhostBattle: boolean;
+    started: boolean;
+    room: GameRoom;
+    blueEffects: Set<EffectEnum>;
+    redEffects: Set<EffectEnum>;
+    board: Board;
+    finished: boolean;
+    blueFlowerSpawn: number;
+    redFlowerSpawn: number;
+    stageLevel: number;
+    bluePlayer: Player | undefined;
+    redPlayer: Player | undefined;
+    blueAbilitiesCast: Ability[];
+    redAbilitiesCast: Ability[];
+    stormLightningTimer: number;
+    tidalWaveTimer: number;
+    tidalWaveCounter: number;
+    entities: IPokemonEntity[];
+    constructor(id: string, room: GameRoom, bluePlayer: Player, redPlayer: Player | {
+        id: "pve";
+        board: MapSchema<Pokemon>;
+    }, stageLevel: number, weather: Weather, isGhostBattle?: boolean);
+    broadcastToSpectators(transfer: Transfer, data: any): void;
+    start(): void;
+    getEffects(playerId: string): Set<EffectEnum> | undefined;
+    getDpsMeter(playerId: string): MapSchema<Dps, string> | undefined;
+    getTeam(playerId: string): MapSchema<IPokemonEntity, string> | undefined;
+    getOpponentTeam(playerId: string): MapSchema<IPokemonEntity, string> | undefined;
+    addPokemon(pokemon: Pokemon, x: number, y: number, team: Team, isSpawn?: boolean): PokemonEntity;
+    getFirstFreeCell(team: Team): {
+        x: number;
+        y: number;
+    } | null;
+    getClosestFreeCellTo(positionX: number, positionY: number, team: Team): {
+        x: number;
+        y: number;
+    } | null;
+    getClosestFreeCellToPokemon(pokemon: IPokemon, team: Team): {
+        x: number;
+        y: number;
+    } | null;
+    getClosestFreeCellToPokemonEntity(pokemon: IPokemonEntity, team?: Team): {
+        x: number;
+        y: number;
+    } | null;
+    applyItemsEffects(pokemon: PokemonEntity): void;
+    applySynergyEffects(pokemon: PokemonEntity, singleType?: Synergy): void;
+    applyDishEffects(dish: Item, pokemon: Pokemon, entity: PokemonEntity | undefined, player: Player): void;
+    applyPostEffects(blueBoard: MapSchema<Pokemon>, redBoard: MapSchema<Pokemon>): void;
+    applyEffect(pokemon: IPokemonEntity, effect: EffectEnum): void;
+    update(dt: number): void;
+    stop(): void;
+    onFinish(): void;
+    applyCurse(effect: EffectEnum, opponentTeamNumber: number): void;
+    addPikachuSurferToBoard(team: Team): void;
+    handleTidalWaveForTeam(team: Team): void;
+    triggerTidalWave(team: Team, tidalWaveLevel: number, healAll?: boolean): void;
+}

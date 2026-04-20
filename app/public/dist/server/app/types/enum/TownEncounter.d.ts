@@ -1,0 +1,25 @@
+import { Pkm } from "./Pokemon";
+export declare const TownEncounters: {
+    readonly KECLEON: Pkm.KECLEON;
+    readonly CHANSEY: Pkm.CHANSEY;
+    readonly ELECTIVIRE: Pkm.ELECTIVIRE;
+    readonly XATU: Pkm.XATU;
+    readonly KANGASKHAN: Pkm.KANGASKHAN;
+    readonly DUSKULL: Pkm.DUSKULL;
+    readonly MEOWTH: Pkm.MEOWTH;
+    readonly MAROWAK: Pkm.MAROWAK;
+    readonly WOBBUFFET: Pkm.WOBBUFFET;
+    readonly SPINDA: Pkm.SPINDA;
+    readonly REGIROCK: Pkm.REGIROCK;
+    readonly MUNCHLAX: Pkm.MUNCHLAX;
+    readonly SABLEYE: Pkm.SABLEYE;
+    readonly CELEBI: Pkm.CELEBI;
+    readonly MAKUHITA: Pkm.MAKUHITA;
+    readonly CROAGUNK: Pkm.CROAGUNK;
+    readonly WIGGLYTUFF: Pkm.WIGGLYTUFF;
+    readonly CINCCINO: Pkm.CINCCINO;
+    readonly MAGNEZONE: Pkm.MAGNEZONE;
+    readonly KINGAMBIT: Pkm.KINGAMBIT;
+    readonly LAPRAS: Pkm.LAPRAS;
+};
+export type TownEncounter = (typeof TownEncounters)[keyof typeof TownEncounters];

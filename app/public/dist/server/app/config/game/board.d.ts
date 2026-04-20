@@ -1,0 +1,10 @@
+export declare const BOARD_WIDTH = 8;
+export declare const BOARD_HEIGHT = 6;
+export declare const BOARD_SIDE_HEIGHT = 4;
+export declare const BOARD_X_START = 672;
+export declare const BOARD_Y_START = 808;
+export declare const CELL_WIDTH = 96;
+export declare const CELL_HEIGHT = 96;
+export declare const CELL_VISUAL_WIDTH = 75;
+export declare const CELL_VISUAL_HEIGHT = 75;
+export declare const BERRY_TREE_POSITIONS: number[][];

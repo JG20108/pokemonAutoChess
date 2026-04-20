@@ -1,0 +1,30 @@
+import { GameObjects } from "phaser";
+import { Item } from "../../../../types/enum/Item";
+import type GameScene from "../scenes/game-scene";
+import DraggableObject from "./draggable-object";
+import ItemDetail from "./item-detail";
+export default class ItemContainer extends DraggableObject {
+    scene: GameScene;
+    detail: ItemDetail | undefined;
+    sprite: GameObjects.Image;
+    tempDetail: ItemDetail | undefined;
+    tempSprite: GameObjects.Image | undefined;
+    countText: GameObjects.Text | undefined;
+    circle?: GameObjects.Image;
+    name: Item;
+    pokemonId: string | null;
+    playerId: string;
+    mouseoutTimeout: NodeJS.Timeout | null;
+    constructor(scene: GameScene, x: number, y: number, item: Item, pokemonId: string | null, playerId: string);
+    get cellIndex(): 5 | 2 | 3 | 6 | 4 | 0 | 1 | 7;
+    updateDropZone(value: boolean): void;
+    onPointerOver(pointer: any): void;
+    onPointerOut(): void;
+    onPointerDown(pointer: Phaser.Input.Pointer, event: Phaser.Types.Input.EventData): void;
+    onPointerUp(): void;
+    openDetail(): void;
+    closeDetail(): void;
+    showTempDetail(item: Item): void;
+    updateCount(value: number): void;
+    destroy(fromScene?: boolean | undefined): void;
+}

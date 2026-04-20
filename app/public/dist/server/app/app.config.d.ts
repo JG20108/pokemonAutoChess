@@ -1,0 +1,161 @@
+import AfterGameRoom from "./rooms/after-game-room";
+import CustomLobbyRoom from "./rooms/custom-lobby-room";
+import GameRoom from "./rooms/game-room";
+import PreparationRoom from "./rooms/preparation-room";
+export declare const server: import("colyseus").Server<{
+    "after-game": import("colyseus").RegisteredHandler<AfterGameRoom>;
+    lobby: import("colyseus").RegisteredHandler<CustomLobbyRoom>;
+    preparation: import("colyseus").RegisteredHandler<PreparationRoom>;
+    game: import("colyseus").RegisteredHandler<GameRoom>;
+}, {
+    handler: (request: Request) => Promise<Response>;
+    endpoints: Record<string, import("colyseus").Endpoint>;
+    addEndpoint: (endpoint: import("colyseus").Endpoint) => void;
+    findRoute: (method: string, path: string) => {
+        data: import("colyseus").Endpoint & {
+            path: string;
+        };
+        params: Record<string, string>;
+    };
+    extend: <NE extends Record<string, import("colyseus").Endpoint>>(newEndpoints: NE) => {
+        handler: (request: Request) => Promise<Response>;
+        endpoints: Record<string, import("colyseus").Endpoint> & NE;
+        addEndpoint: (endpoint: import("colyseus").Endpoint) => void;
+        findRoute: (method: string, path: string) => {
+            data: ((inputCtx: any) => Promise<any>) & {
+                options: import("colyseus").EndpointOptions;
+                path: string;
+            } & {
+                path: string;
+            };
+            params: Record<string, string>;
+        };
+        extend: <NE_1 extends Record<string, import("colyseus").Endpoint>>(newEndpoints: NE_1) => {
+            handler: (request: Request) => Promise<Response>;
+            endpoints: Record<string, import("colyseus").Endpoint> & NE & NE_1;
+            addEndpoint: (endpoint: import("colyseus").Endpoint) => void;
+            findRoute: (method: string, path: string) => {
+                data: ((inputCtx: any) => Promise<any>) & {
+                    options: import("colyseus").EndpointOptions;
+                    path: string;
+                } & {
+                    path: string;
+                };
+                params: Record<string, string>;
+            };
+            extend: <NE_2 extends Record<string, import("colyseus").Endpoint>>(newEndpoints: NE_2) => {
+                handler: (request: Request) => Promise<Response>;
+                endpoints: Record<string, import("colyseus").Endpoint> & NE & NE_1 & NE_2;
+                addEndpoint: (endpoint: import("colyseus").Endpoint) => void;
+                findRoute: (method: string, path: string) => {
+                    data: ((inputCtx: any) => Promise<any>) & {
+                        options: import("colyseus").EndpointOptions;
+                        path: string;
+                    } & {
+                        path: string;
+                    };
+                    params: Record<string, string>;
+                };
+                extend: <NE_3 extends Record<string, import("colyseus").Endpoint>>(newEndpoints: NE_3) => {
+                    handler: (request: Request) => Promise<Response>;
+                    endpoints: Record<string, import("colyseus").Endpoint> & NE & NE_1 & NE_2 & NE_3;
+                    addEndpoint: (endpoint: import("colyseus").Endpoint) => void;
+                    findRoute: (method: string, path: string) => {
+                        data: ((inputCtx: any) => Promise<any>) & {
+                            options: import("colyseus").EndpointOptions;
+                            path: string;
+                        } & {
+                            path: string;
+                        };
+                        params: Record<string, string>;
+                    };
+                    extend: <NE_4 extends Record<string, import("colyseus").Endpoint>>(newEndpoints: NE_4) => {
+                        handler: (request: Request) => Promise<Response>;
+                        endpoints: Record<string, import("colyseus").Endpoint> & NE & NE_1 & NE_2 & NE_3 & NE_4;
+                        addEndpoint: (endpoint: import("colyseus").Endpoint) => void;
+                        findRoute: (method: string, path: string) => {
+                            data: ((inputCtx: any) => Promise<any>) & {
+                                options: import("colyseus").EndpointOptions;
+                                path: string;
+                            } & {
+                                path: string;
+                            };
+                            params: Record<string, string>;
+                        };
+                        extend: <NE_5 extends Record<string, import("colyseus").Endpoint>>(newEndpoints: NE_5) => {
+                            handler: (request: Request) => Promise<Response>;
+                            endpoints: Record<string, import("colyseus").Endpoint> & NE & NE_1 & NE_2 & NE_3 & NE_4 & NE_5;
+                            addEndpoint: (endpoint: import("colyseus").Endpoint) => void;
+                            findRoute: (method: string, path: string) => {
+                                data: ((inputCtx: any) => Promise<any>) & {
+                                    options: import("colyseus").EndpointOptions;
+                                    path: string;
+                                } & {
+                                    path: string;
+                                };
+                                params: Record<string, string>;
+                            };
+                            extend: <NE_6 extends Record<string, import("colyseus").Endpoint>>(newEndpoints: NE_6) => {
+                                handler: (request: Request) => Promise<Response>;
+                                endpoints: Record<string, import("colyseus").Endpoint> & NE & NE_1 & NE_2 & NE_3 & NE_4 & NE_5 & NE_6;
+                                addEndpoint: (endpoint: import("colyseus").Endpoint) => void;
+                                findRoute: (method: string, path: string) => {
+                                    data: ((inputCtx: any) => Promise<any>) & {
+                                        options: import("colyseus").EndpointOptions;
+                                        path: string;
+                                    } & {
+                                        path: string;
+                                    };
+                                    params: Record<string, string>;
+                                };
+                                extend: <NE_7 extends Record<string, import("colyseus").Endpoint>>(newEndpoints: NE_7) => {
+                                    handler: (request: Request) => Promise<Response>;
+                                    endpoints: Record<string, import("colyseus").Endpoint> & NE & NE_1 & NE_2 & NE_3 & NE_4 & NE_5 & NE_6 & NE_7;
+                                    addEndpoint: (endpoint: import("colyseus").Endpoint) => void;
+                                    findRoute: (method: string, path: string) => {
+                                        data: ((inputCtx: any) => Promise<any>) & {
+                                            options: import("colyseus").EndpointOptions;
+                                            path: string;
+                                        } & {
+                                            path: string;
+                                        };
+                                        params: Record<string, string>;
+                                    };
+                                    extend: <NE_8 extends Record<string, import("colyseus").Endpoint>>(newEndpoints: NE_8) => {
+                                        handler: (request: Request) => Promise<Response>;
+                                        endpoints: Record<string, import("colyseus").Endpoint> & NE & NE_1 & NE_2 & NE_3 & NE_4 & NE_5 & NE_6 & NE_7 & NE_8;
+                                        addEndpoint: (endpoint: import("colyseus").Endpoint) => void;
+                                        findRoute: (method: string, path: string) => {
+                                            data: ((inputCtx: any) => Promise<any>) & {
+                                                options: import("colyseus").EndpointOptions;
+                                                path: string;
+                                            } & {
+                                                path: string;
+                                            };
+                                            params: Record<string, string>;
+                                        };
+                                        extend: <NE_9 extends Record<string, import("colyseus").Endpoint>>(newEndpoints: NE_9) => {
+                                            handler: (request: Request) => Promise<Response>;
+                                            endpoints: Record<string, import("colyseus").Endpoint> & NE & NE_1 & NE_2 & NE_3 & NE_4 & NE_5 & NE_6 & NE_7 & NE_8 & NE_9;
+                                            addEndpoint: (endpoint: import("colyseus").Endpoint) => void;
+                                            findRoute: (method: string, path: string) => {
+                                                data: ((inputCtx: any) => Promise<any>) & {
+                                                    options: import("colyseus").EndpointOptions;
+                                                    path: string;
+                                                } & {
+                                                    path: string;
+                                                };
+                                                params: Record<string, string>;
+                                            };
+                                            extend: <NE_10 extends Record<string, import("colyseus").Endpoint>>(newEndpoints: NE_10) => any;
+                                        };
+                                    };
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+}>;

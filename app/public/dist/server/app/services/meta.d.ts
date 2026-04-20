@@ -1,0 +1,15 @@
+import { ITypeStatistics } from "../types/meta";
+import type { IDendrogram } from "../types/models/dendrogram";
+import type { IItemsStatisticV2 } from "../types/models/items-statistic-v2";
+import type { IMetaV2 } from "../types/models/meta-v2";
+import type { IPokemonsStatisticV2 } from "../types/models/pokemons-statistic-v2";
+import type { IRegionStatistic } from "../types/models/regions-statistic";
+import type { IReportMetadata } from "../types/models/report-metadata";
+export declare function fetchMetaReports(): Promise<[IReportMetadata[], IItemsStatisticV2[], IPokemonsStatisticV2[], IRegionStatistic[], IMetaV2[], IDendrogram | null]>;
+export declare function getMetaPokemons(): IPokemonsStatisticV2[];
+export declare function getMetaItems(): IItemsStatisticV2[];
+export declare function getMetadata(): IReportMetadata[];
+export declare function getMetaRegions(): IRegionStatistic[];
+export declare function getMetaV2(): IMetaV2[];
+export declare function getDendrogram(): IDendrogram | null;
+export declare function computeSynergyAverages(): ITypeStatistics;

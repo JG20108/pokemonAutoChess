@@ -1,0 +1,55 @@
+import { MapSchema } from "@colyseus/schema";
+import GameState from "../../../../rooms/states/game-state";
+import { Emotion, IFloatingItem, IPokemonAvatar, IPortal, ISynergySymbol } from "../../../../types";
+import { Pkm } from "../../../../types/enum/Pokemon";
+import { TownEncounter } from "../../../../types/enum/TownEncounter";
+import { ILeaderboardInfo } from "../../../../types/interfaces/LeaderboardInfo";
+import AnimationManager from "../animation-manager";
+import GameScene from "../scenes/game-scene";
+import { FloatingItemContainer } from "./floating-item-container";
+import { GameDialog } from "./game-dialog";
+import PokemonAvatar from "./pokemon-avatar";
+import PokemonSpecial from "./pokemon-special";
+import { Portal, SynergySymbol } from "./portal";
+export default class MinigameManager {
+    pokemons: Map<string, PokemonAvatar>;
+    items: Map<string, FloatingItemContainer>;
+    portals: Map<string, Portal>;
+    symbols: Map<string, SynergySymbol>;
+    uid: string;
+    scene: GameScene;
+    display: boolean;
+    animationManager: AnimationManager;
+    villagers: PokemonSpecial[];
+    encounterDescription: GameDialog | null;
+    constructor(scene: GameScene, animationManager: AnimationManager, uid: string, existingState: GameState);
+    dispose(): void;
+    update(): void;
+    buildPokemons(avatars: MapSchema<IPokemonAvatar, string>): void;
+    buildItems(items: MapSchema<IFloatingItem, string>): void;
+    buildPortals(portals: MapSchema<IPortal, string>, symbols: MapSchema<ISynergySymbol, string>, avatars: MapSchema<IPokemonAvatar, string>): void;
+    getVector(x: number, y: number): {
+        x: number;
+        y: number;
+    };
+    addItem(item: IFloatingItem): void;
+    removeItem(itemToRemove: IFloatingItem): void;
+    changeItem(item: IFloatingItem, field: string, value: string | number): void;
+    addPortal(portal: IPortal): void;
+    removePortal(portalToRemove: IPortal): void;
+    changePortal(portal: IPortal, field: string, value: string | number): void;
+    addSymbol(symbol: ISynergySymbol): void;
+    removeSymbol(symbolToRemove: ISynergySymbol): void;
+    changeSymbol(symbol: ISynergySymbol, field: string, value: string | number): void;
+    addPokemon(pokemon: IPokemonAvatar): void;
+    removePokemon(pokemonToRemove: IPokemonAvatar): void;
+    changePokemon(pokemon: IPokemonAvatar, field: string, value: any): void;
+    addVillagers(encounter: TownEncounter | null, podium: ILeaderboardInfo[]): void;
+    showEmote(id: string, emote: Emotion): void;
+    onNpcDialog({ npc, dialog, ...otherArgs }: {
+        npc: Pkm;
+        dialog: string;
+    }): void;
+    showEncounterDescription(desc: string): void;
+    closeTooltips(): void;
+}
