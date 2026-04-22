@@ -456,7 +456,11 @@ export class Egg extends Pokemon {
 }
 
 export class Electrike extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FIELD])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FIELD,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.RARE
   stars = 1
   evolution = Pkm.MANECTRIC
@@ -472,7 +476,11 @@ export class Electrike extends Pokemon {
 }
 
 export class Manectric extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FIELD])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FIELD,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.RARE
   stars = 2
   //evolution = Pkm.MEGA_MANECTRIC
@@ -488,7 +496,11 @@ export class Manectric extends Pokemon {
 }
 
 export class MegaManectric extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FIELD])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FIELD,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.RARE
   stars = 3
   hp = 250
@@ -3192,7 +3204,11 @@ export class Pichu extends Pokemon {
 }
 
 export class Pikachu extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FAIRY])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FAIRY,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.COMMON
   stars = 2
   evolutions = [Pkm.RAICHU, Pkm.ALOLAN_RAICHU]
@@ -3220,7 +3236,11 @@ export class Pikachu extends Pokemon {
 }
 
 export class Raichu extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FAIRY])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FAIRY,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.COMMON
   stars = 3
   hp = 220
@@ -3390,7 +3410,11 @@ export class Dusknoir extends Pokemon {
 }
 
 export class Magnemite extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.STEEL])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.STEEL,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNCOMMON
   stars = 1
   evolution = Pkm.MAGNETON
@@ -3405,7 +3429,11 @@ export class Magnemite extends Pokemon {
 }
 
 export class Magneton extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.STEEL])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.STEEL,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNCOMMON
   stars = 2
   evolution = Pkm.MAGNEZONE
@@ -3420,7 +3448,11 @@ export class Magneton extends Pokemon {
 }
 
 export class Magnezone extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.STEEL])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.STEEL,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNCOMMON
   stars = 3
   hp = 250
@@ -5461,7 +5493,11 @@ export class OriginGiratina extends Pokemon {
 }
 
 export class Zapdos extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FLYING])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FLYING,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.LEGENDARY
   stars = 3
   hp = 300
@@ -6132,7 +6168,11 @@ export class Vaporeon extends Pokemon {
 }
 
 export class Jolteon extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FIELD])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FIELD,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.SPECIAL
   stars = 2
   hp = 180
@@ -9529,7 +9569,11 @@ export class Venomoth extends Pokemon {
 }
 
 export class Voltorb extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.ARTIFICIAL])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.ARTIFICIAL,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNCOMMON
   stars = 1
   evolution = Pkm.ELECTRODE
@@ -9545,7 +9589,11 @@ export class Voltorb extends Pokemon {
 }
 
 export class Electrode extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.ARTIFICIAL])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.ARTIFICIAL,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNCOMMON
   stars = 2
   hp = 150
@@ -12294,7 +12342,11 @@ export class Maractus extends Pokemon {
 }
 
 export class Plusle extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FIELD])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FIELD,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNIQUE
   stars = 3
   hp = 140
@@ -12308,7 +12360,11 @@ export class Plusle extends Pokemon {
 }
 
 export class Minun extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FIELD])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FIELD,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNIQUE
   stars = 3
   hp = 140
@@ -13686,7 +13742,11 @@ export class MausholdFour extends Pokemon {
 }
 
 export class Morpeko extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.DARK, Synergy.ELECTRIC])
+  types = new SetSchema<Synergy>([
+    Synergy.DARK,
+    Synergy.ELECTRIC,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNIQUE
   stars = 3
   hp = 200
@@ -18789,7 +18849,11 @@ export class Ledian extends Pokemon {
 }
 
 export class Emolga extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FLYING])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FLYING,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNIQUE
   stars = 3
   hp = 150
@@ -18834,7 +18898,11 @@ export class Excadrill extends Pokemon {
 }
 
 export class Togedemaru extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.STEEL])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.STEEL,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNIQUE
   stars = 3
   hp = 200
@@ -18848,7 +18916,11 @@ export class Togedemaru extends Pokemon {
 }
 
 export class Dedenne extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FAIRY])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FAIRY,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNIQUE
   stars = 3
   hp = 200
@@ -19158,7 +19230,11 @@ export class Orbeetle extends Pokemon {
 }
 
 export class Pachirisu extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.NORMAL])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.NORMAL,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNIQUE
   stars = 3
   hp = 180
@@ -20289,7 +20365,11 @@ export class Dubwool extends Pokemon {
 }
 
 export class Yamper extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FIELD])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FIELD,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNCOMMON
   stars = 1
   evolution = Pkm.BOLTUND
@@ -20305,7 +20385,11 @@ export class Yamper extends Pokemon {
 }
 
 export class Boltund extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.FIELD])
+  types = new SetSchema<Synergy>([
+    Synergy.ELECTRIC,
+    Synergy.FIELD,
+    Synergy.LIGHT
+  ])
   rarity = Rarity.UNCOMMON
   stars = 2
   hp = 130
