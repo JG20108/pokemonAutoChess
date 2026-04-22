@@ -1006,9 +1006,9 @@ export class PokemonEntity extends Schema implements IPokemonEntity {
           ? count(this.player.items, Item.ICY_ROCK)
           : 0
 
-      const freezeChance = 0.2 + nbIcyRocks * 0.05
+      const freezeChance = 0.25 + nbIcyRocks * 0.05
       if (chance(freezeChance, this)) {
-        target.status.triggerFreeze(2000, target, this)
+        target.status.triggerFreeze(2500, target, this)
       }
     }
 
@@ -1027,9 +1027,9 @@ export class PokemonEntity extends Schema implements IPokemonEntity {
     }
 
     if (this.hasSynergyEffect(Synergy.GHOST)) {
-      const silenceChance = 0.15
+      const silenceChance = 0.1
       if (chance(silenceChance, this)) {
-        target.status.triggerSilence(2000, target, this)
+        target.status.triggerSilence(1500, target, this)
       }
     }
 

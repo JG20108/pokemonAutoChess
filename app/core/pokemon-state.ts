@@ -472,7 +472,7 @@ export default abstract class PokemonState {
         attacker &&
         attacker.effects.has(EffectEnum.SHEER_COLD)
       ) {
-        damage *= 1.3
+        damage *= 1.5
       }
 
       let def = pokemon.status.armorReduction

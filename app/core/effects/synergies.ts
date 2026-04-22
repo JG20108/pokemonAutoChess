@@ -229,6 +229,10 @@ export class OnFieldDeathEffect extends OnDeathEffect {
 
 export class FlyingProtectionEffect extends OnDamageReceivedEffect {
   priority = -1
+  // Speed burst applied for 2s after each fly-away, letting the escape double
+  // as an offensive repositioning tool rather than pure survivability.
+  static readonly FLY_AWAY_SPEED_BURST = 20
+  static readonly FLY_AWAY_SPEED_BURST_DURATION = 2000
   flyingProtection: number = 0
   constructor(effect: EffectEnum) {
     super(undefined, effect)
@@ -255,11 +259,18 @@ export class FlyingProtectionEffect extends OnDamageReceivedEffect {
         pokemon.effects.has(EffectEnum.SKYDIVE)
 
       if (
-        (this.flyingProtection === 1 && pcHp < 0.2) ||
+        (this.flyingProtection === 1 && pcHp < 0.3) ||
         (shouldProcAt50 && this.flyingProtection === 2 && pcHp < 0.5)
       ) {
         this.flyingProtection--
         pokemon.flyAway(board)
+        const speedBurst = FlyingProtectionEffect.FLY_AWAY_SPEED_BURST
+        pokemon.addSpeed(speedBurst, pokemon, 0, false)
+        pokemon.commands.push(
+          new DelayedCommand(() => {
+            pokemon.addSpeed(-speedBurst, pokemon, 0, false)
+          }, FlyingProtectionEffect.FLY_AWAY_SPEED_BURST_DURATION)
+        )
       }
     }
   }
