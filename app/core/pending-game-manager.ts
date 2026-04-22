@@ -9,33 +9,6 @@ interface PendingGame {
 }
 
 const PENDING_GAME = "pending_game"
-const USER_TIMEOUT = "user_timeout"
-const TIMEOUT_IN_SECONDS = 60 * 5 // 5 minutes
-
-export async function isPlayerTimeout(
-  presence: Presence,
-  playerId: string
-): Promise<boolean> {
-  const timeoutDateStr = await presence.hget(playerId, USER_TIMEOUT)
-  if (timeoutDateStr) {
-    const timeout = new Date(timeoutDateStr).getTime()
-    //logger.debug(`Checking timeout for player ${playerId}: ${timeoutDateStr}`);
-    return isValidDate(timeout) && Date.now() < timeout
-  }
-  return false
-}
-
-export async function givePlayerTimeout(
-  presence: Presence,
-  playerId: string
-): Promise<boolean> {
-  //logger.debug(`Setting timeout for player ${playerId}: ${new Date(Date.now() + 1000 * TIMEOUT_IN_SECONDS).toISOString()}`);
-  return presence.hset(
-    playerId,
-    USER_TIMEOUT,
-    new Date(Date.now() + 1000 * TIMEOUT_IN_SECONDS).toISOString()
-  )
-}
 
 export async function getPendingGame(
   presence: Presence,

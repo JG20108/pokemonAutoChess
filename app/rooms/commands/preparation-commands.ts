@@ -11,7 +11,6 @@ import {
 } from "../../config"
 import {
   getPendingGame,
-  isPlayerTimeout,
   setPendingGame
 } from "../../core/pending-game-manager"
 import { GameUser, IGameUser } from "../../models/colyseus-models/game-user"
@@ -41,11 +40,6 @@ export class OnJoinCommand extends Command<
 > {
   async execute({ client, options, auth }) {
     try {
-      if (await isPlayerTimeout(this.room.presence, client.auth.uid)) {
-        client.leave(CloseCodes.USER_TIMEOUT)
-        return
-      }
-
       const pendingGame = await getPendingGame(
         this.room.presence,
         client.auth.uid

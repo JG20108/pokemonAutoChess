@@ -26,7 +26,6 @@ import {
   clearPendingGame,
   clearPendingGamesOnRoomDispose,
   getPendingGame,
-  givePlayerTimeout,
   setPendingGame
 } from "../core/pending-game-manager"
 import { IGameUser } from "../models/colyseus-models/game-user"
@@ -708,20 +707,6 @@ export default class GameRoom extends Room<{ state: GameState }> {
 
       //logger.info(`${client.auth.displayName} left game`)
       const player = this.state.players.get(client.auth.uid)
-      const hasLeftGameBeforeTheEnd =
-        player && player.life > 0 && !this.state.gameFinished
-      const otherHumans = values(this.state.players).filter(
-        (p) => !p.isBot && p.id !== client.auth.uid
-      )
-      if (
-        hasLeftGameBeforeTheEnd &&
-        otherHumans.length >= 1 &&
-        player.role !== Role.ADMIN
-      ) {
-        /* if a user leaves a game before the end, 
-        they cannot join another in the next 5 minutes */
-        givePlayerTimeout(this.presence, client.auth.uid)
-      }
 
       if (player && this.state.stageLevel <= 5 && !consented) {
         /* 

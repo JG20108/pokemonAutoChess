@@ -246,8 +246,7 @@ export default function Preparation() {
           CloseCodes.ROOM_FULL,
           CloseCodes.ROOM_EMPTY,
           CloseCodes.USER_BANNED,
-          CloseCodes.USER_RANK_TOO_LOW,
-          CloseCodes.USER_TIMEOUT
+          CloseCodes.USER_RANK_TOO_LOW
         ].includes(code)
 
         logger.info(`left preparation room with code ${code}`)
