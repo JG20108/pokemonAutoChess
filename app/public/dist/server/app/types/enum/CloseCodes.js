@@ -18,7 +18,6 @@ var CloseCodes;
     CloseCodes[CloseCodes["USER_NOT_AUTHENTICATED"] = 4104] = "USER_NOT_AUTHENTICATED";
     CloseCodes[CloseCodes["USER_RANK_TOO_LOW"] = 4105] = "USER_RANK_TOO_LOW";
     CloseCodes[CloseCodes["USER_RANK_TOO_HIGH"] = 4106] = "USER_RANK_TOO_HIGH";
-    CloseCodes[CloseCodes["USER_TIMEOUT"] = 4107] = "USER_TIMEOUT";
     CloseCodes[CloseCodes["USER_DELETED"] = 4108] = "USER_DELETED";
     CloseCodes[CloseCodes["USER_IN_ANOTHER_GAME"] = 4109] = "USER_IN_ANOTHER_GAME";
     CloseCodes[CloseCodes["USER_ALREADY_JOINED"] = 4110] = "USER_ALREADY_JOINED";
@@ -39,7 +38,6 @@ exports.CloseCodesMessages = {
     [CloseCodes.USER_RANK_TOO_LOW]: "USER_RANK_TOO_LOW",
     [CloseCodes.USER_NOT_AUTHENTICATED]: "USER_NOT_AUTHENTICATED",
     [CloseCodes.USER_NOT_WHITELISTED]: "USER_NOT_WHITELISTED",
-    [CloseCodes.USER_TIMEOUT]: "USER_TIMEOUT",
     [CloseCodes.ROOM_FULL]: "ROOM_FULL",
     [CloseCodes.ROOM_EMPTY]: "ROOM_EMPTY",
     [CloseCodes.ROOM_DELETED]: "ROOM_DELETED",

@@ -9,8 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isPlayerTimeout = isPlayerTimeout;
-exports.givePlayerTimeout = givePlayerTimeout;
 exports.getPendingGame = getPendingGame;
 exports.setPendingGame = setPendingGame;
 exports.clearPendingGame = clearPendingGame;
@@ -18,23 +16,6 @@ exports.clearPendingGamesOnRoomDispose = clearPendingGamesOnRoomDispose;
 const config_1 = require("../config");
 const date_1 = require("../utils/date");
 const PENDING_GAME = "pending_game";
-const USER_TIMEOUT = "user_timeout";
-const TIMEOUT_IN_SECONDS = 60 * 5;
-function isPlayerTimeout(presence, playerId) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const timeoutDateStr = yield presence.hget(playerId, USER_TIMEOUT);
-        if (timeoutDateStr) {
-            const timeout = new Date(timeoutDateStr).getTime();
-            return (0, date_1.isValidDate)(timeout) && Date.now() < timeout;
-        }
-        return false;
-    });
-}
-function givePlayerTimeout(presence, playerId) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return presence.hset(playerId, USER_TIMEOUT, new Date(Date.now() + 1000 * TIMEOUT_IN_SECONDS).toISOString());
-    });
-}
 function getPendingGame(presence, playerId) {
     return __awaiter(this, void 0, void 0, function* () {
         const pendingGame = yield presence.hget(playerId, PENDING_GAME);

@@ -464,7 +464,11 @@ exports.Egg = Egg;
 class Electrike extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FIELD]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FIELD,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.RARE;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.MANECTRIC;
@@ -483,7 +487,11 @@ exports.Electrike = Electrike;
 class Manectric extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FIELD]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FIELD,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.RARE;
         this.stars = 2;
         this.hp = 160;
@@ -501,7 +509,11 @@ exports.Manectric = Manectric;
 class MegaManectric extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FIELD]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FIELD,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.RARE;
         this.stars = 3;
         this.hp = 250;
@@ -3650,7 +3662,11 @@ exports.Pichu = Pichu;
 class Pikachu extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FAIRY]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FAIRY,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.COMMON;
         this.stars = 2;
         this.evolutions = [Pokemon_1.Pkm.RAICHU, Pokemon_1.Pkm.ALOLAN_RAICHU];
@@ -3679,7 +3695,11 @@ exports.Pikachu = Pikachu;
 class Raichu extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FAIRY]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FAIRY,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.COMMON;
         this.stars = 3;
         this.hp = 220;
@@ -3883,7 +3903,11 @@ exports.Dusknoir = Dusknoir;
 class Magnemite extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.STEEL]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.STEEL,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.MAGNETON;
@@ -3901,7 +3925,11 @@ exports.Magnemite = Magnemite;
 class Magneton extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.STEEL]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.STEEL,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.MAGNEZONE;
@@ -3919,7 +3947,11 @@ exports.Magneton = Magneton;
 class Magnezone extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.STEEL]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.STEEL,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 3;
         this.hp = 250;
@@ -6224,7 +6256,11 @@ exports.OriginGiratina = OriginGiratina;
 class Zapdos extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FLYING]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FLYING,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.LEGENDARY;
         this.stars = 3;
         this.hp = 300;
@@ -6995,7 +7031,11 @@ exports.Vaporeon = Vaporeon;
 class Jolteon extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FIELD]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FIELD,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 2;
         this.hp = 180;
@@ -10914,7 +10954,11 @@ exports.Venomoth = Venomoth;
 class Voltorb extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.ARTIFICIAL]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.ARTIFICIAL,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.ELECTRODE;
@@ -10933,7 +10977,11 @@ exports.Voltorb = Voltorb;
 class Electrode extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.ARTIFICIAL]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.ARTIFICIAL,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 2;
         this.hp = 150;
@@ -14110,7 +14158,11 @@ exports.Maractus = Maractus;
 class Plusle extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FIELD]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FIELD,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
         this.hp = 140;
@@ -14127,7 +14179,11 @@ exports.Plusle = Plusle;
 class Minun extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FIELD]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FIELD,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
         this.hp = 140;
@@ -15707,7 +15763,11 @@ exports.MausholdFour = MausholdFour;
 class Morpeko extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.DARK, Synergy_1.Synergy.ELECTRIC]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.DARK,
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
         this.hp = 200;
@@ -21545,7 +21605,11 @@ exports.Ledian = Ledian;
 class Emolga extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FLYING]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FLYING,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
         this.hp = 150;
@@ -21599,7 +21663,11 @@ exports.Excadrill = Excadrill;
 class Togedemaru extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.STEEL]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.STEEL,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
         this.hp = 200;
@@ -21616,7 +21684,11 @@ exports.Togedemaru = Togedemaru;
 class Dedenne extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FAIRY]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FAIRY,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
         this.hp = 200;
@@ -21978,7 +22050,11 @@ exports.Orbeetle = Orbeetle;
 class Pachirisu extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.NORMAL]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.NORMAL,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
         this.hp = 180;
@@ -23292,7 +23368,11 @@ exports.Dubwool = Dubwool;
 class Yamper extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FIELD]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FIELD,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.BOLTUND;
@@ -23311,7 +23391,11 @@ exports.Yamper = Yamper;
 class Boltund extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FIELD]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ELECTRIC,
+            Synergy_1.Synergy.FIELD,
+            Synergy_1.Synergy.LIGHT
+        ]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 2;
         this.hp = 130;

@@ -35,10 +35,6 @@ class OnJoinCommand extends command_1.Command {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ client, options, auth }) {
             try {
-                if (yield (0, pending_game_manager_1.isPlayerTimeout)(this.room.presence, client.auth.uid)) {
-                    client.leave(CloseCodes_1.CloseCodes.USER_TIMEOUT);
-                    return;
-                }
                 const pendingGame = yield (0, pending_game_manager_1.getPendingGame)(this.room.presence, client.auth.uid);
                 if (pendingGame != null && !pendingGame.isExpired) {
                     client.leave(CloseCodes_1.CloseCodes.USER_IN_ANOTHER_GAME);

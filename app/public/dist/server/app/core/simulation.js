@@ -743,6 +743,14 @@ class Simulation extends schema_1.Schema {
                 if (types.has(Synergy_1.Synergy.FLYING)) {
                     pokemon.effects.add(effect);
                     pokemon.effectsSet.add(new synergies_2.FlyingProtectionEffect(effect));
+                    const flyingAtkRatio = effect === Effect_1.EffectEnum.TAILWIND
+                        ? 0.1
+                        : effect === Effect_1.EffectEnum.FEATHER_DANCE
+                            ? 0.2
+                            : effect === Effect_1.EffectEnum.MAX_AIRSTREAM
+                                ? 0.3
+                                : 0.4;
+                    pokemon.addAttack(Math.ceil(flyingAtkRatio * pokemon.baseAtk), pokemon, 0, false);
                 }
                 break;
             case Effect_1.EffectEnum.SWIFT_SWIM:
@@ -808,18 +816,22 @@ class Simulation extends schema_1.Schema {
             case Effect_1.EffectEnum.CHILLY:
                 pokemon.effects.add(Effect_1.EffectEnum.CHILLY);
                 pokemon.addSpecialDefense(4, pokemon, 0, false);
+                pokemon.addDefense(2, pokemon, 0, false);
                 break;
             case Effect_1.EffectEnum.FROSTY:
                 pokemon.effects.add(Effect_1.EffectEnum.FROSTY);
                 pokemon.addSpecialDefense(12, pokemon, 0, false);
+                pokemon.addDefense(5, pokemon, 0, false);
                 break;
             case Effect_1.EffectEnum.FREEZING:
                 pokemon.effects.add(Effect_1.EffectEnum.FREEZING);
                 pokemon.addSpecialDefense(25, pokemon, 0, false);
+                pokemon.addDefense(10, pokemon, 0, false);
                 break;
             case Effect_1.EffectEnum.SHEER_COLD:
                 pokemon.effects.add(Effect_1.EffectEnum.SHEER_COLD);
                 pokemon.addSpecialDefense(50, pokemon, 0, false);
+                pokemon.addDefense(20, pokemon, 0, false);
                 break;
             case Effect_1.EffectEnum.POISONOUS:
             case Effect_1.EffectEnum.VENOMOUS:
@@ -987,7 +999,7 @@ class Simulation extends schema_1.Schema {
             case Effect_1.EffectEnum.CURSE_OF_FATE:
                 if (pokemon.types.has(Synergy_1.Synergy.GHOST)) {
                     pokemon.effects.add(effect);
-                    pokemon.addDodgeChance(0.15, pokemon, 0, false);
+                    pokemon.addDodgeChance(0.1, pokemon, 0, false);
                 }
                 break;
             case Effect_1.EffectEnum.VICTINI_PASSIVE: {
@@ -1241,8 +1253,8 @@ class Simulation extends schema_1.Schema {
             const highestDef = Math.max(...opponentsCursable.map((p) => p.def + p.speDef));
             const enemyWithHighestDef = (0, random_1.pickRandomIn)(opponentsCursable.filter((p) => p.def + p.speDef === highestDef));
             if (enemyWithHighestDef) {
-                enemyWithHighestDef.addDefense(-5, curser, 0, false);
-                enemyWithHighestDef.addSpecialDefense(-5, curser, 0, false);
+                enemyWithHighestDef.addDefense(-4, curser, 0, false);
+                enemyWithHighestDef.addSpecialDefense(-4, curser, 0, false);
                 enemyWithHighestDef.status.curseVulnerability = true;
                 enemyWithHighestDef.status.triggerFlinch(30000, enemyWithHighestDef);
             }
@@ -1251,7 +1263,7 @@ class Simulation extends schema_1.Schema {
             const highestAtk = Math.max(...opponentsCursable.map((p) => p.atk));
             const enemyWithHighestAtk = (0, random_1.pickRandomIn)(opponentsCursable.filter((p) => p.atk === highestAtk));
             if (enemyWithHighestAtk) {
-                enemyWithHighestAtk.addAttack(Math.round(-0.2 * enemyWithHighestAtk.atk), curser, 0, false);
+                enemyWithHighestAtk.addAttack(Math.round(-0.15 * enemyWithHighestAtk.atk), curser, 0, false);
                 enemyWithHighestAtk.status.curseWeakness = true;
                 enemyWithHighestAtk.status.triggerParalysis(30000, enemyWithHighestAtk, null);
             }
@@ -1260,7 +1272,7 @@ class Simulation extends schema_1.Schema {
             const highestAP = Math.max(...opponentsCursable.map((p) => p.ap));
             const enemyWithHighestAP = (0, random_1.pickRandomIn)(opponentsCursable.filter((p) => p.ap === highestAP));
             if (enemyWithHighestAP) {
-                enemyWithHighestAP.addAbilityPower(-30, curser, 0, false);
+                enemyWithHighestAP.addAbilityPower(-25, curser, 0, false);
                 enemyWithHighestAP.status.curseTorment = true;
                 enemyWithHighestAP.status.triggerFatigue(30000, enemyWithHighestAP);
             }
@@ -1269,7 +1281,7 @@ class Simulation extends schema_1.Schema {
             const strongestEnemy = (0, pokemon_entity_1.getStrongestUnit)(opponentsCursable);
             if (strongestEnemy) {
                 strongestEnemy.status.curseFate = true;
-                strongestEnemy.status.triggerCurse(8000, strongestEnemy);
+                strongestEnemy.status.triggerCurse(12000, strongestEnemy);
             }
         }
     }

@@ -208,15 +208,22 @@ class FlyingProtectionEffect extends effect_1.OnDamageReceivedEffect {
             const pcHp = pokemon.hp / pokemon.maxHP;
             const shouldProcAt50 = pokemon.effects.has(Effect_1.EffectEnum.MAX_AIRSTREAM) ||
                 pokemon.effects.has(Effect_1.EffectEnum.SKYDIVE);
-            if ((this.flyingProtection === 1 && pcHp < 0.2) ||
+            if ((this.flyingProtection === 1 && pcHp < 0.3) ||
                 (shouldProcAt50 && this.flyingProtection === 2 && pcHp < 0.5)) {
                 this.flyingProtection--;
                 pokemon.flyAway(board);
+                const speedBurst = FlyingProtectionEffect.FLY_AWAY_SPEED_BURST;
+                pokemon.addSpeed(speedBurst, pokemon, 0, false);
+                pokemon.commands.push(new simulation_command_1.DelayedCommand(() => {
+                    pokemon.addSpeed(-speedBurst, pokemon, 0, false);
+                }, FlyingProtectionEffect.FLY_AWAY_SPEED_BURST_DURATION));
             }
         }
     }
 }
 exports.FlyingProtectionEffect = FlyingProtectionEffect;
+FlyingProtectionEffect.FLY_AWAY_SPEED_BURST = 20;
+FlyingProtectionEffect.FLY_AWAY_SPEED_BURST_DURATION = 2000;
 class FightingKnockbackEffect extends effect_1.OnDamageReceivedEffect {
     constructor(effect) {
         super(undefined, effect);

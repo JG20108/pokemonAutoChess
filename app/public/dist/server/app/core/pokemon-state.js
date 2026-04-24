@@ -370,7 +370,7 @@ class PokemonState {
             if (pokemon.status.freeze &&
                 attacker &&
                 attacker.effects.has(Effect_1.EffectEnum.SHEER_COLD)) {
-                damage *= 1.3;
+                damage *= 1.5;
             }
             let def = pokemon.status.armorReduction
                 ? Math.round(pokemon.def / 2)

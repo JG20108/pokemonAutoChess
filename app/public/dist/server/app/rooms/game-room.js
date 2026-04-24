@@ -537,13 +537,6 @@ class GameRoom extends colyseus_1.Room {
                 }
                 (0, pending_game_manager_1.clearPendingGame)(this.presence, client.auth.uid);
                 const player = this.state.players.get(client.auth.uid);
-                const hasLeftGameBeforeTheEnd = player && player.life > 0 && !this.state.gameFinished;
-                const otherHumans = (0, schemas_1.values)(this.state.players).filter((p) => !p.isBot && p.id !== client.auth.uid);
-                if (hasLeftGameBeforeTheEnd &&
-                    otherHumans.length >= 1 &&
-                    player.role !== types_1.Role.ADMIN) {
-                    (0, pending_game_manager_1.givePlayerTimeout)(this.presence, client.auth.uid);
-                }
                 if (player && this.state.stageLevel <= 5 && !consented) {
                     this.state.players.delete(client.auth.uid);
                     this.setMetadata({

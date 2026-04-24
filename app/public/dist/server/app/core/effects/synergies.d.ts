@@ -31,6 +31,8 @@ export declare class OnFieldDeathEffect extends OnDeathEffect {
 }
 export declare class FlyingProtectionEffect extends OnDamageReceivedEffect {
     priority: number;
+    static readonly FLY_AWAY_SPEED_BURST = 20;
+    static readonly FLY_AWAY_SPEED_BURST_DURATION = 2000;
     flyingProtection: number;
     constructor(effect: EffectEnum);
     apply({ pokemon, board }: OnDamageReceivedEffectArgs): void;
