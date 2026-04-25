@@ -1328,7 +1328,8 @@ export declare class FlyStrategy extends AbilityStrategy {
     process(pokemon: PokemonEntity, board: Board, target: null, crit: boolean): void;
 }
 export declare class SurfStrategy extends AbilityStrategy {
-    process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean, preventDefaultAnim?: boolean, tierLevel?: number): void;
+    requiresTarget: boolean;
+    process(pokemon: PokemonEntity, board: Board, target: null, crit: boolean, preventDefaultAnim?: boolean, tierLevel?: number): void;
 }
 export declare class HeadlongRushStrategy extends AbilityStrategy {
     process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;

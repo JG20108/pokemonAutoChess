@@ -8,12 +8,34 @@ import { getRegularsTier1 } from "../models/shop"
 import GameState from "../rooms/states/game-state"
 import { Rarity } from "../types/enum/Game"
 import { Pkm, PkmRegionalVariants } from "../types/enum/Pokemon"
+import { Synergy } from "../types/enum/Synergy"
 import { getPokemonCustomFromAvatar } from "../utils/avatar"
 import { getFirstAvailablePositionInBench } from "../utils/board"
 import { min } from "../utils/number"
 import { pickRandomIn, simpleHashSeededCoinFlip } from "../utils/random"
 import { getUnitPowerScore } from "./bot-logic"
 import { createRandomEgg } from "./eggs"
+
+export const PseudoLegendaryPool: Pkm[] = [
+  Pkm.DRATINI,
+  Pkm.LARVITAR,
+  Pkm.BAGON,
+  Pkm.BELDUM,
+  Pkm.GIBLE,
+  Pkm.DEINO,
+  Pkm.GOOMY,
+  Pkm.JANGMO_O,
+  Pkm.DREEPY,
+  Pkm.FRIGIBAX
+]
+
+export function pickPseudoLegendaries(): Pkm[] {
+  return [...PseudoLegendaryPool]
+}
+
+export function pickAllSynergies(): Synergy[] {
+  return Object.values(Synergy)
+}
 
 export function spawnDIAYAvatar(player: Player): Pokemon {
   const {

@@ -3616,7 +3616,7 @@ class GeomancyStrategy extends ability_strategy_1.AbilityStrategy {
         super.process(pokemon, board, target, crit);
         pokemon.addAttack(15, pokemon, 1, crit);
         pokemon.addSpecialDefense(10, pokemon, 1, crit);
-        pokemon.addSpeed(20, pokemon, 0, false);
+        pokemon.addSpeed(15, pokemon, 0, false);
     }
 }
 exports.GeomancyStrategy = GeomancyStrategy;
@@ -7720,6 +7720,10 @@ class FlyStrategy extends ability_strategy_1.AbilityStrategy {
 }
 exports.FlyStrategy = FlyStrategy;
 class SurfStrategy extends ability_strategy_1.AbilityStrategy {
+    constructor() {
+        super(...arguments);
+        this.requiresTarget = false;
+    }
     process(pokemon, board, target, crit, preventDefaultAnim, tierLevel = pokemon.stars) {
         var _a;
         super.process(pokemon, board, target, crit, true);
@@ -7749,8 +7753,8 @@ class SurfStrategy extends ability_strategy_1.AbilityStrategy {
             });
             pokemon.moveTo(farthestCoordinate.x, farthestCoordinate.y, board, false);
         }
-        if (targetsHit.size === 0) {
-            target.handleSpecialDamage(damage, board, Game_1.AttackType.SPECIAL, pokemon, crit);
+        if (targetsHit.size === 0 && (farthestCoordinate === null || farthestCoordinate === void 0 ? void 0 : farthestCoordinate.target)) {
+            farthestCoordinate.target.handleSpecialDamage(damage, board, Game_1.AttackType.SPECIAL, pokemon, crit);
         }
     }
 }
@@ -7911,7 +7915,7 @@ class DarkLariatStrategy extends ability_strategy_1.AbilityStrategy {
     process(pokemon, board, target, crit) {
         var _a, _b;
         super.process(pokemon, board, target, crit, true);
-        const hits = Math.round((0.5 + 0.01 * pokemon.speed) * 3);
+        const hits = Math.round((1 + 0.01 * pokemon.speed) * 3);
         target.status.triggerFlinch(1000, target, pokemon);
         for (let i = 0; i < hits; i++) {
             pokemon.commands.push(new simulation_command_1.DelayedCommand(() => {
@@ -7991,6 +7995,7 @@ class DragonPulseStrategy extends ability_strategy_1.AbilityStrategy {
         pokemon.commands.push(new simulation_command_1.DelayedCommand(() => {
             if (target && target.hp > 0) {
                 target.handleSpecialDamage(damage, board, Game_1.AttackType.SPECIAL, pokemon, crit);
+                pokemon.addAbilityPower(5, pokemon, 0, false, false);
                 board
                     .getAdjacentCells(target.positionX, target.positionY, false)
                     .filter((cell) => cell.value && cell.value.team !== pokemon.team)
@@ -8003,6 +8008,7 @@ class DragonPulseStrategy extends ability_strategy_1.AbilityStrategy {
                             targetY: cell.y
                         });
                         cell.value.handleSpecialDamage(damage, board, Game_1.AttackType.SPECIAL, pokemon, crit);
+                        pokemon.addAbilityPower(5, pokemon, 0, false, false);
                         pokemon.commands.push(new simulation_command_1.DelayedCommand(() => {
                             if (pokemon && cell.value) {
                                 board
@@ -8017,6 +8023,7 @@ class DragonPulseStrategy extends ability_strategy_1.AbilityStrategy {
                                         targetY: c.y
                                     });
                                     (_a = c.value) === null || _a === void 0 ? void 0 : _a.handleSpecialDamage(damage, board, Game_1.AttackType.SPECIAL, pokemon, crit);
+                                    pokemon.addAbilityPower(5, pokemon, 0, false, false);
                                 });
                             }
                         }, 400));
@@ -10455,7 +10462,6 @@ class HyperBeamStrategy extends ability_strategy_1.AbilityStrategy {
         });
         pokemon.commands.push(new simulation_command_1.DelayedCommand(() => {
             var _a;
-            pokemon.broadcastAbility({ skill: "HYPER_BEAM" });
             const damage = (_a = [50, 100, 150][pokemon.stars - 1]) !== null && _a !== void 0 ? _a : 150;
             pokemon.broadcastAbility({
                 skill: Ability_1.Ability.HYPER_BEAM,

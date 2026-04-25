@@ -35,6 +35,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -63,6 +65,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -90,6 +94,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -118,6 +124,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -145,6 +153,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -173,6 +183,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -200,6 +212,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -228,6 +242,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -255,6 +271,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -283,6 +301,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -314,6 +334,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -342,6 +364,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -369,6 +393,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -397,6 +423,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -424,6 +452,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -452,6 +482,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -479,6 +511,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -507,6 +541,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -534,6 +570,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -562,6 +600,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -589,6 +629,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -617,6 +659,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -644,6 +688,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -672,6 +718,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -699,6 +747,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -727,6 +777,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -754,6 +806,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -782,6 +836,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -809,6 +865,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -837,6 +895,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -864,6 +924,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -892,6 +954,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -920,6 +984,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -948,6 +1014,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
@@ -975,6 +1043,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
         }[];
         gameStartedAt: string | null;
         ownerId: string;
@@ -1003,6 +1073,8 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             title: string;
             role: import("../../../types").Role;
             anonymous: boolean;
+            twitchLogin: string;
+            twitchDisplayName: string;
             assign: <T extends Partial<GameUser>>(props: import("@colyseus/schema").AssignableProps<T>) => GameUser;
             restore: (jsonData: import("@colyseus/schema").ToJSON<GameUser>) => GameUser;
             setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<GameUser>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;

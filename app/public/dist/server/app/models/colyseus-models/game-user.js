@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameUser = void 0;
 const schema_1 = require("@colyseus/schema");
 class GameUser extends schema_1.Schema {
-    constructor(uid, name, elo, games, avatar, isBot, ready, title, role, anonymous) {
+    constructor(uid, name, elo, games, avatar, isBot, ready, title, role, anonymous, twitchLogin = "", twitchDisplayName = "") {
         super();
         this.uid = uid;
         this.name = name;
@@ -21,6 +21,8 @@ class GameUser extends schema_1.Schema {
         this.title = title;
         this.role = role;
         this.anonymous = anonymous;
+        this.twitchLogin = twitchLogin;
+        this.twitchDisplayName = twitchDisplayName;
     }
 }
 exports.GameUser = GameUser;
@@ -54,4 +56,10 @@ __decorate([
 __decorate([
     (0, schema_1.type)("boolean")
 ], GameUser.prototype, "anonymous", void 0);
+__decorate([
+    (0, schema_1.type)("string")
+], GameUser.prototype, "twitchLogin", void 0);
+__decorate([
+    (0, schema_1.type)("string")
+], GameUser.prototype, "twitchDisplayName", void 0);
 //# sourceMappingURL=game-user.js.map

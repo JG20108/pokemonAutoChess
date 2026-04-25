@@ -10,6 +10,7 @@ export default class ItemsContainer extends GameObjects.Container {
     items: Item[];
     constructor(scene: GameScene, inventory: SetSchema<Item> | ArraySchema<Item>, x: number, y: number, pokemonId: string | null, playerId: string);
     render(inventory: SetSchema<Item> | ArraySchema<Item>): void;
+    getOrderPriority(item: Item): number;
     closeTooltips(): void;
     setPlayer(player: Player): void;
     updateCount(item: Item, count: number): void;

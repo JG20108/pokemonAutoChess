@@ -18,7 +18,10 @@ export enum SpecialGameRule {
   GO_BIG_OR_GO_HOME = "GO_BIG_OR_GO_HOME",
   FAMILY_OUTING = "FAMILY_OUTING",
   UNOWN_SPELL = "UNOWN_SPELL",
-  CHOSEN_ONES = "CHOSEN_ONES"
+  CHOSEN_ONES = "CHOSEN_ONES",
+  PSEUDO_JOURNEY = "PSEUDO_JOURNEY",
+  MONOTYPE = "MONOTYPE",
+  CHOSEN_ONE = "CHOSEN_ONE"
 }
 
 export const SpecialGameRuleDescription: Record<SpecialGameRule, string> = {
@@ -57,5 +60,11 @@ export const SpecialGameRuleDescription: Record<SpecialGameRule, string> = {
   [SpecialGameRule.UNOWN_SPELL]:
     "Unowns are spectating your fights and are casting spells on both teams each round.",
   [SpecialGameRule.CHOSEN_ONES]:
-    "The add picks you choose evolve immediately and gain bonus stats."
+    "The add picks you choose evolve immediately and gain bonus stats.",
+  [SpecialGameRule.PSEUDO_JOURNEY]:
+    "Choose a base-form pseudo-legendary at stage 1. You receive a free copy on your bench every stage up to stage 10.",
+  [SpecialGameRule.MONOTYPE]:
+    "Choose one synergy type at stage 1. Only Pokémon sharing that synergy can be placed on the board.",
+  [SpecialGameRule.CHOSEN_ONE]:
+    "At stage 1, pick any Unique Pokémon from the full pool. It starts on your bench and cannot be sold."
 }

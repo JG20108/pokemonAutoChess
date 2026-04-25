@@ -32,6 +32,11 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -76,6 +81,11 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -120,6 +130,11 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -164,6 +179,11 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -208,6 +228,11 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -240,54 +265,6 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
         emotion: Emotion;
         shiny: boolean;
     }>) => void;
-    changeSelectedEmotion: (state: {
-        uid: string;
-        displayName: string;
-        email: string;
-        profile: {
-            pokemonCollection: Map<string, {
-                id: string;
-                selectedEmotion: Emotion | null;
-                selectedShiny: boolean;
-                dust: number;
-                played: number;
-                emotions: Emotion[];
-                shinyEmotions: Emotion[];
-            }>;
-            uid: string;
-            displayName: string;
-            language: Language | "";
-            avatar: string;
-            games: number;
-            wins: number;
-            exp: number;
-            level: number;
-            elo: number;
-            maxElo: number;
-            eventPoints: number;
-            maxEventPoints: number;
-            eventFinishTime: Date | null;
-            booster: number;
-            titles: Title[];
-            title: "" | Title;
-            role: import("../../../types").Role;
-            banned?: boolean | undefined;
-        } | undefined;
-        pendingGameId: string | null;
-        connectionStatus: ConnectionStatus;
-        error: string | null;
-        notifications: {
-            id: string;
-            userId: string;
-            type: import("../../../types/notifications").NotificationType;
-            message: string;
-            timestamp: number;
-        }[];
-    }, action: PayloadAction<{
-        index: string;
-        emotion: Emotion | null;
-        shiny: boolean;
-    }>) => void;
     setTitle: (state: {
         uid: string;
         displayName: string;
@@ -304,6 +281,11 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -348,6 +330,11 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -392,6 +379,11 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -436,6 +428,11 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -480,6 +477,11 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -524,6 +526,11 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -568,6 +575,11 @@ export declare const networkSlice: import("@reduxjs/toolkit").Slice<INetwork, {
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -601,10 +613,6 @@ export declare const logIn: import("@reduxjs/toolkit").ActionCreatorWithPayload<
     index: string;
     emotion: Emotion;
     shiny: boolean;
-}, "network/changeAvatar">, changeSelectedEmotion: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
-    index: string;
-    emotion: Emotion | null;
-    shiny: boolean;
-}, "network/changeSelectedEmotion">, setTitle: import("@reduxjs/toolkit").ActionCreatorWithPayload<"" | Title, "network/setTitle">, selectLanguage: import("@reduxjs/toolkit").ActionCreatorWithPayload<Language, "network/selectLanguage">, setConnectionStatus: import("@reduxjs/toolkit").ActionCreatorWithPayload<ConnectionStatus, "network/setConnectionStatus">, setErrorAlertMessage: import("@reduxjs/toolkit").ActionCreatorWithPayload<string | null, "network/setErrorAlertMessage">, setPendingGameId: import("@reduxjs/toolkit").ActionCreatorWithPayload<string | null, "network/setPendingGameId">;
+}, "network/changeAvatar">, setTitle: import("@reduxjs/toolkit").ActionCreatorWithPayload<"" | Title, "network/setTitle">, selectLanguage: import("@reduxjs/toolkit").ActionCreatorWithPayload<Language, "network/selectLanguage">, setConnectionStatus: import("@reduxjs/toolkit").ActionCreatorWithPayload<ConnectionStatus, "network/setConnectionStatus">, setErrorAlertMessage: import("@reduxjs/toolkit").ActionCreatorWithPayload<string | null, "network/setErrorAlertMessage">, setPendingGameId: import("@reduxjs/toolkit").ActionCreatorWithPayload<string | null, "network/setPendingGameId">;
 declare const _default: import("redux").Reducer<INetwork>;
 export default _default;

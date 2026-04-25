@@ -70,10 +70,11 @@ export default class PokemonSprite extends DraggableObject {
     inBattle: boolean;
     floatingTween?: Phaser.Tweens.Tween;
     troopers?: PokemonSprite[];
+    isTeleporting: boolean;
     constructor(scene: GameScene | DebugScene, x: number, y: number, pokemon: IPokemonEntity | IPokemon, playerId: string, inBattle: boolean, flip: boolean);
     get positionX(): number;
     get positionY(): number;
-    lazyloadAnimations(scene: GameScene | DebugScene): Promise<void>;
+    lazyLoadAnimations(scene: GameScene | DebugScene): Promise<void>;
     unloadAnimations(scene: GameScene | DebugScene | undefined, indexToUnload: string, tintToUnload: PokemonTint): void;
     updateTooltipPosition(): void;
     destroy(fromScene?: boolean | undefined): void;
@@ -82,7 +83,7 @@ export default class PokemonSprite extends DraggableObject {
     onPointerDown(pointer: Phaser.Input.Pointer, event: Phaser.Types.Input.EventData): void;
     onPointerUp(): void;
     onPointerOut(): void;
-    onPointerOver(pointer: any): void;
+    onPointerOver(pointer: Phaser.Input.Pointer): void;
     attackAnimation(targetX: number, targetY: number, delayBeforeShoot: number, travelTime: number, onComplete?: () => void): void;
     deathAnimation(): void;
     resurrectAnimation(): void;
@@ -136,7 +137,7 @@ export default class PokemonSprite extends DraggableObject {
     addCurseWeakness(): void;
     addCurseTorment(): void;
     addCurseFate(): void;
-    addPoison(stacks: any): void;
+    addPoison(stacks: number): void;
     removePoison(): void;
     addProtect(): void;
     removeProtect(): void;

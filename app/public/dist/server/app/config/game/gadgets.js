@@ -12,7 +12,8 @@ exports.GADGETS_NAMES = [
     "gameboy",
     "pokeguesser",
     "bot_builder",
-    "tier_list_maker"
+    "tier_list_maker",
+    "sprite_tracker"
 ];
 exports.GADGETS = {
     trainer_card: {
@@ -65,6 +66,11 @@ exports.GADGETS = {
         name: "tier_list_maker",
         icon: "tier-list",
         levelRequired: 50
+    },
+    sprite_tracker: {
+        name: "sprite_tracker",
+        icon: "pokemon-sprite",
+        levelRequired: 60
     }
 };
 exports.GADGETS_UNLOCKED_BY_LEVEL = Object.fromEntries(Object.values(exports.GADGETS).map((gadget) => [gadget.levelRequired, gadget]));

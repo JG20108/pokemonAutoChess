@@ -16,11 +16,15 @@ const pokemon_portrait_1 = __importDefault(require("../pokemon-portrait"));
 const elo_badge_1 = require("./elo-badge");
 const role_badge_1 = require("./role-badge");
 function PlayerBox(props) {
+    var _a, _b;
     const { t } = (0, react_i18next_1.useTranslation)();
     const role = (0, hooks_1.useAppSelector)((state) => { var _a; return (_a = state.network.profile) === null || _a === void 0 ? void 0 : _a.role; });
     const pokemons = [];
     const [favoritePokemons, setFavoritePokemons] = (0, react_1.useState)([]);
     const [favoriteSynergies, setFavoriteSynergies] = (0, react_1.useState)([]);
+    const twitchUrl = props.user.twitchLogin
+        ? `https://www.twitch.tv/${props.user.twitchLogin}`
+        : null;
     (0, react_1.useEffect)(() => {
         if (!props.history)
             return;
@@ -50,11 +54,11 @@ function PlayerBox(props) {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between"
-                }, children: (0, jsx_runtime_1.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "0.5em" }, children: [(0, jsx_runtime_1.jsx)(pokemon_portrait_1.default, { avatar: props.user.avatar }), props.user.title && ((0, jsx_runtime_1.jsx)("p", { className: "player-title", children: t(`title.${props.user.title}`) })), (0, jsx_runtime_1.jsx)(role_badge_1.RoleBadge, { role: props.user.role }), props.user.banned && ((0, jsx_runtime_1.jsx)("div", { className: "badge banned", children: t("banned") })), (0, jsx_runtime_1.jsx)("p", { style: {
+                }, children: (0, jsx_runtime_1.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "0.5em" }, children: [(0, jsx_runtime_1.jsx)(pokemon_portrait_1.default, { avatar: props.user.avatar }), props.user.title && ((0, jsx_runtime_1.jsx)("p", { className: "player-title", children: t(`title.${props.user.title}`) })), (0, jsx_runtime_1.jsx)(role_badge_1.RoleBadge, { role: props.user.role }), props.user.banned && ((0, jsx_runtime_1.jsx)("div", { className: "badge banned", children: t("banned") })), (0, jsx_runtime_1.jsx)("p", { className: "player-display-name", style: {
                                 overflow: "hidden",
                                 whiteSpace: "nowrap",
                                 textOverflow: "ellipsis"
-                            }, children: props.user.displayName })] }) }), (0, jsx_runtime_1.jsxs)("div", { style: {
+                            }, children: props.user.displayName }), twitchUrl && ((0, jsx_runtime_1.jsx)("a", { className: "twitch-badge-link", href: twitchUrl, target: "_blank", rel: "noreferrer", title: `Watch ${(_a = props.user.twitchDisplayName) !== null && _a !== void 0 ? _a : props.user.twitchLogin} on Twitch`, "aria-label": `Watch ${(_b = props.user.twitchDisplayName) !== null && _b !== void 0 ? _b : props.user.twitchLogin} on Twitch`, children: (0, jsx_runtime_1.jsx)("img", { src: "/assets/ui/twitch.png", alt: "", "aria-hidden": "true" }) }))] }) }), (0, jsx_runtime_1.jsxs)("div", { style: {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between"

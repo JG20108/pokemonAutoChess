@@ -11,6 +11,7 @@ const types_1 = require("../types");
 const Dungeon_1 = require("../types/enum/Dungeon");
 const Expedition_1 = require("../types/enum/Expedition");
 const Game_1 = require("../types/enum/Game");
+const Synergy_1 = require("../types/enum/Synergy");
 const number_1 = require("../utils/number");
 function getPlayerExpeditions(user) {
     const hash = user.uid.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) +
@@ -19,30 +20,72 @@ function getPlayerExpeditions(user) {
     const expeditions = [...expeditionsTypes, ...expeditionsTypes]
         .slice(hash % expeditionsTypes.length, (hash % expeditionsTypes.length) + 3)
         .map((type, i) => ({
-        rank: getExpeditionTier(user.eventPoints - i),
+        rank: getExpeditionTier(user.eventPoints, i),
         type,
         hash
     }));
     return expeditions;
 }
-function getExpeditionTier(level) {
-    if (level < 3) {
-        return Expedition_1.ExpeditionRank.E;
-    }
-    else if (level < 6) {
-        return Expedition_1.ExpeditionRank.D;
-    }
-    else if (level < 10) {
-        return Expedition_1.ExpeditionRank.C;
-    }
-    else if (level < 15) {
-        return Expedition_1.ExpeditionRank.B;
-    }
-    else if (level < 20) {
-        return Expedition_1.ExpeditionRank.A;
-    }
-    else {
-        return Expedition_1.ExpeditionRank.S;
+function getExpeditionTier(level, index) {
+    switch (index) {
+        case 0: {
+            if (level < 3) {
+                return Expedition_1.ExpeditionRank.E;
+            }
+            else if (level < 6) {
+                return Expedition_1.ExpeditionRank.D;
+            }
+            else if (level < 10) {
+                return Expedition_1.ExpeditionRank.C;
+            }
+            else if (level < 15) {
+                return Expedition_1.ExpeditionRank.B;
+            }
+            else if (level < 20) {
+                return Expedition_1.ExpeditionRank.A;
+            }
+            else {
+                return Expedition_1.ExpeditionRank.S;
+            }
+        }
+        case 1: {
+            if (level < 5) {
+                return Expedition_1.ExpeditionRank.E;
+            }
+            else if (level < 10) {
+                return Expedition_1.ExpeditionRank.D;
+            }
+            else if (level < 15) {
+                return Expedition_1.ExpeditionRank.C;
+            }
+            else if (level < 20) {
+                return Expedition_1.ExpeditionRank.B;
+            }
+            else if (level < 30) {
+                return Expedition_1.ExpeditionRank.A;
+            }
+            else {
+                return Expedition_1.ExpeditionRank.S;
+            }
+        }
+        case 2:
+        default: {
+            if (level < 6) {
+                return Expedition_1.ExpeditionRank.E;
+            }
+            else if (level < 12) {
+                return Expedition_1.ExpeditionRank.D;
+            }
+            else if (level < 18) {
+                return Expedition_1.ExpeditionRank.C;
+            }
+            else if (level < 25) {
+                return Expedition_1.ExpeditionRank.B;
+            }
+            else {
+                return Expedition_1.ExpeditionRank.A;
+            }
+        }
     }
 }
 function getExpeditionLabel(expedition) {
@@ -96,7 +139,7 @@ function getExpeditionData(expedition) {
         case Expedition_1.ExpeditionType.EXPLORATION: {
             const regions = Object.values(Dungeon_1.DungeonPMDO);
             const region = regions[expedition.hash % regions.length];
-            const regionSynergies = config_1.RegionDetails[region].synergies;
+            const regionSynergies = config_1.RegionDetails[region].synergies.filter((s) => s !== Synergy_1.Synergy.BABY);
             const synergy = regionSynergies[expedition.hash % regionSynergies.length];
             const synergyTriggers = config_1.SynergyTriggers[synergy];
             const level = synergyTriggers[(0, number_1.max)(synergyTriggers.length - 1)(rankIndex)];

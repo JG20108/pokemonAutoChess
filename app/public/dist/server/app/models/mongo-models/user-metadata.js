@@ -16,6 +16,23 @@ const userMetadataSchema = new mongoose_1.Schema({
     displayName: {
         type: String
     },
+    twitchUserId: {
+        type: String
+    },
+    twitchLogin: {
+        type: String,
+        lowercase: true,
+        trim: true
+    },
+    twitchDisplayName: {
+        type: String
+    },
+    twitchVerifiedAt: {
+        type: Date
+    },
+    twitchVerificationRevokedAt: {
+        type: Date
+    },
     language: {
         type: String,
         default: "en"
@@ -110,7 +127,10 @@ const userMetadataSchema = new mongoose_1.Schema({
     }
 });
 userMetadataSchema.index({ displayName: 1 }, { collation: { locale: "en", strength: 2 } });
+userMetadataSchema.index({ elo: 1 });
 userMetadataSchema.index({ titles: 1 });
+userMetadataSchema.index({ twitchUserId: 1 }, { unique: true, sparse: true });
+userMetadataSchema.index({ twitchLogin: 1 }, { unique: true, sparse: true });
 exports.default = (0, mongoose_1.model)("UserMetadata", userMetadataSchema);
 function toLeanUserMetadata(user) {
     var _a, _b;

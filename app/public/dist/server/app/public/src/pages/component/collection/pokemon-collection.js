@@ -100,7 +100,7 @@ function PokemonCollection() {
 }
 function PokemonCollectionList(props) {
     const pokemonCollection = (0, hooks_1.useAppSelector)((state) => { var _a; return (_a = state.network.profile) === null || _a === void 0 ? void 0 : _a.pokemonCollection; });
-    const lastBoostersOpened = (0, hooks_1.useAppSelector)((state) => state.lobby.lastBoostersOpened);
+    const lastBoostersOpened = (0, hooks_1.useAppSelector)((state) => state.boosters.lastBoostersOpened);
     const [favorites] = (0, store_1.useLocalStore)(store_1.LocalStoreKeys.FAVORITES, [], Infinity);
     const getItem = (0, react_1.useCallback)((index) => pokemonCollection === null || pokemonCollection === void 0 ? void 0 : pokemonCollection.get(index), [pokemonCollection]);
     const pokemonsSorted = (0, react_1.useMemo)(() => {

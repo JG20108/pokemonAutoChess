@@ -28,6 +28,7 @@ const events_1 = require("../types/events");
 const logger_1 = require("../utils/logger");
 const number_1 = require("../utils/number");
 const notifications_1 = require("./notifications");
+const sprite_gap_scanner_1 = require("./sprite-gap-scanner");
 function initCronJobs() {
     logger_1.logger.debug("init cron jobs");
     cron_1.CronJob.from({
@@ -58,6 +59,12 @@ function initCronJobs() {
         cronTime: "0 0 1 * *",
         timeZone: "UTC",
         onTick: () => resetEventScores(),
+        start: true
+    });
+    cron_1.CronJob.from({
+        cronTime: "0 9 * * *",
+        timeZone: "UTC",
+        onTick: () => (0, sprite_gap_scanner_1.refreshSpriteGapData)(),
         start: true
     });
 }

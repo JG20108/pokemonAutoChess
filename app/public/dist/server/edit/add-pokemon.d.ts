@@ -5,7 +5,7 @@ declare function getAvailablePokemonIndices(): string[];
 declare class SpriteSheetProcessor {
     private durations;
     private delays;
-    private missing;
+    private missingPokemonLog;
     private mapName;
     private pkmIndexes;
     constructor();
@@ -15,7 +15,7 @@ declare class SpriteSheetProcessor {
     saveDelaysFile(): void;
     private removeBlue;
     private removeRed;
-    private zeroPad;
+    private zeroPadToFour;
     splitIndex(spriteCollabPath: string, index: string): Promise<void>;
     splitAll(spriteCollabPath: string): Promise<void>;
     saveMissingFiles(): void;

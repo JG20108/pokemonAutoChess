@@ -18,7 +18,7 @@ const pokemon_portrait_1 = __importDefault(require("../pokemon-portrait"));
 require("./pokemon-collection-item.css");
 function PokemonCollectionItem(props) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j;
-    const lastBoostersOpened = (0, hooks_1.useAppSelector)((state) => state.lobby.lastBoostersOpened);
+    const lastBoostersOpened = (0, hooks_1.useAppSelector)((state) => state.boosters.lastBoostersOpened);
     const [favorites] = (0, store_1.useLocalStore)(store_1.LocalStoreKeys.FAVORITES, [], Infinity);
     if ((0, precomputed_emotions_1.getAvailableEmotions)(props.index, false).length === 0) {
         return null;

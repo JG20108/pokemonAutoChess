@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ConsumableItems = exports.UnholdableItems = exports.Mulches = exports.Sweets = exports.SynergyFlavors = exports.Flavors = exports.HerbaMysticas = exports.ItemsSoldAtTown = exports.DishesGoingToInventory = exports.Mushrooms = exports.Dishes = exports.AbilityPerTM = exports.TMs = exports.TMsGold = exports.TMsSilver = exports.TMsBronze = exports.OgerponMasks = exports.CraftableNoStonesOrScarves = exports.SynergyGivenByGem = exports.SynergyGivenByItem = exports.SynergyItems = exports.SynergyItemsNoSpecial = exports.ToolsBuried = exports.SynergyGemsBuried = exports.SynergyGems = exports.SynergyStones = exports.CraftableItemsNoScarves = exports.CraftableItems = exports.WeatherByWeatherRocks = exports.WeatherRocksByWeather = exports.WeatherRocks = exports.ShinyItems = exports.ArtificialItems = exports.Tools = exports.Berries = exports.SpecialBerries = exports.NonSpecialBerries = exports.Scarves = exports.ItemRecipe = exports.ItemComponents = exports.ItemComponentsNoScarf = exports.ItemComponentsNoFossilOrScarf = exports.FishingRods = exports.SpecialItems = exports.TownItems = exports.DojoTickets = exports.MissionOrders = exports.MemoryDiscsBySynergy = exports.MemoryDiscs = exports.Item = void 0;
-exports.RemovableItems = void 0;
+exports.UnholdableItems = exports.Mulches = exports.Sweets = exports.SynergyFlavors = exports.Flavors = exports.HerbaMysticas = exports.ItemsSoldAtTown = exports.DishesGoingToInventory = exports.Mushrooms = exports.Dishes = exports.AbilityPerTM = exports.TMs = exports.TMsGold = exports.TMsSilver = exports.TMsBronze = exports.OgerponMasks = exports.Wands = exports.CraftableNoStonesOrScarves = exports.SynergyGivenByGem = exports.SynergyGivenByItem = exports.SynergyItems = exports.SynergyItemsNoSpecial = exports.ToolsBuried = exports.SynergyGemsBuried = exports.SynergyGems = exports.SynergyStones = exports.CraftableItemsNoScarves = exports.CraftableItems = exports.WeatherByWeatherRocks = exports.WeatherRocksByWeather = exports.WeatherRocks = exports.ShinyItems = exports.ArtificialItems = exports.Tools = exports.Berries = exports.SpecialBerries = exports.NonSpecialBerries = exports.Scarves = exports.ItemRecipe = exports.ItemComponents = exports.ItemComponentsNoScarf = exports.ItemComponentsNoFossilOrScarf = exports.FishingRods = exports.SpecialItems = exports.TownItems = exports.DojoTickets = exports.MissionOrders = exports.MemoryDiscsBySynergy = exports.MemoryDiscs = exports.Item = void 0;
+exports.RemovableItems = exports.ConsumableItems = void 0;
 const map_1 = require("../../utils/map");
 const Ability_1 = require("./Ability");
 const Synergy_1 = require("./Synergy");
@@ -311,6 +311,22 @@ var Item;
     Item["TATSUGIRI_CURLY"] = "TATSUGIRI_CURLY";
     Item["TATSUGIRI_DROOPY"] = "TATSUGIRI_DROOPY";
     Item["TATSUGIRI_STRETCHY"] = "TATSUGIRI_STRETCHY";
+    Item["CONFUSE_WAND"] = "CONFUSE_WAND";
+    Item["PETRIFY_WAND"] = "PETRIFY_WAND";
+    Item["SLOW_WAND"] = "SLOW_WAND";
+    Item["SLUMBER_WAND"] = "SLUMBER_WAND";
+    Item["BLAST_WAND"] = "BLAST_WAND";
+    Item["HP_SWAP_WAND"] = "HP_SWAP_WAND";
+    Item["SPIRIT_WAND"] = "SPIRIT_WAND";
+    Item["LONG_WAND"] = "LONG_WAND";
+    Item["GUIDING_WAND"] = "GUIDING_WAND";
+    Item["SURROUND_WAND"] = "SURROUND_WAND";
+    Item["POUNCE_WAND"] = "POUNCE_WAND";
+    Item["TWO_EDGED_WAND"] = "TWO_EDGED_WAND";
+    Item["WARP_WAND"] = "WARP_WAND";
+    Item["SWITCHER_WAND"] = "SWITCHER_WAND";
+    Item["WHIRLWIND_WAND"] = "WHIRLWIND_WAND";
+    Item["TUNNEL_WAND"] = "TUNNEL_WAND";
 })(Item || (exports.Item = Item = {}));
 exports.MemoryDiscs = [
     Item.FIRE_MEMORY,
@@ -824,6 +840,24 @@ exports.SynergyGivenByGem = {
     [Item.GOURMET_GEM]: Synergy_1.Synergy.GOURMET
 };
 exports.CraftableNoStonesOrScarves = exports.CraftableItemsNoScarves.filter((item) => exports.SynergyGivenByItem.hasOwnProperty(item) === false);
+exports.Wands = [
+    Item.BLAST_WAND,
+    Item.HP_SWAP_WAND,
+    Item.SPIRIT_WAND,
+    Item.LONG_WAND,
+    Item.CONFUSE_WAND,
+    Item.PETRIFY_WAND,
+    Item.SLOW_WAND,
+    Item.SLUMBER_WAND,
+    Item.GUIDING_WAND,
+    Item.SURROUND_WAND,
+    Item.POUNCE_WAND,
+    Item.TWO_EDGED_WAND,
+    Item.WARP_WAND,
+    Item.SWITCHER_WAND,
+    Item.WHIRLWIND_WAND,
+    Item.TUNNEL_WAND
+];
 exports.OgerponMasks = [
     Item.TEAL_MASK,
     Item.WELLSPRING_MASK,
@@ -991,6 +1025,7 @@ exports.Mulches = [Item.RICH_MULCH, Item.AMAZE_MULCH];
 exports.UnholdableItems = [
     ...exports.WeatherRocks,
     ...exports.FishingRods,
+    ...exports.Wands,
     ...exports.TMs,
     ...exports.Flavors,
     ...exports.Dishes,

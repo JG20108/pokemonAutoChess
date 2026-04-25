@@ -47,6 +47,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.server = void 0;
+const promises_1 = require("node:fs/promises");
 const monitor_1 = require("@colyseus/monitor");
 const colyseus_1 = require("colyseus");
 const cors_1 = __importDefault(require("cors"));
@@ -54,6 +55,7 @@ const express_1 = __importDefault(require("express"));
 const express_basic_auth_1 = __importDefault(require("express-basic-auth"));
 const firebase_admin_1 = __importDefault(require("firebase-admin"));
 const helmet_1 = __importDefault(require("helmet"));
+const marked_1 = require("marked");
 const mongoose_1 = require("mongoose");
 const path_1 = __importDefault(require("path"));
 const package_json_1 = __importDefault(require("../package.json"));
@@ -70,12 +72,16 @@ const after_game_room_1 = __importDefault(require("./rooms/after-game-room"));
 const custom_lobby_room_1 = __importDefault(require("./rooms/custom-lobby-room"));
 const game_room_1 = __importDefault(require("./rooms/game-room"));
 const preparation_room_1 = __importDefault(require("./rooms/preparation-room"));
+const booster_1 = require("./services/booster");
 const bots_1 = require("./services/bots");
+const collection_2 = require("./services/collection");
 const leaderboard_1 = require("./services/leaderboard");
 const meta_1 = require("./services/meta");
+const sprite_gap_scanner_1 = require("./services/sprite-gap-scanner");
 const twitch_1 = require("./services/twitch");
 const types_1 = require("./types");
 const Dungeon_1 = require("./types/enum/Dungeon");
+const Emotion_1 = require("./types/enum/Emotion");
 const Game_1 = require("./types/enum/Game");
 const Item_1 = require("./types/enum/Item");
 const Pokemon_1 = require("./types/enum/Pokemon");
@@ -93,6 +99,60 @@ const setCacheControl = (res, maxAge = 86400) => {
         res.set("Cache-Control", "no-cache");
     }
 };
+const legalPageStyle = `
+      :root {
+        color-scheme: light;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: #f7f7f7;
+        color: #1b1b1b;
+      }
+      main {
+        box-sizing: border-box;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+        background: #fff;
+        min-height: 100vh;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.25;
+      }
+      p,
+      li {
+        line-height: 1.6;
+      }
+`;
+function renderLegalPage(res, markdownFile, pageTitle, unavailableMessage) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const markdown = yield (0, promises_1.readFile)(path_1.default.resolve(process.cwd(), markdownFile), "utf8");
+            const html = yield marked_1.marked.parse(markdown);
+            res.type("html").send(`<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${pageTitle} | Pokemon Auto Chess</title>
+    <style>${legalPageStyle}</style>
+  </head>
+  <body>
+    <main>
+      ${html}
+    </main>
+  </body>
+</html>`);
+        }
+        catch (error) {
+            logger_1.logger.error(`Failed to load ${markdownFile}`, error);
+            res.status(500).send(unavailableMessage);
+        }
+    });
+}
 let gameOptions = {};
 if (process.env.NODE_APP_INSTANCE) {
     const processNumber = Number(process.env.NODE_APP_INSTANCE || "0");
@@ -217,6 +277,18 @@ exports.server = (0, colyseus_1.defineServer)(Object.assign(Object.assign({}, ga
         app.get("/translations", (req, res) => {
             res.sendFile(viewsSrc);
         });
+        app.get("/privacy-policy", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            yield renderLegalPage(res, "policy.md", "Privacy Policy", "Privacy policy is temporarily unavailable");
+        }));
+        app.get("/policy", (req, res) => {
+            res.redirect(301, "/privacy-policy");
+        });
+        app.get("/terms-of-service", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            yield renderLegalPage(res, "terms-of-service.md", "Terms of Service", "Terms of service are temporarily unavailable");
+        }));
+        app.get("/terms", (req, res) => {
+            res.redirect(301, "/terms-of-service");
+        });
         app.get("/pokemons", (req, res) => {
             res.send(Pokemon_1.Pkm);
         });
@@ -255,9 +327,21 @@ exports.server = (0, colyseus_1.defineServer)(Object.assign(Object.assign({}, ga
             setCacheControl(res, 86400);
             res.send((0, meta_1.getMetaV2)());
         }));
+        app.get("/meta/player-rank-distribution", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            setCacheControl(res, 86400);
+            res.send((0, meta_1.getPlayerRankDistribution)());
+        }));
+        app.get("/meta/game-activity", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            setCacheControl(res, 86400);
+            res.send((0, meta_1.getGameActivity)());
+        }));
         app.get("/dendrogram", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             setCacheControl(res, 86400);
             res.send((0, meta_1.getDendrogram)());
+        }));
+        app.get("/sprite-gap-scanner", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            setCacheControl(res, 86400);
+            res.send((0, sprite_gap_scanner_1.getCachedSpriteGapData)());
         }));
         app.get("/meta/types", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const userAuth = yield authUser(req, res);
@@ -321,6 +405,65 @@ exports.server = (0, colyseus_1.defineServer)(Object.assign(Object.assign({}, ga
         app.get("/twitch/streams", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             setCacheControl(res, 120);
             res.send((0, twitch_1.getTwitchStreamsPayload)());
+        }));
+        app.post("/twitch/verify/start", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            const userAuth = yield authUser(req, res);
+            if (!userAuth)
+                return;
+            try {
+                const payload = yield (0, twitch_1.startTwitchAccountVerification)(userAuth.uid);
+                res.status(200).json(payload);
+            }
+            catch (error) {
+                const message = error instanceof Error ? error.message : "Unknown error";
+                logger_1.logger.error("Error starting Twitch verification", { error: message });
+                if (message.includes("not configured") ||
+                    message.includes("REDIRECT") ||
+                    message.includes("STATE_SECRET")) {
+                    res.status(503).json({ error: message });
+                    return;
+                }
+                res.status(400).json({ error: message });
+            }
+        }));
+        app.get("/auth/twitch/callback", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            var _a, _b;
+            const state = (_a = req.query.state) === null || _a === void 0 ? void 0 : _a.toString();
+            const code = (_b = req.query.code) === null || _b === void 0 ? void 0 : _b.toString();
+            const successRedirect = process.env.TWITCH_VERIFY_SUCCESS_REDIRECT || "/auth";
+            const errorRedirect = process.env.TWITCH_VERIFY_ERROR_REDIRECT || "/auth";
+            if (!state || !code) {
+                return res.redirect(`${errorRedirect}?twitchVerify=missing_params`);
+            }
+            try {
+                yield (0, twitch_1.completeTwitchAccountVerification)(code, state);
+                return res.redirect(`${successRedirect}?twitchVerify=success`);
+            }
+            catch (error) {
+                const message = error instanceof Error
+                    ? encodeURIComponent(error.message)
+                    : "verification_failed";
+                logger_1.logger.error("Error completing Twitch verification", { error: message });
+                return res.redirect(`${errorRedirect}?twitchVerify=${message}`);
+            }
+        }));
+        app.post("/twitch/verify/unlink", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            const userAuth = yield authUser(req, res);
+            if (!userAuth)
+                return;
+            try {
+                yield (0, twitch_1.unlinkTwitchAccount)(userAuth.uid);
+                res.status(200).send();
+            }
+            catch (error) {
+                const message = error instanceof Error ? error.message : "Unknown error";
+                if (message === "User not found") {
+                    res.status(404).json({ error: message });
+                    return;
+                }
+                logger_1.logger.error("Error unlinking Twitch verification", { error: message });
+                res.status(500).json({ error: "Error unlinking Twitch account" });
+            }
         }));
         app.get("/game-history/:playerUid", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             if (!isDevelopment) {
@@ -450,6 +593,117 @@ exports.server = (0, colyseus_1.defineServer)(Object.assign(Object.assign({}, ga
             catch (error) {
                 logger_1.logger.error("Error fetching profile", error);
                 res.status(500).send("Error fetching profile");
+            }
+        }));
+        app.post("/boosters/open", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                const userAuth = yield authUser(req, res);
+                if (!userAuth)
+                    return;
+                const result = yield (0, booster_1.openBoosterForUser)(userAuth.uid);
+                if (!result) {
+                    res.status(409).json({ error: "No boosters available" });
+                    return;
+                }
+                res.status(200).json({
+                    boosterContent: result.boosterContent,
+                    user: (0, user_metadata_1.toUserMetadataJSON)(result.userDoc)
+                });
+            }
+            catch (error) {
+                logger_1.logger.error("Error opening booster", error);
+                res.status(500).json({ error: "Error opening booster" });
+            }
+        }));
+        app.post("/boosters/buy", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            var _a;
+            try {
+                const userAuth = yield authUser(req, res);
+                if (!userAuth)
+                    return;
+                const index = (_a = req.body) === null || _a === void 0 ? void 0 : _a.index;
+                if (!index || typeof index !== "string") {
+                    res.status(400).json({ error: "index is required" });
+                    return;
+                }
+                const result = yield (0, booster_1.buyBoosterForUser)(userAuth.uid, index);
+                if (!result) {
+                    res.status(409).json({ error: "Not enough dust or invalid pokemon" });
+                    return;
+                }
+                res.status(200).json({
+                    user: (0, user_metadata_1.toUserMetadataJSON)(result.userDoc)
+                });
+            }
+            catch (error) {
+                logger_1.logger.error("Error buying booster", error);
+                res.status(500).json({ error: "Error buying booster" });
+            }
+        }));
+        app.post("/collection/change-selected-emotion", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            var _a, _b, _c;
+            try {
+                const userAuth = yield authUser(req, res);
+                if (!userAuth)
+                    return;
+                const index = (_a = req.body) === null || _a === void 0 ? void 0 : _a.index;
+                const emotion = (_b = req.body) === null || _b === void 0 ? void 0 : _b.emotion;
+                const shiny = (_c = req.body) === null || _c === void 0 ? void 0 : _c.shiny;
+                if (!index || typeof index !== "string") {
+                    res.status(400).json({ error: "index is required" });
+                    return;
+                }
+                if (emotion !== null && !Object.values(Emotion_1.Emotion).includes(emotion)) {
+                    res.status(400).json({ error: "emotion is invalid" });
+                    return;
+                }
+                if (typeof shiny !== "boolean") {
+                    res.status(400).json({ error: "shiny must be a boolean" });
+                    return;
+                }
+                const result = yield (0, collection_2.changeSelectedEmotionForUser)(userAuth.uid, index, emotion, shiny);
+                if (!result) {
+                    res.status(409).json({ error: "Emotion is not unlocked" });
+                    return;
+                }
+                res.status(200).json({ user: (0, user_metadata_1.toUserMetadataJSON)(result.userDoc) });
+            }
+            catch (error) {
+                logger_1.logger.error("Error changing selected emotion", error);
+                res.status(500).json({ error: "Error changing selected emotion" });
+            }
+        }));
+        app.post("/collection/buy-emotion", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            var _a, _b, _c;
+            try {
+                const userAuth = yield authUser(req, res);
+                if (!userAuth)
+                    return;
+                const index = (_a = req.body) === null || _a === void 0 ? void 0 : _a.index;
+                const emotion = (_b = req.body) === null || _b === void 0 ? void 0 : _b.emotion;
+                const shiny = (_c = req.body) === null || _c === void 0 ? void 0 : _c.shiny;
+                if (!index || typeof index !== "string") {
+                    res.status(400).json({ error: "index is required" });
+                    return;
+                }
+                if (!emotion || !Object.values(Emotion_1.Emotion).includes(emotion)) {
+                    res.status(400).json({ error: "emotion is invalid" });
+                    return;
+                }
+                if (typeof shiny !== "boolean") {
+                    res.status(400).json({ error: "shiny must be a boolean" });
+                    return;
+                }
+                const result = yield (0, collection_2.buyEmotionForUser)(userAuth.uid, index, emotion, shiny);
+                if (!result) {
+                    res.status(409).json({ error: "Not enough dust or invalid state" });
+                    return;
+                }
+                res.status(200).json({ user: (0, user_metadata_1.toUserMetadataJSON)(result.userDoc) });
+            }
+            catch (error) {
+                logger_1.logger.error("Error buying emotion", error);
+                res.status(500).json({ error: "Error buying emotion" });
             }
         }));
         app.post("/bots", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

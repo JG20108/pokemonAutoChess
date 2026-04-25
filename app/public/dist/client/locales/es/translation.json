@@ -3743,6 +3743,9 @@
 	"player_choices": {
 		"choose_add_pick": "Elige un Pokémon adicional. Estará disponible para todos.",
 		"choose_first_partner": "Elige tu inicial. Tendrás una copia de este en cada etapa hasta la número 10",
+		"choose_pseudo_legendary": "Elige tu pseudolegendario. Recibirás una copia gratis en cada etapa hasta la número 10.",
+		"choose_chosen_one": "Elige tu Pokémon Único. No podrá ser vendido.",
+		"choose_monotype": "Elige tu tipo de sinergia. Solo los Pokémon con ese tipo pueden ser colocados en el tablero.",
 		"free_slot_hint": "Debe tener un espacio libre en el banquillo, o dos para Duos"
 	},
 	"hide": "Ocultar",
@@ -4120,7 +4123,12 @@
 		"HIGH_ROLLER": "Suertudo",
 		"REGIONAL_SPECIALTIES": "Especialidades Regionales",
 		"GO_BIG_OR_GO_HOME": "Aporta o aparta",
-		"FAMILY_OUTING": "Vacaciones en familia"
+		"FAMILY_OUTING": "Vacaciones en familia",
+		"UNOWN_SPELL": "Unown Spell",
+		"CHOSEN_ONES": "Los Elegidos",
+		"PSEUDO_JOURNEY": "Viaje Pseudo",
+		"MONOTYPE": "Monotipo",
+		"CHOSEN_ONE": "El Elegido"
 	},
 	"scribble_description": {
 		"EVERYONE_IS_HERE": "Todas los pokémon adicionales están disponibles de inmediato.",
@@ -4140,7 +4148,12 @@
 		"HIGH_ROLLER": "Las tiendas tienen una probabilidad de contener Eclosiones en las rondas 0-10, Únicos en las rondas 10-20 y Legendarios a partir de la ronda 20.",
 		"REGIONAL_SPECIALTIES": "La región en la que te encuentras actualmente cuenta para tus sinergias. Cuando cambias de región, tu equipo prueba un plato local.",
 		"GO_BIG_OR_GO_HOME": "Las unidades ganan 5 de HP máximos y crecen en tamaño cada ronda.",
-		"FAMILY_OUTING": "Los Pokémon de la misma familia cuentan para los niveles de sinergia."
+		"FAMILY_OUTING": "Los Pokémon de la misma familia cuentan para los niveles de sinergia.",
+		"UNOWN_SPELL": "Los Unown presencian tus batallas y lanzan hechizos en ambos equipos cada ronda.",
+		"CHOSEN_ONES": "Los adicionales que elijas evolucionan de inmediato y ganan estadísticas adicionales.",
+		"PSEUDO_JOURNEY": "Elige un pseudolegendario en la etapa 1. Recibirás una copia gratuita en tu banquillo en cada etapa hasta la 10.",
+		"MONOTYPE": "Elige un tipo de sinergia en la etapa 1. Solo los Pokémon con ese tipo pueden colocarse en el tablero.",
+		"CHOSEN_ONE": "En la etapa 1, elige cualquier Pokémon Único del pool completo. Empieza en tu banquillo y no puede ser vendido."
 	},
 	"town_encounter_description": {
 		"KECLEON": "Kecleon vende piedras de sinergia por {{cost}} de GOLD",

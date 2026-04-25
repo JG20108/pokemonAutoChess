@@ -124,6 +124,10 @@ interface OnAttackEffectArgs {
     isTripleAttack?: boolean;
     hasAttackKilled?: boolean;
 }
+export declare class BeforeAttackEffect extends Effect {
+    apply(args: OnAttackEffectArgs): void;
+    constructor(effect?: (args: OnAttackEffectArgs) => void, origin?: EffectOrigin);
+}
 export declare class OnAttackEffect extends Effect {
     apply(args: OnAttackEffectArgs): void;
     constructor(effect?: (args: OnAttackEffectArgs) => void, origin?: EffectOrigin);

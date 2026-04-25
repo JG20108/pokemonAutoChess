@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OnShieldDepletedEffect = exports.OnMoveEffect = exports.OnDamageDealtEffect = exports.OnAttackReceivedEffect = exports.OnDamageReceivedEffect = exports.OnAbilityCastEffect = exports.OnAttackEffect = exports.OnHitEffect = exports.PeriodicEffect = exports.OnResurrectEffect = exports.OnDeathEffect = exports.OnKillEffect = exports.OnItemDroppedEffect = exports.OnSimulationStartEffect = exports.OnStageStartEffect = exports.OnItemRemovedEffect = exports.OnItemGainedEffect = exports.OnDishConsumedEffect = exports.OnSpawnEffect = exports.Effect = void 0;
+exports.OnShieldDepletedEffect = exports.OnMoveEffect = exports.OnDamageDealtEffect = exports.OnAttackReceivedEffect = exports.OnDamageReceivedEffect = exports.OnAbilityCastEffect = exports.OnAttackEffect = exports.BeforeAttackEffect = exports.OnHitEffect = exports.PeriodicEffect = exports.OnResurrectEffect = exports.OnDeathEffect = exports.OnKillEffect = exports.OnItemDroppedEffect = exports.OnSimulationStartEffect = exports.OnStageStartEffect = exports.OnItemRemovedEffect = exports.OnItemGainedEffect = exports.OnDishConsumedEffect = exports.OnSpawnEffect = exports.Effect = void 0;
 class Effect {
     apply(...args) { }
     constructor(effect, origin) {
@@ -108,6 +108,13 @@ class OnHitEffect extends Effect {
     }
 }
 exports.OnHitEffect = OnHitEffect;
+class BeforeAttackEffect extends Effect {
+    apply(args) { }
+    constructor(effect, origin) {
+        super(effect, origin);
+    }
+}
+exports.BeforeAttackEffect = BeforeAttackEffect;
 class OnAttackEffect extends Effect {
     apply(args) { }
     constructor(effect, origin) {

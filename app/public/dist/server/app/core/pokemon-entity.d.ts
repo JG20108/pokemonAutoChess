@@ -171,11 +171,6 @@ export declare class PokemonEntity extends Schema implements IPokemonEntity {
         attackType: AttackType;
         isRetaliation: boolean;
     }): void;
-    onCriticalAttack({ target, board, damage }: {
-        target: PokemonEntity;
-        board: Board;
-        damage: number;
-    }): void;
     onKill({ target, board, attackType }: {
         target: PokemonEntity;
         board: Board;

@@ -1,37 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -41,17 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteRoomCommand = exports.OpenGameCommand = exports.JoinOrOpenRoomCommand = exports.SelectLanguageCommand = exports.UnbanUserCommand = exports.BanUserCommand = exports.OnSearchByIdCommand = exports.BuyBoosterCommand = exports.BuyEmotionCommand = exports.ChangeAvatarCommand = exports.ChangeSelectedEmotionCommand = exports.ChangeTitleCommand = exports.ChangeNameCommand = exports.OpenBoosterCommand = exports.RemoveMessageCommand = exports.OnNewMessageCommand = exports.GiveRoleCommand = exports.GiveAllPortraitsCommand = exports.GiveBoostersCommand = exports.HeapSnapshotCommand = exports.DeleteAccountCommand = exports.GiveTitleCommand = exports.OnLeaveCommand = exports.OnJoinCommand = void 0;
+exports.DeleteRoomCommand = exports.OpenGameCommand = exports.JoinOrOpenRoomCommand = exports.SelectLanguageCommand = exports.UnbanUserCommand = exports.BanUserCommand = exports.OnSearchByIdCommand = exports.ChangeAvatarCommand = exports.ChangeTitleCommand = exports.ChangeNameCommand = exports.RemoveMessageCommand = exports.OnNewMessageCommand = exports.GiveRoleCommand = exports.GiveAllPortraitsCommand = exports.GiveBoostersCommand = exports.HeapSnapshotCommand = exports.DeleteAccountCommand = exports.GiveTitleCommand = exports.OnLeaveCommand = exports.OnJoinCommand = void 0;
 const command_1 = require("@colyseus/command");
 const colyseus_1 = require("colyseus");
+const crypto_1 = require("crypto");
 const v8_1 = require("v8");
 const config_1 = require("../../config");
 const collection_1 = require("../../core/collection");
 const pending_game_manager_1 = require("../../core/pending-game-manager");
-const user_metadata_1 = __importStar(require("../../models/mongo-models/user-metadata"));
+const user_metadata_1 = __importDefault(require("../../models/mongo-models/user-metadata"));
 const precomputed_emotions_1 = require("../../models/precomputed/precomputed-emotions");
-const precomputed_pokemon_data_1 = require("../../models/precomputed/precomputed-pokemon-data");
 const discord_1 = require("../../services/discord");
 const notifications_1 = require("../../services/notifications");
 const types_1 = require("../../types");
@@ -330,107 +300,6 @@ class RemoveMessageCommand extends command_1.Command {
     }
 }
 exports.RemoveMessageCommand = RemoveMessageCommand;
-class OpenBoosterCommand extends command_1.Command {
-    execute(_a) {
-        return __awaiter(this, arguments, void 0, function* ({ client }) {
-            try {
-                const user = this.room.users.get(client.auth.uid);
-                if (!user)
-                    return;
-                let userDoc = yield user_metadata_1.default.findOneAndUpdate({
-                    uid: client.auth.uid,
-                    booster: { $gt: 0 }
-                }, {
-                    $inc: { booster: -1 }
-                }, { returnDocument: "after" });
-                if (!userDoc)
-                    return;
-                const updateOperations = {};
-                const boosterContent = (0, collection_1.createBooster)(userDoc);
-                boosterContent.forEach((card) => {
-                    const index = Pokemon_1.PkmIndex[card.name];
-                    const existingItem = userDoc.pokemonCollection.get(index);
-                    if (!existingItem) {
-                        if (`pokemonCollection.${index}` in updateOperations) {
-                            const unlocked = updateOperations[`pokemonCollection.${index}`].unlocked;
-                            collection_1.CollectionUtils.unlockEmotion(unlocked, card.emotion, card.shiny);
-                        }
-                        else {
-                            const newCollectionItem = {
-                                id: index,
-                                unlocked: Buffer.alloc(5, 0),
-                                dust: 0,
-                                selectedEmotion: types_1.Emotion.NORMAL,
-                                selectedShiny: false,
-                                played: 0
-                            };
-                            collection_1.CollectionUtils.unlockEmotion(newCollectionItem.unlocked, card.emotion, card.shiny);
-                            updateOperations[`pokemonCollection.${index}`] = newCollectionItem;
-                        }
-                    }
-                    else {
-                        const hasUnlocked = collection_1.CollectionUtils.hasUnlocked(existingItem.unlocked, card.emotion, card.shiny);
-                        if (hasUnlocked) {
-                            const dustGain = card.shiny ? config_1.DUST_PER_SHINY : config_1.DUST_PER_BOOSTER;
-                            const shardIndex = Pokemon_1.PkmIndex[(0, config_1.getBaseAltForm)(card.name)];
-                            updateOperations.$inc = updateOperations.$inc || {};
-                            updateOperations.$inc[`pokemonCollection.${shardIndex}.dust`] =
-                                dustGain;
-                        }
-                        else {
-                            collection_1.CollectionUtils.unlockEmotion(existingItem.unlocked, card.emotion, card.shiny);
-                            updateOperations[`pokemonCollection.${index}.unlocked`] =
-                                Buffer.copyBytesFrom(existingItem.unlocked, 0, 5);
-                        }
-                    }
-                });
-                yield userDoc.updateOne(updateOperations);
-                userDoc = yield user_metadata_1.default.findOne({ uid: client.auth.uid });
-                if (!userDoc) {
-                    logger_1.logger.error(`User document not found after opening booster: ${client.auth.uid}`);
-                    return;
-                }
-                user.booster = userDoc.booster;
-                boosterContent.forEach((pkmWithCustom) => {
-                    const index = Pokemon_1.PkmIndex[pkmWithCustom.name];
-                    const pokemonCollectionItem = user.pokemonCollection.get(index);
-                    const mongoPokemonCollectionItem = userDoc.pokemonCollection.get(index);
-                    if (!mongoPokemonCollectionItem) {
-                        logger_1.logger.error(`Missing mongo collection item after booster open`, {
-                            index,
-                            pkmWithCustom,
-                            clientUid: client.auth.uid
-                        });
-                        return;
-                    }
-                    if (pokemonCollectionItem) {
-                        pokemonCollectionItem.dust = mongoPokemonCollectionItem.dust;
-                        pokemonCollectionItem.unlocked = Buffer.copyBytesFrom(mongoPokemonCollectionItem.unlocked, 0, 5);
-                    }
-                    else {
-                        const newConfig = {
-                            dust: mongoPokemonCollectionItem.dust,
-                            id: mongoPokemonCollectionItem.id,
-                            selectedEmotion: mongoPokemonCollectionItem.selectedEmotion,
-                            selectedShiny: mongoPokemonCollectionItem.selectedShiny,
-                            played: mongoPokemonCollectionItem.played,
-                            unlocked: Buffer.copyBytesFrom(mongoPokemonCollectionItem.unlocked, 0, 5)
-                        };
-                        user.pokemonCollection.set(index, newConfig);
-                    }
-                });
-                checkTitlesAfterEmotionUnlocked(userDoc, boosterContent);
-                yield userDoc.save();
-                client.send(types_1.Transfer.BOOSTER_CONTENT, boosterContent);
-                client.send(types_1.Transfer.USER_PROFILE, (0, user_metadata_1.toUserMetadataJSON)(userDoc));
-            }
-            catch (error) {
-                logger_1.logger.error(error);
-            }
-        });
-    }
-}
-exports.OpenBoosterCommand = OpenBoosterCommand;
 class ChangeNameCommand extends command_1.Command {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ client, name }) {
@@ -479,37 +348,6 @@ class ChangeTitleCommand extends command_1.Command {
     }
 }
 exports.ChangeTitleCommand = ChangeTitleCommand;
-class ChangeSelectedEmotionCommand extends command_1.Command {
-    execute(_a) {
-        return __awaiter(this, arguments, void 0, function* ({ client, emotion, index, shiny }) {
-            try {
-                const user = this.room.users.get(client.auth.uid);
-                if (!user)
-                    return;
-                const pokemonCollectionItem = user.pokemonCollection.get(index);
-                if (!pokemonCollectionItem)
-                    return;
-                if (emotion === pokemonCollectionItem.selectedEmotion &&
-                    shiny === pokemonCollectionItem.selectedShiny) {
-                    return;
-                }
-                if (emotion === null ||
-                    collection_1.CollectionUtils.hasUnlocked(pokemonCollectionItem.unlocked, emotion, shiny)) {
-                    pokemonCollectionItem.selectedEmotion = emotion;
-                    pokemonCollectionItem.selectedShiny = shiny;
-                    yield user_metadata_1.default.findOneAndUpdate({ uid: client.auth.uid }, {
-                        [`pokemonCollection.${index}.selectedEmotion`]: emotion,
-                        [`pokemonCollection.${index}.selectedShiny`]: shiny
-                    });
-                }
-            }
-            catch (error) {
-                logger_1.logger.error(error);
-            }
-        });
-    }
-}
-exports.ChangeSelectedEmotionCommand = ChangeSelectedEmotionCommand;
 class ChangeAvatarCommand extends command_1.Command {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ client, index, emotion, shiny }) {
@@ -538,162 +376,6 @@ class ChangeAvatarCommand extends command_1.Command {
     }
 }
 exports.ChangeAvatarCommand = ChangeAvatarCommand;
-class BuyEmotionCommand extends command_1.Command {
-    execute(_a) {
-        return __awaiter(this, arguments, void 0, function* ({ client, emotion, index, shiny }) {
-            try {
-                const user = this.room.users.get(client.auth.uid);
-                const cost = (0, config_1.getEmotionCost)(emotion, shiny);
-                if (!user || !Pokemon_1.PkmByIndex.hasOwnProperty(index))
-                    return;
-                const shardIndex = Pokemon_1.PkmIndex[(0, config_1.getBaseAltForm)(Pokemon_1.PkmByIndex[index])];
-                const pokemonCollectionItem = user.pokemonCollection.get(index);
-                const shardCollectionItem = user.pokemonCollection.get(shardIndex);
-                if (!pokemonCollectionItem || !shardCollectionItem)
-                    return;
-                if (collection_1.CollectionUtils.hasUnlocked(pokemonCollectionItem.unlocked, emotion, shiny)) {
-                    return;
-                }
-                const mongoUser = yield user_metadata_1.default.findOne({ uid: client.auth.uid });
-                if (!mongoUser)
-                    return;
-                const mongoItem = mongoUser.pokemonCollection.get(index);
-                const mongoShardItem = mongoUser.pokemonCollection.get(shardIndex);
-                if (!mongoItem || !mongoShardItem)
-                    return;
-                if (mongoShardItem.dust < cost)
-                    return;
-                collection_1.CollectionUtils.unlockEmotion(mongoItem.unlocked, emotion, shiny);
-                mongoItem.selectedEmotion = emotion;
-                mongoItem.selectedShiny = shiny;
-                mongoUser.markModified(`pokemonCollection.${index}`);
-                mongoShardItem.dust -= cost;
-                collection_1.CollectionUtils.unlockEmotion(pokemonCollectionItem.unlocked, emotion, shiny);
-                shardCollectionItem.dust = mongoShardItem.dust;
-                pokemonCollectionItem.selectedEmotion = emotion;
-                pokemonCollectionItem.selectedShiny = shiny;
-                checkTitlesAfterEmotionUnlocked(mongoUser, [
-                    { name: Pokemon_1.PkmByIndex[index], emotion, shiny }
-                ]);
-                yield mongoUser.save();
-                client.send(types_1.Transfer.USER_PROFILE, (0, user_metadata_1.toUserMetadataJSON)(mongoUser));
-            }
-            catch (error) {
-                logger_1.logger.error(error);
-            }
-        });
-    }
-}
-exports.BuyEmotionCommand = BuyEmotionCommand;
-function checkTitlesAfterEmotionUnlocked(mongoUser, unlocked) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const newTitles = [];
-        if (!mongoUser.titles.includes(types_1.Title.SHINY_SEEKER)) {
-            let numberOfShinies = 0;
-            mongoUser.pokemonCollection.forEach((c) => {
-                const { shinyEmotions } = collection_1.CollectionUtils.getEmotionsUnlocked(c);
-                numberOfShinies += shinyEmotions.length;
-            });
-            if (numberOfShinies >= 30) {
-                newTitles.push(types_1.Title.SHINY_SEEKER);
-            }
-        }
-        if (!mongoUser.titles.includes(types_1.Title.DUKE)) {
-            if (Object.values(Pokemon_1.Pkm)
-                .filter((p) => Pokemon_1.NonPkm.includes(p) === false && config_1.PkmAltForms.includes(p) === false)
-                .every((pkm) => {
-                const baseForm = (0, config_1.getBaseAltForm)(pkm);
-                const accepted = baseForm in config_1.PkmAltFormsByPkm
-                    ? [baseForm, ...config_1.PkmAltFormsByPkm[baseForm]]
-                    : [baseForm];
-                return accepted.some((form) => {
-                    const item = mongoUser.pokemonCollection.get(Pokemon_1.PkmIndex[form]);
-                    if (!item)
-                        return false;
-                    const { emotions, shinyEmotions } = collection_1.CollectionUtils.getEmotionsUnlocked(item);
-                    return emotions.length > 0 || shinyEmotions.length > 0;
-                });
-            })) {
-                newTitles.push(types_1.Title.DUKE);
-            }
-        }
-        if (unlocked.some((p) => p.emotion === types_1.Emotion.ANGRY && p.name === Pokemon_1.Pkm.ARBOK) &&
-            !mongoUser.titles.includes(types_1.Title.DENTIST)) {
-            newTitles.push(types_1.Title.DENTIST);
-        }
-        if (!mongoUser.titles.includes(types_1.Title.ARCHEOLOGIST) &&
-            Pokemon_1.Unowns.some((unown) => unlocked.map((p) => p.name).includes(unown)) &&
-            Pokemon_1.Unowns.every((name) => {
-                const unownIndex = Pokemon_1.PkmIndex[name];
-                const item = mongoUser.pokemonCollection.get(unownIndex);
-                const isBeingUnlockedRightNow = unlocked.some((p) => p.name === name);
-                let isAlreadyUnlocked = false;
-                if (item) {
-                    const { emotions, shinyEmotions } = collection_1.CollectionUtils.getEmotionsUnlocked(item);
-                    isAlreadyUnlocked = emotions.length > 0 || shinyEmotions.length > 0;
-                }
-                return isAlreadyUnlocked || isBeingUnlockedRightNow;
-            })) {
-            newTitles.push(types_1.Title.ARCHEOLOGIST);
-        }
-        if (!mongoUser.titles.includes(types_1.Title.DUCHESS)) {
-            if (unlocked.some((p) => {
-                const item = mongoUser.pokemonCollection.get(Pokemon_1.PkmIndex[p.name]);
-                if (!item)
-                    return false;
-                const { emotions, shinyEmotions } = collection_1.CollectionUtils.getEmotionsUnlocked(item);
-                return (shinyEmotions.length >= types_1.CollectionEmotions.length &&
-                    emotions.length >= types_1.CollectionEmotions.length);
-            })) {
-                newTitles.push(types_1.Title.DUCHESS);
-            }
-        }
-        if (newTitles.length > 0) {
-            mongoUser.titles.push(...newTitles);
-        }
-    });
-}
-class BuyBoosterCommand extends command_1.Command {
-    execute(_a) {
-        return __awaiter(this, arguments, void 0, function* ({ client, index }) {
-            try {
-                const user = this.room.users.get(client.auth.uid);
-                if (!user)
-                    return;
-                const pkm = Pokemon_1.PkmByIndex[index];
-                if (!pkm)
-                    return;
-                const rarity = (0, precomputed_pokemon_data_1.getPokemonData)(pkm).rarity;
-                const boosterCost = config_1.BoosterPriceByRarity[rarity];
-                const shardIndex = Pokemon_1.PkmIndex[(0, config_1.getBaseAltForm)(pkm)];
-                const mongoUser = yield user_metadata_1.default.findOneAndUpdate({
-                    uid: client.auth.uid,
-                    [`pokemonCollection.${shardIndex}.dust`]: { $gte: boosterCost }
-                }, {
-                    $inc: {
-                        booster: 1,
-                        [`pokemonCollection.${shardIndex}.dust`]: -boosterCost
-                    }
-                }, { returnDocument: "after" });
-                if (!mongoUser)
-                    return;
-                const pokemonCollectionItem = user.pokemonCollection.get(shardIndex);
-                if (!pokemonCollectionItem)
-                    return;
-                const mongoPokemonCollectionItem = mongoUser.pokemonCollection.get(shardIndex);
-                if (!mongoPokemonCollectionItem)
-                    return;
-                user.booster = mongoUser.booster;
-                pokemonCollectionItem.dust = mongoPokemonCollectionItem.dust;
-                client.send(types_1.Transfer.USER_PROFILE, (0, user_metadata_1.toUserMetadataJSON)(mongoUser));
-            }
-            catch (error) {
-                logger_1.logger.error(error);
-            }
-        });
-    }
-}
-exports.BuyBoosterCommand = BuyBoosterCommand;
 class OnSearchByIdCommand extends command_1.Command {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ client, uid }) {
@@ -921,7 +603,12 @@ class OpenGameCommand extends command_1.Command {
             }
             else if (gameMode === Game_1.GameMode.CUSTOM_LOBBY) {
                 ownerId = user.uid;
-                password = Math.random().toString(36).substring(2, 6).toUpperCase();
+                const secureCode = (0, crypto_1.randomBytes)(4)
+                    .toString("base64url")
+                    .replace(/[^a-zA-Z0-9]/g, "");
+                password = (secureCode + (0, crypto_1.randomBytes)(4).toString("hex"))
+                    .substring(0, 4)
+                    .toUpperCase();
             }
             else if (gameMode === Game_1.GameMode.CLASSIC) {
                 roomName = "Classic";

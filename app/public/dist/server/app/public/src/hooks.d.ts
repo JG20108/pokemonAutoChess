@@ -2,6 +2,7 @@ import { TypedUseSelectorHook } from "react-redux";
 import type { RootState } from "./stores";
 export declare const useAppDispatch: () => import("redux-thunk").ThunkDispatch<{
     lobby: import("./stores/LobbyStore").IUserLobbyState;
+    boosters: import("./stores/BoostersStore").IUserBoostersState;
     network: import("./stores/NetworkStore").INetwork;
     preparation: import("./stores/PreparationStore").IUserPreparationState;
     game: import("./stores/GameStore").GameStateStore;

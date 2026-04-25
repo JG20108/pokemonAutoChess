@@ -4099,7 +4099,7 @@ exports.Florges = Florges;
 class Chikorita extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FLORA]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.FAIRY]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.BAYLEEF;
@@ -4117,7 +4117,7 @@ exports.Chikorita = Chikorita;
 class Bayleef extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FLORA]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.FAIRY]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.MEGANIUM;
@@ -4135,7 +4135,7 @@ exports.Bayleef = Bayleef;
 class Meganium extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FLORA]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.FAIRY]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 3;
         this.hp = 220;
@@ -5088,7 +5088,7 @@ exports.Blastoise = Blastoise;
 class Bellsprout extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.POISON, Synergy_1.Synergy.FLORA]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FLORA]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.WEEPINBELL;
@@ -5106,7 +5106,7 @@ exports.Bellsprout = Bellsprout;
 class Weepinbell extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.POISON, Synergy_1.Synergy.FLORA]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FLORA]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.VICTREEBEL;
@@ -5124,7 +5124,7 @@ exports.Weepinbell = Weepinbell;
 class Victreebel extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.POISON, Synergy_1.Synergy.FLORA]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FLORA]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 3;
         this.hp = 200;
@@ -5691,12 +5691,12 @@ exports.Pidgeot = Pidgeot;
 class Hoppip extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLYING, Synergy_1.Synergy.FLORA, Synergy_1.Synergy.GRASS]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLYING, Synergy_1.Synergy.FLORA]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.SKIPLOOM;
         this.hp = 50;
-        this.atk = 4;
+        this.atk = 5;
         this.speed = 60;
         this.def = 2;
         this.speDef = 2;
@@ -5709,12 +5709,12 @@ exports.Hoppip = Hoppip;
 class Skiploom extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLYING, Synergy_1.Synergy.FLORA, Synergy_1.Synergy.GRASS]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLYING, Synergy_1.Synergy.FLORA]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.JUMPLUFF;
         this.hp = 100;
-        this.atk = 8;
+        this.atk = 10;
         this.speed = 60;
         this.def = 3;
         this.speDef = 4;
@@ -5727,11 +5727,11 @@ exports.Skiploom = Skiploom;
 class Jumpluff extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLYING, Synergy_1.Synergy.FLORA, Synergy_1.Synergy.GRASS]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLYING, Synergy_1.Synergy.FLORA]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 3;
         this.hp = 150;
-        this.atk = 12;
+        this.atk = 15;
         this.speed = 60;
         this.def = 4;
         this.speDef = 6;
@@ -8534,7 +8534,7 @@ class Drampa extends Pokemon {
         this.maxPP = 80;
         this.range = 3;
         this.skill = Ability_1.Ability.DRAGON_PULSE;
-        this.passive = Passive_1.Passive.BERSERK;
+        this.passive = Passive_1.Passive.DRAMPA;
     }
 }
 exports.Drampa = Drampa;
@@ -8612,7 +8612,7 @@ exports.MegaRayquaza = MegaRayquaza;
 class Oddish extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.POISON, Synergy_1.Synergy.GRASS]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.POISON]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.GLOOM;
@@ -8630,7 +8630,7 @@ exports.Oddish = Oddish;
 class Gloom extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.POISON, Synergy_1.Synergy.GRASS]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.POISON]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.VILEPLUME;
@@ -8648,10 +8648,10 @@ exports.Gloom = Gloom;
 class Vileplume extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.POISON, Synergy_1.Synergy.GRASS]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.POISON]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 3;
-        this.hp = 230;
+        this.hp = 250;
         this.atk = 24;
         this.speed = 41;
         this.def = 8;
@@ -8665,10 +8665,10 @@ exports.Vileplume = Vileplume;
 class Bellossom extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.GRASS, Synergy_1.Synergy.SOUND]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.SOUND]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 4;
-        this.hp = 250;
+        this.hp = 300;
         this.atk = 30;
         this.speed = 41;
         this.def = 10;
@@ -13656,8 +13656,8 @@ class Chingling extends Pokemon {
         this.hp = 150;
         this.atk = 10;
         this.speed = 46;
-        this.def = 7;
-        this.speDef = 8;
+        this.def = 5;
+        this.speDef = 6;
         this.maxPP = 80;
         this.range = 3;
         this.skill = Ability_1.Ability.ECHO;
@@ -13674,8 +13674,8 @@ class Chimecho extends Pokemon {
         this.hp = 200;
         this.atk = 15;
         this.speed = 46;
-        this.def = 10;
-        this.speDef = 12;
+        this.def = 8;
+        this.speDef = 9;
         this.maxPP = 80;
         this.range = 3;
         this.skill = Ability_1.Ability.ECHO;
@@ -19895,11 +19895,11 @@ class Litten extends Pokemon {
         this.rarity = Game_1.Rarity.EPIC;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.TORRACAT;
-        this.hp = 90;
+        this.hp = 95;
         this.atk = 8;
         this.speed = 44;
         this.def = 8;
-        this.speDef = 6;
+        this.speDef = 8;
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.DARK_LARIAT;
@@ -19913,11 +19913,11 @@ class Torracat extends Pokemon {
         this.rarity = Game_1.Rarity.EPIC;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.INCINEROAR;
-        this.hp = 170;
-        this.atk = 14;
+        this.hp = 180;
+        this.atk = 15;
         this.speed = 44;
         this.def = 12;
-        this.speDef = 10;
+        this.speDef = 12;
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.DARK_LARIAT;
@@ -19930,11 +19930,11 @@ class Incineroar extends Pokemon {
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.FIRE, Synergy_1.Synergy.DARK, Synergy_1.Synergy.FIELD]);
         this.rarity = Game_1.Rarity.EPIC;
         this.stars = 3;
-        this.hp = 280;
-        this.atk = 24;
+        this.hp = 300;
+        this.atk = 30;
         this.speed = 44;
         this.def = 16;
-        this.speDef = 14;
+        this.speDef = 16;
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.DARK_LARIAT;

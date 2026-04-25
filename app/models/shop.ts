@@ -32,7 +32,11 @@ import {
   UNOWN_PSY7_NB_SHOPS_INTERVAL,
   UniquePool
 } from "../config"
-import { pickFirstPartners } from "../core/scribbles"
+import {
+  pickAllSynergies,
+  pickFirstPartners,
+  pickPseudoLegendaries
+} from "../core/scribbles"
 import GameState from "../rooms/states/game-state"
 import { IPokemon, IPokemonEntity } from "../types"
 import { Ability } from "../types/enum/Ability"
@@ -393,6 +397,20 @@ export default class Shop {
         allCandidates = [...UniquePool]
       } else if (state.specialGameRule === SpecialGameRule.FIRST_PARTNER) {
         allCandidates = pickFirstPartners(player, state)
+      } else if (state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY) {
+        allCandidates = pickPseudoLegendaries()
+      } else if (state.specialGameRule === SpecialGameRule.CHOSEN_ONE) {
+        player.choices.push(
+          new PlayerChoice({ type: "starter", pokemons: [...UniquePool] })
+        )
+        return
+      } else if (state.specialGameRule === SpecialGameRule.MONOTYPE) {
+        player.choices.push(
+          new PlayerChoice({
+            type: "synergy",
+            synergies: pickAllSynergies()
+          })
+        )
       }
     }
 
@@ -490,7 +508,9 @@ export default class Shop {
         pokemonsProposed.includes(Pkm.EEVEE) === false &&
         (chance(EEVEE_RATE) || initialCandidatesEmpty) &&
         state.specialGameRule !== SpecialGameRule.FIRST_PARTNER &&
-        state.specialGameRule !== SpecialGameRule.UNIQUE_STARTER
+        state.specialGameRule !== SpecialGameRule.UNIQUE_STARTER &&
+        state.specialGameRule !== SpecialGameRule.PSEUDO_JOURNEY &&
+        state.specialGameRule !== SpecialGameRule.MONOTYPE
       ) {
         selected = Pkm.EEVEE
         itemsProposed[i] = Item.FOSSIL_STONE

@@ -4,6 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const phaser_1 = require("phaser");
+const Item_1 = require("../../../../types/enum/Item");
+const array_1 = require("../../../../utils/array");
 const schemas_1 = require("../../../../utils/schemas");
 const depths_1 = require("../depths");
 const item_container_1 = __importDefault(require("./item-container"));
@@ -24,12 +26,33 @@ class ItemsContainer extends phaser_1.GameObjects.Container {
         const ITEMS_PER_COLUMN = 6;
         const items = (0, schemas_1.values)(inventory);
         this.items = [];
-        items.forEach((item, i) => {
+        items
+            .sort((a, b) => this.getOrderPriority(b) - this.getOrderPriority(a))
+            .forEach((item, i) => {
             this.items.push(item);
             const x = -1 * itemSize * Math.floor(i / ITEMS_PER_COLUMN);
             const y = (i % ITEMS_PER_COLUMN) * itemSize;
             this.add(new item_container_1.default(this.scene, x, y, item, this.pokemonId, this.playerId));
         });
+    }
+    getOrderPriority(item) {
+        if ((0, array_1.isIn)(Item_1.SpecialItems, item))
+            return 10;
+        if ((0, array_1.isIn)(Item_1.WeatherRocks, item))
+            return 3;
+        if ((0, array_1.isIn)(Item_1.TMs, item))
+            return 5;
+        if ((0, array_1.isIn)(Item_1.Wands, item))
+            return 4;
+        if ((0, array_1.isIn)(Item_1.ShinyItems, item))
+            return 2;
+        if ((0, array_1.isIn)(Item_1.Tools, item))
+            return 1;
+        if ((0, array_1.isIn)(Item_1.Dishes, item))
+            return -1;
+        if ((0, array_1.isIn)(Item_1.Berries, item))
+            return -2;
+        return 0;
     }
     closeTooltips() {
         for (let i = 0; i < this.list.length; i++) {

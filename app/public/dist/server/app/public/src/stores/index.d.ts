@@ -1,5 +1,6 @@
 declare const store: import("@reduxjs/toolkit").EnhancedStore<{
     lobby: import("./LobbyStore").IUserLobbyState;
+    boosters: import("./BoostersStore").IUserBoostersState;
     network: import("./NetworkStore").INetwork;
     preparation: import("./PreparationStore").IUserPreparationState;
     game: import("./GameStore").GameStateStore;
@@ -7,6 +8,7 @@ declare const store: import("@reduxjs/toolkit").EnhancedStore<{
 }, import("redux").UnknownAction, import("@reduxjs/toolkit").Tuple<[import("redux").StoreEnhancer<{
     dispatch: import("redux-thunk").ThunkDispatch<{
         lobby: import("./LobbyStore").IUserLobbyState;
+        boosters: import("./BoostersStore").IUserBoostersState;
         network: import("./NetworkStore").INetwork;
         preparation: import("./PreparationStore").IUserPreparationState;
         game: import("./GameStore").GameStateStore;

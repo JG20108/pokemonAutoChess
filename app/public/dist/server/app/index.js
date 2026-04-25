@@ -18,6 +18,7 @@ const metrics_1 = require("./metrics");
 const cronjobs_1 = require("./services/cronjobs");
 const leaderboard_1 = require("./services/leaderboard");
 const meta_1 = require("./services/meta");
+const sprite_gap_scanner_1 = require("./services/sprite-gap-scanner");
 const twitch_1 = require("./services/twitch");
 schema_1.Encoder.BUFFER_SIZE = 512 * 1024;
 function main() {
@@ -32,12 +33,14 @@ function main() {
                 yield colyseus_1.matchMaker.createRoom("lobby", {});
                 checkLobby();
                 (0, cronjobs_1.initCronJobs)();
+                yield (0, sprite_gap_scanner_1.warmupSpriteGapScanner)();
             }
         }
         else {
             yield (0, tools_1.listen)(app_config_1.server, process.env.PORT ? parseInt(process.env.PORT) : 9000);
             yield colyseus_1.matchMaker.createRoom("lobby", {});
             (0, cronjobs_1.initCronJobs)();
+            yield (0, sprite_gap_scanner_1.warmupSpriteGapScanner)();
         }
         colyseus_1.logger.info("Fetching leaderboards...");
         (0, leaderboard_1.fetchLeaderboards)();
@@ -45,6 +48,8 @@ function main() {
         colyseus_1.logger.info("Fetching meta reports...");
         (0, meta_1.fetchMetaReports)();
         setInterval(() => (0, meta_1.fetchMetaReports)(), 1000 * 60 * 60 * 24);
+        colyseus_1.logger.info("Refreshing sprite gap scanner...");
+        setInterval(() => (0, sprite_gap_scanner_1.refreshSpriteGapData)(), 1000 * 60 * 60 * 24);
         colyseus_1.logger.info("Fetching Twitch streams...");
         (0, twitch_1.refreshTwitchBlacklist)();
         setInterval(() => (0, twitch_1.refreshTwitchBlacklist)(), 1000 * 60);

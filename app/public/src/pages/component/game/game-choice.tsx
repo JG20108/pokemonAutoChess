@@ -9,6 +9,7 @@ import {
   PkmFamily
 } from "../../../../../types/enum/Pokemon"
 import { SpecialGameRule } from "../../../../../types/enum/SpecialGameRule"
+import { Synergy } from "../../../../../types/enum/Synergy"
 import { isIn } from "../../../../../utils/array"
 import { DEPTH } from "../../../game/depths"
 import { selectConnectedPlayer, useAppSelector } from "../../../hooks"
@@ -18,6 +19,7 @@ import { getGameScene } from "../../game"
 import { playSound, SOUNDS } from "../../utils/audio"
 import { addIconsToDescription } from "../../utils/descriptions"
 import { LocalStoreKeys, localStore } from "../../utils/store"
+import SynergyIcon from "../icons/synergy-icon"
 import GamePokemonDuoPortrait from "./game-pokemon-duo-portrait"
 import GamePokemonPortrait from "./game-pokemon-portrait"
 import "./game-choice.css"
@@ -69,13 +71,20 @@ export default function GameChoice() {
   const choice = choices[0] // only display one choice at a time, the others will be displayed after the first one is picked
 
   let message: string | null = null
-  if (choice.type === "addPick") {
+  if (choice.type === "synergy") {
+    message = t("player_choices.choose_monotype")
+  } else if (choice.type === "addPick") {
     message = t("player_choices.choose_add_pick")
   } else if (choice.type === "starter") {
-    message =
-      specialGameRule === SpecialGameRule.FIRST_PARTNER
-        ? t("player_choices.choose_first_partner")
-        : t("player_choices.choose_starter")
+    if (specialGameRule === SpecialGameRule.FIRST_PARTNER) {
+      message = t("player_choices.choose_first_partner")
+    } else if (specialGameRule === SpecialGameRule.PSEUDO_JOURNEY) {
+      message = t("player_choices.choose_pseudo_legendary")
+    } else if (specialGameRule === SpecialGameRule.CHOSEN_ONE) {
+      message = t("player_choices.choose_chosen_one")
+    } else {
+      message = t("player_choices.choose_starter")
+    }
   } else if (choice.type === "mission_order") {
     message = t("player_choices.choose_mission_order")
   } else if (choice.type === "unique") {
@@ -88,6 +97,10 @@ export default function GameChoice() {
     message = t("player_choices.choose_wand")
   }
 
+  const isChosenOne =
+    choice.type === "starter" &&
+    specialGameRule === SpecialGameRule.CHOSEN_ONE
+
   return (
     <div className="game-choice" style={{ zIndex: DEPTH.MODAL }}>
       <div
@@ -96,8 +109,31 @@ export default function GameChoice() {
       >
         {message && <h2>{message}</h2>}
 
-        {choice.pokemons.length > 0 ? (
-          <div className="game-choice-pokemons-list">
+        {choice.type === "synergy" ? (
+          <div className="game-choice-synergy-list">
+            {(choice.synergies as Synergy[]).map((synergy, index) => (
+              <div
+                key={`${choice.id}-${index}`}
+                className="my-box active clickable game-choice-synergy-item"
+                onClick={(event) => {
+                  event.stopPropagation()
+                  playSound(SOUNDS.BUTTON_CLICK)
+                  pickChoice(choice.id, index)
+                }}
+              >
+                <SynergyIcon type={synergy} size="2rem" />
+                <span>{t(`synergy.${synergy}`)}</span>
+              </div>
+            ))}
+          </div>
+        ) : choice.pokemons.length > 0 ? (
+          <div
+            className={
+              isChosenOne
+                ? "game-choice-pokemons-grid"
+                : "game-choice-pokemons-list"
+            }
+          >
             {choice.pokemons.map((proposition, index) => {
               const item = choice.items[index]
               return (

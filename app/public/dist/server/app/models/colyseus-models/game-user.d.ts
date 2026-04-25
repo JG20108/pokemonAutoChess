@@ -11,6 +11,8 @@ export interface IGameUser {
     title: string;
     role: Role;
     anonymous: boolean;
+    twitchLogin: string;
+    twitchDisplayName: string;
 }
 export declare class GameUser extends Schema implements IGameUser {
     uid: string;
@@ -23,5 +25,7 @@ export declare class GameUser extends Schema implements IGameUser {
     title: string;
     role: Role;
     anonymous: boolean;
-    constructor(uid: string, name: string, elo: number, games: number, avatar: string, isBot: boolean, ready: boolean, title: string, role: Role, anonymous: boolean);
+    twitchLogin: string;
+    twitchDisplayName: string;
+    constructor(uid: string, name: string, elo: number, games: number, avatar: string, isBot: boolean, ready: boolean, title: string, role: Role, anonymous: boolean, twitchLogin?: string, twitchDisplayName?: string);
 }

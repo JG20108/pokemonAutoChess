@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.rooms = exports.client = void 0;
 exports.authenticateUser = authenticateUser;
 exports.fetchProfile = fetchProfile;
+exports.startTwitchVerification = startTwitchVerification;
+exports.unlinkTwitchVerification = unlinkTwitchVerification;
 exports.leaveRoom = leaveRoom;
 exports.leaveAllRooms = leaveAllRooms;
 exports.joinLobby = joinLobby;
@@ -30,14 +32,14 @@ exports.setNoElo = setNoElo;
 exports.lockShop = lockShop;
 exports.levelClick = levelClick;
 exports.buyInShop = buyInShop;
-exports.pickPokemonProposition = pickPokemonProposition;
-exports.pickItem = pickItem;
+exports.pickChoice = pickChoice;
 exports.gameStartRequest = gameStartRequest;
 exports.changeRoomName = changeRoomName;
 exports.changeRoomPassword = changeRoomPassword;
 exports.changeRoomMinMaxRanks = changeRoomMinMaxRanks;
 exports.setSpecialRule = setSpecialRule;
 exports.buyEmotion = buyEmotion;
+exports.changeSelectedEmotion = changeSelectedEmotion;
 exports.buyBooster = buyBooster;
 exports.openBooster = openBooster;
 exports.showEmote = showEmote;
@@ -68,6 +70,7 @@ const CloseCodes_1 = require("../../types/enum/CloseCodes");
 const logger_1 = require("../../utils/logger");
 const store_js_1 = require("./pages/utils/store.js");
 const stores_1 = __importDefault(require("./stores"));
+const BoostersStore_1 = require("./stores/BoostersStore");
 const NetworkStore_1 = require("./stores/NetworkStore");
 const endpoint = `${window.location.protocol.replace("http", "ws")}//${window.location.host}`;
 logger_1.logger.info(`Colyseus endpoint: ${endpoint}`);
@@ -103,6 +106,39 @@ function fetchProfile() {
             .then((profile) => {
             stores_1.default.dispatch((0, NetworkStore_1.setProfile)(profile));
         });
+    });
+}
+function startTwitchVerification() {
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a, _b;
+        const token = yield ((_a = app_1.default.auth().currentUser) === null || _a === void 0 ? void 0 : _a.getIdToken());
+        const res = yield fetch("/twitch/verify/start", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (!res.ok) {
+            const body = yield res.json().catch(() => ({}));
+            throw new Error((_b = body.error) !== null && _b !== void 0 ? _b : res.statusText);
+        }
+        return res.json();
+    });
+}
+function unlinkTwitchVerification() {
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a, _b;
+        const token = yield ((_a = app_1.default.auth().currentUser) === null || _a === void 0 ? void 0 : _a.getIdToken());
+        const res = yield fetch("/twitch/verify/unlink", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (!res.ok) {
+            const body = yield res.json().catch(() => ({}));
+            throw new Error((_b = body.error) !== null && _b !== void 0 ? _b : res.statusText);
+        }
     });
 }
 exports.rooms = {
@@ -204,13 +240,9 @@ function buyInShop(id) {
     var _a;
     (_a = exports.rooms.game) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.SHOP, { id });
 }
-function pickPokemonProposition(proposition) {
+function pickChoice(choiceId, choiceIndex) {
     var _a;
-    (_a = exports.rooms.game) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.POKEMON_PROPOSITION, proposition);
-}
-function pickItem(item) {
-    var _a;
-    (_a = exports.rooms.game) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.ITEM, item);
+    (_a = exports.rooms.game) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.CHOICE, { choiceId, choiceIndex });
 }
 function gameStartRequest(token) {
     var _a;
@@ -233,16 +265,93 @@ function setSpecialRule(rule) {
     (_a = exports.rooms.preparation) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.CHANGE_SPECIAL_RULE, rule);
 }
 function buyEmotion(params) {
-    var _a;
-    (_a = exports.rooms.lobby) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.BUY_EMOTION, params);
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a, _b;
+        const token = yield ((_a = app_1.default.auth().currentUser) === null || _a === void 0 ? void 0 : _a.getIdToken());
+        if (!token)
+            throw new Error("User not authenticated");
+        const res = yield fetch("/collection/buy-emotion", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(params)
+        });
+        if (!res.ok) {
+            const body = yield res.json().catch(() => ({}));
+            throw new Error((_b = body.error) !== null && _b !== void 0 ? _b : res.statusText);
+        }
+        const payload = (yield res.json());
+        stores_1.default.dispatch((0, NetworkStore_1.setProfile)(payload.user));
+        return payload;
+    });
+}
+function changeSelectedEmotion(params) {
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a, _b;
+        const token = yield ((_a = app_1.default.auth().currentUser) === null || _a === void 0 ? void 0 : _a.getIdToken());
+        if (!token)
+            throw new Error("User not authenticated");
+        const res = yield fetch("/collection/change-selected-emotion", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(params)
+        });
+        if (!res.ok) {
+            const body = yield res.json().catch(() => ({}));
+            throw new Error((_b = body.error) !== null && _b !== void 0 ? _b : res.statusText);
+        }
+        const payload = (yield res.json());
+        stores_1.default.dispatch((0, NetworkStore_1.setProfile)(payload.user));
+        return payload;
+    });
 }
 function buyBooster(params) {
-    var _a;
-    (_a = exports.rooms.lobby) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.BUY_BOOSTER, params);
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a, _b;
+        const token = yield ((_a = app_1.default.auth().currentUser) === null || _a === void 0 ? void 0 : _a.getIdToken());
+        if (!token)
+            throw new Error("User not authenticated");
+        const res = yield fetch("/boosters/buy", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(params)
+        });
+        if (!res.ok) {
+            const body = yield res.json().catch(() => ({}));
+            throw new Error((_b = body.error) !== null && _b !== void 0 ? _b : res.statusText);
+        }
+        const payload = (yield res.json());
+        stores_1.default.dispatch((0, NetworkStore_1.setProfile)(payload.user));
+        return payload;
+    });
 }
 function openBooster() {
-    var _a;
-    (_a = exports.rooms.lobby) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.OPEN_BOOSTER);
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a, _b;
+        const token = yield ((_a = app_1.default.auth().currentUser) === null || _a === void 0 ? void 0 : _a.getIdToken());
+        const res = yield fetch("/boosters/open", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (!res.ok) {
+            const body = yield res.json().catch(() => ({}));
+            throw new Error((_b = body.error) !== null && _b !== void 0 ? _b : res.statusText);
+        }
+        const payload = (yield res.json());
+        stores_1.default.dispatch((0, BoostersStore_1.setBoosterContent)(payload.boosterContent));
+        stores_1.default.dispatch((0, NetworkStore_1.setProfile)(payload.user));
+        return payload;
+    });
 }
 function showEmote(emote) {
     var _a;

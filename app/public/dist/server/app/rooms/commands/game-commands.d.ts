@@ -128,7 +128,6 @@ export declare class OnUpdatePhaseCommand extends Command<GameRoom> {
     execute(): void;
     computeAchievements(): void;
     checkEndGame(): boolean;
-    computeStreak(isPVE: boolean): void;
     computeIncome(isPVE: boolean, specialGameRule: SpecialGameRule | null): void;
     checkDeath(): void;
     initializePickingPhase(): Command<import("colyseus").Room<import("colyseus").RoomOptions>, unknown>[];

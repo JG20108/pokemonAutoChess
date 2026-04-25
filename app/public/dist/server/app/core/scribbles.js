@@ -3,6 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.PseudoLegendaryPool = void 0;
+exports.pickPseudoLegendaries = pickPseudoLegendaries;
+exports.pickAllSynergies = pickAllSynergies;
 exports.spawnDIAYAvatar = spawnDIAYAvatar;
 exports.pickFirstPartners = pickFirstPartners;
 const config_1 = require("../config");
@@ -12,12 +15,31 @@ const precomputed_rarity_1 = require("../models/precomputed/precomputed-rarity")
 const shop_1 = require("../models/shop");
 const Game_1 = require("../types/enum/Game");
 const Pokemon_1 = require("../types/enum/Pokemon");
+const Synergy_1 = require("../types/enum/Synergy");
 const avatar_1 = require("../utils/avatar");
 const board_1 = require("../utils/board");
 const number_1 = require("../utils/number");
 const random_1 = require("../utils/random");
 const bot_logic_1 = require("./bot-logic");
 const eggs_1 = require("./eggs");
+exports.PseudoLegendaryPool = [
+    Pokemon_1.Pkm.DRATINI,
+    Pokemon_1.Pkm.LARVITAR,
+    Pokemon_1.Pkm.BAGON,
+    Pokemon_1.Pkm.BELDUM,
+    Pokemon_1.Pkm.GIBLE,
+    Pokemon_1.Pkm.DEINO,
+    Pokemon_1.Pkm.GOOMY,
+    Pokemon_1.Pkm.JANGMO_O,
+    Pokemon_1.Pkm.DREEPY,
+    Pokemon_1.Pkm.FRIGIBAX
+];
+function pickPseudoLegendaries() {
+    return [...exports.PseudoLegendaryPool];
+}
+function pickAllSynergies() {
+    return Object.values(Synergy_1.Synergy);
+}
 function spawnDIAYAvatar(player) {
     var _a, _b, _c;
     const { name, emotion, shiny = false } = (0, avatar_1.getPokemonCustomFromAvatar)(player.avatar);

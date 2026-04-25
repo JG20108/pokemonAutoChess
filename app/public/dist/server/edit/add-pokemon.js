@@ -141,7 +141,7 @@ class SpriteSheetProcessor {
     constructor() {
         this.durations = {};
         this.delays = {};
-        this.missing = "";
+        this.missingPokemonLog = "";
         this.mapName = new Map();
         this.pkmIndexes = ["0000"];
         this.mapName.set("0000", "missingno");
@@ -174,22 +174,24 @@ class SpriteSheetProcessor {
         }
     }
     saveDurationsFile() {
-        const fileA = fs_1.default.createWriteStream("./sheets/durations.json");
-        fileA.on("error", function (err) {
+        try {
+            fs_1.default.writeFileSync("./sheets/durations.json", JSON.stringify(this.durations));
+            logger_1.logger.debug(`Saved durations file, ${Object.keys(this.durations).length} durations entries`);
+        }
+        catch (err) {
             logger_1.logger.error(err);
-        });
-        fileA.write(JSON.stringify(this.durations));
-        fileA.end();
-        logger_1.logger.debug(`Saved durations file, ${Object.keys(this.durations).length} durations entries`);
+            throw err;
+        }
     }
     saveDelaysFile() {
-        const fileA = fs_1.default.createWriteStream("./sheets/delays.json");
-        fileA.on("error", function (err) {
+        try {
+            fs_1.default.writeFileSync("./sheets/delays.json", JSON.stringify(this.delays));
+            logger_1.logger.debug(`Saved delays file, ${Object.keys(this.delays).length} delays entries`);
+        }
+        catch (err) {
             logger_1.logger.error(err);
-        });
-        fileA.write(JSON.stringify(this.delays));
-        fileA.end();
-        logger_1.logger.debug(`Saved delays file, ${Object.keys(this.delays).length} delays entries`);
+            throw err;
+        }
     }
     removeBlue(cropImg) {
         cropImg.scan(0, 0, cropImg.bitmap.width, cropImg.bitmap.height, (x, y, idx) => {
@@ -215,7 +217,7 @@ class SpriteSheetProcessor {
             }
         });
     }
-    zeroPad(num) {
+    zeroPadToFour(num) {
         return ("0000" + num).slice(-4);
     }
     splitIndex(spriteCollabPath, index) {
@@ -227,7 +229,7 @@ class SpriteSheetProcessor {
                 ? `${pathIndex}/0000/0001`
                 : split.length === 2
                     ? `${pathIndex}/0001`
-                    : pathIndex.split("/").with(2, "0001").join("/");
+                    : [...split.slice(0, 2), "0001", ...split.slice(3)].join("/");
             const conf = (_a = pokemon_animations_1.PokemonAnimations[this.mapName.get(index)]) !== null && _a !== void 0 ? _a : pokemon_animations_1.DEFAULT_POKEMON_ANIMATION_CONFIG;
             const allPads = [pathIndex];
             if (!conf.shinyUnavailable)
@@ -235,7 +237,7 @@ class SpriteSheetProcessor {
             for (let j = 0; j < allPads.length; j++) {
                 const pad = allPads[j];
                 try {
-                    const shiny = pathIndex == pad ? Game_1.PokemonTint.NORMAL : Game_1.PokemonTint.SHINY;
+                    const shiny = pathIndex === pad ? Game_1.PokemonTint.NORMAL : Game_1.PokemonTint.SHINY;
                     const xmlFile = fs_1.default.readFileSync((0, path_1.expandHomeDir)(`${spriteCollabPath}/sprite/${pad}/AnimData.xml`));
                     const parser = new fast_xml_parser_1.XMLParser();
                     const xmlData = parser.parse(xmlFile);
@@ -250,11 +252,13 @@ class SpriteSheetProcessor {
                         }
                         else {
                             const attackDurations = toDurationArray(attackMetadata.Durations.Duration);
+                            const delayUntilHit = attackDurations
+                                .slice(0, attackMetadata.HitFrame)
+                                .reduce((prev, curr) => prev + curr, 0);
+                            const totalDuration = attackDurations.reduce((prev, curr) => prev + curr, 0);
                             this.delays[index] = {
-                                d: attackDurations
-                                    .slice(0, attackMetadata.HitFrame)
-                                    .reduce((prev, curr) => prev + curr, 0),
-                                t: attackDurations.reduce((prev, curr) => prev + curr, 0)
+                                d: delayUntilHit,
+                                t: totalDuration
                             };
                         }
                     }
@@ -264,10 +268,6 @@ class SpriteSheetProcessor {
                             Animation_1.AnimationType.Idle,
                             Animation_1.AnimationType.Walk
                         ]);
-                        if (!conf) {
-                            logger_1.logger.warn(`Animation config not found for ${formatPokemonName(index)}`);
-                            continue;
-                        }
                         actions.add((_d = conf.sleep) !== null && _d !== void 0 ? _d : Animation_1.AnimationType.Sleep);
                         actions.add((_e = conf.eat) !== null && _e !== void 0 ? _e : Animation_1.AnimationType.Eat);
                         actions.add((_f = conf.hop) !== null && _f !== void 0 ? _f : Animation_1.AnimationType.Hop);
@@ -321,7 +321,7 @@ class SpriteSheetProcessor {
                                                     h: frameHeight
                                                 });
                                                 yield (0, fs_extra_1.ensureDir)(`split/${index}/${shiny}/${action}/${anim}/${y}`);
-                                                yield cropImg.write(`split/${index}/${shiny}/${action}/${anim}/${y}/${this.zeroPad(x)}.png`);
+                                                yield cropImg.write(`split/${index}/${shiny}/${action}/${anim}/${y}/${this.zeroPadToFour(x)}.png`);
                                             }
                                         }
                                     }
@@ -337,7 +337,7 @@ class SpriteSheetProcessor {
                 }
                 catch (error) {
                     logger_1.logger.warn(`Pokemon ${formatPokemonName(index)} not found at path: ${spriteCollabPath}/sprite/${pad}/AnimData.xml`, error);
-                    this.missing += `${this.mapName.get(index)},${pad}/AnimData.xml\n`;
+                    this.missingPokemonLog += `${this.mapName.get(index)},${pad}/AnimData.xml\n`;
                 }
             }
         });
@@ -356,7 +356,7 @@ class SpriteSheetProcessor {
         fileB.on("error", function (err) {
             logger_1.logger.error(err);
         });
-        fileB.write(this.missing);
+        fileB.write(this.missingPokemonLog);
         fileB.end();
     }
 }
@@ -446,7 +446,7 @@ function updateEmotionsAndCredits(spriteCollabPath, indexesToUpdate = Object.val
         if (metadata) {
             const emotionsAvailable = emotions.map((emotion) => { var _a; return emotion in ((_a = metadata === null || metadata === void 0 ? void 0 : metadata.portrait_files) !== null && _a !== void 0 ? _a : {}) ? 1 : 0; });
             emotionsPerIndex.set(pkmIndex, emotionsAvailable);
-            logger_1.logger.log(`${emotionsAvailable.filter((available) => available === 1).length} portraits found for ${formatPokemonName(pkmIndex)}`);
+            logger_1.logger.info(`${emotionsAvailable.filter((available) => available === 1).length} portraits found for ${formatPokemonName(pkmIndex)}`);
             creditsData.set(pkmIndex, {
                 portrait_credit: metadata.portrait_credit,
                 sprite_credit: metadata.sprite_credit
@@ -457,9 +457,9 @@ function updateEmotionsAndCredits(spriteCollabPath, indexesToUpdate = Object.val
         }
     }
     fs_1.default.writeFileSync("../app/models/precomputed/emotions-per-pokemon-index.json", JSON.stringify((0, map_1.mapToObj)(emotionsPerIndex)));
-    logger_1.logger.log("Updated emotions-per-pokemon-index.json");
+    logger_1.logger.info("Updated emotions-per-pokemon-index.json");
     fs_1.default.writeFileSync("../app/models/precomputed/credits.json", JSON.stringify((0, map_1.mapToObj)(creditsData)));
-    logger_1.logger.log("Updated credits.json");
+    logger_1.logger.info("Updated credits.json");
 }
 function runTexturePacker(indexToAdd) {
     return __awaiter(this, void 0, void 0, function* () {

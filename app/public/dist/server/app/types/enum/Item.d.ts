@@ -304,7 +304,23 @@ export declare enum Item {
     NULLIFY_BANDANNA = "NULLIFY_BANDANNA",
     TATSUGIRI_CURLY = "TATSUGIRI_CURLY",
     TATSUGIRI_DROOPY = "TATSUGIRI_DROOPY",
-    TATSUGIRI_STRETCHY = "TATSUGIRI_STRETCHY"
+    TATSUGIRI_STRETCHY = "TATSUGIRI_STRETCHY",
+    CONFUSE_WAND = "CONFUSE_WAND",
+    PETRIFY_WAND = "PETRIFY_WAND",
+    SLOW_WAND = "SLOW_WAND",
+    SLUMBER_WAND = "SLUMBER_WAND",
+    BLAST_WAND = "BLAST_WAND",
+    HP_SWAP_WAND = "HP_SWAP_WAND",
+    SPIRIT_WAND = "SPIRIT_WAND",
+    LONG_WAND = "LONG_WAND",
+    GUIDING_WAND = "GUIDING_WAND",
+    SURROUND_WAND = "SURROUND_WAND",
+    POUNCE_WAND = "POUNCE_WAND",
+    TWO_EDGED_WAND = "TWO_EDGED_WAND",
+    WARP_WAND = "WARP_WAND",
+    SWITCHER_WAND = "SWITCHER_WAND",
+    WHIRLWIND_WAND = "WHIRLWIND_WAND",
+    TUNNEL_WAND = "TUNNEL_WAND"
 }
 export declare const MemoryDiscs: (Item.FIRE_MEMORY | Item.FOSSIL_MEMORY | Item.PSYCHIC_MEMORY | Item.WATER_MEMORY | Item.ELECTRIC_MEMORY | Item.FAIRY_MEMORY | Item.DARK_MEMORY | Item.GRASS_MEMORY | Item.ICE_MEMORY | Item.FIGHTING_MEMORY | Item.POISON_MEMORY | Item.SOUND_MEMORY | Item.STEEL_MEMORY | Item.FLYING_MEMORY | Item.ROCK_MEMORY | Item.GROUND_MEMORY | Item.FIELD_MEMORY | Item.GHOST_MEMORY | Item.LIGHT_MEMORY | Item.NORMAL_MEMORY | Item.BUG_MEMORY | Item.GOURMET_MEMORY | Item.MONSTER_MEMORY | Item.AQUATIC_MEMORY | Item.DRAGON_MEMORY | Item.FLORA_MEMORY)[];
 export declare const MemoryDiscsBySynergy: {
@@ -405,6 +421,7 @@ export declare const SynergyGivenByItem: {
 };
 export declare const SynergyGivenByGem: Record<(typeof SynergyGems)[number], Synergy>;
 export declare const CraftableNoStonesOrScarves: Item[];
+export declare const Wands: Item[];
 export declare const OgerponMasks: Item[];
 export declare const TMsBronze: Item[];
 export declare const TMsSilver: Item[];

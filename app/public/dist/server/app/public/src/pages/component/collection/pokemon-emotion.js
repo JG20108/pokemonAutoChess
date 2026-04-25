@@ -16,7 +16,7 @@ const pokemon_portrait_1 = __importDefault(require("../pokemon-portrait"));
 require("./pokemon-emotion.css");
 function PokemonEmotion(props) {
     const { t } = (0, react_i18next_1.useTranslation)();
-    const lastBoostersOpened = (0, hooks_1.useAppSelector)((state) => state.lobby.lastBoostersOpened);
+    const lastBoostersOpened = (0, hooks_1.useAppSelector)((state) => state.boosters.lastBoostersOpened);
     const cost = (0, config_1.getEmotionCost)(props.emotion, props.shiny);
     const canUnlock = !props.unlocked && cost <= props.dust;
     const isNew = lastBoostersOpened.some((booster) => booster.some((card) => card.name === Pokemon_1.PkmByIndex[props.index] &&

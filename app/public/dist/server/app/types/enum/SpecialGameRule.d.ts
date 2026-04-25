@@ -18,5 +18,9 @@ export declare enum SpecialGameRule {
     GO_BIG_OR_GO_HOME = "GO_BIG_OR_GO_HOME",
     FAMILY_OUTING = "FAMILY_OUTING",
     UNOWN_SPELL = "UNOWN_SPELL",
-    CHOSEN_ONES = "CHOSEN_ONES"
+    CHOSEN_ONES = "CHOSEN_ONES",
+    PSEUDO_JOURNEY = "PSEUDO_JOURNEY",
+    MONOTYPE = "MONOTYPE",
+    CHOSEN_ONE = "CHOSEN_ONE"
 }
+export declare const SpecialGameRuleDescription: Record<SpecialGameRule, string>;

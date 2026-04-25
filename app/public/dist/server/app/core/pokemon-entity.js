@@ -155,7 +155,7 @@ class PokemonEntity extends schema_1.Schema {
             !this.effects.has(Effect_1.EffectEnum.TELEPORT_NEXT_ATTACK));
     }
     get canBeMoved() {
-        return !this.status.skydiving && !this.items.has(Item_1.Item.HEAVY_DUTY_BOOTS);
+        return !this.status.skydiving && !this.status.locked && !this.items.has(Item_1.Item.HEAVY_DUTY_BOOTS);
     }
     get canBeCopied() {
         return this.passive !== Passive_1.Passive.INANIMATE;
@@ -270,9 +270,7 @@ class PokemonEntity extends schema_1.Schema {
                 attacker.items.has(Item_1.Item.POKEMONOMICON) &&
                 attackType === Game_1.AttackType.SPECIAL) {
                 this.status.triggerBurn(3000, this, attacker);
-            }
-            if ((attacker === null || attacker === void 0 ? void 0 : attacker.passive) === Passive_1.Passive.BERSERK) {
-                attacker.addAbilityPower(5, attacker, 0, false, false);
+                this.addSpecialDefense(-1, attacker, 0, false);
             }
             const damageResult = this.state.handleDamage({
                 target: this,
@@ -813,50 +811,6 @@ class PokemonEntity extends schema_1.Schema {
                 isRetaliation
             });
         });
-    }
-    onCriticalAttack({ target, board, damage }) {
-        if (target.fairySplashCooldown === 0 &&
-            target.hasSynergyEffect(Synergy_1.Synergy.FAIRY)) {
-            let shockDamageFactor = 0.3;
-            if (target.effects.has(Effect_1.EffectEnum.AROMATIC_MIST)) {
-                shockDamageFactor *= 1.2;
-            }
-            else if (target.effects.has(Effect_1.EffectEnum.FAIRY_WIND)) {
-                shockDamageFactor *= 1.4;
-            }
-            else if (target.effects.has(Effect_1.EffectEnum.STRANGE_STEAM)) {
-                shockDamageFactor *= 1.6;
-            }
-            else if (target.effects.has(Effect_1.EffectEnum.MOON_FORCE)) {
-                shockDamageFactor *= 1.8;
-            }
-            const shockDamage = shockDamageFactor * damage;
-            target.count.fairyCritCount++;
-            target.fairySplashCooldown = 250;
-            const distance = (0, distance_1.distanceC)(this.positionX, this.positionY, target.positionX, target.positionY);
-            if (distance <= 1 && this.items.has(Item_1.Item.PROTECTIVE_PADS) === false) {
-                this.handleDamage({
-                    damage: shockDamage,
-                    board,
-                    attackType: Game_1.AttackType.SPECIAL,
-                    attacker: target,
-                    isRetaliation: true,
-                    shouldTargetGainMana: true
-                });
-            }
-        }
-        if (this.items.has(Item_1.Item.SCOPE_LENS)) {
-            const ppStolen = (0, number_1.max)(target.pp)(10);
-            this.addPP(ppStolen, this, 0, false);
-            target.addPP(-ppStolen, this, 0, false);
-            target.count.manaBurnCount++;
-        }
-        if (this.items.has(Item_1.Item.RAZOR_FANG)) {
-            target.status.triggerArmorReduction(2000, target);
-        }
-        if (target.items.has(Item_1.Item.BABIRI_BERRY)) {
-            target.eatBerry(Item_1.Item.BABIRI_BERRY);
-        }
     }
     onKill({ target, board, attackType }) {
         if (!this.isGhostOpponent) {

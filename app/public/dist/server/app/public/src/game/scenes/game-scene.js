@@ -521,8 +521,8 @@ class GameScene extends phaser_1.Scene {
                     });
                 }
                 else if (dropZone.name === "board-zone" &&
-                    !(((_b = this.room) === null || _b === void 0 ? void 0 : _b.state.phase) == Game_1.GamePhaseState.FIGHT &&
-                        dropZone.getData("y") != 0)) {
+                    (((_b = this.room) === null || _b === void 0 ? void 0 : _b.state.phase) == Game_1.GamePhaseState.PICK ||
+                        dropZone.getData("y") == 0)) {
                     this.dispatchEvent(types_1.Transfer.DRAG_DROP_ITEM, {
                         zone: dropZone.name,
                         index: dropZone.getData("x") + dropZone.getData("y") * config_1.BOARD_WIDTH,
@@ -637,21 +637,17 @@ class GameScene extends phaser_1.Scene {
             if (dropZone.name === "flower-pot-zone" &&
                 gameObject instanceof item_container_1.default &&
                 (0, array_1.isIn)(Item_1.Mulches, gameObject.name)) {
-                {
-                    const flowerPot = (_d = this.board) === null || _d === void 0 ? void 0 : _d.flowerPokemonsInPots[dropZone.getData("index")];
-                    if (flowerPot) {
-                        this.clearHovered(flowerPot.sprite);
-                    }
+                const flowerPot = (_d = this.board) === null || _d === void 0 ? void 0 : _d.flowerPokemonsInPots[dropZone.getData("index")];
+                if (flowerPot) {
+                    this.clearHovered(flowerPot.sprite);
                 }
             }
             if (dropZone.name === "berry-tree-zone" &&
                 gameObject instanceof item_container_1.default &&
                 (0, array_1.isIn)(Item_1.Mulches, gameObject.name)) {
-                {
-                    const berryTree = (_e = this.board) === null || _e === void 0 ? void 0 : _e.berryTrees[dropZone.getData("index")];
-                    if (berryTree) {
-                        this.clearHovered(berryTree.sprite);
-                    }
+                const berryTree = (_e = this.board) === null || _e === void 0 ? void 0 : _e.berryTrees[dropZone.getData("index")];
+                if (berryTree) {
+                    this.clearHovered(berryTree.sprite);
                 }
             }
         }, this);

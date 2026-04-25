@@ -600,7 +600,7 @@ class Simulation extends schema_1.Schema {
         }
     }
     applyEffect(pokemon, effect) {
-        var _a, _b;
+        var _a, _b, _c, _d;
         const player = pokemon.player;
         const types = pokemon.types;
         switch (effect) {
@@ -792,6 +792,15 @@ class Simulation extends schema_1.Schema {
             case Effect_1.EffectEnum.MOON_FORCE:
                 if (types.has(Synergy_1.Synergy.FAIRY)) {
                     pokemon.effects.add(effect);
+                    if ((_a = pokemon.player) === null || _a === void 0 ? void 0 : _a.items.includes(Item_1.Item.LONG_WAND)) {
+                        pokemon.range += 1;
+                    }
+                    if ((_b = pokemon.player) === null || _b === void 0 ? void 0 : _b.items.includes(Item_1.Item.POUNCE_WAND)) {
+                        pokemon.effectsSet.add(synergies_2.pounceWandEffect);
+                    }
+                    if (effect === Effect_1.EffectEnum.MOON_FORCE) {
+                        pokemon.addLuck(20, pokemon, 0, false);
+                    }
                 }
                 break;
             case Effect_1.EffectEnum.DRAGON_ENERGY:
@@ -986,8 +995,8 @@ class Simulation extends schema_1.Schema {
             case Effect_1.EffectEnum.SHAPELESS:
             case Effect_1.EffectEnum.ETHEREAL: {
                 const activeSynergies = (player === null || player === void 0 ? void 0 : player.synergies.countActiveSynergies()) || 0;
-                const speedFactor = (_a = [1, 3, 6][effects_1.SynergyEffects[Synergy_1.Synergy.AMORPHOUS].indexOf(effect)]) !== null && _a !== void 0 ? _a : 0;
-                const hpFactor = (_b = [3, 6, 12][effects_1.SynergyEffects[Synergy_1.Synergy.AMORPHOUS].indexOf(effect)]) !== null && _b !== void 0 ? _b : 0;
+                const speedFactor = (_c = [1, 3, 6][effects_1.SynergyEffects[Synergy_1.Synergy.AMORPHOUS].indexOf(effect)]) !== null && _c !== void 0 ? _c : 0;
+                const hpFactor = (_d = [3, 6, 12][effects_1.SynergyEffects[Synergy_1.Synergy.AMORPHOUS].indexOf(effect)]) !== null && _d !== void 0 ? _d : 0;
                 pokemon.effects.add(effect);
                 pokemon.addSpeed(speedFactor * activeSynergies, pokemon, 0, false);
                 pokemon.addMaxHP(hpFactor * activeSynergies, pokemon, 0, false);
@@ -1190,16 +1199,30 @@ class Simulation extends schema_1.Schema {
                 continue;
             const isGhostPlayer = this.id !== player.simulationId;
             const isGhostOpponent = playerId === this.bluePlayerId && this.isGhostBattle;
+            const isPvE = opponentPlayerId === "pve";
+            const battleResult = this.winnerId === playerId
+                ? Game_1.BattleResult.WIN
+                : this.winnerId === opponentPlayerId
+                    ? Game_1.BattleResult.DEFEAT
+                    : Game_1.BattleResult.DRAW;
             if (!isGhostPlayer) {
-                player.addBattleResult(player.opponentId, player.opponentName, this.winnerId === playerId
-                    ? Game_1.BattleResult.WIN
-                    : this.winnerId === opponentPlayerId
-                        ? Game_1.BattleResult.DEFEAT
-                        : Game_1.BattleResult.DRAW, player.opponentAvatar, this.weather);
+                player.addBattleResult(player.opponentId, player.opponentName, battleResult, player.opponentAvatar, this.weather);
+                const previousBattleResult = player.history
+                    .filter((stage) => stage.id !== "pve" && stage.result !== Game_1.BattleResult.DRAW)
+                    .map((stage) => stage.result)
+                    .at(-2);
+                if (battleResult === Game_1.BattleResult.DRAW) {
+                }
+                else if (battleResult !== previousBattleResult) {
+                    player.streak = 0;
+                }
+                else {
+                    player.streak += 1;
+                }
             }
             const client = this.room.clients.find((cli) => cli.auth.uid === playerId);
             if (this.winnerId === playerId) {
-                if (this.redPlayerId !== "pve" && !isGhostPlayer) {
+                if (!isPvE && !isGhostPlayer) {
                     const hasLeadersCrest = (_a = opponentPlayer === null || opponentPlayer === void 0 ? void 0 : opponentPlayer.items.includes(Item_1.Item.LEADERS_CREST)) !== null && _a !== void 0 ? _a : false;
                     const moneyGain = hasLeadersCrest ? 5 : 1;
                     player.addMoney(moneyGain, true, null);
@@ -1229,7 +1252,7 @@ class Simulation extends schema_1.Schema {
             if (this.weather !== Weather_1.Weather.NEUTRAL &&
                 (0, synergies_1.getSynergyStep)(player.synergies, Synergy_1.Synergy.ROCK) > 0 &&
                 !isGhostPlayer &&
-                this.redPlayerId !== "pve") {
+                !isPvE) {
                 const rockCollected = Item_1.WeatherRocksByWeather.get(this.weather);
                 if (rockCollected) {
                     player.weatherRocks.push(rockCollected);
@@ -1371,7 +1394,7 @@ class Simulation extends schema_1.Schema {
                     }
                     if (pokemonHit.items.has(Item_1.Item.SURFBOARD)) {
                         const surf = abilities_1.AbilityStrategies[Ability_1.Ability.SURF];
-                        surf.process(pokemonHit, this.board, pokemonHit, false, false, tidalWaveLevel);
+                        surf.process(pokemonHit, this.board, null, false, false, tidalWaveLevel);
                     }
                     if (pokemonHit.passive === Passive_1.Passive.PIKACHU_SURFER) {
                         pokemonHit.addPP(pokemonHit.maxPP, pokemonHit, 0, false);

@@ -3,7 +3,6 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import Message from "../../../models/colyseus-models/message";
 import { TournamentBracketSchema, TournamentSchema } from "../../../models/colyseus-models/tournament";
 import { IChatV2 } from "../../../types";
-import type { Booster } from "../../../types/Booster";
 import { Language } from "../../../types/enum/Language";
 import { ILeaderboardBotInfo, ILeaderboardEventInfo, ILeaderboardInfo } from "../../../types/interfaces/LeaderboardInfo";
 import { IUserMetadataClient } from "../../../types/interfaces/UserMetadata";
@@ -18,8 +17,6 @@ export interface IUserLobbyState {
     tabIndex: number;
     preparationRooms: RoomAvailable[];
     gameRooms: RoomAvailable[];
-    boosterContent: Booster;
-    lastBoostersOpened: Booster[];
     language: Language;
     tournaments: TournamentSchema[];
     ccu: number;
@@ -40,6 +37,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -54,6 +53,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -62,6 +63,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -74,6 +77,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -102,6 +110,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -134,18 +147,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -182,6 +183,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -196,6 +199,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -204,6 +209,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -216,6 +223,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -244,6 +256,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -276,18 +293,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -324,6 +329,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -338,6 +345,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -346,6 +355,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -358,6 +369,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -386,6 +402,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -418,18 +439,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -466,6 +475,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -480,6 +491,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -488,6 +501,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -500,6 +515,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -528,6 +548,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -560,18 +585,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -608,6 +621,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -622,6 +637,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -630,6 +647,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -642,6 +661,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -670,6 +694,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -702,18 +731,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -750,6 +767,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -764,6 +783,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -772,6 +793,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -784,6 +807,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -812,6 +840,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -844,18 +877,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -892,6 +913,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -906,6 +929,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -914,6 +939,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -926,6 +953,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -954,6 +986,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -986,18 +1023,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -1034,6 +1059,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -1048,6 +1075,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -1056,6 +1085,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -1068,6 +1099,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -1096,6 +1132,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -1128,18 +1169,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -1176,6 +1205,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -1190,6 +1221,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -1198,6 +1231,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -1210,6 +1245,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -1238,6 +1278,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -1270,18 +1315,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -1318,6 +1351,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -1332,6 +1367,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -1340,6 +1377,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -1352,6 +1391,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -1380,6 +1424,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -1412,18 +1461,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -1460,6 +1497,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -1474,6 +1513,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -1482,6 +1523,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -1494,6 +1537,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -1522,6 +1570,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -1554,18 +1607,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -1587,290 +1628,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
         }[];
         ccu: number;
     }, action: PayloadAction<IUserMetadataClient | undefined>) => void;
-    setBoosterContent: (state: {
-        messages: {
-            id: string;
-            payload: string;
-            authorId: string;
-            author: string;
-            avatar: string;
-            time: number;
-        }[];
-        leaderboard: {
-            id: string;
-            name: string;
-            avatar: string;
-            rank: number;
-            value: number;
-        }[];
-        botLeaderboard: {
-            name: string;
-            avatar: string;
-            rank: number;
-            value: number;
-            author: string;
-        }[];
-        levelLeaderboard: {
-            id: string;
-            name: string;
-            avatar: string;
-            rank: number;
-            value: number;
-        }[];
-        eventLeaderboard: {
-            eventFinishTime: Date | null;
-            id: string;
-            name: string;
-            avatar: string;
-            rank: number;
-            value: number;
-        }[];
-        user: {
-            pokemonCollection: Map<string, {
-                unlockedb64: string;
-                id: string;
-                selectedEmotion: import("../../../types").Emotion | null;
-                selectedShiny: boolean;
-                dust: number;
-                played: number;
-            }>;
-            uid: string;
-            displayName: string;
-            language: Language | "";
-            avatar: string;
-            games: number;
-            wins: number;
-            exp: number;
-            level: number;
-            elo: number;
-            maxElo: number;
-            eventPoints: number;
-            maxEventPoints: number;
-            eventFinishTime: Date | null;
-            booster: number;
-            titles: import("../../../types").Title[];
-            title: "" | import("../../../types").Title;
-            role: import("../../../types").Role;
-            banned?: boolean | undefined;
-        } | undefined;
-        searchedUser: {
-            pokemonCollection: Map<string, {
-                unlockedb64: string;
-                id: string;
-                selectedEmotion: import("../../../types").Emotion | null;
-                selectedShiny: boolean;
-                dust: number;
-                played: number;
-            }>;
-            uid: string;
-            displayName: string;
-            language: Language | "";
-            avatar: string;
-            games: number;
-            wins: number;
-            exp: number;
-            level: number;
-            elo: number;
-            maxElo: number;
-            eventPoints: number;
-            maxEventPoints: number;
-            eventFinishTime: Date | null;
-            booster: number;
-            titles: import("../../../types").Title[];
-            title: "" | import("../../../types").Title;
-            role: import("../../../types").Role;
-            banned?: boolean | undefined;
-        } | undefined;
-        tabIndex: number;
-        preparationRooms: {
-            name: string;
-            roomId: string;
-            clients: number;
-            maxClients: number;
-            metadata?: any;
-        }[];
-        gameRooms: {
-            name: string;
-            roomId: string;
-            clients: number;
-            maxClients: number;
-            metadata?: any;
-        }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
-        language: Language;
-        tournaments: {
-            id: string;
-            name: string;
-            startDate: string;
-            players: import("@colyseus/schema").MapSchema<import("../../../models/colyseus-models/tournament").TournamentPlayerSchema, string>;
-            brackets: import("@colyseus/schema").MapSchema<TournamentBracketSchema, string>;
-            finished: boolean;
-            pendingLobbiesCreation: boolean;
-            assign: <T extends Partial<TournamentSchema>>(props: import("@colyseus/schema").AssignableProps<T>) => TournamentSchema;
-            restore: (jsonData: import("@colyseus/schema").ToJSON<TournamentSchema>) => TournamentSchema;
-            setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<TournamentSchema>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
-            clone: () => TournamentSchema;
-            toJSON: (this: any) => import("@colyseus/schema").ToJSON<TournamentSchema>;
-            discardAllChanges: () => void;
-            "~refId"?: number | undefined;
-            "~getByIndex": (index: number) => any;
-            "~deleteByIndex": (index: number) => void;
-        }[];
-        ccu: number;
-    }, action: PayloadAction<Booster>) => void;
-    resetLastBoostersOpened: (state: {
-        messages: {
-            id: string;
-            payload: string;
-            authorId: string;
-            author: string;
-            avatar: string;
-            time: number;
-        }[];
-        leaderboard: {
-            id: string;
-            name: string;
-            avatar: string;
-            rank: number;
-            value: number;
-        }[];
-        botLeaderboard: {
-            name: string;
-            avatar: string;
-            rank: number;
-            value: number;
-            author: string;
-        }[];
-        levelLeaderboard: {
-            id: string;
-            name: string;
-            avatar: string;
-            rank: number;
-            value: number;
-        }[];
-        eventLeaderboard: {
-            eventFinishTime: Date | null;
-            id: string;
-            name: string;
-            avatar: string;
-            rank: number;
-            value: number;
-        }[];
-        user: {
-            pokemonCollection: Map<string, {
-                unlockedb64: string;
-                id: string;
-                selectedEmotion: import("../../../types").Emotion | null;
-                selectedShiny: boolean;
-                dust: number;
-                played: number;
-            }>;
-            uid: string;
-            displayName: string;
-            language: Language | "";
-            avatar: string;
-            games: number;
-            wins: number;
-            exp: number;
-            level: number;
-            elo: number;
-            maxElo: number;
-            eventPoints: number;
-            maxEventPoints: number;
-            eventFinishTime: Date | null;
-            booster: number;
-            titles: import("../../../types").Title[];
-            title: "" | import("../../../types").Title;
-            role: import("../../../types").Role;
-            banned?: boolean | undefined;
-        } | undefined;
-        searchedUser: {
-            pokemonCollection: Map<string, {
-                unlockedb64: string;
-                id: string;
-                selectedEmotion: import("../../../types").Emotion | null;
-                selectedShiny: boolean;
-                dust: number;
-                played: number;
-            }>;
-            uid: string;
-            displayName: string;
-            language: Language | "";
-            avatar: string;
-            games: number;
-            wins: number;
-            exp: number;
-            level: number;
-            elo: number;
-            maxElo: number;
-            eventPoints: number;
-            maxEventPoints: number;
-            eventFinishTime: Date | null;
-            booster: number;
-            titles: import("../../../types").Title[];
-            title: "" | import("../../../types").Title;
-            role: import("../../../types").Role;
-            banned?: boolean | undefined;
-        } | undefined;
-        tabIndex: number;
-        preparationRooms: {
-            name: string;
-            roomId: string;
-            clients: number;
-            maxClients: number;
-            metadata?: any;
-        }[];
-        gameRooms: {
-            name: string;
-            roomId: string;
-            clients: number;
-            maxClients: number;
-            metadata?: any;
-        }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
-        language: Language;
-        tournaments: {
-            id: string;
-            name: string;
-            startDate: string;
-            players: import("@colyseus/schema").MapSchema<import("../../../models/colyseus-models/tournament").TournamentPlayerSchema, string>;
-            brackets: import("@colyseus/schema").MapSchema<TournamentBracketSchema, string>;
-            finished: boolean;
-            pendingLobbiesCreation: boolean;
-            assign: <T extends Partial<TournamentSchema>>(props: import("@colyseus/schema").AssignableProps<T>) => TournamentSchema;
-            restore: (jsonData: import("@colyseus/schema").ToJSON<TournamentSchema>) => TournamentSchema;
-            setDirty: <K extends import("@colyseus/schema/build/types/HelperTypes").NonFunctionPropNames<TournamentSchema>>(property: number | K, operation?: import("@colyseus/schema").OPERATION) => void;
-            clone: () => TournamentSchema;
-            toJSON: (this: any) => import("@colyseus/schema").ToJSON<TournamentSchema>;
-            discardAllChanges: () => void;
-            "~refId"?: number | undefined;
-            "~getByIndex": (index: number) => any;
-            "~deleteByIndex": (index: number) => void;
-        }[];
-        ccu: number;
-    }) => void;
     resetLobby: () => IUserLobbyState;
     addTournament: (state: {
         messages: {
@@ -1887,6 +1644,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -1901,6 +1660,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -1909,6 +1670,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -1921,6 +1684,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -1949,6 +1717,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -1981,18 +1754,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -2029,6 +1790,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -2043,6 +1806,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -2051,6 +1816,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -2063,6 +1830,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2091,6 +1863,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2123,18 +1900,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -2171,6 +1936,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -2185,6 +1952,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -2193,6 +1962,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -2205,6 +1976,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2233,6 +2009,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2265,18 +2046,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -2317,6 +2086,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -2331,6 +2102,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -2339,6 +2112,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -2351,6 +2126,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2379,6 +2159,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2411,18 +2196,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -2459,6 +2232,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -2473,6 +2248,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -2481,6 +2258,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -2493,6 +2272,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2521,6 +2305,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2553,18 +2342,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -2606,6 +2383,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -2620,6 +2399,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -2628,6 +2409,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -2640,6 +2423,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2668,6 +2456,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2700,18 +2493,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -2752,6 +2533,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -2766,6 +2549,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -2774,6 +2559,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -2786,6 +2573,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2814,6 +2606,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2846,18 +2643,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -2897,6 +2682,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
             name: string;
@@ -2911,6 +2698,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         eventLeaderboard: {
             eventFinishTime: Date | null;
@@ -2919,6 +2708,8 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             avatar: string;
             rank: number;
             value: number;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
         }[];
         user: {
             pokemonCollection: Map<string, {
@@ -2931,6 +2722,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2959,6 +2755,11 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             }>;
             uid: string;
             displayName: string;
+            twitchUserId?: string | undefined;
+            twitchLogin?: string | undefined;
+            twitchDisplayName?: string | undefined;
+            twitchVerifiedAt?: (Date | null) | undefined;
+            twitchVerificationRevokedAt?: (Date | null) | undefined;
             language: Language | "";
             avatar: string;
             games: number;
@@ -2991,18 +2792,6 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             maxClients: number;
             metadata?: any;
         }[];
-        boosterContent: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[];
-        lastBoostersOpened: {
-            name: import("../../../types/enum/Pokemon").Pkm;
-            shiny: boolean;
-            emotion: import("../../../types").Emotion;
-            new: boolean;
-        }[][];
         language: Language;
         tournaments: {
             id: string;
@@ -3030,7 +2819,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
         value: any;
     }>) => void;
 }, "lobby", "lobby", import("@reduxjs/toolkit").SliceSelectors<IUserLobbyState>>;
-export declare const removeMessage: import("@reduxjs/toolkit").ActionCreatorWithPayload<Message, "lobby/removeMessage">, setBoosterContent: import("@reduxjs/toolkit").ActionCreatorWithPayload<Booster, "lobby/setBoosterContent">, resetLastBoostersOpened: import("@reduxjs/toolkit").ActionCreatorWithoutPayload<"lobby/resetLastBoostersOpened">, pushMessage: import("@reduxjs/toolkit").ActionCreatorWithPayload<Message, "lobby/pushMessage">, setLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithPayload<ILeaderboardInfo[], "lobby/setLeaderboard">, setBotLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithPayload<ILeaderboardBotInfo[], "lobby/setBotLeaderboard">, setLevelLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithPayload<ILeaderboardInfo[], "lobby/setLevelLeaderboard">, setEventLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithPayload<ILeaderboardEventInfo[], "lobby/setEventLeaderboard">, setTabIndex: import("@reduxjs/toolkit").ActionCreatorWithPayload<number, "lobby/setTabIndex">, addRoom: import("@reduxjs/toolkit").ActionCreatorWithPayload<RoomAvailable<any>, "lobby/addRoom">, removeRoom: import("@reduxjs/toolkit").ActionCreatorWithPayload<string, "lobby/removeRoom">, setCcu: import("@reduxjs/toolkit").ActionCreatorWithPayload<number, "lobby/setCcu">, setSearchedUser: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<IUserMetadataClient | undefined, "lobby/setSearchedUser">, resetLobby: import("@reduxjs/toolkit").ActionCreatorWithoutPayload<"lobby/resetLobby">, addTournament: import("@reduxjs/toolkit").ActionCreatorWithPayload<TournamentSchema, "lobby/addTournament">, removeTournament: import("@reduxjs/toolkit").ActionCreatorWithPayload<TournamentSchema, "lobby/removeTournament">, changeTournament: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
+export declare const removeMessage: import("@reduxjs/toolkit").ActionCreatorWithPayload<Message, "lobby/removeMessage">, pushMessage: import("@reduxjs/toolkit").ActionCreatorWithPayload<Message, "lobby/pushMessage">, setLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithPayload<ILeaderboardInfo[], "lobby/setLeaderboard">, setBotLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithPayload<ILeaderboardBotInfo[], "lobby/setBotLeaderboard">, setLevelLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithPayload<ILeaderboardInfo[], "lobby/setLevelLeaderboard">, setEventLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithPayload<ILeaderboardEventInfo[], "lobby/setEventLeaderboard">, setTabIndex: import("@reduxjs/toolkit").ActionCreatorWithPayload<number, "lobby/setTabIndex">, addRoom: import("@reduxjs/toolkit").ActionCreatorWithPayload<RoomAvailable<any>, "lobby/addRoom">, removeRoom: import("@reduxjs/toolkit").ActionCreatorWithPayload<string, "lobby/removeRoom">, setCcu: import("@reduxjs/toolkit").ActionCreatorWithPayload<number, "lobby/setCcu">, setSearchedUser: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<IUserMetadataClient | undefined, "lobby/setSearchedUser">, resetLobby: import("@reduxjs/toolkit").ActionCreatorWithoutPayload<"lobby/resetLobby">, addTournament: import("@reduxjs/toolkit").ActionCreatorWithPayload<TournamentSchema, "lobby/addTournament">, removeTournament: import("@reduxjs/toolkit").ActionCreatorWithPayload<TournamentSchema, "lobby/removeTournament">, changeTournament: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     tournamentId: string;
     field: string;
     value: any;

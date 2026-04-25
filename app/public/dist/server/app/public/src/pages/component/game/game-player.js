@@ -18,7 +18,9 @@ function GamePlayer(props) {
     const spectatedPlayerId = (0, hooks_1.useAppSelector)((state) => state.game.playerIdSpectated);
     const connectedPlayerId = (0, hooks_1.useAppSelector)((state) => state.network.uid);
     function playerClick() {
-        props.click(props.player.id);
+        if (spectatedPlayerId !== props.player.id) {
+            props.click(props.player.id);
+        }
     }
     return ((0, jsx_runtime_1.jsxs)("div", { className: "game-player-wrapper", children: [(0, jsx_runtime_1.jsxs)("div", { style: {
                     top: `${1 + props.index * 12.5}%`,

@@ -69,6 +69,7 @@ const notifications_1 = require("../services/notifications");
 const types_1 = require("../types");
 const CloseCodes_1 = require("../types/enum/CloseCodes");
 const Game_1 = require("../types/enum/Game");
+const Item_1 = require("../types/enum/Item");
 const Passive_1 = require("../types/enum/Passive");
 const Pokemon_1 = require("../types/enum/Pokemon");
 const SpecialGameRule_1 = require("../types/enum/SpecialGameRule");
@@ -192,16 +193,6 @@ class GameRoom extends colyseus_1.Room {
                 });
                 this.startGame();
             }, config_1.MAX_LOADING_TIME);
-            this.onMessage(types_1.Transfer.ITEM, (client, item) => {
-                if (!this.state.gameFinished && client.auth) {
-                    try {
-                        this.pickItemProposition(client.auth.uid, item);
-                    }
-                    catch (error) {
-                        logger_1.logger.error(error);
-                    }
-                }
-            });
             this.onMessage(types_1.Transfer.SHOP, (client, message) => {
                 if (!this.state.gameFinished && client.auth) {
                     try {
@@ -229,10 +220,10 @@ class GameRoom extends colyseus_1.Room {
                     }
                 }
             });
-            this.onMessage(types_1.Transfer.POKEMON_PROPOSITION, (client, pkm) => {
+            this.onMessage(types_1.Transfer.CHOICE, (client, message) => {
                 if (!this.state.gameFinished && client.auth) {
                     try {
-                        this.pickPokemonProposition(client.auth.uid, pkm);
+                        this.pickChoice(client.auth.uid, message.choiceId, message.choiceIndex);
                     }
                     catch (error) {
                         logger_1.logger.error(error);
@@ -873,97 +864,98 @@ class GameRoom extends colyseus_1.Room {
         });
         return size;
     }
-    pickPokemonProposition(playerId, pkm, bypassLackOfSpace = false) {
-        var _a, _b;
+    pickChoice(playerId, choiceId, choiceIndex, bypassLackOfSpace = false) {
+        var _a, _b, _c, _d;
         const player = this.state.players.get(playerId);
-        if (!player || player.pokemonsProposition.length === 0)
+        if (!player)
             return;
-        if (this.state.additionalPokemons.includes(pkm) &&
-            this.state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.EVERYONE_IS_HERE)
+        const choice = player.choices.find((c) => c.id === choiceId);
+        if (!choice || choiceIndex < 0)
             return;
-        if (config_1.UniquePool.includes(pkm) &&
-            this.state.stageLevel !== config_1.PortalCarouselStages[1] &&
-            !(this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.UNIQUE_STARTER &&
-                this.state.stageLevel <= 1))
+        if (choice.type === "synergy") {
+            if (choiceIndex >= choice.synergies.length)
+                return;
+            player.monotype = choice.synergies[choiceIndex];
+            (0, array_1.removeInArray)(player.choices, choice);
             return;
-        if (config_1.LegendaryPool.includes(pkm) &&
-            this.state.stageLevel !== config_1.PortalCarouselStages[2])
-            return;
-        let pokemonsObtained = (pkm in Pokemon_1.PkmDuos ? Pokemon_1.PkmDuos[pkm] : [pkm]).map((p) => pokemon_factory_1.default.createPokemonFromName(p, player));
-        const pokemon = pokemonsObtained[0];
-        const isEvolution = pokemon.evolutionRule &&
-            pokemon.evolutionRule instanceof evolution_rules_1.CountEvolutionRule &&
-            pokemon.evolutionRule.canEvolveIfGettingOne(pokemon, player);
-        const freeSpace = (0, board_1.getFreeSpaceOnBench)(player.board);
-        if (freeSpace < pokemonsObtained.length &&
-            !bypassLackOfSpace &&
-            !isEvolution)
-            return;
-        const selectedIndex = player.pokemonsProposition.indexOf(pkm);
-        player.pokemonsProposition.clear();
-        if (config_1.AdditionalPicksStages.includes(this.state.stageLevel)) {
-            if ((_a = pokemonsObtained[0]) === null || _a === void 0 ? void 0 : _a.regional) {
-                const basePkm = ((_b = Object.keys(Pokemon_1.PkmRegionalVariants).find((p) => Pokemon_1.PkmRegionalVariants[p].includes(pokemonsObtained[0].name))) !== null && _b !== void 0 ? _b : pokemonsObtained[0].name);
-                this.state.shop.addAdditionalPokemon(basePkm, this.state);
-                player.regionalPokemons.push(pkm);
-            }
-            else {
-                this.state.shop.addAdditionalPokemon(pkm, this.state);
-            }
-            if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.CHOSEN_ONES) {
-                pokemonsObtained = pokemonsObtained.map((pkm) => {
-                    var _a, _b, _c;
-                    const evolution = pkm.hasEvolution
-                        ? pkm.evolutionRule.getEvolution(pkm, player, this.state.stageLevel)
-                        : pkm.name;
-                    const rank = [Game_1.Rarity.UNCOMMON, Game_1.Rarity.RARE, Game_1.Rarity.EPIC].indexOf(pkm.rarity);
-                    const replacement = pokemon_factory_1.default.createPokemonFromName(evolution, player);
-                    replacement.addMaxHP((_a = [50, 100, 150][rank]) !== null && _a !== void 0 ? _a : 50);
-                    replacement.addAttack((_b = [5, 10, 15][rank]) !== null && _b !== void 0 ? _b : 5);
-                    replacement.addAbilityPower((_c = [15, 30, 45][rank]) !== null && _c !== void 0 ? _c : 15);
-                    return replacement;
-                });
-            }
-            this.state.players.forEach((p) => p.updateRegionalPool(this.state, false));
         }
-        if (config_1.AdditionalPicksStages.includes(this.state.stageLevel) ||
-            this.state.stageLevel <= 1) {
-            const selectedItem = player.itemsProposition[selectedIndex];
-            if (player.itemsProposition.length > 0 && selectedItem != null) {
-                player.items.push(selectedItem);
-                player.itemsProposition.clear();
+        if (choiceIndex >= (((_a = choice.pokemons) === null || _a === void 0 ? void 0 : _a.length) || ((_b = choice.items) === null || _b === void 0 ? void 0 : _b.length)))
+            return;
+        if (choice.pokemons.length > 0) {
+            const pkm = choice.pokemons[choiceIndex];
+            let pokemonsObtained = (pkm in Pokemon_1.PkmDuos ? Pokemon_1.PkmDuos[pkm] : [pkm]).map((p) => pokemon_factory_1.default.createPokemonFromName(p, player));
+            const pokemon = pokemonsObtained[0];
+            const isEvolution = pokemon.evolutionRule &&
+                pokemon.evolutionRule instanceof evolution_rules_1.CountEvolutionRule &&
+                pokemon.evolutionRule.canEvolveIfGettingOne(pokemon, player);
+            const freeSpace = (0, board_1.getFreeSpaceOnBench)(player.board);
+            if (freeSpace < pokemonsObtained.length &&
+                !bypassLackOfSpace &&
+                !isEvolution)
+                return false;
+            if (choice.type === "addPick") {
+                if ((_c = pokemonsObtained[0]) === null || _c === void 0 ? void 0 : _c.regional) {
+                    const basePkm = ((_d = Object.keys(Pokemon_1.PkmRegionalVariants).find((p) => Pokemon_1.PkmRegionalVariants[p].includes(pokemonsObtained[0].name))) !== null && _d !== void 0 ? _d : pokemonsObtained[0].name);
+                    this.state.shop.addAdditionalPokemon(basePkm, this.state);
+                    player.regionalPokemons.push(pkm);
+                }
+                else {
+                    this.state.shop.addAdditionalPokemon(pkm, this.state);
+                }
+                if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.CHOSEN_ONES) {
+                    pokemonsObtained = pokemonsObtained.map((pkm) => {
+                        var _a, _b, _c;
+                        const evolution = pkm.hasEvolution
+                            ? pkm.evolutionRule.getEvolution(pkm, player, this.state.stageLevel)
+                            : pkm.name;
+                        const rank = [Game_1.Rarity.UNCOMMON, Game_1.Rarity.RARE, Game_1.Rarity.EPIC].indexOf(pkm.rarity);
+                        const replacement = pokemon_factory_1.default.createPokemonFromName(evolution, player);
+                        replacement.addMaxHP((_a = [50, 100, 150][rank]) !== null && _a !== void 0 ? _a : 50);
+                        replacement.addAttack((_b = [5, 10, 15][rank]) !== null && _b !== void 0 ? _b : 5);
+                        replacement.addAbilityPower((_c = [15, 30, 45][rank]) !== null && _c !== void 0 ? _c : 15);
+                        return replacement;
+                    });
+                }
+                this.state.players.forEach((p) => p.updateRegionalPool(this.state, false));
             }
+            if (choice.type === "starter") {
+                if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY ||
+                    this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.FIRST_PARTNER) {
+                    player.firstPartner = pokemonsObtained[0].name;
+                }
+                if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.CHOSEN_ONE) {
+                    pokemonsObtained[0].canBeSold = false;
+                }
+            }
+            pokemonsObtained.forEach((pokemon) => {
+                const freeCellX = (0, board_1.getFirstAvailablePositionInBench)(player.board);
+                if (isEvolution) {
+                    pokemon.positionX = freeCellX !== null && freeCellX !== void 0 ? freeCellX : -1;
+                    pokemon.positionY = 0;
+                    player.board.set(pokemon.id, pokemon);
+                    pokemon.onAcquired(player);
+                    this.checkEvolutionsAfterPokemonAcquired(playerId);
+                }
+                else if (freeCellX !== null) {
+                    pokemon.positionX = freeCellX;
+                    pokemon.positionY = 0;
+                    player.board.set(pokemon.id, pokemon);
+                    pokemon.onAcquired(player);
+                }
+                else {
+                    const sellPrice = (0, shop_1.getSellPrice)(pokemon, this.state.specialGameRule);
+                    player.addMoney(sellPrice, true, null);
+                }
+            });
         }
-        if (this.state.stageLevel <= 1) {
-            player.firstPartner = pokemonsObtained[0].name;
-        }
-        pokemonsObtained.forEach((pokemon) => {
-            const freeCellX = (0, board_1.getFirstAvailablePositionInBench)(player.board);
-            if (isEvolution) {
-                pokemon.positionX = freeCellX !== null && freeCellX !== void 0 ? freeCellX : -1;
-                pokemon.positionY = 0;
-                player.board.set(pokemon.id, pokemon);
-                pokemon.onAcquired(player);
-                this.checkEvolutionsAfterPokemonAcquired(playerId);
-            }
-            else if (freeCellX !== null) {
-                pokemon.positionX = freeCellX;
-                pokemon.positionY = 0;
-                player.board.set(pokemon.id, pokemon);
-                pokemon.onAcquired(player);
-            }
-            else {
-                const sellPrice = (0, shop_1.getSellPrice)(pokemon, this.state.specialGameRule);
-                player.addMoney(sellPrice, true, null);
-            }
-        });
-    }
-    pickItemProposition(playerId, item) {
-        const player = this.state.players.get(playerId);
-        if (player && player.itemsProposition.includes(item)) {
+        if (choice.items.length > 0) {
+            const item = choice.items[choiceIndex];
             player.items.push(item);
-            player.itemsProposition.clear();
+            if ((0, array_1.isIn)(Item_1.Wands, item)) {
+                player.fairyWands.push(item);
+            }
         }
+        (0, array_1.removeInArray)(player.choices, choice);
     }
     computeRoundDamage(opponentTeam, stageLevel) {
         let damage = Math.ceil(stageLevel / 2);

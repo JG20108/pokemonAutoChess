@@ -70,6 +70,7 @@ const precomputed_pokemon_data_1 = require("../precomputed/precomputed-pokemon-d
 const experience_manager_1 = __importDefault(require("./experience-manager"));
 const game_stats_1 = require("./game-stats");
 const history_item_1 = __importDefault(require("./history-item"));
+const player_choice_1 = require("./player-choice");
 const pokemon_1 = require("./pokemon");
 const pokemon_customs_1 = require("./pokemon-customs");
 const synergies_1 = __importStar(require("./synergies"));
@@ -98,12 +99,12 @@ class Player extends schema_1.Schema {
         this.boardSize = 0;
         this.items = new schema_1.ArraySchema();
         this.scarvesItems = new schema_1.ArraySchema();
+        this.fairyWands = new schema_1.ArraySchema();
         this.alive = true;
         this.history = new schema_1.ArraySchema();
         this.pokemonCustoms = new schema_1.MapSchema();
         this.emotesUnlocked = "";
-        this.itemsProposition = new schema_1.ArraySchema();
-        this.pokemonsProposition = new schema_1.ArraySchema();
+        this.choices = new schema_1.ArraySchema();
         this.pveRewards = new schema_1.ArraySchema();
         this.pveRewardsPropositions = new schema_1.ArraySchema();
         this.loadingProgress = 0;
@@ -142,7 +143,6 @@ class Player extends schema_1.Schema {
         this.specialGameRule = null;
         this.shopsSinceLastUnownShop = 0;
         this.regions = [];
-        this.extraScarves = 0;
         this.id = id;
         this.spectatedPlayerId = id;
         this.name = name;
@@ -267,6 +267,10 @@ class Player extends schema_1.Schema {
             updatedSynergies.get(Synergy_1.Synergy.GOURMET)) {
             this.updateChefsHats();
         }
+        if (previousSynergies.get(Synergy_1.Synergy.FAIRY) !==
+            updatedSynergies.get(Synergy_1.Synergy.FAIRY)) {
+            this.updateFairyWands(previousSynergies, updatedSynergies);
+        }
         this.effects.update(this.synergies, this.board);
         if (this.items.includes(Item_1.Item.MISSION_ORDER_GREEN) &&
             this.synergies.countActiveSynergies() >= 9) {
@@ -323,11 +327,9 @@ class Player extends schema_1.Schema {
     updateScarves(previousSynergies, updatedSynergies) {
         let needsRecomputingSynergiesAgain = false;
         const previousNbNormalScarves = (0, synergies_1.getSynergyStep)(previousSynergies, Synergy_1.Synergy.NORMAL);
-        const previousNbScarves = previousNbNormalScarves + this.extraScarves;
-        const previousScarves = this.getScarvesItemsWithNbScarves(previousNbScarves);
+        const previousScarves = this.getScarvesItemsWithNbScarves(previousNbNormalScarves);
         const newNbNormalScarves = (0, synergies_1.getSynergyStep)(updatedSynergies, Synergy_1.Synergy.NORMAL);
-        const newNbScarves = newNbNormalScarves + this.extraScarves;
-        const newScarves = this.getScarvesItemsWithNbScarves(newNbScarves);
+        const newScarves = this.getScarvesItemsWithNbScarves(newNbNormalScarves);
         if (newScarves.length > previousScarves.length) {
             const gainedScarves = newScarves.slice(previousScarves.length, newScarves.length);
             gainedScarves.forEach((item) => {
@@ -428,6 +430,33 @@ class Player extends schema_1.Schema {
                 }
             }
         } while (newNbHats !== currentNbHats);
+    }
+    updateFairyWands(previousSynergies, updatedSynergies) {
+        var _a, _b;
+        const previousFairyLevel = (0, synergies_1.getSynergyStep)(previousSynergies, Synergy_1.Synergy.FAIRY);
+        const newFairyLevel = (0, synergies_1.getSynergyStep)(updatedSynergies, Synergy_1.Synergy.FAIRY);
+        const nbWandsByLevel = [0, 1, 2, 3, 4];
+        const previousNbWands = (_a = nbWandsByLevel[previousFairyLevel]) !== null && _a !== void 0 ? _a : 0;
+        const newNbWands = (_b = nbWandsByLevel[newFairyLevel]) !== null && _b !== void 0 ? _b : 0;
+        const currentNbWands = this.items.filter((item) => (0, array_1.isIn)(Item_1.Wands, item)).length;
+        if (currentNbWands < newNbWands) {
+            const gainedWands = this.fairyWands.slice(previousNbWands, newNbWands);
+            if (gainedWands.length < newNbWands - currentNbWands &&
+                newFairyLevel - 1 in config_1.FAIRY_WANDS_BY_SYNERGY_LEVEL &&
+                this.choices.filter((c) => c.type === "wand").length === 0) {
+                this.choices.push(new player_choice_1.PlayerChoice({
+                    type: "wand",
+                    items: (0, random_1.pickNRandomIn)(config_1.FAIRY_WANDS_BY_SYNERGY_LEVEL[newFairyLevel - 1], 3)
+                }));
+            }
+            this.items.push(...gainedWands);
+        }
+        else if (newNbWands < previousNbWands) {
+            const lostWands = this.fairyWands.slice(newNbWands, previousNbWands);
+            lostWands.forEach((wand) => {
+                (0, array_1.removeInArray)(this.items, wand);
+            });
+        }
     }
     updateRegionalPool(state, mapChanged, previousMap) {
         if (this.map === "town") {
@@ -562,6 +591,11 @@ class Player extends schema_1.Schema {
         const finals = new Set((0, schemas_1.values)(this.board)
             .filter((pokemon) => pokemon.final)
             .map((pokemon) => (0, pokemon_factory_1.getPokemonBaseline)(pokemon.name)));
+        this.pokemonsTrainingInDojo.forEach((pokemonInDojo) => {
+            if (pokemonInDojo.pokemon.final) {
+                finals.add((0, pokemon_factory_1.getPokemonBaseline)(pokemonInDojo.pokemon.name));
+            }
+        });
         if (finals.has(Pokemon_1.Pkm.BURMY_PLANT)) {
             finals.add(Pokemon_1.Pkm.BURMY_TRASH);
             finals.add(Pokemon_1.Pkm.BURMY_SANDY);
@@ -705,6 +739,9 @@ __decorate([
     (0, schema_1.type)(["string"])
 ], Player.prototype, "scarvesItems", void 0);
 __decorate([
+    (0, schema_1.type)(["string"])
+], Player.prototype, "fairyWands", void 0);
+__decorate([
     (0, schema_1.type)("uint8")
 ], Player.prototype, "rank", void 0);
 __decorate([
@@ -732,13 +769,8 @@ __decorate([
     (0, schema_1.type)("string")
 ], Player.prototype, "role", void 0);
 __decorate([
-    (0, schema_1.view)(),
-    (0, schema_1.type)(["string"])
-], Player.prototype, "itemsProposition", void 0);
-__decorate([
-    (0, schema_1.view)(),
-    (0, schema_1.type)(["string"])
-], Player.prototype, "pokemonsProposition", void 0);
+    (0, schema_1.type)([player_choice_1.PlayerChoice])
+], Player.prototype, "choices", void 0);
 __decorate([
     (0, schema_1.type)(["string"])
 ], Player.prototype, "pveRewards", void 0);

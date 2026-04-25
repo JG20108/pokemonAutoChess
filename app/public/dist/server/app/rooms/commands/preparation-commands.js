@@ -25,6 +25,7 @@ const user_metadata_1 = __importDefault(require("../../models/mongo-models/user-
 const types_1 = require("../../types");
 const CloseCodes_1 = require("../../types/enum/CloseCodes");
 const Game_1 = require("../../types/enum/Game");
+const SpecialGameRule_1 = require("../../types/enum/SpecialGameRule");
 const elo_1 = require("../../utils/elo");
 const logger_1 = require("../../utils/logger");
 const number_1 = require("../../utils/number");
@@ -34,6 +35,7 @@ const schemas_1 = require("../../utils/schemas");
 class OnJoinCommand extends command_1.Command {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ client, options, auth }) {
+            var _b, _c;
             try {
                 const pendingGame = yield (0, pending_game_manager_1.getPendingGame)(this.room.presence, client.auth.uid);
                 if (pendingGame != null && !pendingGame.isExpired) {
@@ -78,7 +80,7 @@ class OnJoinCommand extends command_1.Command {
                         client.leave(CloseCodes_1.CloseCodes.USER_RANK_TOO_HIGH);
                         return;
                     }
-                    this.state.users.set(client.auth.uid, new game_user_1.GameUser(u.uid, u.displayName, u.elo, u.games, u.avatar, false, false, u.title, u.role, auth.email === undefined && auth.photoURL === undefined));
+                    this.state.users.set(client.auth.uid, new game_user_1.GameUser(u.uid, u.displayName, u.elo, u.games, u.avatar, false, false, u.title, u.role, auth.email === undefined && auth.photoURL === undefined, (_b = u.twitchLogin) !== null && _b !== void 0 ? _b : "", (_c = u.twitchDisplayName) !== null && _c !== void 0 ? _c : ""));
                     this.room.updatePlayersInfo();
                     if (u.uid == this.state.ownerId) {
                         this.state.ownerName = u.displayName;
@@ -341,7 +343,9 @@ class OnRoomChangeSpecialRule extends command_1.Command {
                     this.room.state.addMessage({
                         author: "Server",
                         authorId: "server",
-                        payload: `Smeargle's Scribble mode has been ${specialRule ? "enabled" : "disabled"} for this game. Players need to ready again.`,
+                        payload: specialRule
+                            ? `Smeargle's Scribble: ${specialRule} — ${SpecialGameRule_1.SpecialGameRuleDescription[specialRule]}. Players need to ready again.`
+                            : `Smeargle's Scribble has been disabled. Players need to ready again.`,
                         avatar: leader === null || leader === void 0 ? void 0 : leader.avatar
                     });
                     this.state.users.forEach((user) => {

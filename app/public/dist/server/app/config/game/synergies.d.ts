@@ -14,6 +14,7 @@ export declare const MONSTER_AP_BUFF_PER_SYNERGY_LEVEL: number[];
 export declare const MONSTER_MAX_HP_BUFF_FACTOR_PER_SYNERGY_LEVEL: number[];
 export declare const FIELD_HEAL_PER_SYNERGY_LEVEL: number[];
 export declare const FIELD_SPEED_BUFF_PER_SYNERGY_LEVEL: number[];
+export declare const FAIRY_WANDS_BY_SYNERGY_LEVEL: Item[][];
 export declare const UNOWN_ENCOUNTER_CHANCE = 0.033;
 export declare const SHINY_UNOWN_ENCOUNTER_CHANCE = 0.05;
 export declare const SHARDS_PER_UNOWN_WANDERER = 50;

@@ -1,7 +1,7 @@
 "use strict";
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setPendingGameId = exports.setErrorAlertMessage = exports.setConnectionStatus = exports.selectLanguage = exports.setTitle = exports.changeSelectedEmotion = exports.changeAvatar = exports.changeName = exports.clearNotification = exports.setNotifications = exports.setProfile = exports.logOut = exports.logIn = exports.networkSlice = void 0;
+exports.setPendingGameId = exports.setErrorAlertMessage = exports.setConnectionStatus = exports.selectLanguage = exports.setTitle = exports.changeAvatar = exports.changeName = exports.clearNotification = exports.setNotifications = exports.setProfile = exports.logOut = exports.logIn = exports.networkSlice = void 0;
 const toolkit_1 = require("@reduxjs/toolkit");
 const collection_1 = require("../../../core/collection");
 const types_1 = require("../../../types");
@@ -56,17 +56,6 @@ exports.networkSlice = (0, toolkit_1.createSlice)({
                 state.profile.avatar = (0, avatar_1.getAvatarString)(action.payload.index, action.payload.shiny, action.payload.emotion);
             (_a = network_js_1.rooms.lobby) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.CHANGE_AVATAR, action.payload);
         },
-        changeSelectedEmotion: (state, action) => {
-            var _a;
-            if (state.profile) {
-                const pokemonCollectionItem = state.profile.pokemonCollection.get(action.payload.index);
-                if (pokemonCollectionItem) {
-                    pokemonCollectionItem.selectedEmotion = action.payload.emotion;
-                    pokemonCollectionItem.selectedShiny = action.payload.shiny;
-                }
-            }
-            (_a = network_js_1.rooms.lobby) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.CHANGE_SELECTED_EMOTION, action.payload);
-        },
         setTitle: (state, action) => {
             var _a;
             if (state.profile)
@@ -96,6 +85,6 @@ exports.networkSlice = (0, toolkit_1.createSlice)({
         }
     }
 });
-_a = exports.networkSlice.actions, exports.logIn = _a.logIn, exports.logOut = _a.logOut, exports.setProfile = _a.setProfile, exports.setNotifications = _a.setNotifications, exports.clearNotification = _a.clearNotification, exports.changeName = _a.changeName, exports.changeAvatar = _a.changeAvatar, exports.changeSelectedEmotion = _a.changeSelectedEmotion, exports.setTitle = _a.setTitle, exports.selectLanguage = _a.selectLanguage, exports.setConnectionStatus = _a.setConnectionStatus, exports.setErrorAlertMessage = _a.setErrorAlertMessage, exports.setPendingGameId = _a.setPendingGameId;
+_a = exports.networkSlice.actions, exports.logIn = _a.logIn, exports.logOut = _a.logOut, exports.setProfile = _a.setProfile, exports.setNotifications = _a.setNotifications, exports.clearNotification = _a.clearNotification, exports.changeName = _a.changeName, exports.changeAvatar = _a.changeAvatar, exports.setTitle = _a.setTitle, exports.selectLanguage = _a.selectLanguage, exports.setConnectionStatus = _a.setConnectionStatus, exports.setErrorAlertMessage = _a.setErrorAlertMessage, exports.setPendingGameId = _a.setPendingGameId;
 exports.default = exports.networkSlice.reducer;
 //# sourceMappingURL=NetworkStore.js.map

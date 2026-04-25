@@ -428,13 +428,6 @@ class GameContainer {
                 (_b = (_a = this.gameScene) === null || _a === void 0 ? void 0 : _a.itemsContainer) === null || _b === void 0 ? void 0 : _b.render(player.items);
             }
         });
-        $player.scarvesItems.onChange((value, key) => {
-            stores_1.default.dispatch((0, GameStore_1.changePlayer)({
-                id: player.id,
-                field: "scarvesItems",
-                value: player.scarvesItems
-            }));
-        });
         $player.synergies.onChange(() => {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             if (player.id === this.playerIdSpectated &&

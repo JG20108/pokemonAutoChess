@@ -547,6 +547,10 @@ const poppingIcon = (options) => (args) => {
             : [args.positionX, args.positionY], ease: phaser_1.default.Math.Easing.Cubic.Out, scale: (_a = options.scale) !== null && _a !== void 0 ? _a : 0.25, tweenProps: Object.assign({ scale: (_b = options === null || options === void 0 ? void 0 : options.maxScale) !== null && _b !== void 0 ? _b : 3 }, ((_c = options.tweenProps) !== null && _c !== void 0 ? _c : {})) }))(args);
 };
 exports.AbilitiesAnimations = {
+    ["PUFF_RED"]: onTargetScale2,
+    ["PUFF_PINK"]: onTargetScale2,
+    ["PUFF_GREEN"]: onTargetScale2,
+    ["PUFF_BROWN"]: onTargetScale2,
     [Ability_1.Ability.DIAMOND_STORM]: onCasterScale2,
     [Ability_1.Ability.THRASH]: onCasterScale2,
     [Ability_1.Ability.HELPING_HAND]: onCasterScale2,
@@ -608,6 +612,17 @@ exports.AbilitiesAnimations = {
     }),
     ["FIELD_DEATH"]: onCasterScale2,
     ["FAIRY_CRIT"]: onCasterScale2,
+    ["FAIRY_HIT"]: onTarget({
+        ability: "FAIRY/hit",
+        textureKey: "attacks"
+    }),
+    ["FAIRY_TUNNEL"]: projectile({
+        ability: Ability_1.Ability.PSYCHO_CUT,
+        distance: 8,
+        duration: 1000,
+        oriented: true,
+        rotation: +Math.PI / 2
+    }),
     ["POWER_LENS"]: onCasterScale2,
     ["STAR_DUST"]: onCasterScale2,
     ["HEAL_ORDER"]: onCasterScale2,
@@ -2624,6 +2639,21 @@ exports.AbilitiesAnimations = {
         ability: "INFERNO",
         depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON,
         scale: 2
+    }),
+    ["WARP_WAND"]: onSprite((_a) => {
+        var { targetSprite } = _a, args = __rest(_a, ["targetSprite"]);
+        onTarget({ ability: Ability_1.Ability.FUTURE_SIGHT, scale: 1.5 })(args);
+        if (targetSprite) {
+            targetSprite.isTeleporting = true;
+            setTimeout(() => {
+                targetSprite.isTeleporting = false;
+            }, 1000);
+        }
+    }),
+    ["WHIRLWIND_WAND"]: projectile({
+        ability: Ability_1.Ability.WHIRLWIND,
+        duration: 1500,
+        distance: 8
     })
 };
 function displayAbility(args) {

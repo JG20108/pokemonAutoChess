@@ -706,15 +706,28 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
                     attacker: pokemon,
                     shouldTargetGainMana: true
                 });
-                if ((0, random_1.chance)(0.3, pokemon)) {
-                    attacker.status.triggerWound(3000, attacker, pokemon);
-                }
+                attacker.status.triggerWound(3000, attacker, pokemon);
             }
         })
     ], [Item_1.Item.AQUA_EGG]: [
         new effect_1.OnAbilityCastEffect((pokemon) => {
             const ppRegained = (0, number_1.max)(pokemon.maxPP - 10)(Math.round(0.2 * pokemon.maxPP + 2 * pokemon.count.ult));
             pokemon.addPP(ppRegained, pokemon, 0, false);
+        })
+    ], [Item_1.Item.SCOPE_LENS]: [
+        new effect_1.OnAttackEffect(({ pokemon, target, crit }) => {
+            if (crit && target) {
+                const ppStolen = (0, number_1.max)(target.pp)(10);
+                pokemon.addPP(ppStolen, pokemon, 0, false);
+                target.addPP(-ppStolen, pokemon, 0, false);
+                target.count.manaBurnCount++;
+            }
+        })
+    ], [Item_1.Item.RAZOR_FANG]: [
+        new effect_1.BeforeAttackEffect(({ target, crit }) => {
+            if (crit && target) {
+                target.status.triggerArmorReduction(2000, target);
+            }
         })
     ], [Item_1.Item.STAR_DUST]: [
         new effect_1.OnAbilityCastEffect((pokemon) => {
@@ -724,6 +737,12 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
     ], [Item_1.Item.LEPPA_BERRY]: [
         new effect_1.OnAbilityCastEffect((pokemon) => {
             pokemon.eatBerry(Item_1.Item.LEPPA_BERRY);
+        })
+    ], [Item_1.Item.BABIRI_BERRY]: [
+        new effect_1.OnAttackReceivedEffect(({ pokemon, crit }) => {
+            if (crit) {
+                pokemon.eatBerry(Item_1.Item.BABIRI_BERRY);
+            }
         })
     ], [Item_1.Item.MAX_ELIXIR]: [
         new effect_1.OnAbilityCastEffect((pokemon) => {
@@ -1013,5 +1032,9 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
                 }
             });
         }, Item_1.Item.EFFICIENT_BANDANNA)
+    ], [Item_1.Item.LUCKY_RIBBON]: [
+        new effect_1.OnSimulationStartEffect(({ entity }) => {
+            entity.addDodgeChance(0.15, entity, 0, false);
+        })
     ] });
 //# sourceMappingURL=items.js.map

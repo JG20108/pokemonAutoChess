@@ -6299,8 +6299,7 @@ exports.PokemonAnimations = {
         ability: Animation_1.AnimationType.Attack,
         emote: Animation_1.AnimationType.Shoot,
         attackSprite: Animation_1.AttackSprite.ICE_MELEE,
-        hitSprite: Animation_1.HitSprite.WILD_HIT,
-        shinyUnavailable: true
+        hitSprite: Animation_1.HitSprite.WILD_HIT
     },
     [Pokemon_1.Pkm.GALARIAN_DARMANITAN_ZEN]: {
         attack: Animation_1.AnimationType.Idle,
@@ -6836,7 +6835,6 @@ exports.PokemonAnimations = {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Shoot,
         emote: Animation_1.AnimationType.Charge,
-        shinyUnavailable: true,
         attackSprite: Animation_1.AttackSprite.ELECTRIC_MELEE,
         hitSprite: Animation_1.HitSprite.ELECTRIC_HIT
     },
@@ -6920,7 +6918,6 @@ exports.PokemonAnimations = {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Shoot,
         emote: Animation_1.AnimationType.Sing,
-        shinyUnavailable: true,
         attackSprite: Animation_1.AttackSprite.NORMAL_MELEE,
         hitSprite: Animation_1.HitSprite.SOUND_HIT
     },
@@ -6928,7 +6925,6 @@ exports.PokemonAnimations = {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Shoot,
         emote: Animation_1.AnimationType.Sing,
-        shinyUnavailable: true,
         attackSprite: Animation_1.AttackSprite.NORMAL_MELEE,
         hitSprite: Animation_1.HitSprite.SOUND_HIT
     },
@@ -7071,7 +7067,6 @@ exports.PokemonAnimations = {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Shoot,
         emote: Animation_1.AnimationType.Shoot,
-        shinyUnavailable: true,
         attackSprite: Animation_1.AttackSprite.POISON_MELEE,
         hitSprite: Animation_1.HitSprite.POISON_HIT
     },
@@ -7079,7 +7074,6 @@ exports.PokemonAnimations = {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Shoot,
         emote: Animation_1.AnimationType.FlapAround,
-        shinyUnavailable: true,
         attackSprite: Animation_1.AttackSprite.FLYING_MELEE,
         hitSprite: Animation_1.HitSprite.POISON_HIT
     },
@@ -7282,8 +7276,7 @@ exports.PokemonAnimations = {
         ability: Animation_1.AnimationType.Charge,
         emote: Animation_1.AnimationType.Shoot,
         attackSprite: Animation_1.AttackSprite.GRASS_RANGE,
-        hitSprite: Animation_1.HitSprite.GRASS_HIT,
-        shinyUnavailable: true
+        hitSprite: Animation_1.HitSprite.GRASS_HIT
     },
     [Pokemon_1.Pkm.CHESPIN]: {
         attack: Animation_1.AnimationType.Attack,
@@ -7596,15 +7589,13 @@ exports.PokemonAnimations = {
         attack: Animation_1.AnimationType.Strike,
         ability: Animation_1.AnimationType.Attack,
         emote: Animation_1.AnimationType.Shoot,
-        attackSprite: Animation_1.AttackSprite.NORMAL_MELEE,
-        shinyUnavailable: true
+        attackSprite: Animation_1.AttackSprite.NORMAL_MELEE
     },
     [Pokemon_1.Pkm.SCATTERBUG]: {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Shoot,
         emote: Animation_1.AnimationType.Charge,
-        attackSprite: Animation_1.AttackSprite.BUG_RANGE,
-        shinyUnavailable: true
+        attackSprite: Animation_1.AttackSprite.BUG_RANGE
     },
     [Pokemon_1.Pkm.SPEWPA]: {
         attack: Animation_1.AnimationType.Attack,
@@ -7737,8 +7728,7 @@ exports.PokemonAnimations = {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Shoot,
         emote: Animation_1.AnimationType.Shoot,
-        attackSprite: Animation_1.AttackSprite.NORMAL_MELEE,
-        shinyUnavailable: true
+        attackSprite: Animation_1.AttackSprite.NORMAL_MELEE
     },
     [Pokemon_1.Pkm.OINKOLOGNE_MALE]: {
         attack: Animation_1.AnimationType.Attack,
@@ -7757,8 +7747,7 @@ exports.PokemonAnimations = {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Attack,
         emote: Animation_1.AnimationType.Shoot,
-        attackSprite: Animation_1.AttackSprite.NORMAL_MELEE,
-        shinyUnavailable: true
+        attackSprite: Animation_1.AttackSprite.NORMAL_MELEE
     },
     [Pokemon_1.Pkm.YAMPER]: {
         attack: Animation_1.AnimationType.Attack,
@@ -7770,8 +7759,7 @@ exports.PokemonAnimations = {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Shock,
         emote: Animation_1.AnimationType.Shoot,
-        attackSprite: Animation_1.AttackSprite.ELECTRIC_MELEE,
-        shinyUnavailable: true
+        attackSprite: Animation_1.AttackSprite.ELECTRIC_MELEE
     },
     [Pokemon_1.Pkm.GREAT_TUSK]: {
         attack: Animation_1.AnimationType.Attack,

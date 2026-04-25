@@ -1,13 +1,11 @@
 "use strict";
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.changeTournamentBracket = exports.removeTournamentBracket = exports.addTournamentBracket = exports.changeTournamentPlayer = exports.updateTournament = exports.changeTournament = exports.removeTournament = exports.addTournament = exports.resetLobby = exports.setSearchedUser = exports.setCcu = exports.removeRoom = exports.addRoom = exports.setTabIndex = exports.setEventLeaderboard = exports.setLevelLeaderboard = exports.setBotLeaderboard = exports.setLeaderboard = exports.pushMessage = exports.resetLastBoostersOpened = exports.setBoosterContent = exports.removeMessage = exports.lobbySlice = void 0;
+exports.changeTournamentBracket = exports.removeTournamentBracket = exports.addTournamentBracket = exports.changeTournamentPlayer = exports.updateTournament = exports.changeTournament = exports.removeTournament = exports.addTournament = exports.resetLobby = exports.setSearchedUser = exports.setCcu = exports.removeRoom = exports.addRoom = exports.setTabIndex = exports.setEventLeaderboard = exports.setLevelLeaderboard = exports.setBotLeaderboard = exports.setLeaderboard = exports.pushMessage = exports.removeMessage = exports.lobbySlice = void 0;
 const toolkit_1 = require("@reduxjs/toolkit");
 const Language_1 = require("../../../types/enum/Language");
 const initialState = {
     language: Language_1.Language.en,
-    boosterContent: [],
-    lastBoostersOpened: [],
     messages: [],
     leaderboard: [],
     botLeaderboard: [],
@@ -71,13 +69,6 @@ exports.lobbySlice = (0, toolkit_1.createSlice)({
         setSearchedUser: (state, action) => {
             state.searchedUser = action.payload;
         },
-        setBoosterContent: (state, action) => {
-            state.boosterContent = action.payload;
-            state.lastBoostersOpened.push([...action.payload]);
-        },
-        resetLastBoostersOpened: (state) => {
-            state.lastBoostersOpened = [];
-        },
         resetLobby: () => initialState,
         addTournament: (state, action) => {
             state.tournaments = state.tournaments.filter((tournament) => tournament.id !== action.payload.id);
@@ -127,6 +118,6 @@ exports.lobbySlice = (0, toolkit_1.createSlice)({
         }
     }
 });
-_a = exports.lobbySlice.actions, exports.removeMessage = _a.removeMessage, exports.setBoosterContent = _a.setBoosterContent, exports.resetLastBoostersOpened = _a.resetLastBoostersOpened, exports.pushMessage = _a.pushMessage, exports.setLeaderboard = _a.setLeaderboard, exports.setBotLeaderboard = _a.setBotLeaderboard, exports.setLevelLeaderboard = _a.setLevelLeaderboard, exports.setEventLeaderboard = _a.setEventLeaderboard, exports.setTabIndex = _a.setTabIndex, exports.addRoom = _a.addRoom, exports.removeRoom = _a.removeRoom, exports.setCcu = _a.setCcu, exports.setSearchedUser = _a.setSearchedUser, exports.resetLobby = _a.resetLobby, exports.addTournament = _a.addTournament, exports.removeTournament = _a.removeTournament, exports.changeTournament = _a.changeTournament, exports.updateTournament = _a.updateTournament, exports.changeTournamentPlayer = _a.changeTournamentPlayer, exports.addTournamentBracket = _a.addTournamentBracket, exports.removeTournamentBracket = _a.removeTournamentBracket, exports.changeTournamentBracket = _a.changeTournamentBracket;
+_a = exports.lobbySlice.actions, exports.removeMessage = _a.removeMessage, exports.pushMessage = _a.pushMessage, exports.setLeaderboard = _a.setLeaderboard, exports.setBotLeaderboard = _a.setBotLeaderboard, exports.setLevelLeaderboard = _a.setLevelLeaderboard, exports.setEventLeaderboard = _a.setEventLeaderboard, exports.setTabIndex = _a.setTabIndex, exports.addRoom = _a.addRoom, exports.removeRoom = _a.removeRoom, exports.setCcu = _a.setCcu, exports.setSearchedUser = _a.setSearchedUser, exports.resetLobby = _a.resetLobby, exports.addTournament = _a.addTournament, exports.removeTournament = _a.removeTournament, exports.changeTournament = _a.changeTournament, exports.updateTournament = _a.updateTournament, exports.changeTournamentPlayer = _a.changeTournamentPlayer, exports.addTournamentBracket = _a.addTournamentBracket, exports.removeTournamentBracket = _a.removeTournamentBracket, exports.changeTournamentBracket = _a.changeTournamentBracket;
 exports.default = exports.lobbySlice.reducer;
 //# sourceMappingURL=LobbyStore.js.map

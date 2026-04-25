@@ -1,5 +1,6 @@
 import { EffectEnum } from "../../types/enum/Effect";
-import { OnAbilityCastEffect, OnAttackEffect, OnDamageDealtEffect, OnDamageReceivedEffect, OnDamageReceivedEffectArgs, OnDeathEffect, OnKillEffect, OnKillEffectArgs, OnSimulationStartEffect, OnSpawnEffect } from "./effect";
+import { PokemonEntity } from "../pokemon-entity";
+import { OnAbilityCastEffect, OnAttackEffect, OnAttackReceivedEffect, OnDamageDealtEffect, OnDamageReceivedEffect, OnDamageReceivedEffectArgs, OnDeathEffect, OnKillEffect, OnKillEffectArgs, OnSimulationStartEffect, OnSpawnEffect } from "./effect";
 export declare class MonsterKillEffect extends OnKillEffect {
     hpBoosted: number;
     count: number;
@@ -45,3 +46,8 @@ export declare const onFlowerMonDeath: OnDeathEffect;
 export declare const overgrowEffect: OnDamageReceivedEffect;
 export declare const wildBerserkEffect: OnDamageReceivedEffect;
 export declare const normalShieldEffect: OnSimulationStartEffect;
+export declare function applyWandEffects(pokemon: PokemonEntity, target: PokemonEntity, attackDamage: number, crit: boolean): {
+    takenDamage: number;
+    death: boolean;
+};
+export declare const pounceWandEffect: OnAttackReceivedEffect;

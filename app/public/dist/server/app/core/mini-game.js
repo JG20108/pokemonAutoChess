@@ -4,6 +4,7 @@ exports.MiniGame = void 0;
 const matter_js_1 = require("matter-js");
 const config_1 = require("../config");
 const floating_item_1 = require("../models/colyseus-models/floating-item");
+const player_choice_1 = require("../models/colyseus-models/player-choice");
 const pokemon_avatar_1 = require("../models/colyseus-models/pokemon-avatar");
 const portal_1 = require("../models/colyseus-models/portal");
 const synergies_1 = require("../models/colyseus-models/synergies");
@@ -643,9 +644,6 @@ class MiniGame {
                     }
                     else {
                         player.items.push(item.name);
-                        if (item.name === Item_1.Item.SILK_SCARF) {
-                            player.extraScarves += 1;
-                        }
                     }
                 }
             }
@@ -695,7 +693,10 @@ class MiniGame {
         }
         if (state.townEncounter === TownEncounter_1.TownEncounters.WIGGLYTUFF) {
             this.alivePlayers.forEach((player) => {
-                player.itemsProposition.push(...(0, random_1.pickNRandomIn)(Item_1.MissionOrders, 3));
+                player.choices.push(new player_choice_1.PlayerChoice({
+                    type: "mission_order",
+                    items: (0, random_1.pickNRandomIn)(Item_1.MissionOrders, 3)
+                }));
             });
         }
     }

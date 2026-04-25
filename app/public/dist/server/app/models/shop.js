@@ -19,6 +19,7 @@ const logger_1 = require("../utils/logger");
 const number_1 = require("../utils/number");
 const random_1 = require("../utils/random");
 const schemas_1 = require("../utils/schemas");
+const player_choice_1 = require("./colyseus-models/player-choice");
 const pokemon_1 = require("./colyseus-models/pokemon");
 const synergies_1 = require("./colyseus-models/synergies");
 const pokemon_factory_1 = require("./pokemon-factory");
@@ -274,19 +275,38 @@ class Shop {
         }
     }
     assignUniquePropositions(player, state, portalSynergies) {
-        var _a;
         const stageLevel = state.stageLevel;
-        let allCandidates = (_a = {
-            [config_1.PortalCarouselStages[0]]: [...this.commonPool],
-            [config_1.PortalCarouselStages[1]]: [...config_1.UniquePool],
-            [config_1.PortalCarouselStages[2]]: [...config_1.LegendaryPool]
-        }[stageLevel]) !== null && _a !== void 0 ? _a : [];
+        const typeByStage = {
+            [config_1.PortalCarouselStages[0]]: "starter",
+            [config_1.PortalCarouselStages[1]]: "unique",
+            [config_1.PortalCarouselStages[2]]: "legendary"
+        };
+        const type = typeByStage[stageLevel];
+        const poolByType = {
+            starter: [...this.commonPool],
+            unique: [...config_1.UniquePool],
+            legendary: [...config_1.LegendaryPool]
+        };
+        let allCandidates = poolByType[type] || [];
         if (stageLevel === 0) {
             if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.UNIQUE_STARTER) {
                 allCandidates = [...config_1.UniquePool];
             }
             else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.FIRST_PARTNER) {
                 allCandidates = (0, scribbles_1.pickFirstPartners)(player, state);
+            }
+            else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY) {
+                allCandidates = (0, scribbles_1.pickPseudoLegendaries)();
+            }
+            else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.CHOSEN_ONE) {
+                player.choices.push(new player_choice_1.PlayerChoice({ type: "starter", pokemons: [...config_1.UniquePool] }));
+                return;
+            }
+            else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.MONOTYPE) {
+                player.choices.push(new player_choice_1.PlayerChoice({
+                    type: "synergy",
+                    synergies: (0, scribbles_1.pickAllSynergies)()
+                }));
             }
         }
         if (portalSynergies.length > config_1.NB_UNIQUE_PROPOSITIONS) {
@@ -295,6 +315,8 @@ class Shop {
         const nbPropositions = stageLevel === config_1.PortalCarouselStages[0]
             ? config_1.NB_STARTERS
             : config_1.NB_UNIQUE_PROPOSITIONS;
+        const pokemonsProposed = [];
+        const itemsProposed = [];
         for (let i = 0; i < nbPropositions; i++) {
             let synergyWanted = portalSynergies[i];
             function filterCandidates(proposition) {
@@ -310,7 +332,7 @@ class Shop {
                         return false;
                     }
                 }
-                if (player.pokemonsProposition.some((prop) => {
+                if (pokemonsProposed.some((prop) => {
                     const p = prop in Pokemon_1.PkmDuos ? Pokemon_1.PkmDuos[prop][0] : prop;
                     return Pokemon_1.PkmFamily[p] === Pokemon_1.PkmFamily[pkm] || (0, Pokemon_1.isRegionalVariant)(p, pkm);
                 })) {
@@ -344,29 +366,36 @@ class Shop {
                 selected = (0, config_1.getAltFormForPlayer)(selected, player);
             }
             if (stageLevel === config_1.PortalCarouselStages[0]) {
-                player.itemsProposition[i] = (0, random_1.pickRandomIn)(Item_1.ItemComponentsNoFossilOrScarf.filter((c) => player.itemsProposition.includes(c) === false));
+                itemsProposed[i] = (0, random_1.pickRandomIn)(Item_1.ItemComponentsNoFossilOrScarf.filter((c) => itemsProposed.includes(c) === false));
             }
             if (stageLevel === config_1.PortalCarouselStages[0] &&
-                player.pokemonsProposition.includes(Pokemon_1.Pkm.EEVEE) === false &&
+                pokemonsProposed.includes(Pokemon_1.Pkm.EEVEE) === false &&
                 ((0, random_1.chance)(config_1.EEVEE_RATE) || initialCandidatesEmpty) &&
                 state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.FIRST_PARTNER &&
-                state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.UNIQUE_STARTER) {
+                state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.UNIQUE_STARTER &&
+                state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY &&
+                state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.MONOTYPE) {
                 selected = Pokemon_1.Pkm.EEVEE;
-                player.itemsProposition[i] = Item_1.Item.FOSSIL_STONE;
+                itemsProposed[i] = Item_1.Item.FOSSIL_STONE;
             }
             else if (stageLevel === config_1.PortalCarouselStages[1] &&
-                player.pokemonsProposition.includes(Pokemon_1.Pkm.KECLEON) === false &&
+                pokemonsProposed.includes(Pokemon_1.Pkm.KECLEON) === false &&
                 (0, random_1.chance)(config_1.KECLEON_RATE)) {
                 selected = Pokemon_1.Pkm.KECLEON;
             }
             else if (stageLevel === config_1.PortalCarouselStages[2] &&
-                player.pokemonsProposition.includes(Pokemon_1.Pkm.ARCEUS) === false &&
+                pokemonsProposed.includes(Pokemon_1.Pkm.ARCEUS) === false &&
                 (0, random_1.chance)(config_1.ARCEUS_RATE)) {
                 selected = Pokemon_1.Pkm.ARCEUS;
             }
             (0, array_1.removeInArray)(allCandidates, selected);
-            player.pokemonsProposition.push(selected);
+            pokemonsProposed.push(selected);
         }
+        player.choices.push(new player_choice_1.PlayerChoice({
+            type,
+            pokemons: pokemonsProposed,
+            items: itemsProposed
+        }));
     }
     getRandomPokemonFromPool(rarity, player, finals = new Set(), specificTypesWanted) {
         var _a, _b;

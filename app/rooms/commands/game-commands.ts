@@ -398,6 +398,12 @@ export class OnDragDropPokemonCommand extends Command<
               dropFromBench &&
               isBoardFull &&
               target?.doesCountForTeamSize === false
+            ) &&
+            !(
+              dropFromBench &&
+              this.state.specialGameRule === SpecialGameRule.MONOTYPE &&
+              player.monotype !== undefined &&
+              !pokemon.types.has(player.monotype)
             )
           ) {
             // Prevents a pokemon to go on the board only if it's adding a pokemon from the bench on a full board
@@ -475,7 +481,12 @@ export class OnSwitchBenchAndBoardCommand extends Command<
       if (
         pokemon.canBePlaced &&
         destination &&
-        !(isBoardFull && pokemon.doesCountForTeamSize)
+        !(isBoardFull && pokemon.doesCountForTeamSize) &&
+        !(
+          this.state.specialGameRule === SpecialGameRule.MONOTYPE &&
+          player.monotype !== undefined &&
+          !pokemon.types.has(player.monotype)
+        )
       ) {
         const [x, y] = destination
         pokemon.positionX = x
@@ -1454,7 +1465,8 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
     }
 
     if (
-      this.state.specialGameRule === SpecialGameRule.FIRST_PARTNER &&
+      (this.state.specialGameRule === SpecialGameRule.FIRST_PARTNER ||
+        this.state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY) &&
       this.state.stageLevel > 1 &&
       this.state.stageLevel < 10 &&
       player.firstPartner

@@ -1190,14 +1190,7 @@ export declare enum PkmDuo {
     BASCULIN_RED_BLUE = "BASCULIN_RED_BLUE"
 }
 export type PkmProposition = Pkm | PkmDuo;
-export declare const PkmDuos: {
-    LATIOS_LATIAS: Pkm[];
-    PLUSLE_MINUN: Pkm[];
-    ILLUMISE_VOLBEAT: Pkm[];
-    NINJASK_SHEDINJA: Pkm[];
-    INDEEDEE: Pkm[];
-    BASCULIN_RED_BLUE: Pkm[];
-};
+export declare const PkmDuos: Record<PkmDuo, Pkm[]>;
 export declare const Unowns: Pkm[];
 export declare const UnownsForScribble: Pkm[];
 export declare const NonPkm: Pkm[];

@@ -41,13 +41,12 @@ const network_1 = require("../network");
 const stores_1 = __importDefault(require("../stores"));
 const GameStore_1 = require("../stores/GameStore");
 const NetworkStore_1 = require("../stores/NetworkStore");
+const game_choice_1 = __importDefault(require("./component/game/game-choice"));
 const game_dps_meter_1 = __importDefault(require("./component/game/game-dps-meter"));
 const game_expeditions_1 = __importDefault(require("./component/game/game-expeditions"));
 const game_final_rank_1 = __importDefault(require("./component/game/game-final-rank"));
-const game_items_proposition_1 = __importDefault(require("./component/game/game-items-proposition"));
 const game_loading_screen_1 = __importDefault(require("./component/game/game-loading-screen"));
 const game_players_1 = __importDefault(require("./component/game/game-players"));
-const game_pokemons_proposition_1 = __importDefault(require("./component/game/game-pokemons-proposition"));
 const game_shop_1 = __importDefault(require("./component/game/game-shop"));
 const game_spectate_player_info_1 = __importDefault(require("./component/game/game-spectate-player-info"));
 const game_stage_info_1 = __importDefault(require("./component/game/game-stage-info"));
@@ -583,6 +582,13 @@ function Game() {
                     $player.listen("streak", (value) => {
                         dispatch((0, GameStore_1.setStreak)(value));
                     });
+                    $player.choices.onChange(() => {
+                        dispatch((0, GameStore_1.changePlayer)({
+                            id: player.id,
+                            field: "choices",
+                            value: (0, schemas_1.values)(player.choices)
+                        }));
+                    });
                 }
                 $player.listen("life", (value, previousValue) => {
                     var _a, _b;
@@ -673,32 +679,18 @@ function Game() {
                     "title",
                     "eggChance",
                     "goldenEggChance",
-                    "cellBattery"
+                    "cellBattery",
+                    "gameStats",
+                    "scarvesItems",
+                    "fairyWands"
                 ];
                 fields.forEach((field) => {
                     $player.listen(field, (value) => {
                         dispatch((0, GameStore_1.changePlayer)({ id: player.id, field: field, value: value }));
                     });
                 });
-                $player.gameStats.onChange(() => {
-                    dispatch((0, GameStore_1.changePlayer)({
-                        id: player.id,
-                        field: "gameStats",
-                        value: player.gameStats
-                    }));
-                });
                 $player.synergies.onChange(() => {
                     dispatch((0, GameStore_1.setSynergies)({ id: player.id, value: player.synergies }));
-                });
-                $player.itemsProposition.onChange((value, index) => {
-                    if (player.id == uid) {
-                        dispatch((0, GameStore_1.setItemsProposition)((0, schemas_1.values)(player.itemsProposition)));
-                    }
-                });
-                $player.pokemonsProposition.onChange((value, index) => {
-                    if (player.id == uid) {
-                        dispatch((0, GameStore_1.setPokemonProposition)((0, schemas_1.values)(player.pokemonsProposition)));
-                    }
                 });
                 $player.groundHoles.onChange((value) => {
                     if (player.id === stores_1.default.getState().game.playerIdSpectated) {
@@ -747,6 +739,6 @@ function Game() {
         connectToGame,
         leave
     ]);
-    return ((0, jsx_runtime_1.jsxs)("main", { id: "game-wrapper", onContextMenu: (e) => e.preventDefault(), children: [(0, jsx_runtime_1.jsx)("div", { id: "game", ref: container }), loaded ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(main_sidebar_1.MainSidebar, { page: "game", leave: leave, leaveLabel: t("leave_game") }), (0, jsx_runtime_1.jsx)(game_final_rank_1.default, { rank: finalRank, hide: spectateTillTheEnd, leave: leave, visible: finalRankVisibility === FinalRankVisibility.VISIBLE }), spectate ? (0, jsx_runtime_1.jsx)(game_spectate_player_info_1.default, {}) : (0, jsx_runtime_1.jsx)(game_shop_1.default, {}), (0, jsx_runtime_1.jsx)(game_stage_info_1.default, {}), (0, jsx_runtime_1.jsx)(game_players_1.default, { click: (id) => playerClick(id) }), (0, jsx_runtime_1.jsx)(game_synergies_1.default, {}), (0, jsx_runtime_1.jsx)(game_items_proposition_1.default, {}), (0, jsx_runtime_1.jsx)(game_pokemons_proposition_1.default, {}), (0, jsx_runtime_1.jsx)(game_dps_meter_1.default, {}), (0, jsx_runtime_1.jsx)(game_toasts_1.default, {}), currentGameEvent === events_1.GameEvent.EXPEDITIONS && (0, jsx_runtime_1.jsx)(game_expeditions_1.default, {})] })) : ((0, jsx_runtime_1.jsx)(game_loading_screen_1.default, { connectError: connectError })), (0, jsx_runtime_1.jsx)(connection_status_notification_1.ConnectionStatusNotification, {})] }));
+    return ((0, jsx_runtime_1.jsxs)("main", { id: "game-wrapper", onContextMenu: (e) => e.preventDefault(), children: [(0, jsx_runtime_1.jsx)("div", { id: "game", ref: container }), loaded ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(main_sidebar_1.MainSidebar, { page: "game", leave: leave, leaveLabel: t("leave_game") }), (0, jsx_runtime_1.jsx)(game_final_rank_1.default, { rank: finalRank, hide: spectateTillTheEnd, leave: leave, visible: finalRankVisibility === FinalRankVisibility.VISIBLE }), spectate ? (0, jsx_runtime_1.jsx)(game_spectate_player_info_1.default, {}) : (0, jsx_runtime_1.jsx)(game_shop_1.default, {}), (0, jsx_runtime_1.jsx)(game_stage_info_1.default, {}), (0, jsx_runtime_1.jsx)(game_players_1.default, { click: (id) => playerClick(id) }), (0, jsx_runtime_1.jsx)(game_synergies_1.default, {}), (0, jsx_runtime_1.jsx)(game_choice_1.default, {}), (0, jsx_runtime_1.jsx)(game_dps_meter_1.default, {}), (0, jsx_runtime_1.jsx)(game_toasts_1.default, {}), currentGameEvent === events_1.GameEvent.EXPEDITIONS && (0, jsx_runtime_1.jsx)(game_expeditions_1.default, {})] })) : ((0, jsx_runtime_1.jsx)(game_loading_screen_1.default, { connectError: connectError })), (0, jsx_runtime_1.jsx)(connection_status_notification_1.ConnectionStatusNotification, {})] }));
 }
 //# sourceMappingURL=game.js.map

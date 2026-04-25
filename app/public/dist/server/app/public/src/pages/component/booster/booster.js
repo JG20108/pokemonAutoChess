@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Booster;
 const jsx_runtime_1 = require("react/jsx-runtime");
@@ -7,7 +16,7 @@ const react_i18next_1 = require("react-i18next");
 const function_1 = require("../../../../../utils/function");
 const hooks_1 = require("../../../hooks");
 const network_1 = require("../../../network");
-const LobbyStore_1 = require("../../../stores/LobbyStore");
+const BoostersStore_1 = require("../../../stores/BoostersStore");
 const jsx_1 = require("../../utils/jsx");
 const booster_card_1 = require("./booster-card");
 require("./booster.css");
@@ -15,7 +24,7 @@ function Booster() {
     const { t } = (0, react_i18next_1.useTranslation)();
     const dispatch = (0, hooks_1.useAppDispatch)();
     const user = (0, hooks_1.useAppSelector)((state) => state.network.profile);
-    const boosterContent = (0, hooks_1.useAppSelector)((state) => state.lobby.boosterContent);
+    const boosterContent = (0, hooks_1.useAppSelector)((state) => state.boosters.boosterContent);
     const numberOfBooster = user ? user.booster : 0;
     const [flippedStates, setFlippedStates] = (0, react_1.useState)([]);
     const [loading, setLoading] = (0, react_1.useState)(false);
@@ -25,7 +34,7 @@ function Booster() {
         setFlippedStates(new Array(boosterContent.length).fill(false));
     }, [boosterContent]);
     (0, react_1.useEffect)(() => () => {
-        dispatch((0, LobbyStore_1.setBoosterContent)([]));
+        dispatch((0, BoostersStore_1.setBoosterContent)([]));
         setLoading(false);
     }, [dispatch]);
     (0, react_1.useEffect)(() => {
@@ -33,11 +42,19 @@ function Booster() {
             setLoading(false);
         }
     }, [boosterContent]);
-    const throttledBoosterOpen = (0, react_1.useRef)((0, function_1.throttle)(() => {
-        dispatch((0, LobbyStore_1.setBoosterContent)([]));
-        (0, network_1.openBooster)();
+    const throttledBoosterOpen = (0, react_1.useRef)((0, function_1.throttle)(() => __awaiter(this, void 0, void 0, function* () {
+        dispatch((0, BoostersStore_1.setBoosterContent)([]));
         setLoading(true);
-    }, THROTTLE_DURATION)).current;
+        try {
+            yield (0, network_1.openBooster)();
+        }
+        catch (error) {
+            console.error("Error opening booster:", error);
+        }
+        finally {
+            setLoading(false);
+        }
+    }), THROTTLE_DURATION)).current;
     const allCardsFlipped = flippedStates.every((flipped) => flipped);
     function onClickOpenBooster() {
         if (!allCardsFlipped) {

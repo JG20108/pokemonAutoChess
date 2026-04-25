@@ -4,11 +4,12 @@ import AfterGameState from "../../rooms/states/after-game-state";
 import GameState from "../../rooms/states/game-state";
 import LobbyState from "../../rooms/states/lobby-state";
 import PreparationState from "../../rooms/states/preparation-state";
-import { Emotion, Item, Role, Title } from "../../types";
+import { Emotion, Role, Title } from "../../types";
+import type { Booster } from "../../types/Booster";
 import { EloRank } from "../../types/enum/EloRank.js";
 import { BotDifficulty } from "../../types/enum/Game.js";
-import { PkmProposition } from "../../types/enum/Pokemon.js";
 import { SpecialGameRule } from "../../types/enum/SpecialGameRule.js";
+import { IUserMetadataJSON } from "../../types/interfaces/UserMetadata";
 import { IBot } from "./models/bot-v2";
 export declare const client: import("@colyseus/sdk").ColyseusSDK<import("colyseus").Server<{
     "after-game": import("colyseus").RegisteredHandler<import("../../rooms/after-game-room.js").default>;
@@ -169,6 +170,12 @@ export declare const client: import("@colyseus/sdk").ColyseusSDK<import("colyseu
 }>, any>;
 export declare function authenticateUser(): Promise<User>;
 export declare function fetchProfile(forceRefresh?: boolean): Promise<void | import("../../types/interfaces/UserMetadata").IUserMetadataUnpacked>;
+export type TwitchVerificationStartResponse = {
+    authorizeUrl: string;
+    expiresAt: string;
+};
+export declare function startTwitchVerification(): Promise<TwitchVerificationStartResponse>;
+export declare function unlinkTwitchVerification(): Promise<void>;
 export declare const rooms: {
     lobby: Room<{
         state: LobbyState;
@@ -197,8 +204,7 @@ export declare function setNoElo(noElo: boolean): void;
 export declare function lockShop(): void;
 export declare function levelClick(): void;
 export declare function buyInShop(id: number): void;
-export declare function pickPokemonProposition(proposition: PkmProposition): void;
-export declare function pickItem(item: Item): void;
+export declare function pickChoice(choiceId: string, choiceIndex: number): void;
 export declare function gameStartRequest(token: string): void;
 export declare function changeRoomName(name: string): void;
 export declare function changeRoomPassword(password: string | null): void;
@@ -211,11 +217,25 @@ export declare function buyEmotion(params: {
     index: string;
     emotion: Emotion;
     shiny: boolean;
-}): void;
+}): Promise<{
+    user: IUserMetadataJSON;
+}>;
+export declare function changeSelectedEmotion(params: {
+    index: string;
+    emotion: Emotion | null;
+    shiny: boolean;
+}): Promise<{
+    user: IUserMetadataJSON;
+}>;
 export declare function buyBooster(params: {
     index: string;
-}): void;
-export declare function openBooster(): void;
+}): Promise<{
+    user: IUserMetadataJSON;
+}>;
+export declare function openBooster(): Promise<{
+    boosterContent: Booster;
+    user: IUserMetadataJSON;
+}>;
 export declare function showEmote(emote?: string): void;
 export declare function searchById(id: string): void;
 export declare function deleteTournament(params: {

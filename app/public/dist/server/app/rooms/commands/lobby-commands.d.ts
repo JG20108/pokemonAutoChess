@@ -94,13 +94,6 @@ export declare class RemoveMessageCommand extends Command<CustomLobbyRoom, {
         messageId: string;
     }): void;
 }
-export declare class OpenBoosterCommand extends Command<CustomLobbyRoom, {
-    client: Client;
-}> {
-    execute({ client }: {
-        client: Client;
-    }): Promise<void>;
-}
 export declare class ChangeNameCommand extends Command<CustomLobbyRoom, {
     client: Client;
     name: string;
@@ -119,19 +112,6 @@ export declare class ChangeTitleCommand extends Command<CustomLobbyRoom, {
         title: Title | "";
     }): Promise<void>;
 }
-export declare class ChangeSelectedEmotionCommand extends Command<CustomLobbyRoom, {
-    client: Client;
-    index: string;
-    emotion: Emotion | null;
-    shiny: boolean;
-}> {
-    execute({ client, emotion, index, shiny }: {
-        client: Client;
-        index: string;
-        emotion: Emotion | null;
-        shiny: boolean;
-    }): Promise<void>;
-}
 export declare class ChangeAvatarCommand extends Command<CustomLobbyRoom, {
     client: Client;
     index: string;
@@ -143,28 +123,6 @@ export declare class ChangeAvatarCommand extends Command<CustomLobbyRoom, {
         index: string;
         emotion: Emotion;
         shiny: boolean;
-    }): Promise<void>;
-}
-export declare class BuyEmotionCommand extends Command<CustomLobbyRoom, {
-    client: Client;
-    index: string;
-    emotion: Emotion;
-    shiny: boolean;
-}> {
-    execute({ client, emotion, index, shiny }: {
-        client: Client;
-        index: string;
-        emotion: Emotion;
-        shiny: boolean;
-    }): Promise<void>;
-}
-export declare class BuyBoosterCommand extends Command<CustomLobbyRoom, {
-    client: Client;
-    index: string;
-}> {
-    execute({ client, index }: {
-        client: Client;
-        index: string;
     }): Promise<void>;
 }
 export declare class OnSearchByIdCommand extends Command<CustomLobbyRoom, {

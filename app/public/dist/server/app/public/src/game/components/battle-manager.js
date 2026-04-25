@@ -490,10 +490,11 @@ class BattleManager {
                 case "positionY":
                     {
                         const coordinates = (0, utils_1.transformEntityCoordinates)(pokemon.positionX, pokemon.positionY, this.flip);
-                        if (pokemon.skill === Ability_1.Ability.TELEPORT) {
+                        if (pokemon.skill === Ability_1.Ability.TELEPORT || pkmSprite.isTeleporting) {
                             pkmSprite.x = coordinates[0];
                             pkmSprite.y = coordinates[1];
                             pkmSprite.specialAttackAnimation(pokemon);
+                            pkmSprite.isTeleporting = false;
                         }
                         else if (!pokemon.status.skydiving) {
                             const walkingSpeed = 2 *
@@ -607,7 +608,7 @@ class BattleManager {
                         pkmSprite.unloadAnimations(this.scene, previousValue, pkmSprite.pokemon.shiny ? Game_1.PokemonTint.SHINY : Game_1.PokemonTint.NORMAL);
                         pkmSprite.attackSprite =
                             (_g = (_f = pokemon_animations_1.PokemonAnimations[Pokemon_1.PkmByIndex[value]]) === null || _f === void 0 ? void 0 : _f.attackSprite) !== null && _g !== void 0 ? _g : pkmSprite.attackSprite;
-                        pkmSprite.lazyloadAnimations(this.scene).then(() => {
+                        pkmSprite.lazyLoadAnimations(this.scene).then(() => {
                             pkmSprite.animationLocked = false;
                             if (previousValue !== undefined) {
                                 pkmSprite.evolutionAnimation();

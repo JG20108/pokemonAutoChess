@@ -25,9 +25,13 @@ const MetadataReport = () => {
     if (loading) {
         return (0, jsx_runtime_1.jsx)("div", { children: "Loading..." });
     }
-    return ((0, jsx_runtime_1.jsx)("p", { id: "metadata-report", children: t("meta_report_info", {
+    return ((0, jsx_runtime_1.jsx)("p", { id: "metadata-report", title: t("meta_report_info", {
             report_date: (0, date_1.formatDate)(new Date(createdAt), { dateStyle: "long" }),
             time_limit: (0, date_1.formatDate)(new Date(timeLimit), { dateStyle: "long" }),
+            count
+        }), children: t("meta_report_info", {
+            report_date: (0, date_1.formatDate)(new Date(createdAt), { dateStyle: "medium" }),
+            time_limit: (0, date_1.formatDate)(new Date(timeLimit), { dateStyle: "medium" }),
             count
         }) }));
 };

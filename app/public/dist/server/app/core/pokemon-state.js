@@ -21,6 +21,7 @@ class PokemonState {
         this.name = "";
     }
     attack(pokemon, board, target, isTripleAttack = false) {
+        var _a;
         if (target && target.hp > 0) {
             let damage = pokemon.atk;
             let physicalDamage = 0;
@@ -30,7 +31,13 @@ class PokemonState {
             let attackType = pokemon.effects.has(Effect_1.EffectEnum.SPECIAL_ATTACKS)
                 ? Game_1.AttackType.SPECIAL
                 : Game_1.AttackType.PHYSICAL;
-            const crit = (0, random_1.chance)(pokemon.critChance / 100, pokemon);
+            let critChance = pokemon.critChance / 100;
+            if (((_a = pokemon.player) === null || _a === void 0 ? void 0 : _a.items.includes(Item_1.Item.LONG_WAND)) &&
+                pokemon.types.has(Synergy_1.Synergy.FAIRY)) {
+                const distance = (0, distance_1.distanceM)(pokemon.positionX, pokemon.positionY, target.positionX, target.positionY);
+                critChance += 0.01 * distance;
+            }
+            const crit = (0, random_1.chance)(critChance, pokemon);
             if (crit) {
                 if (target.items.has(Item_1.Item.ROCKY_HELMET) === false) {
                     let reductionFactor = 1.0;
@@ -53,30 +60,12 @@ class PokemonState {
                     damage = (0, number_1.min)(0)(Math.round(damageWithoutCrit + critPartOfTheDamage * reductionFactor));
                     target.count.crit++;
                 }
-                pokemon.onCriticalAttack({ target, board, damage });
             }
             if (target.effects.has(Effect_1.EffectEnum.WONDER_ROOM)) {
                 attackType = Game_1.AttackType.SPECIAL;
             }
             if (attackType === Game_1.AttackType.SPECIAL) {
                 damage = Math.ceil(damage * (1 + pokemon.ap / 100));
-            }
-            let additionalSpecialDamagePart = 0;
-            if (pokemon.effects.has(Effect_1.EffectEnum.AROMATIC_MIST)) {
-                additionalSpecialDamagePart += 0.2;
-            }
-            else if (pokemon.effects.has(Effect_1.EffectEnum.FAIRY_WIND)) {
-                additionalSpecialDamagePart += 0.4;
-            }
-            else if (pokemon.effects.has(Effect_1.EffectEnum.STRANGE_STEAM)) {
-                additionalSpecialDamagePart += 0.6;
-            }
-            else if (pokemon.effects.has(Effect_1.EffectEnum.MOON_FORCE)) {
-                additionalSpecialDamagePart += 0.8;
-            }
-            if (pokemon.effects.has(Effect_1.EffectEnum.CHARGE)) {
-                additionalSpecialDamagePart +=
-                    1 * pokemon.count.ult * (1 + pokemon.ap / 100);
             }
             let isAttackSuccessful = true;
             let hasAttackKilled = false;
@@ -99,8 +88,13 @@ class PokemonState {
                 isAttackSuccessful = false;
                 damage = 0;
             }
-            if (additionalSpecialDamagePart > 0) {
-                specialDamage += Math.ceil(damage * additionalSpecialDamagePart);
+            const { takenDamage, death } = (0, synergies_1.applyWandEffects)(pokemon, target, damage, crit);
+            totalTakenDamage += takenDamage;
+            if (death)
+                hasAttackKilled = true;
+            if (pokemon.effects.has(Effect_1.EffectEnum.CHARGE)) {
+                const chargeDamage = damage * pokemon.count.ult * (1 + pokemon.ap / 100);
+                specialDamage += Math.ceil(chargeDamage);
             }
             if (pokemon.items.has(Item_1.Item.NULLIFY_BANDANNA)) {
                 specialDamage += (0, number_1.clamp)(pokemon.pp, 0, pokemon.maxPP);
@@ -146,16 +140,6 @@ class PokemonState {
             if (trueDamagePart > 0) {
                 trueDamage = Math.ceil(damage * trueDamagePart);
                 damage = (0, number_1.min)(0)(damage * (1 - trueDamagePart));
-                const { takenDamage, death } = target.handleDamage({
-                    damage: trueDamage,
-                    board,
-                    attackType: Game_1.AttackType.TRUE,
-                    attacker: pokemon,
-                    shouldTargetGainMana: true
-                });
-                totalTakenDamage += takenDamage;
-                if (death)
-                    hasAttackKilled = true;
             }
             if (attackType === Game_1.AttackType.SPECIAL) {
                 specialDamage += damage;
@@ -166,6 +150,21 @@ class PokemonState {
             if (pokemon.effects.has(Effect_1.EffectEnum.STONE_EDGE)) {
                 physicalDamage += Math.round(pokemon.def * (1 + pokemon.ap / 100));
             }
+            const totalDamage = physicalDamage + specialDamage + trueDamage;
+            pokemon.getEffects(effect_1.BeforeAttackEffect).forEach((effect) => {
+                effect.apply({
+                    pokemon,
+                    target,
+                    board,
+                    physicalDamage,
+                    specialDamage,
+                    trueDamage,
+                    totalDamage,
+                    isTripleAttack,
+                    hasAttackKilled,
+                    crit
+                });
+            });
             if (physicalDamage > 0) {
                 const { takenDamage, death } = target.handleDamage({
                     damage: physicalDamage,
@@ -179,34 +178,23 @@ class PokemonState {
                     hasAttackKilled = true;
             }
             if (specialDamage > 0) {
+                const { takenDamage, death } = target.handleSpecialDamage(specialDamage, board, Game_1.AttackType.SPECIAL, pokemon, false, false);
+                totalTakenDamage += takenDamage;
+                if (death)
+                    hasAttackKilled = true;
+            }
+            if (trueDamage > 0) {
                 const { takenDamage, death } = target.handleDamage({
-                    damage: specialDamage,
+                    damage: trueDamage,
                     board,
-                    attackType: Game_1.AttackType.SPECIAL,
+                    attackType: Game_1.AttackType.TRUE,
                     attacker: pokemon,
                     shouldTargetGainMana: true
                 });
                 totalTakenDamage += takenDamage;
-                if (target.items.has(Item_1.Item.POWER_LENS) &&
-                    !pokemon.items.has(Item_1.Item.PROTECTIVE_PADS)) {
-                    const speDef = target.status.armorReduction
-                        ? Math.round(target.speDef / 2)
-                        : target.speDef;
-                    const damageAfterReduction = specialDamage / (1 + config_1.ARMOR_FACTOR * speDef);
-                    const damageBlocked = (0, number_1.min)(0)(specialDamage - damageAfterReduction);
-                    pokemon.handleDamage({
-                        damage: Math.round(damageBlocked),
-                        board,
-                        attackType: Game_1.AttackType.SPECIAL,
-                        attacker: target,
-                        shouldTargetGainMana: true,
-                        isRetaliation: true
-                    });
-                }
                 if (death)
                     hasAttackKilled = true;
             }
-            const totalDamage = physicalDamage + specialDamage + trueDamage;
             pokemon.onAttack({
                 target,
                 board,

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.normalShieldEffect = exports.wildBerserkEffect = exports.overgrowEffect = exports.onFlowerMonDeath = exports.FightingKnockbackEffect = exports.FlyingProtectionEffect = exports.OnFieldDeathEffect = exports.humanHealEffect = exports.SoundCryEffect = exports.electricTripleAttackEffect = exports.FireHitEffect = exports.GroundHoleEffect = exports.MonsterKillEffect = void 0;
+exports.pounceWandEffect = exports.normalShieldEffect = exports.wildBerserkEffect = exports.overgrowEffect = exports.onFlowerMonDeath = exports.FightingKnockbackEffect = exports.FlyingProtectionEffect = exports.OnFieldDeathEffect = exports.humanHealEffect = exports.SoundCryEffect = exports.electricTripleAttackEffect = exports.FireHitEffect = exports.GroundHoleEffect = exports.MonsterKillEffect = void 0;
+exports.applyWandEffects = applyWandEffects;
 const config_1 = require("../../config");
 const effects_1 = require("../../models/effects");
 const types_1 = require("../../types");
@@ -11,7 +12,11 @@ const Item_1 = require("../../types/enum/Item");
 const Passive_1 = require("../../types/enum/Passive");
 const Pokemon_1 = require("../../types/enum/Pokemon");
 const Synergy_1 = require("../../types/enum/Synergy");
+const array_1 = require("../../utils/array");
 const distance_1 = require("../../utils/distance");
+const number_1 = require("../../utils/number");
+const orientation_1 = require("../../utils/orientation");
+const random_1 = require("../../utils/random");
 const schemas_1 = require("../../utils/schemas");
 const flower_pots_1 = require("../flower-pots");
 const simulation_command_1 = require("../simulation-command");
@@ -333,6 +338,229 @@ exports.normalShieldEffect = new effect_1.OnSimulationStartEffect(({ entity, sim
                 cell.value.addShield(shieldBonus, entity, 0, false);
             }
         });
+    }
+});
+function applyWandEffects(pokemon, target, attackDamage, crit) {
+    var _a, _b;
+    const board = pokemon.simulation.board;
+    const wands = (_b = (_a = pokemon.player) === null || _a === void 0 ? void 0 : _a.items.filter((item) => (0, array_1.isIn)(Item_1.Wands, item))) !== null && _b !== void 0 ? _b : [];
+    let specialDamageFactor = 0;
+    for (const wand of wands) {
+        specialDamageFactor += 0.2;
+        switch (wand) {
+            case Item_1.Item.CONFUSE_WAND: {
+                if ((0, random_1.chance)(0.05, pokemon)) {
+                    target.status.triggerConfusion(2000, target, pokemon);
+                    target.addSpecialDefense(-3, pokemon, 0, false);
+                }
+                break;
+            }
+            case Item_1.Item.PETRIFY_WAND: {
+                if ((0, random_1.chance)(0.05, pokemon)) {
+                    target.status.triggerLocked(2000, target);
+                    target.addDefense(-3, pokemon, 0, false);
+                }
+                break;
+            }
+            case Item_1.Item.SLOW_WAND: {
+                if ((0, random_1.chance)(0.05, pokemon)) {
+                    target.status.triggerParalysis(2000, target, pokemon);
+                    target.addSpeed(-10, pokemon, 0, false);
+                }
+                break;
+            }
+            case Item_1.Item.SLUMBER_WAND: {
+                if ((0, random_1.chance)(0.05, pokemon)) {
+                    target.status.triggerSleep(2000, target);
+                    target.addAttack(-3, pokemon, 0, false);
+                }
+                break;
+            }
+            case Item_1.Item.BLAST_WAND: {
+                if (crit) {
+                    specialDamageFactor += 0.2;
+                    pokemon.broadcastAbility({ skill: "PUFF_PINK" });
+                }
+                break;
+            }
+            case Item_1.Item.SPIRIT_WAND: {
+                specialDamageFactor += pokemon.count.ult * 0.05;
+                if ((0, random_1.chance)(0.2, pokemon)) {
+                    pokemon.addPP(5, pokemon, 0, false);
+                }
+                break;
+            }
+            case Item_1.Item.GUIDING_WAND: {
+                if ((0, random_1.chance)(0.5, pokemon)) {
+                    const lowestHpAdjacentEnemy = board
+                        .getAdjacentCells(target.positionX, target.positionY)
+                        .filter((cell) => cell.value && cell.value.team !== pokemon.team)
+                        .map((cell) => cell.value)
+                        .reduce((lowest, current) => current.hp / current.maxHP < lowest.hp / lowest.maxHP
+                        ? current
+                        : lowest, target);
+                    target = lowestHpAdjacentEnemy || target;
+                    if (lowestHpAdjacentEnemy) {
+                        pokemon.broadcastAbility({
+                            skill: "FAIRY_HIT",
+                            targetX: lowestHpAdjacentEnemy.positionX,
+                            targetY: lowestHpAdjacentEnemy.positionY
+                        });
+                    }
+                }
+                break;
+            }
+            case Item_1.Item.SURROUND_WAND: {
+                const adjacentEnemies = board
+                    .getAdjacentCells(pokemon.positionX, pokemon.positionY)
+                    .filter((cell) => cell.value && cell.value.team !== pokemon.team);
+                specialDamageFactor += 0.1 * adjacentEnemies.length;
+                break;
+            }
+            case Item_1.Item.TWO_EDGED_WAND: {
+                specialDamageFactor += 0.2;
+                break;
+            }
+        }
+    }
+    const specialDamage = specialDamageFactor * attackDamage;
+    let { takenDamage, death } = target.handleSpecialDamage(specialDamage, board, Game_1.AttackType.SPECIAL, pokemon, crit, false);
+    for (const wand of wands) {
+        switch (wand) {
+            case Item_1.Item.HP_SWAP_WAND: {
+                if ((0, random_1.chance)(0.2, pokemon)) {
+                    target.addMaxHP(-Math.floor(specialDamage), pokemon, 0, false);
+                    pokemon.addMaxHP(Math.floor(specialDamage), pokemon, 0, false);
+                }
+                break;
+            }
+            case Item_1.Item.SURROUND_WAND: {
+                if ((0, random_1.chance)(0.1, pokemon)) {
+                    const adjacentEnemies = board
+                        .getAdjacentCells(pokemon.positionX, pokemon.positionY)
+                        .filter((cell) => cell.value &&
+                        cell.value.team !== pokemon.team &&
+                        cell.value.id !== target.id)
+                        .map((cell) => cell.value);
+                    pokemon.broadcastAbility({ skill: "FAIRY_CRIT" });
+                    adjacentEnemies
+                        .filter((e) => e.id !== target.id)
+                        .forEach((enemy) => {
+                        const { takenDamage: additionalDamage, death: adjacentDeath } = enemy.handleSpecialDamage(specialDamage, board, Game_1.AttackType.SPECIAL, pokemon, crit, false);
+                        takenDamage += additionalDamage;
+                        if (adjacentDeath)
+                            death = true;
+                    });
+                }
+                break;
+            }
+            case Item_1.Item.TWO_EDGED_WAND: {
+                if (!(0, random_1.chance)(0.8, pokemon) &&
+                    pokemon.items.has(Item_1.Item.PROTECTIVE_PADS) === false) {
+                    const selfDamage = specialDamage;
+                    pokemon.handleSpecialDamage(selfDamage, board, Game_1.AttackType.SPECIAL, pokemon, crit, false);
+                }
+                break;
+            }
+            case Item_1.Item.WARP_WAND: {
+                if ((0, random_1.chance)(0.05, pokemon) && target.hp > 0) {
+                    const teleportationCell = board.getTeleportationCell(target.positionX, target.positionY, target.team);
+                    if (teleportationCell) {
+                        pokemon.broadcastAbility({
+                            skill: "WARP_WAND",
+                            targetX: target.positionX,
+                            targetY: target.positionY
+                        });
+                        pokemon.broadcastAbility({
+                            skill: "WARP_WAND",
+                            targetX: target.positionX,
+                            targetY: target.positionY
+                        });
+                        target.moveTo(teleportationCell.x, teleportationCell.y, board, true);
+                    }
+                }
+                break;
+            }
+            case Item_1.Item.SWITCHER_WAND: {
+                if ((0, random_1.chance)(0.05, pokemon) && target.hp > 0) {
+                    const farthestTarget = pokemon.state.getFarthestTarget(pokemon, board);
+                    if (farthestTarget) {
+                        pokemon.broadcastAbility({
+                            skill: "WARP_WAND",
+                            targetX: target.positionX,
+                            targetY: target.positionY
+                        });
+                        pokemon.broadcastAbility({
+                            skill: "WARP_WAND",
+                            targetX: farthestTarget.positionX,
+                            targetY: farthestTarget.positionY
+                        });
+                        target.moveTo(farthestTarget.positionX, farthestTarget.positionY, board, true);
+                    }
+                }
+                break;
+            }
+            case Item_1.Item.WHIRLWIND_WAND: {
+                if ((0, random_1.chance)(0.05, pokemon)) {
+                    pokemon.broadcastAbility({ skill: "WHIRLWIND_WAND" });
+                    (0, orientation_1.effectInLine)(board, pokemon, target, (cell) => {
+                        if (cell.value && cell.value.team !== pokemon.team) {
+                            const freeCellInTheBack = board.getSafePlaceAwayFrom(cell.value.positionX, cell.value.positionY, cell.value.team, 3);
+                            if (freeCellInTheBack) {
+                                cell.value.moveTo(freeCellInTheBack.x, freeCellInTheBack.y, board, true);
+                            }
+                        }
+                    });
+                }
+                break;
+            }
+            case Item_1.Item.TUNNEL_WAND: {
+                if ((0, random_1.chance)(0.05, pokemon)) {
+                    pokemon.broadcastAbility({ skill: "FAIRY_TUNNEL" });
+                    (0, orientation_1.effectInLine)(board, pokemon, target, (cell) => {
+                        if (cell.value != null &&
+                            cell.value.team !== pokemon.team &&
+                            cell.value.id !== target.id) {
+                            const { takenDamage: tunnelTakenDamage, death: tunnelDeath } = cell.value.handleSpecialDamage(specialDamage, board, Game_1.AttackType.SPECIAL, pokemon, crit, false);
+                            takenDamage += tunnelTakenDamage;
+                            if (tunnelDeath)
+                                death = true;
+                        }
+                    });
+                }
+                break;
+            }
+        }
+    }
+    return { takenDamage, death };
+}
+exports.pounceWandEffect = new effect_1.OnAttackReceivedEffect(({ pokemon, board, totalDamage, attacker, crit }) => {
+    if (pokemon.fairySplashCooldown === 0 &&
+        attacker &&
+        (crit || (0, random_1.chance)(0.1, pokemon))) {
+        const shockDamageFactor = 0.3;
+        const shockDamage = (0, number_1.min)(1)(Math.round(shockDamageFactor * totalDamage));
+        pokemon.count.fairyCritCount++;
+        pokemon.fairySplashCooldown = 250;
+        const distance = (0, distance_1.distanceC)(pokemon.positionX, pokemon.positionY, attacker.positionX, attacker.positionY);
+        if (distance <= 1) {
+            board
+                .getAdjacentCells(pokemon.positionX, pokemon.positionY, false)
+                .forEach((cell) => {
+                if (cell.value &&
+                    cell.value.team !== pokemon.team &&
+                    cell.value.items.has(Item_1.Item.PROTECTIVE_PADS) === false) {
+                    cell.value.handleDamage({
+                        damage: shockDamage,
+                        board,
+                        attackType: Game_1.AttackType.SPECIAL,
+                        attacker: pokemon,
+                        isRetaliation: true,
+                        shouldTargetGainMana: true
+                    });
+                }
+            });
+        }
     }
 });
 //# sourceMappingURL=synergies.js.map

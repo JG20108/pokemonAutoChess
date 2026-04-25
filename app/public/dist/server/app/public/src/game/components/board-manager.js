@@ -650,7 +650,7 @@ class BoardManager {
                             : Game_1.PokemonTint.NORMAL);
                         pokemonSprite.attackSprite =
                             (_d = (_c = pokemon_animations_1.PokemonAnimations[Pokemon_1.PkmByIndex[value]]) === null || _c === void 0 ? void 0 : _c.attackSprite) !== null && _d !== void 0 ? _d : pokemonSprite.attackSprite;
-                        pokemonSprite.lazyloadAnimations(this.scene).then(() => {
+                        pokemonSprite.lazyLoadAnimations(this.scene).then(() => {
                             pokemonSprite.animationLocked = false;
                             pokemonSprite.evolutionAnimation();
                         });

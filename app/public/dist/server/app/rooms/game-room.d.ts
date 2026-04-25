@@ -8,8 +8,7 @@ import { Pokemon } from "../models/colyseus-models/pokemon";
 import { IGameHistorySimplePlayer, IPokemonEntity } from "../types";
 import { EloRank } from "../types/enum/EloRank";
 import { GameMode } from "../types/enum/Game";
-import { Item } from "../types/enum/Item";
-import { Pkm, PkmProposition } from "../types/enum/Pokemon";
+import { Pkm } from "../types/enum/Pokemon";
 import { SpecialGameRule } from "../types/enum/SpecialGameRule";
 import GameState from "./states/game-state";
 export default class GameRoom extends Room<{
@@ -35,7 +34,7 @@ export default class GameRoom extends Room<{
         bracketId: string | null;
     }): Promise<void>;
     startGame(): void;
-    onAuth(client: Client, options: any, context: any): Promise<import("firebase-admin/lib/auth/user-record").UserRecord | undefined>;
+    onAuth(client: Client, options: any, context: any): Promise<import("firebase-admin/auth").UserRecord | undefined>;
     onJoin(client: Client): Promise<void>;
     onDrop(client: Client, code: number): Promise<void>;
     onReconnect(client: Client): Promise<void>;
@@ -48,8 +47,7 @@ export default class GameRoom extends Room<{
     checkEvolutionsAfterItemAcquired(playerId: string, pokemon: Pokemon): Pokemon | void;
     getNumberOfPlayersAlive(players: MapSchema<Player>): number;
     getTeamSize(board: MapSchema<Pokemon>): number;
-    pickPokemonProposition(playerId: string, pkm: PkmProposition, bypassLackOfSpace?: boolean): void;
-    pickItemProposition(playerId: string, item: Item): void;
+    pickChoice(playerId: string, choiceId: string, choiceIndex: number, bypassLackOfSpace?: boolean): false | undefined;
     computeRoundDamage(opponentTeam: MapSchema<IPokemonEntity>, stageLevel: number): number;
     rankPlayers(): void;
     onRoomDeleted(roomId: any): void;

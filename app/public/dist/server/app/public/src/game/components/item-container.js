@@ -50,7 +50,7 @@ class ItemContainer extends draggable_object_1.default {
             return 4;
         if ((0, array_1.isIn)(Item_1.SpecialItems, this.name))
             return 5;
-        if ((0, array_1.isIn)(Item_1.TMs, this.name))
+        if ((0, array_1.isIn)(Item_1.TMs, this.name) || (0, array_1.isIn)(Item_1.Wands, this.name))
             return 6;
         if ((0, array_1.isIn)(Item_1.Dishes, this.name))
             return 7;

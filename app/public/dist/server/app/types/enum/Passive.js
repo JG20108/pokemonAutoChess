@@ -141,7 +141,7 @@ var Passive;
     Passive["GLIMMORA"] = "GLIMMORA";
     Passive["PILLAR"] = "PILLAR";
     Passive["INANIMATE"] = "INANIMATE";
-    Passive["BERSERK"] = "BERSERK";
+    Passive["DRAMPA"] = "DRAMPA";
     Passive["APPLIN"] = "APPLIN";
     Passive["DIPPLIN"] = "DIPPLIN";
     Passive["WELL_BAKED"] = "WELL_BAKED";

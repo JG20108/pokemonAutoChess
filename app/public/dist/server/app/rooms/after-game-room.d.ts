@@ -15,7 +15,7 @@ export default class AfterGameRoom extends Room<{
         eligibleToELO: boolean;
         gameMode: GameMode;
     }): void;
-    onAuth(client: Client, options: any, context: any): Promise<import("firebase-admin/lib/auth/user-record").UserRecord | undefined>;
+    onAuth(client: Client, options: any, context: any): Promise<import("firebase-admin/auth").UserRecord | undefined>;
     onJoin(client: Client): void;
     onDrop(client: Client, code: number): Promise<void>;
     onLeave(client: Client, code: number): Promise<void>;

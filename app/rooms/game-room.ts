@@ -1186,12 +1186,16 @@ export default class GameRoom extends Room<{ state: GameState }> {
     const player = this.state.players.get(playerId)
     if (!player) return
     const choice = player.choices.find((c) => c.id === choiceId)
-    if (
-      !choice ||
-      choiceIndex < 0 ||
-      choiceIndex >= (choice.pokemons?.length || choice.items?.length)
-    )
+    if (!choice || choiceIndex < 0) return
+
+    if (choice.type === "synergy") {
+      if (choiceIndex >= choice.synergies.length) return
+      player.monotype = choice.synergies[choiceIndex]
+      removeInArray(player.choices, choice)
       return
+    }
+
+    if (choiceIndex >= (choice.pokemons?.length || choice.items?.length)) return
 
     if (choice.pokemons.length > 0) {
       const pkm = choice.pokemons[choiceIndex]
@@ -1256,7 +1260,15 @@ export default class GameRoom extends Room<{ state: GameState }> {
       }
 
       if (choice.type === "starter") {
-        player.firstPartner = pokemonsObtained[0].name
+        if (
+          this.state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY ||
+          this.state.specialGameRule === SpecialGameRule.FIRST_PARTNER
+        ) {
+          player.firstPartner = pokemonsObtained[0].name
+        }
+        if (this.state.specialGameRule === SpecialGameRule.CHOSEN_ONE) {
+          pokemonsObtained[0].canBeSold = false
+        }
       }
 
       pokemonsObtained.forEach((pokemon) => {

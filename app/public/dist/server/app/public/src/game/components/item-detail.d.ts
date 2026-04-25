@@ -4,7 +4,7 @@ import "./item-detail.css";
 export declare function ItemDetailTooltipContent({ item, showItemCombinationsTooltip }: {
     item: Item;
     showItemCombinationsTooltip?: boolean;
-}): import("react/jsx-runtime").JSX.Element;
+}): import("react/jsx-runtime").JSX.Element | null;
 export declare function ItemDetailTooltip(): import("react/jsx-runtime").JSX.Element;
 export default class ItemDetail extends GameObjects.DOMElement {
     dom: HTMLDivElement;

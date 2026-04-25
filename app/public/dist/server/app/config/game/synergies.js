@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SYNERGY_COLORS = exports.GoldenEggItems = exports.GOLDEN_BERRY_TREE_TYPES = exports.SHARDS_PER_SHINY_UNOWN_WANDERER = exports.SHARDS_PER_UNOWN_WANDERER = exports.SHINY_UNOWN_ENCOUNTER_CHANCE = exports.UNOWN_ENCOUNTER_CHANCE = exports.FIELD_SPEED_BUFF_PER_SYNERGY_LEVEL = exports.FIELD_HEAL_PER_SYNERGY_LEVEL = exports.MONSTER_MAX_HP_BUFF_FACTOR_PER_SYNERGY_LEVEL = exports.MONSTER_AP_BUFF_PER_SYNERGY_LEVEL = exports.MONSTER_ATTACK_BUFF_PER_SYNERGY_LEVEL = exports.FishRarityProbability = exports.SynergyTriggers = void 0;
+exports.SYNERGY_COLORS = exports.GoldenEggItems = exports.GOLDEN_BERRY_TREE_TYPES = exports.SHARDS_PER_SHINY_UNOWN_WANDERER = exports.SHARDS_PER_UNOWN_WANDERER = exports.SHINY_UNOWN_ENCOUNTER_CHANCE = exports.UNOWN_ENCOUNTER_CHANCE = exports.FAIRY_WANDS_BY_SYNERGY_LEVEL = exports.FIELD_SPEED_BUFF_PER_SYNERGY_LEVEL = exports.FIELD_HEAL_PER_SYNERGY_LEVEL = exports.MONSTER_MAX_HP_BUFF_FACTOR_PER_SYNERGY_LEVEL = exports.MONSTER_AP_BUFF_PER_SYNERGY_LEVEL = exports.MONSTER_ATTACK_BUFF_PER_SYNERGY_LEVEL = exports.FishRarityProbability = exports.SynergyTriggers = void 0;
 const Game_1 = require("../../types/enum/Game");
 const Item_1 = require("../../types/enum/Item");
 const Synergy_1 = require("../../types/enum/Synergy");
@@ -65,6 +65,17 @@ exports.MONSTER_AP_BUFF_PER_SYNERGY_LEVEL = [10, 20, 30, 30];
 exports.MONSTER_MAX_HP_BUFF_FACTOR_PER_SYNERGY_LEVEL = [0.2, 0.4, 0.6, 0.6];
 exports.FIELD_HEAL_PER_SYNERGY_LEVEL = [30, 40, 50];
 exports.FIELD_SPEED_BUFF_PER_SYNERGY_LEVEL = [15, 20, 25];
+exports.FAIRY_WANDS_BY_SYNERGY_LEVEL = [
+    [Item_1.Item.LONG_WAND, Item_1.Item.SPIRIT_WAND, Item_1.Item.HP_SWAP_WAND, Item_1.Item.BLAST_WAND],
+    [Item_1.Item.SLUMBER_WAND, Item_1.Item.SLOW_WAND, Item_1.Item.PETRIFY_WAND, Item_1.Item.CONFUSE_WAND],
+    [
+        Item_1.Item.TWO_EDGED_WAND,
+        Item_1.Item.POUNCE_WAND,
+        Item_1.Item.SURROUND_WAND,
+        Item_1.Item.GUIDING_WAND
+    ],
+    [Item_1.Item.TUNNEL_WAND, Item_1.Item.WHIRLWIND_WAND, Item_1.Item.SWITCHER_WAND, Item_1.Item.WARP_WAND]
+];
 exports.UNOWN_ENCOUNTER_CHANCE = 0.033;
 exports.SHINY_UNOWN_ENCOUNTER_CHANCE = 0.05;
 exports.SHARDS_PER_UNOWN_WANDERER = 50;

@@ -1,4 +1,37 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = WikiAbility;
 const jsx_runtime_1 = require("react/jsx-runtime");
@@ -14,7 +47,7 @@ const Pokemon_1 = require("../../../../../types/enum/Pokemon");
 const avatar_1 = require("../../../../../utils/avatar");
 const item_detail_1 = require("../../../game/components/item-detail");
 const descriptions_1 = require("../../utils/descriptions");
-const jsx_1 = require("../../utils/jsx");
+const jsx_1 = __importStar(require("../../utils/jsx"));
 const game_pokemon_detail_1 = require("../game/game-pokemon-detail");
 const MIN_COL_WIDTH = 320;
 const ROW_HEIGHT = 200;
@@ -44,7 +77,7 @@ function WikiAbility() {
     const filteredAbilities = Object.keys(Ability_1.Ability)
         .filter((a) => a !== Ability_1.Ability.DEFAULT &&
         (!searchQuery.trim() ||
-            `${t(`ability.${a}`)} ${t(`ability_description.${a}`)}`
+            (0, jsx_1.default)((0, descriptions_1.addIconsToDescription)(`${t(`ability.${a}`)} ${t(`ability_description.${a}`)}`))
                 .toLowerCase()
                 .includes(searchQuery.trim().toLowerCase())))
         .sort((a, b) => t(`ability.${a}`).localeCompare(t(`ability.${b}`)));

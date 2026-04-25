@@ -78,6 +78,7 @@ class PokemonSprite extends draggable_object_1.default {
         this.dishes = [];
         this.dishesSprites = [];
         this.inBattle = false;
+        this.isTeleporting = false;
         this.scene = scene;
         this.flip = flip;
         this.playerId = playerId;
@@ -172,7 +173,7 @@ class PokemonSprite extends draggable_object_1.default {
             this.scene.lastPokemonDetail.closeDetail();
             this.scene.lastPokemonDetail = null;
         }
-        this.lazyloadAnimations(scene).then(() => {
+        this.lazyLoadAnimations(scene).then(() => {
             var _a, _b;
             if (!this.sprite.scene)
                 return;
@@ -196,7 +197,7 @@ class PokemonSprite extends draggable_object_1.default {
     get positionY() {
         return this.pokemon.positionY;
     }
-    lazyloadAnimations(scene) {
+    lazyLoadAnimations(scene) {
         return new Promise((resolve) => {
             var _a;
             const tint = this.pokemon.shiny ? Game_1.PokemonTint.SHINY : Game_1.PokemonTint.NORMAL;
@@ -280,7 +281,6 @@ class PokemonSprite extends draggable_object_1.default {
         }
     }
     openDetail() {
-        const isGameScene = (scene) => "lastPokemonDetail" in scene;
         if (!isGameScene(this.scene))
             return;
         this.scene.closeTooltips();
@@ -1002,6 +1002,7 @@ class PokemonSprite extends draggable_object_1.default {
         }
     }
     addPoison(stacks) {
+        var _a;
         const poisonTexture = stacks >= 3 ? "POISON_BADLY" : "POISON";
         if (!this.poison) {
             this.poison = this.scene.add
@@ -1010,7 +1011,7 @@ class PokemonSprite extends draggable_object_1.default {
             this.poison.anims.play(poisonTexture);
             this.add(this.poison);
         }
-        else if (this.poison.texture.key !== poisonTexture) {
+        else if (((_a = this.poison.anims.currentAnim) === null || _a === void 0 ? void 0 : _a.key) !== poisonTexture) {
             this.poison.setTexture("status", `${poisonTexture}/000.png`);
             this.poison.anims.play(poisonTexture);
         }

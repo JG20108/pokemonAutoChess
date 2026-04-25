@@ -21,7 +21,7 @@ import { CloseCodes } from "../../types/enum/CloseCodes"
 import { EloRank } from "../../types/enum/EloRank"
 import { GameMode } from "../../types/enum/Game"
 import { Language } from "../../types/enum/Language"
-import { PkmIndex } from "../../types/enum/Pokemon"
+import { Pkm, PkmIndex } from "../../types/enum/Pokemon"
 import { Starters } from "../../types/enum/Starters"
 import {
   IPokemonCollectionItemMongo,

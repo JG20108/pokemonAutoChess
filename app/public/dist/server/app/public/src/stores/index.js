@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const toolkit_1 = require("@reduxjs/toolkit");
 const immer_1 = require("immer");
 const AfterGameStore_1 = __importDefault(require("./AfterGameStore"));
+const BoostersStore_1 = __importDefault(require("./BoostersStore"));
 const GameStore_1 = __importDefault(require("./GameStore"));
 const LobbyStore_1 = __importDefault(require("./LobbyStore"));
 const NetworkStore_1 = __importDefault(require("./NetworkStore"));
@@ -14,6 +15,7 @@ const PreparationStore_1 = __importDefault(require("./PreparationStore"));
 const store = (0, toolkit_1.configureStore)({
     reducer: {
         lobby: LobbyStore_1.default,
+        boosters: BoostersStore_1.default,
         network: NetworkStore_1.default,
         preparation: PreparationStore_1.default,
         game: GameStore_1.default,

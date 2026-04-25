@@ -240,9 +240,6 @@ class CustomLobbyRoom extends colyseus_1.Room {
             this.onMessage(types_1.Transfer.SET_ROLE, (client, { uid, role }) => {
                 this.dispatcher.dispatch(new lobby_commands_1.GiveRoleCommand(), { client, uid, role });
             });
-            this.onMessage(types_1.Transfer.OPEN_BOOSTER, (client) => {
-                this.dispatcher.dispatch(new lobby_commands_1.OpenBoosterCommand(), { client });
-            });
             this.onMessage(types_1.Transfer.CHANGE_NAME, (client, message) => {
                 this.dispatcher.dispatch(new lobby_commands_1.ChangeNameCommand(), {
                     client,
@@ -251,28 +248,6 @@ class CustomLobbyRoom extends colyseus_1.Room {
             });
             this.onMessage(types_1.Transfer.SET_TITLE, (client, title) => {
                 this.dispatcher.dispatch(new lobby_commands_1.ChangeTitleCommand(), { client, title });
-            });
-            this.onMessage(types_1.Transfer.CHANGE_SELECTED_EMOTION, (client, { index, emotion, shiny }) => {
-                this.dispatcher.dispatch(new lobby_commands_1.ChangeSelectedEmotionCommand(), {
-                    client,
-                    index,
-                    emotion,
-                    shiny
-                });
-            });
-            this.onMessage(types_1.Transfer.BUY_EMOTION, (client, { index, emotion, shiny }) => {
-                this.dispatcher.dispatch(new lobby_commands_1.BuyEmotionCommand(), {
-                    client,
-                    index,
-                    emotion,
-                    shiny
-                });
-            });
-            this.onMessage(types_1.Transfer.BUY_BOOSTER, (client, message) => {
-                this.dispatcher.dispatch(new lobby_commands_1.BuyBoosterCommand(), {
-                    client,
-                    index: message.index
-                });
             });
             this.onMessage(types_1.Transfer.SEARCH_BY_ID, (client, uid) => {
                 this.dispatcher.dispatch(new lobby_commands_1.OnSearchByIdCommand(), { client, uid });

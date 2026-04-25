@@ -6,7 +6,7 @@ import { IPlayer, Role, Title } from "../../types";
 import { DungeonPMDO } from "../../types/enum/Dungeon";
 import { BattleResult, Team } from "../../types/enum/Game";
 import { Item, MissionOrder } from "../../types/enum/Item";
-import { Pkm, type PkmProposition } from "../../types/enum/Pokemon";
+import { Pkm } from "../../types/enum/Pokemon";
 import { SpecialGameRule } from "../../types/enum/SpecialGameRule";
 import { Synergy } from "../../types/enum/Synergy";
 import { WandererBehavior, WandererType } from "../../types/enum/Wanderer";
@@ -16,6 +16,7 @@ import { IPokemonCollectionItemMongo } from "../../types/interfaces/UserMetadata
 import { Effects } from "../effects";
 import ExperienceManager from "./experience-manager";
 import HistoryItem from "./history-item";
+import { PlayerChoice } from "./player-choice";
 import { Pokemon } from "./pokemon";
 import { PokemonCustoms } from "./pokemon-customs";
 import Synergies from "./synergies";
@@ -45,6 +46,7 @@ export default class Player extends Schema implements IPlayer {
     boardSize: number;
     items: ArraySchema<Item>;
     scarvesItems: ArraySchema<Item>;
+    fairyWands: ArraySchema<Item>;
     rank: number;
     elo: number;
     games: number;
@@ -54,8 +56,7 @@ export default class Player extends Schema implements IPlayer {
     emotesUnlocked: string;
     title: Title | "";
     role: Role;
-    itemsProposition: ArraySchema<Item>;
-    pokemonsProposition: ArraySchema<PkmProposition>;
+    choices: ArraySchema<PlayerChoice>;
     pveRewards: ArraySchema<Item>;
     pveRewardsPropositions: ArraySchema<Item>;
     loadingProgress: number;
@@ -92,6 +93,7 @@ export default class Player extends Schema implements IPlayer {
     lightY: number;
     ghost: boolean;
     firstPartner: Pkm | undefined;
+    monotype: Synergy | undefined;
     hasLeftGame: boolean;
     bonusSynergies: Map<Synergy, number>;
     pokemonsPlayed: Set<Pkm>;
@@ -103,7 +105,6 @@ export default class Player extends Schema implements IPlayer {
     specialGameRule: SpecialGameRule | null;
     shopsSinceLastUnownShop: number;
     regions: DungeonPMDO[];
-    extraScarves: number;
     constructor(id: string, name: string, elo: number, games: number, avatar: string, isBot: boolean, rank: number, pokemonCollection: Map<string, IPokemonCollectionItemMongo>, title: Title | "", role: Role, state: GameState);
     addExperience(value: number): void;
     addMoney(value: number, countTotalEarned: boolean, origin: PokemonEntity | null): void;
@@ -118,6 +119,7 @@ export default class Player extends Schema implements IPlayer {
     updateTms(previousSynergies: Map<Synergy, number>, updatedSynergies: Map<Synergy, number>): void;
     updateFishingRods(): void;
     updateChefsHats(): void;
+    updateFairyWands(previousSynergies: Map<Synergy, number>, updatedSynergies: Map<Synergy, number>): void;
     updateRegionalPool(state: GameState, mapChanged: boolean, previousMap?: string): void;
     onLightChange(): void;
     registerPlayedPokemons(): void;

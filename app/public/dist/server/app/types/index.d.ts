@@ -9,6 +9,7 @@ import ExperienceManager from "../models/colyseus-models/experience-manager";
 import { IPokemonRecord } from "../models/colyseus-models/game-record";
 import HistoryItem from "../models/colyseus-models/history-item";
 import Player from "../models/colyseus-models/player";
+import { PlayerChoice } from "../models/colyseus-models/player-choice";
 import { Pokemon } from "../models/colyseus-models/pokemon";
 import { PokemonCustoms } from "../models/colyseus-models/pokemon-customs";
 import Status from "../models/colyseus-models/status";
@@ -23,7 +24,7 @@ import { Emotion } from "./enum/Emotion";
 import { GameMode, Orientation, PokemonActionState, Rarity, Stat, Team } from "./enum/Game";
 import { Item } from "./enum/Item";
 import { Passive } from "./enum/Passive";
-import { Pkm, PkmProposition } from "./enum/Pokemon";
+import { Pkm } from "./enum/Pokemon";
 import { Synergy } from "./enum/Synergy";
 import { Weather } from "./enum/Weather";
 import { GameStats } from "./interfaces/GameStats";
@@ -51,12 +52,9 @@ export declare enum Transfer {
     SWITCH_BENCH_AND_BOARD = "SWITCH_BENCH_AND_BOARD",
     SELL_POKEMON = "SELL_POKEMON",
     REMOVE_FROM_SHOP = "REMOVE_FROM_SHOP",
-    CHANGE_SELECTED_EMOTION = "CHANGE_SELECTED_EMOTION",
     NEW_MESSAGE = "NEW_MESSAGE",
     CHANGE_NAME = "CHANGE_NAME",
     CHANGE_AVATAR = "CHANGE_AVATAR",
-    OPEN_BOOSTER = "OPEN_BOOSTER",
-    BUY_BOOSTER = "BUY_BOOSTER",
     ADD_BOT = "ADD_BOT",
     REMOVE_BOT = "REMOVE_BOT",
     TOGGLE_READY = "TOGGLE_READY",
@@ -66,7 +64,6 @@ export declare enum Transfer {
     LOCK = "LOCK",
     LEVEL_UP = "LEVEL_UP",
     SHOP = "SHOP",
-    ITEM = "ITEM",
     COOK = "COOK",
     DIG = "DIG",
     GAME_START = "GAME_START",
@@ -76,8 +73,6 @@ export declare enum Transfer {
     CHANGE_ROOM_PASSWORD = "CHANGE_ROOM_PASSWORD",
     CHANGE_ROOM_RANKS = "CHANGE_ROOM_RANKS",
     CHANGE_SPECIAL_RULE = "CHANGE_SPECIAL_RULE",
-    BUY_EMOTION = "BUY_EMOTION",
-    BOOSTER_CONTENT = "BOOSTER_CONTENT",
     USER = "USER",
     DRAG_DROP_CANCEL = "DRAG_DROP_CANCEL",
     SHOW_EMOTE = "SHOW_EMOTE",
@@ -94,6 +89,7 @@ export declare enum Transfer {
     GIVE_TITLE = "GIVE_TITLE",
     GIVE_ALL_PORTRAITS = "GIVE_ALL_PORTRAITS",
     POKEMON_PROPOSITION = "POKEMON_PROPOSITION",
+    CHOICE = "CHOICE",
     KICK = "KICK",
     DELETE_ROOM = "DELETE_ROOM",
     BAN = "BAN",
@@ -244,6 +240,7 @@ export interface IPlayer {
     boardSize: number;
     items: ArraySchema<Item>;
     scarvesItems: ArraySchema<Item>;
+    fairyWands: ArraySchema<Item>;
     rank: number;
     elo: number;
     alive: boolean;
@@ -251,8 +248,7 @@ export interface IPlayer {
     pokemonCustoms: PokemonCustoms;
     title: Title | "";
     role: Role;
-    itemsProposition: ArraySchema<Item>;
-    pokemonsProposition: ArraySchema<PkmProposition>;
+    choices: ArraySchema<PlayerChoice>;
     loadingProgress: number;
     berryTreesStages: number[];
     flowerPots: Pokemon[];
