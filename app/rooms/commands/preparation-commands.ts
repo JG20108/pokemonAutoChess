@@ -20,7 +20,10 @@ import { Role } from "../../types"
 import { CloseCodes } from "../../types/enum/CloseCodes"
 import { EloRank } from "../../types/enum/EloRank"
 import { BotDifficulty, GameMode } from "../../types/enum/Game"
-import { SpecialGameRule } from "../../types/enum/SpecialGameRule"
+import {
+  SpecialGameRule,
+  SpecialGameRuleDescription
+} from "../../types/enum/SpecialGameRule"
 import type { IBot } from "../../types/models/bot-v2"
 import { getRank } from "../../utils/elo"
 import { logger } from "../../utils/logger"
@@ -441,7 +444,7 @@ export class OnRoomChangeSpecialRule extends Command<
           author: "Server",
           authorId: "server",
           payload: specialRule
-            ? `Smeargle's Scribble rule selected: ${specialRule}. Players need to ready again.`
+            ? `Smeargle's Scribble: ${specialRule} — ${SpecialGameRuleDescription[specialRule]}. Players need to ready again.`
             : `Smeargle's Scribble has been disabled. Players need to ready again.`,
           avatar: leader?.avatar
         })
