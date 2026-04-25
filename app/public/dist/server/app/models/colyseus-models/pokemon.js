@@ -1334,7 +1334,7 @@ class Beldum extends Pokemon {
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.METANG;
         this.hp = 110;
-        this.atk = 5;
+        this.atk = 8;
         this.speed = 47;
         this.def = 12;
         this.speDef = 8;
@@ -1356,7 +1356,7 @@ class Metang extends Pokemon {
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.METAGROSS;
         this.hp = 190;
-        this.atk = 9;
+        this.atk = 15;
         this.speed = 47;
         this.def = 18;
         this.speDef = 12;
@@ -1377,7 +1377,7 @@ class Metagross extends Pokemon {
         this.rarity = Game_1.Rarity.EPIC;
         this.stars = 3;
         this.hp = 320;
-        this.atk = 20;
+        this.atk = 28;
         this.speed = 47;
         this.def = 24;
         this.speDef = 16;
@@ -1467,7 +1467,7 @@ class Bagon extends Pokemon {
         this.atk = 5;
         this.speed = 57;
         this.def = 6;
-        this.speDef = 6;
+        this.speDef = 8;
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.DRAGON_CLAW;
@@ -1485,7 +1485,7 @@ class Shelgon extends Pokemon {
         this.atk = 11;
         this.speed = 57;
         this.def = 10;
-        this.speDef = 6;
+        this.speDef = 10;
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.DRAGON_CLAW;
@@ -1502,11 +1502,11 @@ class Salamence extends Pokemon {
         ]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 3;
-        this.hp = 210;
+        this.hp = 225;
         this.atk = 20;
         this.speed = 57;
         this.def = 10;
-        this.speDef = 6;
+        this.speDef = 12;
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.DRAGON_CLAW;
@@ -1869,7 +1869,7 @@ class Oshawott extends Pokemon {
         this.rarity = Game_1.Rarity.EPIC;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.DEWOTT;
-        this.hp = 100;
+        this.hp = 108;
         this.atk = 8;
         this.speed = 47;
         this.def = 8;
@@ -1963,7 +1963,7 @@ class Larvitar extends Pokemon {
         this.atk = 7;
         this.speed = 45;
         this.def = 8;
-        this.speDef = 4;
+        this.speDef = 6;
         this.maxPP = 90;
         this.range = 1;
         this.skill = Ability_1.Ability.BITE;
@@ -1981,7 +1981,7 @@ class Pupitar extends Pokemon {
         this.atk = 14;
         this.speed = 45;
         this.def = 12;
-        this.speDef = 8;
+        this.speDef = 11;
         this.maxPP = 90;
         this.range = 1;
         this.skill = Ability_1.Ability.BITE;
@@ -1996,9 +1996,9 @@ class Tyranitar extends Pokemon {
         this.stars = 3;
         this.hp = 210;
         this.atk = 28;
-        this.speed = 45;
+        this.speed = 47;
         this.def = 16;
-        this.speDef = 10;
+        this.speDef = 14;
         this.maxPP = 90;
         this.range = 1;
         this.skill = Ability_1.Ability.BITE;
@@ -3903,11 +3903,7 @@ exports.Dusknoir = Dusknoir;
 class Magnemite extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([
-            Synergy_1.Synergy.ELECTRIC,
-            Synergy_1.Synergy.STEEL,
-            Synergy_1.Synergy.LIGHT
-        ]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.STEEL]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.MAGNETON;
@@ -3925,11 +3921,7 @@ exports.Magnemite = Magnemite;
 class Magneton extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([
-            Synergy_1.Synergy.ELECTRIC,
-            Synergy_1.Synergy.STEEL,
-            Synergy_1.Synergy.LIGHT
-        ]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.STEEL]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.MAGNEZONE;
@@ -3947,11 +3939,7 @@ exports.Magneton = Magneton;
 class Magnezone extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([
-            Synergy_1.Synergy.ELECTRIC,
-            Synergy_1.Synergy.STEEL,
-            Synergy_1.Synergy.LIGHT
-        ]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.STEEL]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 3;
         this.hp = 250;
@@ -4596,9 +4584,9 @@ class Mudkip extends Pokemon {
         this.rarity = Game_1.Rarity.COMMON;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.MARSHTOMP;
-        this.hp = 65;
+        this.hp = 70;
         this.atk = 5;
-        this.speed = 44;
+        this.speed = 46;
         this.def = 4;
         this.speDef = 4;
         this.maxPP = 60;
@@ -4619,9 +4607,9 @@ class Marshtomp extends Pokemon {
         this.rarity = Game_1.Rarity.COMMON;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.SWAMPERT;
-        this.hp = 130;
+        this.hp = 140;
         this.atk = 9;
-        this.speed = 44;
+        this.speed = 46;
         this.def = 6;
         this.speDef = 6;
         this.maxPP = 60;
@@ -4641,10 +4629,10 @@ class Swampert extends Pokemon {
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.WATER, Synergy_1.Synergy.GROUND]);
         this.rarity = Game_1.Rarity.COMMON;
         this.stars = 3;
-        this.hp = 200;
+        this.hp = 215;
         this.atk = 20;
-        this.speed = 44;
-        this.def = 10;
+        this.speed = 46;
+        this.def = 12;
         this.speDef = 10;
         this.maxPP = 60;
         this.range = 1;
@@ -5054,8 +5042,8 @@ class Squirtle extends Pokemon {
         this.hp = 60;
         this.atk = 5;
         this.speed = 50;
-        this.def = 2;
-        this.speDef = 2;
+        this.def = 5;
+        this.speDef = 4;
         this.maxPP = 100;
         this.range = 3;
         this.skill = Ability_1.Ability.HYDRO_PUMP;
@@ -5072,8 +5060,8 @@ class Wartortle extends Pokemon {
         this.hp = 120;
         this.atk = 9;
         this.speed = 50;
-        this.def = 3;
-        this.speDef = 3;
+        this.def = 7;
+        this.speDef = 6;
         this.maxPP = 100;
         this.range = 3;
         this.skill = Ability_1.Ability.HYDRO_PUMP;
@@ -5089,8 +5077,8 @@ class Blastoise extends Pokemon {
         this.hp = 200;
         this.atk = 20;
         this.speed = 50;
-        this.def = 4;
-        this.speDef = 4;
+        this.def = 10;
+        this.speDef = 8;
         this.maxPP = 100;
         this.range = 3;
         this.skill = Ability_1.Ability.HYDRO_PUMP;
@@ -7879,8 +7867,8 @@ class Absol extends Pokemon {
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
         this.hp = 200;
-        this.atk = 19;
-        this.speed = 49;
+        this.atk = 25;
+        this.speed = 52;
         this.def = 10;
         this.speDef = 10;
         this.maxPP = 100;
