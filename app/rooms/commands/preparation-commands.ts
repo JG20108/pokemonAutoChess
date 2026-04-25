@@ -440,9 +440,9 @@ export class OnRoomChangeSpecialRule extends Command<
         this.room.state.addMessage({
           author: "Server",
           authorId: "server",
-          payload: `Smeargle's Scribble mode has been ${
-            specialRule ? "enabled" : "disabled"
-          } for this game. Players need to ready again.`,
+          payload: specialRule
+            ? `Smeargle's Scribble rule selected: ${specialRule}. Players need to ready again.`
+            : `Smeargle's Scribble has been disabled. Players need to ready again.`,
           avatar: leader?.avatar
         })
 
