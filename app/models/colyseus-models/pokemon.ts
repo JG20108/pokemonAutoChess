@@ -1211,7 +1211,7 @@ export class Beldum extends Pokemon {
   stars = 1
   evolution = Pkm.METANG
   hp = 110
-  atk = 5
+  atk = 8
   speed = 47
   def = 12
   speDef = 8
@@ -1230,7 +1230,7 @@ export class Metang extends Pokemon {
   stars = 2
   evolution = Pkm.METAGROSS
   hp = 190
-  atk = 9
+  atk = 15
   speed = 47
   def = 18
   speDef = 12
@@ -1248,7 +1248,7 @@ export class Metagross extends Pokemon {
   rarity = Rarity.EPIC
   stars = 3
   hp = 320
-  atk = 20
+  atk = 28
   speed = 47
   def = 24
   speDef = 16
@@ -1326,7 +1326,7 @@ export class Bagon extends Pokemon {
   atk = 5
   speed = 57
   def = 6
-  speDef = 6
+  speDef = 8
   maxPP = 100
   range = 1
   skill = Ability.DRAGON_CLAW
@@ -1341,7 +1341,7 @@ export class Shelgon extends Pokemon {
   atk = 11
   speed = 57
   def = 10
-  speDef = 6
+  speDef = 10
   maxPP = 100
   range = 1
   skill = Ability.DRAGON_CLAW
@@ -1355,11 +1355,11 @@ export class Salamence extends Pokemon {
   ])
   rarity = Rarity.UNCOMMON
   stars = 3
-  hp = 210
+  hp = 225
   atk = 20
   speed = 57
   def = 10
-  speDef = 6
+  speDef = 12
   maxPP = 100
   range = 1
   skill = Ability.DRAGON_CLAW
@@ -1667,7 +1667,7 @@ export class Oshawott extends Pokemon {
   rarity = Rarity.EPIC
   stars = 1
   evolution = Pkm.DEWOTT
-  hp = 100
+  hp = 108
   atk = 8
   speed = 47
   def = 8
@@ -1749,7 +1749,7 @@ export class Larvitar extends Pokemon {
   atk = 7
   speed = 45
   def = 8
-  speDef = 4
+  speDef = 6
   maxPP = 90
   range = 1
   skill = Ability.BITE
@@ -1764,7 +1764,7 @@ export class Pupitar extends Pokemon {
   atk = 14
   speed = 45
   def = 12
-  speDef = 8
+  speDef = 11
   maxPP = 90
   range = 1
   skill = Ability.BITE
@@ -1776,9 +1776,9 @@ export class Tyranitar extends Pokemon {
   stars = 3
   hp = 210
   atk = 28
-  speed = 45
+  speed = 47
   def = 16
-  speDef = 10
+  speDef = 14
   maxPP = 90
   range = 1
   skill = Ability.BITE
@@ -3410,11 +3410,7 @@ export class Dusknoir extends Pokemon {
 }
 
 export class Magnemite extends Pokemon {
-  types = new SetSchema<Synergy>([
-    Synergy.ELECTRIC,
-    Synergy.STEEL,
-    Synergy.LIGHT
-  ])
+  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.STEEL])
   rarity = Rarity.UNCOMMON
   stars = 1
   evolution = Pkm.MAGNETON
@@ -3429,11 +3425,7 @@ export class Magnemite extends Pokemon {
 }
 
 export class Magneton extends Pokemon {
-  types = new SetSchema<Synergy>([
-    Synergy.ELECTRIC,
-    Synergy.STEEL,
-    Synergy.LIGHT
-  ])
+  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.STEEL])
   rarity = Rarity.UNCOMMON
   stars = 2
   evolution = Pkm.MAGNEZONE
@@ -3448,11 +3440,7 @@ export class Magneton extends Pokemon {
 }
 
 export class Magnezone extends Pokemon {
-  types = new SetSchema<Synergy>([
-    Synergy.ELECTRIC,
-    Synergy.STEEL,
-    Synergy.LIGHT
-  ])
+  types = new SetSchema<Synergy>([Synergy.ELECTRIC, Synergy.STEEL])
   rarity = Rarity.UNCOMMON
   stars = 3
   hp = 250
@@ -3998,9 +3986,9 @@ export class Mudkip extends Pokemon {
   rarity = Rarity.COMMON
   stars = 1
   evolution = Pkm.MARSHTOMP
-  hp = 65
+  hp = 70
   atk = 5
-  speed = 44
+  speed = 46
   def = 4
   speDef = 4
   maxPP = 60
@@ -4023,9 +4011,9 @@ export class Marshtomp extends Pokemon {
   rarity = Rarity.COMMON
   stars = 2
   evolution = Pkm.SWAMPERT
-  hp = 130
+  hp = 140
   atk = 9
-  speed = 44
+  speed = 46
   def = 6
   speDef = 6
   maxPP = 60
@@ -4047,10 +4035,10 @@ export class Swampert extends Pokemon {
   types = new SetSchema<Synergy>([Synergy.WATER, Synergy.GROUND])
   rarity = Rarity.COMMON
   stars = 3
-  hp = 200
+  hp = 215
   atk = 20
-  speed = 44
-  def = 10
+  speed = 46
+  def = 12
   speDef = 10
   maxPP = 60
   range = 1
@@ -4416,8 +4404,8 @@ export class Squirtle extends Pokemon {
   hp = 60
   atk = 5
   speed = 50
-  def = 2
-  speDef = 2
+  def = 5
+  speDef = 4
   maxPP = 100
   range = 3
   skill = Ability.HYDRO_PUMP
@@ -4431,8 +4419,8 @@ export class Wartortle extends Pokemon {
   hp = 120
   atk = 9
   speed = 50
-  def = 3
-  speDef = 3
+  def = 7
+  speDef = 6
   maxPP = 100
   range = 3
   skill = Ability.HYDRO_PUMP
@@ -4445,8 +4433,8 @@ export class Blastoise extends Pokemon {
   hp = 200
   atk = 20
   speed = 50
-  def = 4
-  speDef = 4
+  def = 10
+  speDef = 8
   maxPP = 100
   range = 3
   skill = Ability.HYDRO_PUMP
@@ -6939,8 +6927,8 @@ export class Absol extends Pokemon {
   rarity = Rarity.UNIQUE
   stars = 3
   hp = 200
-  atk = 19
-  speed = 49
+  atk = 25
+  speed = 52
   def = 10
   speDef = 10
   maxPP = 100
