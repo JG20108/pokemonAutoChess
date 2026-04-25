@@ -527,10 +527,11 @@ export default class BattleManager {
               pokemon.positionY,
               this.flip
             )
-            if (pokemon.skill === Ability.TELEPORT) {
+            if (pokemon.skill === Ability.TELEPORT || pkmSprite.isTeleporting) {
               pkmSprite.x = coordinates[0]
               pkmSprite.y = coordinates[1]
               pkmSprite.specialAttackAnimation(pokemon)
+              pkmSprite.isTeleporting = false
             } else if (!pokemon.status.skydiving) {
               const walkingSpeed =
                 2 *
@@ -676,7 +677,7 @@ export default class BattleManager {
               PokemonAnimations[PkmByIndex[value as string]]?.attackSprite ??
               pkmSprite.attackSprite
             // load the new ones
-            pkmSprite.lazyloadAnimations(this.scene).then(() => {
+            pkmSprite.lazyLoadAnimations(this.scene).then(() => {
               pkmSprite.animationLocked = false
               if (previousValue !== undefined) {
                 pkmSprite.evolutionAnimation()

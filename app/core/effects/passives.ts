@@ -216,7 +216,7 @@ const MiniorKernelOnAttackEffect = new OnAttackEffect(
       })
       if (pokemon.name === Pkm.MINIOR_KERNEL_GREEN) {
         cells.forEach((v) => {
-          if (v && v.value && v.value.team === pokemon.team) {
+          if (v.value && v.value.team === pokemon.team) {
             v.value.handleHeal(physicalDamage, pokemon, 1, false)
           }
         })
@@ -521,7 +521,6 @@ const FurCoatEffect = new OnStageStartEffect(({ pokemon, player }) => {
     if (pokemon.stacks >= pokemon.stacksRequired && player) {
       pokemon.stacks = 0
       player.items.push(Item.SILK_SCARF)
-      player.extraScarves += 1
     }
     pokemon.stacks = 0
   } else if (pokemon.stacks < pokemon.stacksRequired) {
@@ -1558,6 +1557,7 @@ export const PassiveEffects: Partial<
 
       const transformToHero = () => {
         transformed = true
+        const isFinizenOnBoard = entity.refToBoardPokemon.name === Pkm.FINIZEN
         entity.index = PkmIndex[Pkm.PALAFIN_HERO]
         entity.name = Pkm.PALAFIN_HERO
         entity.addAttack(18, entity, 0, false)
@@ -1565,7 +1565,7 @@ export const PassiveEffects: Partial<
         entity.addDefense(5, entity, 0, false)
         entity.addSpecialDefense(5, entity, 0, false)
         entity.hp = entity.maxHP
-        if (entity.player && !entity.isGhostOpponent) {
+        if (entity.player && !entity.isGhostOpponent && isFinizenOnBoard) {
           entity.player.pokemonsPlayed.add(Pkm.PALAFIN_HERO)
           entity.player.transformPokemon(
             entity.refToBoardPokemon as Pokemon,

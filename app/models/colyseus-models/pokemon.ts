@@ -3576,7 +3576,7 @@ export class Florges extends Pokemon {
 }
 
 export class Chikorita extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.FLORA])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.FAIRY])
   rarity = Rarity.SPECIAL
   stars = 1
   evolution = Pkm.BAYLEEF
@@ -3591,7 +3591,7 @@ export class Chikorita extends Pokemon {
 }
 
 export class Bayleef extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.FLORA])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.FAIRY])
   rarity = Rarity.SPECIAL
   stars = 2
   evolution = Pkm.MEGANIUM
@@ -3606,7 +3606,7 @@ export class Bayleef extends Pokemon {
 }
 
 export class Meganium extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.FLORA])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.FAIRY])
   rarity = Rarity.SPECIAL
   stars = 3
   hp = 220
@@ -4441,7 +4441,7 @@ export class Blastoise extends Pokemon {
 }
 
 export class Bellsprout extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.POISON, Synergy.FLORA])
+  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.FLORA])
   rarity = Rarity.SPECIAL
   stars = 1
   evolution = Pkm.WEEPINBELL
@@ -4456,7 +4456,7 @@ export class Bellsprout extends Pokemon {
 }
 
 export class Weepinbell extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.POISON, Synergy.FLORA])
+  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.FLORA])
   rarity = Rarity.SPECIAL
   stars = 2
   evolution = Pkm.VICTREEBEL
@@ -4471,7 +4471,7 @@ export class Weepinbell extends Pokemon {
 }
 
 export class Victreebel extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.POISON, Synergy.FLORA])
+  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.FLORA])
   rarity = Rarity.SPECIAL
   stars = 3
   hp = 200
@@ -5013,12 +5013,12 @@ export class Pidgeot extends Pokemon {
 }
 
 export class Hoppip extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.FLYING, Synergy.FLORA, Synergy.GRASS])
+  types = new SetSchema<Synergy>([Synergy.FLYING, Synergy.FLORA])
   rarity = Rarity.SPECIAL
   stars = 1
   evolution = Pkm.SKIPLOOM
   hp = 50
-  atk = 4
+  atk = 5
   speed = 60
   def = 2
   speDef = 2
@@ -5028,12 +5028,12 @@ export class Hoppip extends Pokemon {
 }
 
 export class Skiploom extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.FLYING, Synergy.FLORA, Synergy.GRASS])
+  types = new SetSchema<Synergy>([Synergy.FLYING, Synergy.FLORA])
   rarity = Rarity.SPECIAL
   stars = 2
   evolution = Pkm.JUMPLUFF
   hp = 100
-  atk = 8
+  atk = 10
   speed = 60
   def = 3
   speDef = 4
@@ -5043,11 +5043,11 @@ export class Skiploom extends Pokemon {
 }
 
 export class Jumpluff extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.FLYING, Synergy.FLORA, Synergy.GRASS])
+  types = new SetSchema<Synergy>([Synergy.FLYING, Synergy.FLORA])
   rarity = Rarity.SPECIAL
   stars = 3
   hp = 150
-  atk = 12
+  atk = 15
   speed = 60
   def = 4
   speDef = 6
@@ -7498,7 +7498,7 @@ export class Drampa extends Pokemon {
   maxPP = 80
   range = 3
   skill = Ability.DRAGON_PULSE
-  passive = Passive.BERSERK
+  passive = Passive.DRAMPA
 }
 
 export class PrimalGroudon extends Pokemon {
@@ -7564,7 +7564,7 @@ export class MegaRayquaza extends Pokemon {
 }
 
 export class Oddish extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.POISON, Synergy.GRASS])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.POISON])
   rarity = Rarity.SPECIAL
   stars = 1
   evolution = Pkm.GLOOM
@@ -7579,7 +7579,7 @@ export class Oddish extends Pokemon {
 }
 
 export class Gloom extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.POISON, Synergy.GRASS])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.POISON])
   rarity = Rarity.SPECIAL
   stars = 2
   evolution = Pkm.VILEPLUME
@@ -7594,10 +7594,10 @@ export class Gloom extends Pokemon {
 }
 
 export class Vileplume extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.POISON, Synergy.GRASS])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.POISON])
   rarity = Rarity.SPECIAL
   stars = 3
-  hp = 230
+  hp = 250
   atk = 24
   speed = 41
   def = 8
@@ -7608,10 +7608,10 @@ export class Vileplume extends Pokemon {
 }
 
 export class Bellossom extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.GRASS, Synergy.SOUND])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.SOUND])
   rarity = Rarity.SPECIAL
   stars = 4
-  hp = 250
+  hp = 300
   atk = 30
   speed = 41
   def = 10
@@ -11907,8 +11907,8 @@ export class Chingling extends Pokemon {
   hp = 150
   atk = 10
   speed = 46
-  def = 7
-  speDef = 8
+  def = 5
+  speDef = 6
   maxPP = 80
   range = 3
   skill = Ability.ECHO
@@ -11922,8 +11922,8 @@ export class Chimecho extends Pokemon {
   hp = 200
   atk = 15
   speed = 46
-  def = 10
-  speDef = 12
+  def = 8
+  speDef = 9
   maxPP = 80
   range = 3
   skill = Ability.ECHO
@@ -17365,11 +17365,11 @@ export class Litten extends Pokemon {
   rarity = Rarity.EPIC
   stars = 1
   evolution = Pkm.TORRACAT
-  hp = 90
+  hp = 95
   atk = 8
   speed = 44
   def = 8
-  speDef = 6
+  speDef = 8
   maxPP = 100
   range = 1
   skill = Ability.DARK_LARIAT
@@ -17380,11 +17380,11 @@ export class Torracat extends Pokemon {
   rarity = Rarity.EPIC
   stars = 2
   evolution = Pkm.INCINEROAR
-  hp = 170
-  atk = 14
+  hp = 180
+  atk = 15
   speed = 44
   def = 12
-  speDef = 10
+  speDef = 12
   maxPP = 100
   range = 1
   skill = Ability.DARK_LARIAT
@@ -17394,11 +17394,11 @@ export class Incineroar extends Pokemon {
   types = new SetSchema<Synergy>([Synergy.FIRE, Synergy.DARK, Synergy.FIELD])
   rarity = Rarity.EPIC
   stars = 3
-  hp = 280
-  atk = 24
+  hp = 300
+  atk = 30
   speed = 44
   def = 16
-  speDef = 14
+  speDef = 16
   maxPP = 100
   range = 1
   skill = Ability.DARK_LARIAT

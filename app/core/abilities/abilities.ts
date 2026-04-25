@@ -5234,7 +5234,7 @@ export class GeomancyStrategy extends AbilityStrategy {
     super.process(pokemon, board, target, crit)
     pokemon.addAttack(15, pokemon, 1, crit)
     pokemon.addSpecialDefense(10, pokemon, 1, crit)
-    pokemon.addSpeed(20, pokemon, 0, false)
+    pokemon.addSpeed(15, pokemon, 0, false)
   }
 }
 
@@ -11606,10 +11606,11 @@ export class FlyStrategy extends AbilityStrategy {
 }
 
 export class SurfStrategy extends AbilityStrategy {
+  requiresTarget = false
   process(
     pokemon: PokemonEntity,
     board: Board,
-    target: PokemonEntity,
+    target: null,
     crit: boolean,
     preventDefaultAnim?: boolean,
     tierLevel = pokemon.stars
@@ -11668,9 +11669,9 @@ export class SurfStrategy extends AbilityStrategy {
       pokemon.moveTo(farthestCoordinate.x, farthestCoordinate.y, board, false)
     }
 
-    if (targetsHit.size === 0) {
-      // ensure to at least hit the target
-      target.handleSpecialDamage(
+    if (targetsHit.size === 0 && farthestCoordinate?.target) {
+      // ensure to at least hit the farthest target
+      farthestCoordinate.target.handleSpecialDamage(
         damage,
         board,
         AttackType.SPECIAL,
@@ -11940,7 +11941,7 @@ export class DarkLariatStrategy extends AbilityStrategy {
   ) {
     super.process(pokemon, board, target, crit, true)
     //The user swings both arms and hits the target several times while moving behind them. Each hit deals [100,SP]% ATK as SPECIAL. Number of hits increase with SPEED. Target is FLINCH during the attack.
-    const hits = Math.round((0.5 + 0.01 * pokemon.speed) * 3)
+    const hits = Math.round((1 + 0.01 * pokemon.speed) * 3)
     target.status.triggerFlinch(1000, target, pokemon)
     for (let i = 0; i < hits; i++) {
       pokemon.commands.push(
@@ -12080,6 +12081,8 @@ export class DragonPulseStrategy extends AbilityStrategy {
             pokemon,
             crit
           )
+
+          pokemon.addAbilityPower(5, pokemon, 0, false, false)
           board
             .getAdjacentCells(target.positionX, target.positionY, false)
             .filter((cell) => cell.value && cell.value.team !== pokemon.team)
@@ -12098,6 +12101,8 @@ export class DragonPulseStrategy extends AbilityStrategy {
                   pokemon,
                   crit
                 )
+                pokemon.addAbilityPower(5, pokemon, 0, false, false)
+
                 pokemon.commands.push(
                   new DelayedCommand(() => {
                     if (pokemon && cell.value) {
@@ -12122,6 +12127,7 @@ export class DragonPulseStrategy extends AbilityStrategy {
                             pokemon,
                             crit
                           )
+                          pokemon.addAbilityPower(5, pokemon, 0, false, false)
                         })
                     }
                   }, 400)
@@ -16134,7 +16140,6 @@ export class HyperBeamStrategy extends AbilityStrategy {
 
     pokemon.commands.push(
       new DelayedCommand(() => {
-        pokemon.broadcastAbility({ skill: "HYPER_BEAM" })
         const damage = [50, 100, 150][pokemon.stars - 1] ?? 150
         pokemon.broadcastAbility({
           skill: Ability.HYPER_BEAM,
