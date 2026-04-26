@@ -1207,6 +1207,14 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
     this.state.time =
       (StageDuration[this.state.stageLevel] ?? StageDuration.DEFAULT) * 1000
 
+    // CHOSEN_ONE presents the full Unique pool, so give players extra time to decide.
+    if (
+      this.state.stageLevel === 0 &&
+      this.state.specialGameRule === SpecialGameRule.CHOSEN_ONE
+    ) {
+      this.state.time = Math.max(this.state.time, 85000)
+    }
+
     if (
       [2, 4].includes(this.state.stageLevel) &&
       this.state.specialGameRule === SpecialGameRule.TECHNOLOGIC
