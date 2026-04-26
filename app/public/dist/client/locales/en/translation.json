@@ -4019,6 +4019,7 @@
 		"choose_monotype": "Choose your synergy type. Only Pokémon with this type can be placed on the board.",
 		"choose_dual_type_first": "Choose your FIRST synergy type. Only Pokémon sharing at least one of your two types can be placed.",
 		"choose_dual_type_second": "Choose your SECOND synergy type. Pick something different from your first!",
+		"choose_gym_badge": "Choose your synergy. Each time it reaches a new threshold, you earn a free Rare Candy!",
 		"free_slot_hint": "You must have one free slot on the bench, or two for Duos"
 	},
 	"hide": "Hide",
@@ -4451,7 +4452,8 @@
 		"PSEUDO_JOURNEY": "Pseudo Journey",
 		"MONOTYPE": "Monotype",
 		"CHOSEN_ONE": "Chosen One",
-		"DUAL_TYPE_SPECIALIST": "Dual Type Specialist"
+		"DUAL_TYPE_SPECIALIST": "Dual Type Specialist",
+		"GYM_BADGE": "Gym Badge"
 	},
 	"scribble_description": {
 		"EVERYONE_IS_HERE": "All the additional picks are available immediately",
@@ -4477,7 +4479,8 @@
 		"PSEUDO_JOURNEY": "Choose a base-form pseudo-legendary at stage 1. You receive a free copy on your bench every stage up to stage 10.",
 		"MONOTYPE": "Choose one synergy type at stage 1. Only Pokémon sharing that synergy can be placed on the board.",
 		"CHOSEN_ONE": "At stage 1, pick any Unique Pokémon from the full pool. It starts on your bench and cannot be sold.",
-		"DUAL_TYPE_SPECIALIST": "Choose TWO synergy types at stage 1. Only Pokémon sharing at least one of your chosen synergies can be placed on the board."
+		"DUAL_TYPE_SPECIALIST": "Choose TWO synergy types at stage 1. Only Pokémon sharing at least one of your chosen synergies can be placed on the board.",
+		"GYM_BADGE": "Choose one synergy at stage 1. Each time that synergy reaches a new threshold, you earn a free Rare Candy."
 	},
 	"town_encounter_description": {
 		"KECLEON": "Kecleon sells Synergy items for {{cost}} GOLD",

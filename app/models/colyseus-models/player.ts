@@ -163,6 +163,7 @@ export default class Player extends Schema implements IPlayer {
   firstPartner: Pkm | undefined
   monotype: Synergy | undefined
   monotype2: Synergy | undefined
+  gymBadgeThreshold: number = 0
   hasLeftGame: boolean = false
   bonusSynergies: Map<Synergy, number> = new Map<Synergy, number>()
   pokemonsPlayed: Set<Pkm> = new Set<Pkm>()
@@ -390,6 +391,22 @@ export default class Player extends Schema implements IPlayer {
       updatedSynergies.get(Synergy.FAIRY)
     ) {
       this.updateFairyWands(previousSynergies, updatedSynergies)
+    }
+
+    if (
+      this.specialGameRule === SpecialGameRule.GYM_BADGE &&
+      this.monotype !== undefined
+    ) {
+      const count = updatedSynergies.get(this.monotype) ?? 0
+      const thresholds = SynergyTriggers[this.monotype]
+      const currentStep = thresholds.filter((t) => count >= t).length
+      if (currentStep > this.gymBadgeThreshold) {
+        const candies = currentStep - this.gymBadgeThreshold
+        for (let c = 0; c < candies; c++) {
+          this.items.push(Item.RARE_CANDY)
+        }
+        this.gymBadgeThreshold = currentStep
+      }
     }
 
     this.effects.update(this.synergies, this.board)

@@ -22,7 +22,8 @@ export enum SpecialGameRule {
   PSEUDO_JOURNEY = "PSEUDO_JOURNEY",
   MONOTYPE = "MONOTYPE",
   CHOSEN_ONE = "CHOSEN_ONE",
-  DUAL_TYPE_SPECIALIST = "DUAL_TYPE_SPECIALIST"
+  DUAL_TYPE_SPECIALIST = "DUAL_TYPE_SPECIALIST",
+  GYM_BADGE = "GYM_BADGE"
 }
 
 export const SpecialGameRuleDescription: Record<SpecialGameRule, string> = {
@@ -69,5 +70,7 @@ export const SpecialGameRuleDescription: Record<SpecialGameRule, string> = {
   [SpecialGameRule.CHOSEN_ONE]:
     "At stage 1, pick any Unique Pokémon from the full pool. It starts on your bench and cannot be sold.",
   [SpecialGameRule.DUAL_TYPE_SPECIALIST]:
-    "Choose TWO synergy types at stage 1. Only Pokémon sharing at least one of your chosen synergies can be placed on the board."
+    "Choose TWO synergy types at stage 1. Only Pokémon sharing at least one of your chosen synergies can be placed on the board.",
+  [SpecialGameRule.GYM_BADGE]:
+    "Choose one synergy at stage 1. Each time that synergy reaches a new threshold, you earn a free Rare Candy."
 }

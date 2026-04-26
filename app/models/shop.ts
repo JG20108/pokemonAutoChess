@@ -430,7 +430,8 @@ export default class Shop {
         return
       } else if (
         state.specialGameRule === SpecialGameRule.MONOTYPE ||
-        state.specialGameRule === SpecialGameRule.DUAL_TYPE_SPECIALIST
+        state.specialGameRule === SpecialGameRule.DUAL_TYPE_SPECIALIST ||
+        state.specialGameRule === SpecialGameRule.GYM_BADGE
       ) {
         player.choices.push(
           new PlayerChoice({
@@ -530,10 +531,13 @@ export default class Shop {
       }
 
       if (stageLevel === PortalCarouselStages[0]) {
+        const unusedComponents = ItemComponentsNoFossilOrScarf.filter(
+          (c) => itemsProposed.includes(c) === false
+        )
         itemsProposed[i] = pickRandomIn(
-          ItemComponentsNoFossilOrScarf.filter(
-            (c) => itemsProposed.includes(c) === false
-          )
+          unusedComponents.length > 0
+            ? unusedComponents
+            : ItemComponentsNoFossilOrScarf
         )
       }
 
@@ -545,7 +549,8 @@ export default class Shop {
         state.specialGameRule !== SpecialGameRule.UNIQUE_STARTER &&
         state.specialGameRule !== SpecialGameRule.PSEUDO_JOURNEY &&
         state.specialGameRule !== SpecialGameRule.MONOTYPE &&
-        state.specialGameRule !== SpecialGameRule.DUAL_TYPE_SPECIALIST
+        state.specialGameRule !== SpecialGameRule.DUAL_TYPE_SPECIALIST &&
+        state.specialGameRule !== SpecialGameRule.GYM_BADGE
       ) {
         selected = Pkm.EEVEE
         itemsProposed[i] = Item.FOSSIL_STONE

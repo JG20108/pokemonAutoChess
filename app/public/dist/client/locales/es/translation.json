@@ -3748,6 +3748,7 @@
 		"choose_monotype": "Elige tu tipo de sinergia. Solo los Pokémon con ese tipo pueden ser colocados en el tablero.",
 		"choose_dual_type_first": "Elige tu PRIMER tipo de sinergia. Solo los Pokémon con al menos uno de tus dos tipos pueden colocarse en el tablero.",
 		"choose_dual_type_second": "Elige tu SEGUNDO tipo de sinergia. ¡Elige algo diferente al primero!",
+		"choose_gym_badge": "Elige tu sinergia. ¡Cada vez que alcance un nuevo umbral, recibirás un Caramelo Raro gratis!",
 		"free_slot_hint": "Debe tener un espacio libre en el banquillo, o dos para Duos"
 	},
 	"hide": "Ocultar",
@@ -4131,7 +4132,8 @@
 		"PSEUDO_JOURNEY": "Viaje Pseudo",
 		"MONOTYPE": "Monotipo",
 		"CHOSEN_ONE": "El Elegido",
-		"DUAL_TYPE_SPECIALIST": "Especialista Dual"
+		"DUAL_TYPE_SPECIALIST": "Especialista Dual",
+		"GYM_BADGE": "Medalla de Gimnasio"
 	},
 	"scribble_description": {
 		"EVERYONE_IS_HERE": "Todas los pokémon adicionales están disponibles de inmediato.",
@@ -4157,7 +4159,8 @@
 		"PSEUDO_JOURNEY": "Elige un pseudolegendario en la etapa 1. Recibirás una copia gratuita en tu banquillo en cada etapa hasta la 10.",
 		"MONOTYPE": "Elige un tipo de sinergia en la etapa 1. Solo los Pokémon con ese tipo pueden colocarse en el tablero.",
 		"CHOSEN_ONE": "En la etapa 1, elige cualquier Pokémon Único del pool completo. Empieza en tu banquillo y no puede ser vendido.",
-		"DUAL_TYPE_SPECIALIST": "Elige DOS tipos de sinergia en la etapa 1. Solo los Pokémon que compartan al menos uno de tus tipos elegidos pueden colocarse en el tablero."
+		"DUAL_TYPE_SPECIALIST": "Elige DOS tipos de sinergia en la etapa 1. Solo los Pokémon que compartan al menos uno de tus tipos elegidos pueden colocarse en el tablero.",
+		"GYM_BADGE": "Elige una sinergia en la etapa 1. Cada vez que esa sinergia alcance un nuevo umbral, recibirás un Caramelo Raro gratis."
 	},
 	"town_encounter_description": {
 		"KECLEON": "Kecleon vende piedras de sinergia por {{cost}} de GOLD",

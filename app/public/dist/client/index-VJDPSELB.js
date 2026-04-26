@@ -203625,6 +203625,7 @@ Take a look at the reducer(s) handling this action type: ${action.type}.
     SpecialGameRule2["MONOTYPE"] = "MONOTYPE";
     SpecialGameRule2["CHOSEN_ONE"] = "CHOSEN_ONE";
     SpecialGameRule2["DUAL_TYPE_SPECIALIST"] = "DUAL_TYPE_SPECIALIST";
+    SpecialGameRule2["GYM_BADGE"] = "GYM_BADGE";
     return SpecialGameRule2;
   })(SpecialGameRule || {});
 
@@ -240933,6 +240934,7 @@ void main() {
       this.randomEggsGiven = [];
       this.flowerPotsSpawnOrder = shuffleArray([...FlowerPots]);
       this.ghost = false;
+      this.gymBadgeThreshold = 0;
       this.hasLeftGame = false;
       this.bonusSynergies = /* @__PURE__ */ new Map();
       this.pokemonsPlayed = /* @__PURE__ */ new Set();
@@ -241040,7 +241042,7 @@ void main() {
       return newPokemon;
     }
     updateSynergies() {
-      var _a9, _b6;
+      var _a9, _b6, _c6;
       const pokemons = values(this.board);
       const previousSynergies = this.synergies.toMap();
       let updatedSynergies = computeSynergies(
@@ -241082,6 +241084,18 @@ void main() {
       }
       if (previousSynergies.get("FAIRY" /* FAIRY */) !== updatedSynergies.get("FAIRY" /* FAIRY */)) {
         this.updateFairyWands(previousSynergies, updatedSynergies);
+      }
+      if (this.specialGameRule === "GYM_BADGE" /* GYM_BADGE */ && this.monotype !== void 0) {
+        const count2 = (_c6 = updatedSynergies.get(this.monotype)) != null ? _c6 : 0;
+        const thresholds = SynergyTriggers[this.monotype];
+        const currentStep = thresholds.filter((t3) => count2 >= t3).length;
+        if (currentStep > this.gymBadgeThreshold) {
+          const candies = currentStep - this.gymBadgeThreshold;
+          for (let c3 = 0; c3 < candies; c3++) {
+            this.items.push("RARE_CANDY" /* RARE_CANDY */);
+          }
+          this.gymBadgeThreshold = currentStep;
+        }
       }
       this.effects.update(this.synergies, this.board);
       if (this.items.includes("MISSION_ORDER_GREEN" /* MISSION_ORDER_GREEN */) && this.synergies.countActiveSynergies() >= 9) {
@@ -275927,7 +275941,7 @@ void main() {
     const choice = choices[0];
     let message = null;
     if (choice.type === "synergy") {
-      message = specialGameRule === "DUAL_TYPE_SPECIALIST" /* DUAL_TYPE_SPECIALIST */ ? t3("player_choices.choose_dual_type_first") : t3("player_choices.choose_monotype");
+      message = specialGameRule === "DUAL_TYPE_SPECIALIST" /* DUAL_TYPE_SPECIALIST */ ? t3("player_choices.choose_dual_type_first") : specialGameRule === "GYM_BADGE" /* GYM_BADGE */ ? t3("player_choices.choose_gym_badge") : t3("player_choices.choose_monotype");
     } else if (choice.type === "synergy2") {
       message = t3("player_choices.choose_dual_type_second");
     } else if (choice.type === "addPick") {

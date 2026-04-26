@@ -75,7 +75,9 @@ export default function GameChoice() {
     message =
       specialGameRule === SpecialGameRule.DUAL_TYPE_SPECIALIST
         ? t("player_choices.choose_dual_type_first")
-        : t("player_choices.choose_monotype")
+        : specialGameRule === SpecialGameRule.GYM_BADGE
+          ? t("player_choices.choose_gym_badge")
+          : t("player_choices.choose_monotype")
   } else if (choice.type === "synergy2") {
     message = t("player_choices.choose_dual_type_second")
   } else if (choice.type === "addPick") {
