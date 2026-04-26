@@ -241086,9 +241086,11 @@ void main() {
         this.updateFairyWands(previousSynergies, updatedSynergies);
       }
       if (this.specialGameRule === "GYM_BADGE" /* GYM_BADGE */ && this.monotype !== void 0) {
+        const GYM_BADGE_MAX_CANDY_STEPS = 3;
         const count2 = (_c6 = updatedSynergies.get(this.monotype)) != null ? _c6 : 0;
         const thresholds = SynergyTriggers[this.monotype];
-        const currentStep = thresholds.filter((t3) => count2 >= t3).length;
+        const rawStep = thresholds.filter((t3) => count2 >= t3).length;
+        const currentStep = Math.min(rawStep, GYM_BADGE_MAX_CANDY_STEPS);
         if (currentStep > this.gymBadgeThreshold) {
           const gained = currentStep - this.gymBadgeThreshold;
           for (let c3 = 0; c3 < gained; c3++) {

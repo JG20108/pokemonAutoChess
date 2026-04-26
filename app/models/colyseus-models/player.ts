@@ -397,9 +397,11 @@ export default class Player extends Schema implements IPlayer {
       this.specialGameRule === SpecialGameRule.GYM_BADGE &&
       this.monotype !== undefined
     ) {
+      const GYM_BADGE_MAX_CANDY_STEPS = 3
       const count = updatedSynergies.get(this.monotype) ?? 0
       const thresholds = SynergyTriggers[this.monotype]
-      const currentStep = thresholds.filter((t) => count >= t).length
+      const rawStep = thresholds.filter((t) => count >= t).length
+      const currentStep = Math.min(rawStep, GYM_BADGE_MAX_CANDY_STEPS)
       if (currentStep > this.gymBadgeThreshold) {
         const gained = currentStep - this.gymBadgeThreshold
         for (let c = 0; c < gained; c++) {

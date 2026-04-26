@@ -3748,7 +3748,7 @@
 		"choose_monotype": "Elige tu tipo de sinergia. Solo los Pokémon con ese tipo pueden ser colocados en el tablero.",
 		"choose_dual_type_first": "Elige tu PRIMER tipo de sinergia. Solo los Pokémon con al menos uno de tus dos tipos pueden colocarse en el tablero.",
 		"choose_dual_type_second": "Elige tu SEGUNDO tipo de sinergia. ¡Elige algo diferente al primero!",
-		"choose_gym_badge": "Elige tu sinergia. ¡Cada vez que alcance un nuevo umbral, recibirás un Caramelo Raro gratis!",
+		"choose_gym_badge": "Elige tu sinergia. ¡Cada vez que alcance un nuevo umbral, recibirás un Caramelo Raro gratis (hasta 3)!",
 		"free_slot_hint": "Debe tener un espacio libre en el banquillo, o dos para Duos"
 	},
 	"hide": "Ocultar",
@@ -4160,7 +4160,7 @@
 		"MONOTYPE": "Elige un tipo de sinergia en la etapa 1. Solo los Pokémon con ese tipo pueden colocarse en el tablero.",
 		"CHOSEN_ONE": "En la etapa 1, elige cualquier Pokémon Único del pool completo. Empieza en tu banquillo y no puede ser vendido.",
 		"DUAL_TYPE_SPECIALIST": "Elige DOS tipos de sinergia en la etapa 1. Solo los Pokémon que compartan al menos uno de tus tipos elegidos pueden colocarse en el tablero.",
-		"GYM_BADGE": "Elige una sinergia en la etapa 1. Cada vez que alcance un nuevo umbral, recibirás un Caramelo Raro gratis. Si bajas de un umbral, se quita un caramelo, como con otros objetos basados en sinergias."
+		"GYM_BADGE": "Elige una sinergia en la etapa 1. Cada vez que alcance un nuevo umbral, recibirás un Caramelo Raro gratis (máximo 3 en total). Si bajas de un umbral, se quita un caramelo, como con otros objetos basados en sinergias."
 	},
 	"town_encounter_description": {
 		"KECLEON": "Kecleon vende piedras de sinergia por {{cost}} de GOLD",
