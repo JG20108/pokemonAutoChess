@@ -12,6 +12,7 @@ export type PlayerChoiceType =
   | "mission_order"
   | "wand"
   | "synergy"
+  | "synergy2"
 
 export class PlayerChoice extends Schema {
   @type("string") id: string

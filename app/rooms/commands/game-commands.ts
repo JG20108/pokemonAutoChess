@@ -401,9 +401,13 @@ export class OnDragDropPokemonCommand extends Command<
             ) &&
             !(
               dropFromBench &&
-              this.state.specialGameRule === SpecialGameRule.MONOTYPE &&
+              (this.state.specialGameRule === SpecialGameRule.MONOTYPE ||
+                this.state.specialGameRule ===
+                  SpecialGameRule.DUAL_TYPE_SPECIALIST) &&
               player.monotype !== undefined &&
-              !pokemon.types.has(player.monotype)
+              !pokemon.types.has(player.monotype) &&
+              (player.monotype2 === undefined ||
+                !pokemon.types.has(player.monotype2))
             )
           ) {
             // Prevents a pokemon to go on the board only if it's adding a pokemon from the bench on a full board
@@ -483,9 +487,13 @@ export class OnSwitchBenchAndBoardCommand extends Command<
         destination &&
         !(isBoardFull && pokemon.doesCountForTeamSize) &&
         !(
-          this.state.specialGameRule === SpecialGameRule.MONOTYPE &&
+          (this.state.specialGameRule === SpecialGameRule.MONOTYPE ||
+            this.state.specialGameRule ===
+              SpecialGameRule.DUAL_TYPE_SPECIALIST) &&
           player.monotype !== undefined &&
-          !pokemon.types.has(player.monotype)
+          !pokemon.types.has(player.monotype) &&
+          (player.monotype2 === undefined ||
+            !pokemon.types.has(player.monotype2))
         )
       ) {
         const [x, y] = destination

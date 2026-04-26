@@ -25,6 +25,7 @@ import {
   setPendingGame
 } from "../core/pending-game-manager"
 import { IGameUser } from "../models/colyseus-models/game-user"
+import { PlayerChoice } from "../models/colyseus-models/player-choice"
 import Player from "../models/colyseus-models/player"
 import { Pokemon } from "../models/colyseus-models/pokemon"
 import { updatePlayerExpeditionsAfterGame } from "../models/expeditions"
@@ -1201,7 +1202,21 @@ export default class GameRoom extends Room<{ state: GameState }> {
     if (choice.type === "synergy") {
       const allSynergies = Object.values(Synergy)
       if (choiceIndex < 0 || choiceIndex >= allSynergies.length) return
-      player.monotype = allSynergies[choiceIndex]
+      const picked = allSynergies[choiceIndex]
+      player.monotype = picked
+      if (this.state.specialGameRule === SpecialGameRule.DUAL_TYPE_SPECIALIST) {
+        player.choices.push(new PlayerChoice({ type: "synergy2", synergies: [] }))
+      }
+      removeInArray(player.choices, choice)
+      return
+    }
+
+    if (choice.type === "synergy2") {
+      const allSynergies = Object.values(Synergy)
+      if (choiceIndex < 0 || choiceIndex >= allSynergies.length) return
+      const picked = allSynergies[choiceIndex]
+      if (picked === player.monotype) return // prevent picking the same synergy twice
+      player.monotype2 = picked
       removeInArray(player.choices, choice)
       return
     }

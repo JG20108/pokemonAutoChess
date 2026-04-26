@@ -66,7 +66,12 @@ export const PSEUDO_JOURNEY_NORMALIZED_STATS: Partial<Record<Pkm, PseudoStats>> 
     // ── Beldum line (Psychic/Steel/Artificial) ─ ultimate tank
     [Pkm.BELDUM]: { hp: 85, atk: 7, def: 7, speDef: 6 },
     [Pkm.METANG]: { hp: 155, atk: 14, def: 13, speDef: 10 },
-    [Pkm.METAGROSS]: { hp: 240, atk: 24, def: 18, speDef: 14 }
+    [Pkm.METAGROSS]: { hp: 240, atk: 24, def: 18, speDef: 14 },
+
+    // ── Frigibax line (Dragon/Ice) ─ heavy physical tank-attacker
+    [Pkm.FRIGIBAX]: { hp: 85, atk: 7, def: 6, speDef: 4 },
+    [Pkm.ARCTIBAX]: { hp: 155, atk: 14, def: 10, speDef: 7 },
+    [Pkm.BAXCALIBUR]: { hp: 240, atk: 24, def: 16, speDef: 10 }
   }
 
 export function applyPseudoJourneyNormalizedStats(pokemon: Pokemon): void {
@@ -80,7 +85,7 @@ export function applyPseudoJourneyNormalizedStats(pokemon: Pokemon): void {
 }
 
 // Dreepy excluded: uses HatchEvolutionRule (won't evolve via free copies)
-// Frigibax excluded: ULTRA rarity with 150 HP / 15 ATK base, grossly stronger than the rest
+// Frigibax: included with stats normalized to match the rest of the pool
 export const PseudoLegendaryPool: Pkm[] = [
   Pkm.DRATINI,
   Pkm.LARVITAR,
@@ -89,7 +94,8 @@ export const PseudoLegendaryPool: Pkm[] = [
   Pkm.GIBLE,
   Pkm.DEINO,
   Pkm.GOOMY,
-  Pkm.JANGMO_O
+  Pkm.JANGMO_O,
+  Pkm.FRIGIBAX
 ]
 
 export function pickPseudoLegendaries(): Pkm[] {

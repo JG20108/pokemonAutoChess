@@ -203624,6 +203624,7 @@ Take a look at the reducer(s) handling this action type: ${action.type}.
     SpecialGameRule2["PSEUDO_JOURNEY"] = "PSEUDO_JOURNEY";
     SpecialGameRule2["MONOTYPE"] = "MONOTYPE";
     SpecialGameRule2["CHOSEN_ONE"] = "CHOSEN_ONE";
+    SpecialGameRule2["DUAL_TYPE_SPECIALIST"] = "DUAL_TYPE_SPECIALIST";
     return SpecialGameRule2;
   })(SpecialGameRule || {});
 
@@ -232221,7 +232222,11 @@ void main() {
     // ── Beldum line (Psychic/Steel/Artificial) ─ ultimate tank
     ["BELDUM" /* BELDUM */]: { hp: 85, atk: 7, def: 7, speDef: 6 },
     ["METANG" /* METANG */]: { hp: 155, atk: 14, def: 13, speDef: 10 },
-    ["METAGROSS" /* METAGROSS */]: { hp: 240, atk: 24, def: 18, speDef: 14 }
+    ["METAGROSS" /* METAGROSS */]: { hp: 240, atk: 24, def: 18, speDef: 14 },
+    // ── Frigibax line (Dragon/Ice) ─ heavy physical tank-attacker
+    ["FRIGIBAX" /* FRIGIBAX */]: { hp: 85, atk: 7, def: 6, speDef: 4 },
+    ["ARCTIBAX" /* ARCTIBAX */]: { hp: 155, atk: 14, def: 10, speDef: 7 },
+    ["BAXCALIBUR" /* BAXCALIBUR */]: { hp: 240, atk: 24, def: 16, speDef: 10 }
   };
   var PseudoLegendaryPool = [
     "DRATINI" /* DRATINI */,
@@ -232231,7 +232236,8 @@ void main() {
     "GIBLE" /* GIBLE */,
     "DEINO" /* DEINO */,
     "GOOMY" /* GOOMY */,
-    "JANGMO_O" /* JANGMO_O */
+    "JANGMO_O" /* JANGMO_O */,
+    "FRIGIBAX" /* FRIGIBAX */
   ];
 
   // app/models/colyseus-models/player-choice.ts
@@ -232291,7 +232297,10 @@ void main() {
     "GARCHOMP" /* GARCHOMP */,
     "BELDUM" /* BELDUM */,
     "METANG" /* METANG */,
-    "METAGROSS" /* METAGROSS */
+    "METAGROSS" /* METAGROSS */,
+    "FRIGIBAX" /* FRIGIBAX */,
+    "ARCTIBAX" /* ARCTIBAX */,
+    "BAXCALIBUR" /* BAXCALIBUR */
   ]);
   function getRegularsTier1(pokemons) {
     return pokemons.filter((p) => {
@@ -275918,7 +275927,9 @@ void main() {
     const choice = choices[0];
     let message = null;
     if (choice.type === "synergy") {
-      message = t3("player_choices.choose_monotype");
+      message = specialGameRule === "DUAL_TYPE_SPECIALIST" /* DUAL_TYPE_SPECIALIST */ ? t3("player_choices.choose_dual_type_first") : t3("player_choices.choose_monotype");
+    } else if (choice.type === "synergy2") {
+      message = t3("player_choices.choose_dual_type_second");
     } else if (choice.type === "addPick") {
       message = t3("player_choices.choose_add_pick");
     } else if (choice.type === "starter") {
@@ -275951,7 +275962,7 @@ void main() {
           style: { visibility: visible ? "visible" : "hidden" },
           children: [
             message && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h2", { children: message }),
-            choice.type === "synergy" ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "game-choice-synergy-list", children: Object.values(Synergy).map((synergy, index) => /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+            choice.type === "synergy" || choice.type === "synergy2" ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "game-choice-synergy-list", children: Object.values(Synergy).map((synergy, index) => /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
               "div",
               {
                 className: "my-box active clickable game-choice-synergy-item",

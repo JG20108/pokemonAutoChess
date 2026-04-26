@@ -72,7 +72,12 @@ export default function GameChoice() {
 
   let message: string | null = null
   if (choice.type === "synergy") {
-    message = t("player_choices.choose_monotype")
+    message =
+      specialGameRule === SpecialGameRule.DUAL_TYPE_SPECIALIST
+        ? t("player_choices.choose_dual_type_first")
+        : t("player_choices.choose_monotype")
+  } else if (choice.type === "synergy2") {
+    message = t("player_choices.choose_dual_type_second")
   } else if (choice.type === "addPick") {
     message = t("player_choices.choose_add_pick")
   } else if (choice.type === "starter") {
@@ -109,7 +114,7 @@ export default function GameChoice() {
       >
         {message && <h2>{message}</h2>}
 
-        {choice.type === "synergy" ? (
+        {choice.type === "synergy" || choice.type === "synergy2" ? (
           <div className="game-choice-synergy-list">
             {Object.values(Synergy).map((synergy, index) => (
               <div

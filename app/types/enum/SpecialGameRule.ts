@@ -21,7 +21,8 @@ export enum SpecialGameRule {
   CHOSEN_ONES = "CHOSEN_ONES",
   PSEUDO_JOURNEY = "PSEUDO_JOURNEY",
   MONOTYPE = "MONOTYPE",
-  CHOSEN_ONE = "CHOSEN_ONE"
+  CHOSEN_ONE = "CHOSEN_ONE",
+  DUAL_TYPE_SPECIALIST = "DUAL_TYPE_SPECIALIST"
 }
 
 export const SpecialGameRuleDescription: Record<SpecialGameRule, string> = {
@@ -66,5 +67,7 @@ export const SpecialGameRuleDescription: Record<SpecialGameRule, string> = {
   [SpecialGameRule.MONOTYPE]:
     "Choose one synergy type at stage 1. Only Pokémon sharing that synergy can be placed on the board.",
   [SpecialGameRule.CHOSEN_ONE]:
-    "At stage 1, pick any Unique Pokémon from the full pool. It starts on your bench and cannot be sold."
+    "At stage 1, pick any Unique Pokémon from the full pool. It starts on your bench and cannot be sold.",
+  [SpecialGameRule.DUAL_TYPE_SPECIALIST]:
+    "Choose TWO synergy types at stage 1. Only Pokémon sharing at least one of your chosen synergies can be placed on the board."
 }

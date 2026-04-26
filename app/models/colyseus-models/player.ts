@@ -162,6 +162,7 @@ export default class Player extends Schema implements IPlayer {
   ghost: boolean = false
   firstPartner: Pkm | undefined
   monotype: Synergy | undefined
+  monotype2: Synergy | undefined
   hasLeftGame: boolean = false
   bonusSynergies: Map<Synergy, number> = new Map<Synergy, number>()
   pokemonsPlayed: Set<Pkm> = new Set<Pkm>()

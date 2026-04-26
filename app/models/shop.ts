@@ -95,7 +95,8 @@ const PSEUDO_JOURNEY_LINE_PKMS: ReadonlySet<Pkm> = new Set([
   Pkm.DRATINI, Pkm.DRAGONAIR, Pkm.DRAGONITE,
   Pkm.JANGMO_O, Pkm.HAKAMO_O, Pkm.KOMMO_O,
   Pkm.GIBLE, Pkm.GABITE, Pkm.GARCHOMP,
-  Pkm.BELDUM, Pkm.METANG, Pkm.METAGROSS
+  Pkm.BELDUM, Pkm.METANG, Pkm.METAGROSS,
+  Pkm.FRIGIBAX, Pkm.ARCTIBAX, Pkm.BAXCALIBUR
 ])
 
 export function getRegularsTier1(pokemons: Pkm[]) {
@@ -427,7 +428,10 @@ export default class Shop {
           new PlayerChoice({ type: "starter", pokemons: [...UniquePool] })
         )
         return
-      } else if (state.specialGameRule === SpecialGameRule.MONOTYPE) {
+      } else if (
+        state.specialGameRule === SpecialGameRule.MONOTYPE ||
+        state.specialGameRule === SpecialGameRule.DUAL_TYPE_SPECIALIST
+      ) {
         player.choices.push(
           new PlayerChoice({
             type: "synergy",
@@ -469,7 +473,7 @@ export default class Shop {
 
         if (!hasSynergyWanted) return false
 
-        if (regional) {
+        if (regional && state.specialGameRule !== SpecialGameRule.PSEUDO_JOURNEY) {
           const pokemon = new PokemonClasses[pkm](pkm)
           if (!pokemon.isInRegion(player.map)) {
             // skip regional pokemons not in their region
@@ -540,7 +544,8 @@ export default class Shop {
         state.specialGameRule !== SpecialGameRule.FIRST_PARTNER &&
         state.specialGameRule !== SpecialGameRule.UNIQUE_STARTER &&
         state.specialGameRule !== SpecialGameRule.PSEUDO_JOURNEY &&
-        state.specialGameRule !== SpecialGameRule.MONOTYPE
+        state.specialGameRule !== SpecialGameRule.MONOTYPE &&
+        state.specialGameRule !== SpecialGameRule.DUAL_TYPE_SPECIALIST
       ) {
         selected = Pkm.EEVEE
         itemsProposed[i] = Item.FOSSIL_STONE
@@ -575,7 +580,8 @@ export default class Shop {
     rarity: Rarity,
     player: Player,
     finals: Set<Pkm> = new Set(),
-    specificTypesWanted?: Synergy[]
+    specificTypesWanted?: Synergy[],
+    excludedPkms?: ReadonlySet<Pkm>
   ): Pkm {
     let pkm = Pkm.MAGIKARP
     const candidates = (this.getPool(rarity) ?? [])
@@ -590,6 +596,8 @@ export default class Shop {
         return pkm
       })
       .filter((pkm) => {
+        if (excludedPkms?.has(pkm)) return false
+
         const types = getPokemonData(pkm).types
         const isOfTypeWanted = specificTypesWanted
           ? specificTypesWanted.some((specificTypeWanted) =>
@@ -684,11 +692,14 @@ export default class Shop {
     if (attractor) {
       specificTypesWanted = values(attractor.types)
     } else if (
-      state.specialGameRule === SpecialGameRule.MONOTYPE &&
+      (state.specialGameRule === SpecialGameRule.MONOTYPE ||
+        state.specialGameRule === SpecialGameRule.DUAL_TYPE_SPECIALIST) &&
       player.monotype !== undefined &&
       chance(0.2)
     ) {
-      specificTypesWanted = [player.monotype]
+      specificTypesWanted = [player.monotype, player.monotype2].filter(
+        (s): s is Synergy => s !== undefined
+      )
     } else if (wildChance > 0 && chance(wildChance)) {
       specificTypesWanted = [Synergy.WILD]
     }
@@ -750,11 +761,17 @@ export default class Shop {
       }
     }
 
+    const excludedFromPool =
+      state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY
+        ? PSEUDO_JOURNEY_LINE_PKMS
+        : undefined
+
     return this.getRandomPokemonFromPool(
       rarity,
       player,
       finals,
-      specificTypesWanted
+      specificTypesWanted,
+      excludedFromPool
     )
   }
 

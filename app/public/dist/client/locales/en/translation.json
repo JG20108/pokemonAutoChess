@@ -4017,6 +4017,8 @@
 		"choose_pseudo_legendary": "Choose your pseudo-legendary. You will get a free copy every stage up to stage 10.",
 		"choose_chosen_one": "Choose your Unique Pokémon. It cannot be sold.",
 		"choose_monotype": "Choose your synergy type. Only Pokémon with this type can be placed on the board.",
+		"choose_dual_type_first": "Choose your FIRST synergy type. Only Pokémon sharing at least one of your two types can be placed.",
+		"choose_dual_type_second": "Choose your SECOND synergy type. Pick something different from your first!",
 		"free_slot_hint": "You must have one free slot on the bench, or two for Duos"
 	},
 	"hide": "Hide",
@@ -4448,7 +4450,8 @@
 		"CHOSEN_ONES": "The Chosen Ones",
 		"PSEUDO_JOURNEY": "Pseudo Journey",
 		"MONOTYPE": "Monotype",
-		"CHOSEN_ONE": "Chosen One"
+		"CHOSEN_ONE": "Chosen One",
+		"DUAL_TYPE_SPECIALIST": "Dual Type Specialist"
 	},
 	"scribble_description": {
 		"EVERYONE_IS_HERE": "All the additional picks are available immediately",
@@ -4473,7 +4476,8 @@
 		"CHOSEN_ONES": "The add picks you choose evolve immediately and gain bonus stats.",
 		"PSEUDO_JOURNEY": "Choose a base-form pseudo-legendary at stage 1. You receive a free copy on your bench every stage up to stage 10.",
 		"MONOTYPE": "Choose one synergy type at stage 1. Only Pokémon sharing that synergy can be placed on the board.",
-		"CHOSEN_ONE": "At stage 1, pick any Unique Pokémon from the full pool. It starts on your bench and cannot be sold."
+		"CHOSEN_ONE": "At stage 1, pick any Unique Pokémon from the full pool. It starts on your bench and cannot be sold.",
+		"DUAL_TYPE_SPECIALIST": "Choose TWO synergy types at stage 1. Only Pokémon sharing at least one of your chosen synergies can be placed on the board."
 	},
 	"town_encounter_description": {
 		"KECLEON": "Kecleon sells Synergy items for {{cost}} GOLD",
