@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PseudoLegendaryPool = void 0;
+exports.PseudoLegendaryPool = exports.PSEUDO_JOURNEY_NORMALIZED_STATS = void 0;
+exports.applyPseudoJourneyNormalizedStats = applyPseudoJourneyNormalizedStats;
 exports.pickPseudoLegendaries = pickPseudoLegendaries;
 exports.pickAllSynergies = pickAllSynergies;
 exports.spawnDIAYAvatar = spawnDIAYAvatar;
@@ -22,6 +23,44 @@ const number_1 = require("../utils/number");
 const random_1 = require("../utils/random");
 const bot_logic_1 = require("./bot-logic");
 const eggs_1 = require("./eggs");
+exports.PSEUDO_JOURNEY_NORMALIZED_STATS = {
+    [Pokemon_1.Pkm.GOOMY]: { hp: 85, atk: 7, def: 2, speDef: 5 },
+    [Pokemon_1.Pkm.SLIGOO]: { hp: 155, atk: 14, def: 4, speDef: 8 },
+    [Pokemon_1.Pkm.GOODRA]: { hp: 240, atk: 24, def: 6, speDef: 14 },
+    [Pokemon_1.Pkm.HISUI_SLIGGOO]: { hp: 155, atk: 14, def: 8, speDef: 6 },
+    [Pokemon_1.Pkm.HISUI_GOODRA]: { hp: 240, atk: 24, def: 12, speDef: 10 },
+    [Pokemon_1.Pkm.BAGON]: { hp: 85, atk: 7, def: 5, speDef: 5 },
+    [Pokemon_1.Pkm.SHELGON]: { hp: 155, atk: 14, def: 10, speDef: 9 },
+    [Pokemon_1.Pkm.SALAMENCE]: { hp: 240, atk: 24, def: 12, speDef: 11 },
+    [Pokemon_1.Pkm.LARVITAR]: { hp: 85, atk: 7, def: 6, speDef: 4 },
+    [Pokemon_1.Pkm.PUPITAR]: { hp: 155, atk: 14, def: 12, speDef: 8 },
+    [Pokemon_1.Pkm.TYRANITAR]: { hp: 240, atk: 24, def: 18, speDef: 10 },
+    [Pokemon_1.Pkm.DEINO]: { hp: 85, atk: 7, def: 3, speDef: 3 },
+    [Pokemon_1.Pkm.ZWEILOUS]: { hp: 155, atk: 14, def: 6, speDef: 6 },
+    [Pokemon_1.Pkm.HYDREIGON]: { hp: 240, atk: 24, def: 8, speDef: 8 },
+    [Pokemon_1.Pkm.DRATINI]: { hp: 85, atk: 7, def: 5, speDef: 6 },
+    [Pokemon_1.Pkm.DRAGONAIR]: { hp: 155, atk: 14, def: 10, speDef: 10 },
+    [Pokemon_1.Pkm.DRAGONITE]: { hp: 240, atk: 24, def: 14, speDef: 14 },
+    [Pokemon_1.Pkm.JANGMO_O]: { hp: 85, atk: 7, def: 5, speDef: 5 },
+    [Pokemon_1.Pkm.HAKAMO_O]: { hp: 155, atk: 14, def: 10, speDef: 10 },
+    [Pokemon_1.Pkm.KOMMO_O]: { hp: 240, atk: 24, def: 14, speDef: 12 },
+    [Pokemon_1.Pkm.GIBLE]: { hp: 85, atk: 7, def: 4, speDef: 4 },
+    [Pokemon_1.Pkm.GABITE]: { hp: 155, atk: 14, def: 8, speDef: 7 },
+    [Pokemon_1.Pkm.GARCHOMP]: { hp: 240, atk: 24, def: 10, speDef: 8 },
+    [Pokemon_1.Pkm.BELDUM]: { hp: 85, atk: 7, def: 7, speDef: 6 },
+    [Pokemon_1.Pkm.METANG]: { hp: 155, atk: 14, def: 13, speDef: 10 },
+    [Pokemon_1.Pkm.METAGROSS]: { hp: 240, atk: 24, def: 18, speDef: 14 }
+};
+function applyPseudoJourneyNormalizedStats(pokemon) {
+    const stats = exports.PSEUDO_JOURNEY_NORMALIZED_STATS[pokemon.name];
+    if (!stats)
+        return;
+    pokemon.hp = stats.hp;
+    pokemon.maxHP = stats.hp;
+    pokemon.atk = stats.atk;
+    pokemon.def = stats.def;
+    pokemon.speDef = stats.speDef;
+}
 exports.PseudoLegendaryPool = [
     Pokemon_1.Pkm.DRATINI,
     Pokemon_1.Pkm.LARVITAR,
@@ -30,9 +69,7 @@ exports.PseudoLegendaryPool = [
     Pokemon_1.Pkm.GIBLE,
     Pokemon_1.Pkm.DEINO,
     Pokemon_1.Pkm.GOOMY,
-    Pokemon_1.Pkm.JANGMO_O,
-    Pokemon_1.Pkm.DREEPY,
-    Pokemon_1.Pkm.FRIGIBAX
+    Pokemon_1.Pkm.JANGMO_O
 ];
 function pickPseudoLegendaries() {
     return [...exports.PseudoLegendaryPool];

@@ -10,6 +10,7 @@ const react_i18next_1 = require("react-i18next");
 const Item_1 = require("../../../../../types/enum/Item");
 const Pokemon_1 = require("../../../../../types/enum/Pokemon");
 const SpecialGameRule_1 = require("../../../../../types/enum/SpecialGameRule");
+const Synergy_1 = require("../../../../../types/enum/Synergy");
 const array_1 = require("../../../../../utils/array");
 const depths_1 = require("../../../game/depths");
 const hooks_1 = require("../../../hooks");
@@ -91,7 +92,7 @@ function GameChoice() {
     }
     const isChosenOne = choice.type === "starter" &&
         specialGameRule === SpecialGameRule_1.SpecialGameRule.CHOSEN_ONE;
-    return ((0, jsx_runtime_1.jsxs)("div", { className: "game-choice", style: { zIndex: depths_1.DEPTH.MODAL }, children: [(0, jsx_runtime_1.jsxs)("div", { className: "my-container", style: { visibility: visible ? "visible" : "hidden" }, children: [message && (0, jsx_runtime_1.jsx)("h2", { children: message }), choice.type === "synergy" ? ((0, jsx_runtime_1.jsx)("div", { className: "game-choice-synergy-list", children: choice.synergies.map((synergy, index) => ((0, jsx_runtime_1.jsxs)("div", { className: "my-box active clickable game-choice-synergy-item", onClick: (event) => {
+    return ((0, jsx_runtime_1.jsxs)("div", { className: "game-choice", style: { zIndex: depths_1.DEPTH.MODAL }, children: [(0, jsx_runtime_1.jsxs)("div", { className: "my-container", style: { visibility: visible ? "visible" : "hidden" }, children: [message && (0, jsx_runtime_1.jsx)("h2", { children: message }), choice.type === "synergy" ? ((0, jsx_runtime_1.jsx)("div", { className: "game-choice-synergy-list", children: Object.values(Synergy_1.Synergy).map((synergy, index) => ((0, jsx_runtime_1.jsxs)("div", { className: "my-box active clickable game-choice-synergy-item", onClick: (event) => {
                                 event.stopPropagation();
                                 (0, audio_1.playSound)(audio_1.SOUNDS.BUTTON_CLICK);
                                 (0, network_1.pickChoice)(choice.id, index);

@@ -111,7 +111,7 @@ export default function GameChoice() {
 
         {choice.type === "synergy" ? (
           <div className="game-choice-synergy-list">
-            {(choice.synergies as Synergy[]).map((synergy, index) => (
+            {Object.values(Synergy).map((synergy, index) => (
               <div
                 key={`${choice.id}-${index}`}
                 className="my-box active clickable game-choice-synergy-item"

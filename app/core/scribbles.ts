@@ -16,6 +16,71 @@ import { pickRandomIn, simpleHashSeededCoinFlip } from "../utils/random"
 import { getUnitPowerScore } from "./bot-logic"
 import { createRandomEgg } from "./eggs"
 
+type PseudoStats = { hp: number; atk: number; def: number; speDef: number }
+
+/**
+ * Normalized base stats applied exclusively in PSEUDO_JOURNEY mode.
+ * All 3-star finals share HP=240 and ATK=24 for equal offensive power.
+ * DEF + SpeDef give each line a distinct survivability profile.
+ * Speed is intentionally left unchanged (already part of each pokemon's identity).
+ */
+export const PSEUDO_JOURNEY_NORMALIZED_STATS: Partial<Record<Pkm, PseudoStats>> =
+  {
+    // ── Goomy line (Dragon/Aquatic/Amorphous) ─ amorphous tank, low speed
+    [Pkm.GOOMY]: { hp: 85, atk: 7, def: 2, speDef: 5 },
+    [Pkm.SLIGOO]: { hp: 155, atk: 14, def: 4, speDef: 8 },
+    [Pkm.GOODRA]: { hp: 240, atk: 24, def: 6, speDef: 14 },
+    [Pkm.HISUI_SLIGGOO]: { hp: 155, atk: 14, def: 8, speDef: 6 },
+    [Pkm.HISUI_GOODRA]: { hp: 240, atk: 24, def: 12, speDef: 10 },
+
+    // ── Bagon line (Dragon/Monster) ─ standard melee attacker
+    [Pkm.BAGON]: { hp: 85, atk: 7, def: 5, speDef: 5 },
+    [Pkm.SHELGON]: { hp: 155, atk: 14, def: 10, speDef: 9 },
+    [Pkm.SALAMENCE]: { hp: 240, atk: 24, def: 12, speDef: 11 },
+
+    // ── Larvitar line (Dark/Monster/Rock) ─ high physical defence
+    [Pkm.LARVITAR]: { hp: 85, atk: 7, def: 6, speDef: 4 },
+    [Pkm.PUPITAR]: { hp: 155, atk: 14, def: 12, speDef: 8 },
+    [Pkm.TYRANITAR]: { hp: 240, atk: 24, def: 18, speDef: 10 },
+
+    // ── Deino line (Dragon/Dark, range=2) ─ glass cannon ranged
+    [Pkm.DEINO]: { hp: 85, atk: 7, def: 3, speDef: 3 },
+    [Pkm.ZWEILOUS]: { hp: 155, atk: 14, def: 6, speDef: 6 },
+    [Pkm.HYDREIGON]: { hp: 240, atk: 24, def: 8, speDef: 8 },
+
+    // ── Dratini line (Dragon/Flying/Aquatic) ─ balanced all-rounder
+    [Pkm.DRATINI]: { hp: 85, atk: 7, def: 5, speDef: 6 },
+    [Pkm.DRAGONAIR]: { hp: 155, atk: 14, def: 10, speDef: 10 },
+    [Pkm.DRAGONITE]: { hp: 240, atk: 24, def: 14, speDef: 14 },
+
+    // ── Jangmo-o line (Dragon/Fighting/Sound) ─ balanced fighter
+    [Pkm.JANGMO_O]: { hp: 85, atk: 7, def: 5, speDef: 5 },
+    [Pkm.HAKAMO_O]: { hp: 155, atk: 14, def: 10, speDef: 10 },
+    [Pkm.KOMMO_O]: { hp: 240, atk: 24, def: 14, speDef: 12 },
+
+    // ── Gible line (Dragon/Ground/Monster) ─ fast attacker
+    [Pkm.GIBLE]: { hp: 85, atk: 7, def: 4, speDef: 4 },
+    [Pkm.GABITE]: { hp: 155, atk: 14, def: 8, speDef: 7 },
+    [Pkm.GARCHOMP]: { hp: 240, atk: 24, def: 10, speDef: 8 },
+
+    // ── Beldum line (Psychic/Steel/Artificial) ─ ultimate tank
+    [Pkm.BELDUM]: { hp: 85, atk: 7, def: 7, speDef: 6 },
+    [Pkm.METANG]: { hp: 155, atk: 14, def: 13, speDef: 10 },
+    [Pkm.METAGROSS]: { hp: 240, atk: 24, def: 18, speDef: 14 }
+  }
+
+export function applyPseudoJourneyNormalizedStats(pokemon: Pokemon): void {
+  const stats = PSEUDO_JOURNEY_NORMALIZED_STATS[pokemon.name]
+  if (!stats) return
+  pokemon.hp = stats.hp
+  pokemon.maxHP = stats.hp
+  pokemon.atk = stats.atk
+  pokemon.def = stats.def
+  pokemon.speDef = stats.speDef
+}
+
+// Dreepy excluded: uses HatchEvolutionRule (won't evolve via free copies)
+// Frigibax excluded: ULTRA rarity with 150 HP / 15 ATK base, grossly stronger than the rest
 export const PseudoLegendaryPool: Pkm[] = [
   Pkm.DRATINI,
   Pkm.LARVITAR,
@@ -24,9 +89,7 @@ export const PseudoLegendaryPool: Pkm[] = [
   Pkm.GIBLE,
   Pkm.DEINO,
   Pkm.GOOMY,
-  Pkm.JANGMO_O,
-  Pkm.DREEPY,
-  Pkm.FRIGIBAX
+  Pkm.JANGMO_O
 ]
 
 export function pickPseudoLegendaries(): Pkm[] {

@@ -232187,6 +232187,42 @@ void main() {
   }
 
   // app/core/scribbles.ts
+  var PSEUDO_JOURNEY_NORMALIZED_STATS = {
+    // ── Goomy line (Dragon/Aquatic/Amorphous) ─ amorphous tank, low speed
+    ["GOOMY" /* GOOMY */]: { hp: 85, atk: 7, def: 2, speDef: 5 },
+    ["SLIGOO" /* SLIGOO */]: { hp: 155, atk: 14, def: 4, speDef: 8 },
+    ["GOODRA" /* GOODRA */]: { hp: 240, atk: 24, def: 6, speDef: 14 },
+    ["HISUI_SLIGGOO" /* HISUI_SLIGGOO */]: { hp: 155, atk: 14, def: 8, speDef: 6 },
+    ["HISUI_GOODRA" /* HISUI_GOODRA */]: { hp: 240, atk: 24, def: 12, speDef: 10 },
+    // ── Bagon line (Dragon/Monster) ─ standard melee attacker
+    ["BAGON" /* BAGON */]: { hp: 85, atk: 7, def: 5, speDef: 5 },
+    ["SHELGON" /* SHELGON */]: { hp: 155, atk: 14, def: 10, speDef: 9 },
+    ["SALAMENCE" /* SALAMENCE */]: { hp: 240, atk: 24, def: 12, speDef: 11 },
+    // ── Larvitar line (Dark/Monster/Rock) ─ high physical defence
+    ["LARVITAR" /* LARVITAR */]: { hp: 85, atk: 7, def: 6, speDef: 4 },
+    ["PUPITAR" /* PUPITAR */]: { hp: 155, atk: 14, def: 12, speDef: 8 },
+    ["TYRANITAR" /* TYRANITAR */]: { hp: 240, atk: 24, def: 18, speDef: 10 },
+    // ── Deino line (Dragon/Dark, range=2) ─ glass cannon ranged
+    ["DEINO" /* DEINO */]: { hp: 85, atk: 7, def: 3, speDef: 3 },
+    ["ZWEILOUS" /* ZWEILOUS */]: { hp: 155, atk: 14, def: 6, speDef: 6 },
+    ["HYDREIGON" /* HYDREIGON */]: { hp: 240, atk: 24, def: 8, speDef: 8 },
+    // ── Dratini line (Dragon/Flying/Aquatic) ─ balanced all-rounder
+    ["DRATINI" /* DRATINI */]: { hp: 85, atk: 7, def: 5, speDef: 6 },
+    ["DRAGONAIR" /* DRAGONAIR */]: { hp: 155, atk: 14, def: 10, speDef: 10 },
+    ["DRAGONITE" /* DRAGONITE */]: { hp: 240, atk: 24, def: 14, speDef: 14 },
+    // ── Jangmo-o line (Dragon/Fighting/Sound) ─ balanced fighter
+    ["JANGMO_O" /* JANGMO_O */]: { hp: 85, atk: 7, def: 5, speDef: 5 },
+    ["HAKAMO_O" /* HAKAMO_O */]: { hp: 155, atk: 14, def: 10, speDef: 10 },
+    ["KOMMO_O" /* KOMMO_O */]: { hp: 240, atk: 24, def: 14, speDef: 12 },
+    // ── Gible line (Dragon/Ground/Monster) ─ fast attacker
+    ["GIBLE" /* GIBLE */]: { hp: 85, atk: 7, def: 4, speDef: 4 },
+    ["GABITE" /* GABITE */]: { hp: 155, atk: 14, def: 8, speDef: 7 },
+    ["GARCHOMP" /* GARCHOMP */]: { hp: 240, atk: 24, def: 10, speDef: 8 },
+    // ── Beldum line (Psychic/Steel/Artificial) ─ ultimate tank
+    ["BELDUM" /* BELDUM */]: { hp: 85, atk: 7, def: 7, speDef: 6 },
+    ["METANG" /* METANG */]: { hp: 155, atk: 14, def: 13, speDef: 10 },
+    ["METAGROSS" /* METAGROSS */]: { hp: 240, atk: 24, def: 18, speDef: 14 }
+  };
   var PseudoLegendaryPool = [
     "DRATINI" /* DRATINI */,
     "LARVITAR" /* LARVITAR */,
@@ -232195,9 +232231,7 @@ void main() {
     "GIBLE" /* GIBLE */,
     "DEINO" /* DEINO */,
     "GOOMY" /* GOOMY */,
-    "JANGMO_O" /* JANGMO_O */,
-    "DREEPY" /* DREEPY */,
-    "FRIGIBAX" /* FRIGIBAX */
+    "JANGMO_O" /* JANGMO_O */
   ];
 
   // app/models/colyseus-models/player-choice.ts
@@ -232231,6 +232265,34 @@ void main() {
   ], PlayerChoice.prototype, "synergies", 2);
 
   // app/models/shop.ts
+  var PSEUDO_JOURNEY_LINE_PKMS = /* @__PURE__ */ new Set([
+    "GOOMY" /* GOOMY */,
+    "SLIGOO" /* SLIGOO */,
+    "GOODRA" /* GOODRA */,
+    "HISUI_SLIGGOO" /* HISUI_SLIGGOO */,
+    "HISUI_GOODRA" /* HISUI_GOODRA */,
+    "BAGON" /* BAGON */,
+    "SHELGON" /* SHELGON */,
+    "SALAMENCE" /* SALAMENCE */,
+    "LARVITAR" /* LARVITAR */,
+    "PUPITAR" /* PUPITAR */,
+    "TYRANITAR" /* TYRANITAR */,
+    "DEINO" /* DEINO */,
+    "ZWEILOUS" /* ZWEILOUS */,
+    "HYDREIGON" /* HYDREIGON */,
+    "DRATINI" /* DRATINI */,
+    "DRAGONAIR" /* DRAGONAIR */,
+    "DRAGONITE" /* DRAGONITE */,
+    "JANGMO_O" /* JANGMO_O */,
+    "HAKAMO_O" /* HAKAMO_O */,
+    "KOMMO_O" /* KOMMO_O */,
+    "GIBLE" /* GIBLE */,
+    "GABITE" /* GABITE */,
+    "GARCHOMP" /* GARCHOMP */,
+    "BELDUM" /* BELDUM */,
+    "METANG" /* METANG */,
+    "METAGROSS" /* METAGROSS */
+  ]);
   function getRegularsTier1(pokemons) {
     return pokemons.filter((p) => {
       const pokemonData = getPokemonData(p);
@@ -232247,6 +232309,8 @@ void main() {
     var _a9;
     const name6 = pokemon.name;
     if (specialGameRule === "FREE_MARKET" /* FREE_MARKET */ && name6 !== "EGG" /* EGG */)
+      return 0;
+    if (specialGameRule === "PSEUDO_JOURNEY" /* PSEUDO_JOURNEY */ && PSEUDO_JOURNEY_LINE_PKMS.has(name6))
       return 0;
     const duo = Object.entries(PkmDuos).find(([key, duo2]) => duo2.includes(name6));
     let price = 1;
@@ -275887,7 +275951,7 @@ void main() {
           style: { visibility: visible ? "visible" : "hidden" },
           children: [
             message && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h2", { children: message }),
-            choice.type === "synergy" ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "game-choice-synergy-list", children: choice.synergies.map((synergy, index) => /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+            choice.type === "synergy" ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "game-choice-synergy-list", children: Object.values(Synergy).map((synergy, index) => /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
               "div",
               {
                 className: "my-box active clickable game-choice-synergy-item",

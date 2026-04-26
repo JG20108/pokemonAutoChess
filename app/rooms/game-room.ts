@@ -69,6 +69,7 @@ import {
   PkmIndex,
   PkmRegionalVariants
 } from "../types/enum/Pokemon"
+import { applyPseudoJourneyNormalizedStats } from "../core/scribbles"
 import { SpecialGameRule } from "../types/enum/SpecialGameRule"
 import { Synergy } from "../types/enum/Synergy"
 import { GameEvent } from "../types/events"
@@ -1094,6 +1095,9 @@ export default class GameRoom extends Room<{ state: GameState }> {
 
   spawnOnBench(player: Player, pkm: Pkm, anim: "fishing" | "spawn" = "spawn") {
     const pokemon = PokemonFactory.createPokemonFromName(pkm, player)
+    if (this.state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY) {
+      applyPseudoJourneyNormalizedStats(pokemon)
+    }
     const x = getFirstAvailablePositionInBench(player.board)
     if (x !== null) {
       pokemon.positionX = x
@@ -1130,6 +1134,12 @@ export default class GameRoom extends Room<{ state: GameState }> {
         }
       }
     })
+
+    if (this.state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY) {
+      player.board.forEach((pokemon) =>
+        applyPseudoJourneyNormalizedStats(pokemon)
+      )
+    }
 
     player.boardSize = this.getTeamSize(player.board)
     return hasEvolved
@@ -1189,8 +1199,9 @@ export default class GameRoom extends Room<{ state: GameState }> {
     if (!choice || choiceIndex < 0) return
 
     if (choice.type === "synergy") {
-      if (choiceIndex >= choice.synergies.length) return
-      player.monotype = choice.synergies[choiceIndex]
+      const allSynergies = Object.values(Synergy)
+      if (choiceIndex < 0 || choiceIndex >= allSynergies.length) return
+      player.monotype = allSynergies[choiceIndex]
       removeInArray(player.choices, choice)
       return
     }
@@ -1268,6 +1279,9 @@ export default class GameRoom extends Room<{ state: GameState }> {
         }
         if (this.state.specialGameRule === SpecialGameRule.CHOSEN_ONE) {
           pokemonsObtained[0].canBeSold = false
+        }
+        if (this.state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY) {
+          pokemonsObtained.forEach((p) => applyPseudoJourneyNormalizedStats(p))
         }
       }
 

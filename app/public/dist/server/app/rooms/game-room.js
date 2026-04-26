@@ -72,7 +72,9 @@ const Game_1 = require("../types/enum/Game");
 const Item_1 = require("../types/enum/Item");
 const Passive_1 = require("../types/enum/Passive");
 const Pokemon_1 = require("../types/enum/Pokemon");
+const scribbles_1 = require("../core/scribbles");
 const SpecialGameRule_1 = require("../types/enum/SpecialGameRule");
+const Synergy_1 = require("../types/enum/Synergy");
 const events_1 = require("../types/events");
 const array_1 = require("../utils/array");
 const avatar_1 = require("../utils/avatar");
@@ -805,6 +807,9 @@ class GameRoom extends colyseus_1.Room {
     }
     spawnOnBench(player, pkm, anim = "spawn") {
         const pokemon = pokemon_factory_1.default.createPokemonFromName(pkm, player);
+        if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY) {
+            (0, scribbles_1.applyPseudoJourneyNormalizedStats)(pokemon);
+        }
         const x = (0, board_1.getFirstAvailablePositionInBench)(player.board);
         if (x !== null) {
             pokemon.positionX = x;
@@ -833,6 +838,9 @@ class GameRoom extends colyseus_1.Room {
                 }
             }
         });
+        if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY) {
+            player.board.forEach((pokemon) => (0, scribbles_1.applyPseudoJourneyNormalizedStats)(pokemon));
+        }
         player.boardSize = this.getTeamSize(player.board);
         return hasEvolved;
     }
@@ -873,9 +881,10 @@ class GameRoom extends colyseus_1.Room {
         if (!choice || choiceIndex < 0)
             return;
         if (choice.type === "synergy") {
-            if (choiceIndex >= choice.synergies.length)
+            const allSynergies = Object.values(Synergy_1.Synergy);
+            if (choiceIndex < 0 || choiceIndex >= allSynergies.length)
                 return;
-            player.monotype = choice.synergies[choiceIndex];
+            player.monotype = allSynergies[choiceIndex];
             (0, array_1.removeInArray)(player.choices, choice);
             return;
         }
@@ -925,6 +934,9 @@ class GameRoom extends colyseus_1.Room {
                 }
                 if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.CHOSEN_ONE) {
                     pokemonsObtained[0].canBeSold = false;
+                }
+                if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY) {
+                    pokemonsObtained.forEach((p) => (0, scribbles_1.applyPseudoJourneyNormalizedStats)(p));
                 }
             }
             pokemonsObtained.forEach((pokemon) => {

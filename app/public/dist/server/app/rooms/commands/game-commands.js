@@ -1127,10 +1127,15 @@ class OnUpdatePhaseCommand extends command_1.Command {
                 }
             }
         }
-        if ((this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.FIRST_PARTNER ||
-            this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY) &&
+        if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.FIRST_PARTNER &&
             this.state.stageLevel > 1 &&
             this.state.stageLevel < 10 &&
+            player.firstPartner) {
+            this.room.spawnOnBench(player, player.firstPartner, "spawn");
+        }
+        if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY &&
+            this.state.stageLevel > 1 &&
+            this.state.stageLevel < 12 &&
             player.firstPartner) {
             this.room.spawnOnBench(player, player.firstPartner, "spawn");
         }

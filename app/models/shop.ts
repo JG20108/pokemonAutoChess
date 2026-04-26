@@ -81,6 +81,23 @@ export function getPoolSize(rarity: Rarity, maxStars: number): number {
   return PoolSize[rarity][clamp(maxStars, 1, 3) - 1]
 }
 
+/**
+ * All evolution forms covered by PSEUDO_JOURNEY stat normalisation.
+ * Defined here (not imported from scribbles.ts) to avoid a circular
+ * dependency: scribbles.ts already imports getRegularsTier1 from shop.ts.
+ * Must stay in sync with PSEUDO_JOURNEY_NORMALIZED_STATS in scribbles.ts.
+ */
+const PSEUDO_JOURNEY_LINE_PKMS: ReadonlySet<Pkm> = new Set([
+  Pkm.GOOMY, Pkm.SLIGOO, Pkm.GOODRA, Pkm.HISUI_SLIGGOO, Pkm.HISUI_GOODRA,
+  Pkm.BAGON, Pkm.SHELGON, Pkm.SALAMENCE,
+  Pkm.LARVITAR, Pkm.PUPITAR, Pkm.TYRANITAR,
+  Pkm.DEINO, Pkm.ZWEILOUS, Pkm.HYDREIGON,
+  Pkm.DRATINI, Pkm.DRAGONAIR, Pkm.DRAGONITE,
+  Pkm.JANGMO_O, Pkm.HAKAMO_O, Pkm.KOMMO_O,
+  Pkm.GIBLE, Pkm.GABITE, Pkm.GARCHOMP,
+  Pkm.BELDUM, Pkm.METANG, Pkm.METAGROSS
+])
+
 export function getRegularsTier1(pokemons: Pkm[]) {
   return pokemons.filter((p) => {
     const pokemonData = getPokemonData(p)
@@ -113,6 +130,12 @@ export function getSellPrice(
   const name = pokemon.name
 
   if (specialGameRule === SpecialGameRule.FREE_MARKET && name !== Pkm.EGG)
+    return 0
+
+  if (
+    specialGameRule === SpecialGameRule.PSEUDO_JOURNEY &&
+    PSEUDO_JOURNEY_LINE_PKMS.has(name)
+  )
     return 0
 
   const duo = Object.entries(PkmDuos).find(([key, duo]) => duo.includes(name))
@@ -419,10 +442,17 @@ export default class Shop {
       portalSynergies = pickNRandomIn(portalSynergies, NB_UNIQUE_PROPOSITIONS)
     }
 
-    const nbPropositions =
+    let nbPropositions =
       stageLevel === PortalCarouselStages[0]
         ? NB_STARTERS
         : NB_UNIQUE_PROPOSITIONS
+
+    if (
+      stageLevel === PortalCarouselStages[0] &&
+      state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY
+    ) {
+      nbPropositions = allCandidates.length
+    }
     const pokemonsProposed: PkmProposition[] = []
     const itemsProposed: Item[] = []
 
@@ -653,6 +683,12 @@ export default class Shop {
 
     if (attractor) {
       specificTypesWanted = values(attractor.types)
+    } else if (
+      state.specialGameRule === SpecialGameRule.MONOTYPE &&
+      player.monotype !== undefined &&
+      chance(0.2)
+    ) {
+      specificTypesWanted = [player.monotype]
     } else if (wildChance > 0 && chance(wildChance)) {
       specificTypesWanted = [Synergy.WILD]
     }

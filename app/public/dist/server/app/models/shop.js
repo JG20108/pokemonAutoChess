@@ -312,9 +312,13 @@ class Shop {
         if (portalSynergies.length > config_1.NB_UNIQUE_PROPOSITIONS) {
             portalSynergies = (0, random_1.pickNRandomIn)(portalSynergies, config_1.NB_UNIQUE_PROPOSITIONS);
         }
-        const nbPropositions = stageLevel === config_1.PortalCarouselStages[0]
+        let nbPropositions = stageLevel === config_1.PortalCarouselStages[0]
             ? config_1.NB_STARTERS
             : config_1.NB_UNIQUE_PROPOSITIONS;
+        if (stageLevel === config_1.PortalCarouselStages[0] &&
+            state.specialGameRule === SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY) {
+            nbPropositions = allCandidates.length;
+        }
         const pokemonsProposed = [];
         const itemsProposed = [];
         for (let i = 0; i < nbPropositions; i++) {
@@ -477,6 +481,11 @@ class Shop {
         }
         if (attractor) {
             specificTypesWanted = (0, schemas_1.values)(attractor.types);
+        }
+        else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.MONOTYPE &&
+            player.monotype !== undefined &&
+            (0, random_1.chance)(0.2)) {
+            specificTypesWanted = [player.monotype];
         }
         else if (wildChance > 0 && (0, random_1.chance)(wildChance)) {
             specificTypesWanted = [Synergy_1.Synergy.WILD];

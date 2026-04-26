@@ -1465,10 +1465,18 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
     }
 
     if (
-      (this.state.specialGameRule === SpecialGameRule.FIRST_PARTNER ||
-        this.state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY) &&
+      this.state.specialGameRule === SpecialGameRule.FIRST_PARTNER &&
       this.state.stageLevel > 1 &&
       this.state.stageLevel < 10 &&
+      player.firstPartner
+    ) {
+      this.room.spawnOnBench(player, player.firstPartner, "spawn")
+    }
+
+    if (
+      this.state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY &&
+      this.state.stageLevel > 1 &&
+      this.state.stageLevel < 12 &&
       player.firstPartner
     ) {
       this.room.spawnOnBench(player, player.firstPartner, "spawn")
