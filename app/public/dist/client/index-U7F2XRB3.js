@@ -241090,12 +241090,25 @@ void main() {
         const thresholds = SynergyTriggers[this.monotype];
         const currentStep = thresholds.filter((t3) => count2 >= t3).length;
         if (currentStep > this.gymBadgeThreshold) {
-          const candies = currentStep - this.gymBadgeThreshold;
-          for (let c3 = 0; c3 < candies; c3++) {
+          const gained = currentStep - this.gymBadgeThreshold;
+          for (let c3 = 0; c3 < gained; c3++) {
             this.items.push("RARE_CANDY" /* RARE_CANDY */);
           }
-          this.gymBadgeThreshold = currentStep;
+        } else if (currentStep < this.gymBadgeThreshold) {
+          const removeGymBadgeRareCandy = () => {
+            for (const pokemon of values(this.board)) {
+              if (pokemon.items.has("RARE_CANDY" /* RARE_CANDY */)) {
+                pokemon.removeItem("RARE_CANDY" /* RARE_CANDY */, this);
+                return;
+              }
+            }
+            removeInArray(this.items, "RARE_CANDY" /* RARE_CANDY */);
+          };
+          for (let r3 = 0; r3 < this.gymBadgeThreshold - currentStep; r3++) {
+            removeGymBadgeRareCandy();
+          }
         }
+        this.gymBadgeThreshold = currentStep;
       }
       this.effects.update(this.synergies, this.board);
       if (this.items.includes("MISSION_ORDER_GREEN" /* MISSION_ORDER_GREEN */) && this.synergies.countActiveSynergies() >= 9) {

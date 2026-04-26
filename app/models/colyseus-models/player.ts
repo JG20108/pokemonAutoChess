@@ -401,12 +401,25 @@ export default class Player extends Schema implements IPlayer {
       const thresholds = SynergyTriggers[this.monotype]
       const currentStep = thresholds.filter((t) => count >= t).length
       if (currentStep > this.gymBadgeThreshold) {
-        const candies = currentStep - this.gymBadgeThreshold
-        for (let c = 0; c < candies; c++) {
+        const gained = currentStep - this.gymBadgeThreshold
+        for (let c = 0; c < gained; c++) {
           this.items.push(Item.RARE_CANDY)
         }
-        this.gymBadgeThreshold = currentStep
+      } else if (currentStep < this.gymBadgeThreshold) {
+        const removeGymBadgeRareCandy = () => {
+          for (const pokemon of values(this.board)) {
+            if (pokemon.items.has(Item.RARE_CANDY)) {
+              pokemon.removeItem(Item.RARE_CANDY, this)
+              return
+            }
+          }
+          removeInArray<Item>(this.items, Item.RARE_CANDY)
+        }
+        for (let r = 0; r < this.gymBadgeThreshold - currentStep; r++) {
+          removeGymBadgeRareCandy()
+        }
       }
+      this.gymBadgeThreshold = currentStep
     }
 
     this.effects.update(this.synergies, this.board)

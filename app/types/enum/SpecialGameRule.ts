@@ -72,5 +72,5 @@ export const SpecialGameRuleDescription: Record<SpecialGameRule, string> = {
   [SpecialGameRule.DUAL_TYPE_SPECIALIST]:
     "Choose TWO synergy types at stage 1. Only Pokémon sharing at least one of your chosen synergies can be placed on the board.",
   [SpecialGameRule.GYM_BADGE]:
-    "Choose one synergy at stage 1. Each time that synergy reaches a new threshold, you earn a free Rare Candy."
+    "Choose one synergy at stage 1. Each time that synergy reaches a new threshold, you earn a free Rare Candy. Dropping below a threshold removes one Candy the same way other synergy items are taken back."
 }
