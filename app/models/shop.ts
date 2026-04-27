@@ -77,6 +77,50 @@ import { getPokemonBaseline } from "./pokemon-factory"
 import { getPokemonData } from "./precomputed/precomputed-pokemon-data"
 import { PRECOMPUTED_POKEMONS_PER_RARITY } from "./precomputed/precomputed-rarity"
 
+/**
+ * CHOSEN_ONE: keep one "starter-eligible" UNIQUE per evolutionary line.
+ * 1) Within each Pkm family, keep only the lowest star tier present in the list
+ *    (drops Megas, Palafin Hero, etc. when the base shares the family).
+ * 2) Remove any species that is a direct evolution target of another candidate still
+ *    in the list (e.g. Palafin when Finizen is pickable), using evolution / evolutions
+ *    from Pokemon definitions — divergent same-tier branches without those links stay
+ *    (e.g. Scyther / Scizor / Kleavor).
+ */
+function filterChosenOneUniqueSingles(singles: Pkm[]): Pkm[] {
+  if (singles.length === 0) return singles
+  const minStarsByFamily = new Map<Pkm, number>()
+  for (const p of singles) {
+    const root = PkmFamily[p]
+    const stars = getPokemonData(p).stars
+    const prev = minStarsByFamily.get(root)
+    if (prev === undefined || stars < prev) {
+      minStarsByFamily.set(root, stars)
+    }
+  }
+  let working = singles.filter(
+    (p) => getPokemonData(p).stars === minStarsByFamily.get(PkmFamily[p])
+  )
+  let prevLen = -1
+  while (working.length !== prevLen) {
+    prevLen = working.length
+    const set = new Set(working)
+    const evolutionTargets = new Set<Pkm>()
+    for (const p of working) {
+      const { evolution, evolutions } = getPokemonData(p)
+      if (evolution && set.has(evolution)) {
+        evolutionTargets.add(evolution)
+      }
+      for (const e of evolutions) {
+        if (set.has(e)) {
+          evolutionTargets.add(e)
+        }
+      }
+    }
+    working = working.filter((p) => !evolutionTargets.has(p))
+  }
+  return working
+}
+
 export function getPoolSize(rarity: Rarity, maxStars: number): number {
   return PoolSize[rarity][clamp(maxStars, 1, 3) - 1]
 }
@@ -424,12 +468,11 @@ export default class Shop {
       } else if (state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY) {
         allCandidates = pickPseudoLegendaries()
       } else if (state.specialGameRule === SpecialGameRule.CHOSEN_ONE) {
-        const allUniqueChoices: PkmProposition[] = [
-          ...PRECOMPUTED_POKEMONS_PER_RARITY.UNIQUE
-        ]
-        const uniqueSingles = new Set(
-          PRECOMPUTED_POKEMONS_PER_RARITY.UNIQUE.map((pkm) => pkm as Pkm)
+        const chosenOneSingles = filterChosenOneUniqueSingles(
+          PRECOMPUTED_POKEMONS_PER_RARITY.UNIQUE
         )
+        const allUniqueChoices: PkmProposition[] = [...chosenOneSingles]
+        const uniqueSingles = new Set(chosenOneSingles)
         // Keep full unique coverage while preserving duo behavior for duo pairs.
         Object.entries(PkmDuos).forEach(([duoKey, duoMembers]) => {
           if (duoMembers.every((member) => uniqueSingles.has(member))) {
