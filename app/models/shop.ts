@@ -82,7 +82,8 @@ const CHOSEN_ONE_CANONICAL_SPECIES_ONLY: ReadonlySet<Pkm> = new Set([
   Pkm.ROTOM,
   Pkm.CASTFORM,
   Pkm.MIMIKYU,
-  Pkm.MINIOR
+  Pkm.MINIOR,
+  Pkm.MORPEKO
 ])
 
 /**
@@ -93,7 +94,7 @@ const CHOSEN_ONE_CANONICAL_SPECIES_ONLY: ReadonlySet<Pkm> = new Set([
  *    in the list (e.g. Palafin when Finizen is pickable), using evolution / evolutions
  *    from Pokemon definitions — divergent same-tier branches without those links stay
  *    (e.g. Scyther / Scizor / Kleavor).
- * 3) For known form families (Rotom, Castform, Mimikyu, Minior), keep only the canonical
+ * 3) For known form families (Rotom, Castform, Mimikyu, Minior, Morpeko), keep only the canonical
  *    species enum when it is still in the candidate list.
  */
 function filterChosenOneUniqueSingles(singles: Pkm[]): Pkm[] {

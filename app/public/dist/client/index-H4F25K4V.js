@@ -232276,7 +232276,8 @@ void main() {
     "ROTOM" /* ROTOM */,
     "CASTFORM" /* CASTFORM */,
     "MIMIKYU" /* MIMIKYU */,
-    "MINIOR" /* MINIOR */
+    "MINIOR" /* MINIOR */,
+    "MORPEKO" /* MORPEKO */
   ]);
   var PSEUDO_JOURNEY_LINE_PKMS = /* @__PURE__ */ new Set([
     "GOOMY" /* GOOMY */,
