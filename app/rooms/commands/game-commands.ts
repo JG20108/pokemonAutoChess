@@ -1207,18 +1207,14 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
     this.state.time =
       (StageDuration[this.state.stageLevel] ?? StageDuration.DEFAULT) * 1000
 
-    // CHOSEN_ONE: huge Unique grid. Treasure Town bumps stage 0→1 before the first PICK phase,
-    // so the first pick uses StageDuration[1] (20s) unless we extend here. Also extend the first
-    // portal town timer below so the carousel is not capped at ~23s only.
+    // CHOSEN_ONE: huge Unique grid. Town bumps stage 0→1 before the first PICK, so the first
+    // pick would use StageDuration[1] (20s). Extend only that round (stage 1), not every PICK
+    // phase — a lingering fat "starter" choice would otherwise match on later stages too.
     if (
       this.state.specialGameRule === SpecialGameRule.CHOSEN_ONE &&
-      values(this.state.players).some((p) =>
-        p.choices.some(
-          (c) => c.type === "starter" && (c.pokemons?.length ?? 0) > 30
-        )
-      )
+      this.state.stageLevel === 1
     ) {
-      this.state.time = Math.max(this.state.time, 90000)
+      this.state.time = Math.max(this.state.time, 60000)
     }
 
     if (
@@ -1750,12 +1746,6 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
       minigamePhaseDuration = PORTAL_CAROUSEL_BASE_DURATION
     } else if (this.state.stageLevel !== ItemCarouselStages[0]) {
       minigamePhaseDuration += nbPlayersAlive * 2000
-    }
-    if (
-      this.state.specialGameRule === SpecialGameRule.CHOSEN_ONE &&
-      this.state.stageLevel === 0
-    ) {
-      minigamePhaseDuration = Math.max(minigamePhaseDuration, 90000)
     }
     this.state.time = minigamePhaseDuration
     this.room.miniGame.initialize(this.state, this.room)
