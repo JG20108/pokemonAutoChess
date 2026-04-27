@@ -232228,6 +232228,7 @@ void main() {
     ["FRIGIBAX" /* FRIGIBAX */]: { hp: 85, atk: 7, def: 6, speDef: 4 },
     ["ARCTIBAX" /* ARCTIBAX */]: { hp: 155, atk: 14, def: 10, speDef: 7 },
     ["BAXCALIBUR" /* BAXCALIBUR */]: { hp: 240, atk: 24, def: 16, speDef: 10 }
+    // (Dreepy line intentionally excluded from PSEUDO_JOURNEY)
   };
   var PseudoLegendaryPool = [
     "DRATINI" /* DRATINI */,
@@ -232309,6 +232310,12 @@ void main() {
     "FRIGIBAX" /* FRIGIBAX */,
     "ARCTIBAX" /* ARCTIBAX */,
     "BAXCALIBUR" /* BAXCALIBUR */
+  ]);
+  var PSEUDO_JOURNEY_SHOP_EXCLUDED_PKMS = /* @__PURE__ */ new Set([
+    ...PSEUDO_JOURNEY_LINE_PKMS,
+    "DREEPY" /* DREEPY */,
+    "DRAKLOAK" /* DRAKLOAK */,
+    "DRAGAPULT" /* DRAGAPULT */
   ]);
   function getRegularsTier1(pokemons) {
     return pokemons.filter((p) => {

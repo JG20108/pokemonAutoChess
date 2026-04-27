@@ -162,8 +162,7 @@ const PSEUDO_JOURNEY_LINE_PKMS: ReadonlySet<Pkm> = new Set([
   Pkm.JANGMO_O, Pkm.HAKAMO_O, Pkm.KOMMO_O,
   Pkm.GIBLE, Pkm.GABITE, Pkm.GARCHOMP,
   Pkm.BELDUM, Pkm.METANG, Pkm.METAGROSS,
-  Pkm.FRIGIBAX, Pkm.ARCTIBAX, Pkm.BAXCALIBUR,
-  Pkm.DREEPY, Pkm.DRAKLOAK, Pkm.DRAGAPULT
+  Pkm.FRIGIBAX, Pkm.ARCTIBAX, Pkm.BAXCALIBUR
 ])
 
 /**
@@ -502,10 +501,18 @@ export default class Shop {
       } else if (state.specialGameRule === SpecialGameRule.FIRST_PARTNER) {
         allCandidates = pickFirstPartners(player, state)
       } else if (state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY) {
+        const pseudoChoices = pickPseudoLegendaries()
+        const shuffledItems = [...ItemComponentsNoFossilOrScarf]
+        shuffleArray(shuffledItems)
+        const pseudoItems = pseudoChoices.map(
+          (_, index) =>
+            shuffledItems[index] ?? pickRandomIn(ItemComponentsNoFossilOrScarf)
+        )
         player.choices.push(
           new PlayerChoice({
             type: "starter",
-            pokemons: pickPseudoLegendaries()
+            pokemons: pseudoChoices,
+            items: pseudoItems
           })
         )
         return

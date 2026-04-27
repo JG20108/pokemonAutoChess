@@ -73,10 +73,7 @@ export const PSEUDO_JOURNEY_NORMALIZED_STATS: Partial<Record<Pkm, PseudoStats>> 
     [Pkm.ARCTIBAX]: { hp: 155, atk: 14, def: 10, speDef: 7 },
     [Pkm.BAXCALIBUR]: { hp: 240, atk: 24, def: 16, speDef: 10 },
 
-    // ── Dreepy line (Dragon/Ghost) ─ glass-cannon ranged line
-    [Pkm.DREEPY]: { hp: 85, atk: 7, def: 3, speDef: 3 },
-    [Pkm.DRAKLOAK]: { hp: 155, atk: 14, def: 6, speDef: 6 },
-    [Pkm.DRAGAPULT]: { hp: 240, atk: 24, def: 8, speDef: 8 }
+    // (Dreepy line intentionally excluded from PSEUDO_JOURNEY)
   }
 
 export function applyPseudoJourneyNormalizedStats(pokemon: Pokemon): void {
@@ -98,8 +95,7 @@ export const PseudoLegendaryPool: Pkm[] = [
   Pkm.DEINO,
   Pkm.GOOMY,
   Pkm.JANGMO_O,
-  Pkm.FRIGIBAX,
-  Pkm.DREEPY
+  Pkm.FRIGIBAX
 ]
 
 export function pickPseudoLegendaries(): Pkm[] {
