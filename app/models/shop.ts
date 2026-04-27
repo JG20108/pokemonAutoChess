@@ -165,6 +165,19 @@ const PSEUDO_JOURNEY_LINE_PKMS: ReadonlySet<Pkm> = new Set([
   Pkm.FRIGIBAX, Pkm.ARCTIBAX, Pkm.BAXCALIBUR
 ])
 
+/**
+ * PSEUDO_JOURNEY shop exclusion:
+ * - All normalized pseudo lines above
+ * - Dreepy line too (kept out of the mode's regular shop to avoid bypassing the
+ *   intended pseudo-choice identity, even though it is not part of the starter pool).
+ */
+const PSEUDO_JOURNEY_SHOP_EXCLUDED_PKMS: ReadonlySet<Pkm> = new Set([
+  ...PSEUDO_JOURNEY_LINE_PKMS,
+  Pkm.DREEPY,
+  Pkm.DRAKLOAK,
+  Pkm.DRAGAPULT
+])
+
 export function getRegularsTier1(pokemons: Pkm[]) {
   return pokemons.filter((p) => {
     const pokemonData = getPokemonData(p)
@@ -847,7 +860,7 @@ export default class Shop {
 
     const excludedFromPool =
       state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY
-        ? PSEUDO_JOURNEY_LINE_PKMS
+        ? PSEUDO_JOURNEY_SHOP_EXCLUDED_PKMS
         : undefined
 
     return this.getRandomPokemonFromPool(
