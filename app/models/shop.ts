@@ -424,8 +424,22 @@ export default class Shop {
       } else if (state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY) {
         allCandidates = pickPseudoLegendaries()
       } else if (state.specialGameRule === SpecialGameRule.CHOSEN_ONE) {
+        const allUniqueChoices: PkmProposition[] = [
+          ...PRECOMPUTED_POKEMONS_PER_RARITY.UNIQUE
+        ]
+        const uniqueSingles = new Set(
+          PRECOMPUTED_POKEMONS_PER_RARITY.UNIQUE.map((pkm) => pkm as Pkm)
+        )
+        // Keep full unique coverage while preserving duo behavior for duo pairs.
+        Object.entries(PkmDuos).forEach(([duoKey, duoMembers]) => {
+          if (duoMembers.every((member) => uniqueSingles.has(member))) {
+            duoMembers.forEach((member) => removeInArray(allUniqueChoices, member))
+            allUniqueChoices.push(duoKey as PkmProposition)
+          }
+        })
+        allUniqueChoices.sort((a, b) => String(a).localeCompare(String(b)))
         player.choices.push(
-          new PlayerChoice({ type: "starter", pokemons: [...UniquePool] })
+          new PlayerChoice({ type: "starter", pokemons: allUniqueChoices })
         )
         return
       } else if (
