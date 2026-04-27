@@ -488,7 +488,13 @@ export default class Shop {
       } else if (state.specialGameRule === SpecialGameRule.FIRST_PARTNER) {
         allCandidates = pickFirstPartners(player, state)
       } else if (state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY) {
-        allCandidates = pickPseudoLegendaries()
+        player.choices.push(
+          new PlayerChoice({
+            type: "starter",
+            pokemons: pickPseudoLegendaries()
+          })
+        )
+        return
       } else if (state.specialGameRule === SpecialGameRule.CHOSEN_ONE) {
         const chosenOneSingles = filterChosenOneUniqueSingles(
           PRECOMPUTED_POKEMONS_PER_RARITY.UNIQUE
@@ -531,12 +537,6 @@ export default class Shop {
         ? NB_STARTERS
         : NB_UNIQUE_PROPOSITIONS
 
-    if (
-      stageLevel === PortalCarouselStages[0] &&
-      state.specialGameRule === SpecialGameRule.PSEUDO_JOURNEY
-    ) {
-      nbPropositions = allCandidates.length
-    }
     const pokemonsProposed: PkmProposition[] = []
     const itemsProposed: Item[] = []
 
