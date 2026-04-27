@@ -71,7 +71,12 @@ export const PSEUDO_JOURNEY_NORMALIZED_STATS: Partial<Record<Pkm, PseudoStats>> 
     // ── Frigibax line (Dragon/Ice) ─ heavy physical tank-attacker
     [Pkm.FRIGIBAX]: { hp: 85, atk: 7, def: 6, speDef: 4 },
     [Pkm.ARCTIBAX]: { hp: 155, atk: 14, def: 10, speDef: 7 },
-    [Pkm.BAXCALIBUR]: { hp: 240, atk: 24, def: 16, speDef: 10 }
+    [Pkm.BAXCALIBUR]: { hp: 240, atk: 24, def: 16, speDef: 10 },
+
+    // ── Dreepy line (Dragon/Ghost) ─ glass-cannon ranged line
+    [Pkm.DREEPY]: { hp: 85, atk: 7, def: 3, speDef: 3 },
+    [Pkm.DRAKLOAK]: { hp: 155, atk: 14, def: 6, speDef: 6 },
+    [Pkm.DRAGAPULT]: { hp: 240, atk: 24, def: 8, speDef: 8 }
   }
 
 export function applyPseudoJourneyNormalizedStats(pokemon: Pokemon): void {
@@ -84,8 +89,6 @@ export function applyPseudoJourneyNormalizedStats(pokemon: Pokemon): void {
   pokemon.speDef = stats.speDef
 }
 
-// Dreepy excluded: uses HatchEvolutionRule (won't evolve via free copies)
-// Frigibax: included with stats normalized to match the rest of the pool
 export const PseudoLegendaryPool: Pkm[] = [
   Pkm.DRATINI,
   Pkm.LARVITAR,
@@ -95,7 +98,8 @@ export const PseudoLegendaryPool: Pkm[] = [
   Pkm.DEINO,
   Pkm.GOOMY,
   Pkm.JANGMO_O,
-  Pkm.FRIGIBAX
+  Pkm.FRIGIBAX,
+  Pkm.DREEPY
 ]
 
 export function pickPseudoLegendaries(): Pkm[] {
