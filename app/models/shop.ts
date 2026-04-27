@@ -77,6 +77,14 @@ import { getPokemonBaseline } from "./pokemon-factory"
 import { getPokemonData } from "./precomputed/precomputed-pokemon-data"
 import { PRECOMPUTED_POKEMONS_PER_RARITY } from "./precomputed/precomputed-rarity"
 
+/** Families where CHOSEN_ONE should offer only the base species, not cosmetic / form variants. */
+const CHOSEN_ONE_CANONICAL_SPECIES_ONLY: ReadonlySet<Pkm> = new Set([
+  Pkm.ROTOM,
+  Pkm.CASTFORM,
+  Pkm.MIMIKYU,
+  Pkm.MINIOR
+])
+
 /**
  * CHOSEN_ONE: keep one "starter-eligible" UNIQUE per evolutionary line.
  * 1) Within each Pkm family, keep only the lowest star tier present in the list
@@ -85,6 +93,8 @@ import { PRECOMPUTED_POKEMONS_PER_RARITY } from "./precomputed/precomputed-rarit
  *    in the list (e.g. Palafin when Finizen is pickable), using evolution / evolutions
  *    from Pokemon definitions — divergent same-tier branches without those links stay
  *    (e.g. Scyther / Scizor / Kleavor).
+ * 3) For known form families (Rotom, Castform, Mimikyu, Minior), keep only the canonical
+ *    species enum when it is still in the candidate list.
  */
 function filterChosenOneUniqueSingles(singles: Pkm[]): Pkm[] {
   if (singles.length === 0) return singles
@@ -118,6 +128,17 @@ function filterChosenOneUniqueSingles(singles: Pkm[]): Pkm[] {
     }
     working = working.filter((p) => !evolutionTargets.has(p))
   }
+  const candidateSet = new Set(working)
+  working = working.filter((p) => {
+    const root = PkmFamily[p]
+    if (
+      CHOSEN_ONE_CANONICAL_SPECIES_ONLY.has(root) &&
+      candidateSet.has(root)
+    ) {
+      return p === root
+    }
+    return true
+  })
   return working
 }
 

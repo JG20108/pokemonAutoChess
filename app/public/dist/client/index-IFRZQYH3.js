@@ -232272,6 +232272,12 @@ void main() {
   ], PlayerChoice.prototype, "synergies", 2);
 
   // app/models/shop.ts
+  var CHOSEN_ONE_CANONICAL_SPECIES_ONLY = /* @__PURE__ */ new Set([
+    "ROTOM" /* ROTOM */,
+    "CASTFORM" /* CASTFORM */,
+    "MIMIKYU" /* MIMIKYU */,
+    "MINIOR" /* MINIOR */
+  ]);
   var PSEUDO_JOURNEY_LINE_PKMS = /* @__PURE__ */ new Set([
     "GOOMY" /* GOOMY */,
     "SLIGOO" /* SLIGOO */,
