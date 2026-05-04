@@ -54,6 +54,7 @@ const elo_1 = require("../core/elo");
 const evolution_rules_1 = require("../core/evolution-rules");
 const mini_game_1 = require("../core/mini-game");
 const pending_game_manager_1 = require("../core/pending-game-manager");
+const player_choice_1 = require("../models/colyseus-models/player-choice");
 const player_1 = __importDefault(require("../models/colyseus-models/player"));
 const expeditions_1 = require("../models/expeditions");
 const bot_v2_1 = require("../models/mongo-models/bot-v2");
@@ -884,7 +885,22 @@ class GameRoom extends colyseus_1.Room {
             const allSynergies = Object.values(Synergy_1.Synergy);
             if (choiceIndex < 0 || choiceIndex >= allSynergies.length)
                 return;
-            player.monotype = allSynergies[choiceIndex];
+            const picked = allSynergies[choiceIndex];
+            player.monotype = picked;
+            if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.DUAL_TYPE_SPECIALIST) {
+                player.choices.push(new player_choice_1.PlayerChoice({ type: "synergy2", synergies: [] }));
+            }
+            (0, array_1.removeInArray)(player.choices, choice);
+            return;
+        }
+        if (choice.type === "synergy2") {
+            const allSynergies = Object.values(Synergy_1.Synergy);
+            if (choiceIndex < 0 || choiceIndex >= allSynergies.length)
+                return;
+            const picked = allSynergies[choiceIndex];
+            if (picked === player.monotype)
+                return;
+            player.monotype2 = picked;
             (0, array_1.removeInArray)(player.choices, choice);
             return;
         }

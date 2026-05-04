@@ -25,9 +25,75 @@ const synergies_1 = require("./colyseus-models/synergies");
 const pokemon_factory_1 = require("./pokemon-factory");
 const precomputed_pokemon_data_1 = require("./precomputed/precomputed-pokemon-data");
 const precomputed_rarity_1 = require("./precomputed/precomputed-rarity");
+const CHOSEN_ONE_CANONICAL_SPECIES_ONLY = new Set([
+    Pokemon_1.Pkm.ROTOM,
+    Pokemon_1.Pkm.CASTFORM,
+    Pokemon_1.Pkm.MIMIKYU,
+    Pokemon_1.Pkm.MINIOR,
+    Pokemon_1.Pkm.MORPEKO
+]);
+function filterChosenOneUniqueSingles(singles) {
+    if (singles.length === 0)
+        return singles;
+    const minStarsByFamily = new Map();
+    for (const p of singles) {
+        const root = Pokemon_1.PkmFamily[p];
+        const stars = (0, precomputed_pokemon_data_1.getPokemonData)(p).stars;
+        const prev = minStarsByFamily.get(root);
+        if (prev === undefined || stars < prev) {
+            minStarsByFamily.set(root, stars);
+        }
+    }
+    let working = singles.filter((p) => (0, precomputed_pokemon_data_1.getPokemonData)(p).stars === minStarsByFamily.get(Pokemon_1.PkmFamily[p]));
+    let prevLen = -1;
+    while (working.length !== prevLen) {
+        prevLen = working.length;
+        const set = new Set(working);
+        const evolutionTargets = new Set();
+        for (const p of working) {
+            const { evolution, evolutions } = (0, precomputed_pokemon_data_1.getPokemonData)(p);
+            if (evolution && set.has(evolution)) {
+                evolutionTargets.add(evolution);
+            }
+            for (const e of evolutions) {
+                if (set.has(e)) {
+                    evolutionTargets.add(e);
+                }
+            }
+        }
+        working = working.filter((p) => !evolutionTargets.has(p));
+    }
+    const candidateSet = new Set(working);
+    working = working.filter((p) => {
+        const root = Pokemon_1.PkmFamily[p];
+        if (CHOSEN_ONE_CANONICAL_SPECIES_ONLY.has(root) &&
+            candidateSet.has(root)) {
+            return p === root;
+        }
+        return true;
+    });
+    return working;
+}
 function getPoolSize(rarity, maxStars) {
     return config_1.PoolSize[rarity][(0, number_1.clamp)(maxStars, 1, 3) - 1];
 }
+const PSEUDO_JOURNEY_LINE_PKMS = new Set([
+    Pokemon_1.Pkm.GOOMY, Pokemon_1.Pkm.SLIGOO, Pokemon_1.Pkm.GOODRA, Pokemon_1.Pkm.HISUI_SLIGGOO, Pokemon_1.Pkm.HISUI_GOODRA,
+    Pokemon_1.Pkm.BAGON, Pokemon_1.Pkm.SHELGON, Pokemon_1.Pkm.SALAMENCE,
+    Pokemon_1.Pkm.LARVITAR, Pokemon_1.Pkm.PUPITAR, Pokemon_1.Pkm.TYRANITAR,
+    Pokemon_1.Pkm.DEINO, Pokemon_1.Pkm.ZWEILOUS, Pokemon_1.Pkm.HYDREIGON,
+    Pokemon_1.Pkm.DRATINI, Pokemon_1.Pkm.DRAGONAIR, Pokemon_1.Pkm.DRAGONITE,
+    Pokemon_1.Pkm.JANGMO_O, Pokemon_1.Pkm.HAKAMO_O, Pokemon_1.Pkm.KOMMO_O,
+    Pokemon_1.Pkm.GIBLE, Pokemon_1.Pkm.GABITE, Pokemon_1.Pkm.GARCHOMP,
+    Pokemon_1.Pkm.BELDUM, Pokemon_1.Pkm.METANG, Pokemon_1.Pkm.METAGROSS,
+    Pokemon_1.Pkm.FRIGIBAX, Pokemon_1.Pkm.ARCTIBAX, Pokemon_1.Pkm.BAXCALIBUR
+]);
+const PSEUDO_JOURNEY_SHOP_EXCLUDED_PKMS = new Set([
+    ...PSEUDO_JOURNEY_LINE_PKMS,
+    Pokemon_1.Pkm.DREEPY,
+    Pokemon_1.Pkm.DRAKLOAK,
+    Pokemon_1.Pkm.DRAGAPULT
+]);
 function getRegularsTier1(pokemons) {
     return pokemons.filter((p) => {
         const pokemonData = (0, precomputed_pokemon_data_1.getPokemonData)(p);
@@ -50,6 +116,9 @@ function getSellPrice(pokemon, specialGameRule, ignoreRareCandy = false) {
     var _a;
     const name = pokemon.name;
     if (specialGameRule === SpecialGameRule_1.SpecialGameRule.FREE_MARKET && name !== Pokemon_1.Pkm.EGG)
+        return 0;
+    if (specialGameRule === SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY &&
+        PSEUDO_JOURNEY_LINE_PKMS.has(name))
         return 0;
     const duo = Object.entries(Pokemon_1.PkmDuos).find(([key, duo]) => duo.includes(name));
     let price = 1;
@@ -296,13 +365,34 @@ class Shop {
                 allCandidates = (0, scribbles_1.pickFirstPartners)(player, state);
             }
             else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY) {
-                allCandidates = (0, scribbles_1.pickPseudoLegendaries)();
-            }
-            else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.CHOSEN_ONE) {
-                player.choices.push(new player_choice_1.PlayerChoice({ type: "starter", pokemons: [...config_1.UniquePool] }));
+                const pseudoChoices = (0, scribbles_1.pickPseudoLegendaries)();
+                const shuffledItems = [...Item_1.ItemComponentsNoFossilOrScarf];
+                (0, random_1.shuffleArray)(shuffledItems);
+                const pseudoItems = pseudoChoices.map((_, index) => { var _a; return (_a = shuffledItems[index]) !== null && _a !== void 0 ? _a : (0, random_1.pickRandomIn)(Item_1.ItemComponentsNoFossilOrScarf); });
+                player.choices.push(new player_choice_1.PlayerChoice({
+                    type: "starter",
+                    pokemons: pseudoChoices,
+                    items: pseudoItems
+                }));
                 return;
             }
-            else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.MONOTYPE) {
+            else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.CHOSEN_ONE) {
+                const chosenOneSingles = filterChosenOneUniqueSingles(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.UNIQUE);
+                const allUniqueChoices = [...chosenOneSingles];
+                const uniqueSingles = new Set(chosenOneSingles);
+                Object.entries(Pokemon_1.PkmDuos).forEach(([duoKey, duoMembers]) => {
+                    if (duoMembers.every((member) => uniqueSingles.has(member))) {
+                        duoMembers.forEach((member) => (0, array_1.removeInArray)(allUniqueChoices, member));
+                        allUniqueChoices.push(duoKey);
+                    }
+                });
+                allUniqueChoices.sort((a, b) => String(a).localeCompare(String(b)));
+                player.choices.push(new player_choice_1.PlayerChoice({ type: "starter", pokemons: allUniqueChoices }));
+                return;
+            }
+            else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.MONOTYPE ||
+                state.specialGameRule === SpecialGameRule_1.SpecialGameRule.DUAL_TYPE_SPECIALIST ||
+                state.specialGameRule === SpecialGameRule_1.SpecialGameRule.GYM_BADGE) {
                 player.choices.push(new player_choice_1.PlayerChoice({
                     type: "synergy",
                     synergies: (0, scribbles_1.pickAllSynergies)()
@@ -315,10 +405,6 @@ class Shop {
         let nbPropositions = stageLevel === config_1.PortalCarouselStages[0]
             ? config_1.NB_STARTERS
             : config_1.NB_UNIQUE_PROPOSITIONS;
-        if (stageLevel === config_1.PortalCarouselStages[0] &&
-            state.specialGameRule === SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY) {
-            nbPropositions = allCandidates.length;
-        }
         const pokemonsProposed = [];
         const itemsProposed = [];
         for (let i = 0; i < nbPropositions; i++) {
@@ -330,7 +416,7 @@ class Shop {
                 const hasSynergyWanted = synergyWanted === undefined || types.includes(synergyWanted);
                 if (!hasSynergyWanted)
                     return false;
-                if (regional) {
+                if (regional && state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY) {
                     const pokemon = new pokemon_1.PokemonClasses[pkm](pkm);
                     if (!pokemon.isInRegion(player.map)) {
                         return false;
@@ -370,7 +456,10 @@ class Shop {
                 selected = (0, config_1.getAltFormForPlayer)(selected, player);
             }
             if (stageLevel === config_1.PortalCarouselStages[0]) {
-                itemsProposed[i] = (0, random_1.pickRandomIn)(Item_1.ItemComponentsNoFossilOrScarf.filter((c) => itemsProposed.includes(c) === false));
+                const unusedComponents = Item_1.ItemComponentsNoFossilOrScarf.filter((c) => itemsProposed.includes(c) === false);
+                itemsProposed[i] = (0, random_1.pickRandomIn)(unusedComponents.length > 0
+                    ? unusedComponents
+                    : Item_1.ItemComponentsNoFossilOrScarf);
             }
             if (stageLevel === config_1.PortalCarouselStages[0] &&
                 pokemonsProposed.includes(Pokemon_1.Pkm.EEVEE) === false &&
@@ -378,7 +467,9 @@ class Shop {
                 state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.FIRST_PARTNER &&
                 state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.UNIQUE_STARTER &&
                 state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY &&
-                state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.MONOTYPE) {
+                state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.MONOTYPE &&
+                state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.DUAL_TYPE_SPECIALIST &&
+                state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.GYM_BADGE) {
                 selected = Pokemon_1.Pkm.EEVEE;
                 itemsProposed[i] = Item_1.Item.FOSSIL_STONE;
             }
@@ -401,7 +492,7 @@ class Shop {
             items: itemsProposed
         }));
     }
-    getRandomPokemonFromPool(rarity, player, finals = new Set(), specificTypesWanted) {
+    getRandomPokemonFromPool(rarity, player, finals = new Set(), specificTypesWanted, excludedPkms) {
         var _a, _b;
         let pkm = Pokemon_1.Pkm.MAGIKARP;
         const candidates = ((_a = this.getPool(rarity)) !== null && _a !== void 0 ? _a : [])
@@ -415,6 +506,8 @@ class Shop {
             return pkm;
         })
             .filter((pkm) => {
+            if (excludedPkms === null || excludedPkms === void 0 ? void 0 : excludedPkms.has(pkm))
+                return false;
             const types = (0, precomputed_pokemon_data_1.getPokemonData)(pkm).types;
             const isOfTypeWanted = specificTypesWanted
                 ? specificTypesWanted.some((specificTypeWanted) => types.includes(specificTypeWanted))
@@ -482,10 +575,11 @@ class Shop {
         if (attractor) {
             specificTypesWanted = (0, schemas_1.values)(attractor.types);
         }
-        else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.MONOTYPE &&
+        else if ((state.specialGameRule === SpecialGameRule_1.SpecialGameRule.MONOTYPE ||
+            state.specialGameRule === SpecialGameRule_1.SpecialGameRule.DUAL_TYPE_SPECIALIST) &&
             player.monotype !== undefined &&
             (0, random_1.chance)(0.2)) {
-            specificTypesWanted = [player.monotype];
+            specificTypesWanted = [player.monotype, player.monotype2].filter((s) => s !== undefined);
         }
         else if (wildChance > 0 && (0, random_1.chance)(wildChance)) {
             specificTypesWanted = [Synergy_1.Synergy.WILD];
@@ -532,7 +626,10 @@ class Shop {
                 return this.pickSpecialPokemon(Game_1.Rarity.UNIQUE);
             }
         }
-        return this.getRandomPokemonFromPool(rarity, player, finals, specificTypesWanted);
+        const excludedFromPool = state.specialGameRule === SpecialGameRule_1.SpecialGameRule.PSEUDO_JOURNEY
+            ? PSEUDO_JOURNEY_SHOP_EXCLUDED_PKMS
+            : undefined;
+        return this.getRandomPokemonFromPool(rarity, player, finals, specificTypesWanted, excludedFromPool);
     }
     pickSpecialPokemon(rarity) {
         let pool;

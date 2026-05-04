@@ -94,6 +94,8 @@ export default class Player extends Schema implements IPlayer {
     ghost: boolean;
     firstPartner: Pkm | undefined;
     monotype: Synergy | undefined;
+    monotype2: Synergy | undefined;
+    gymBadgeThreshold: number;
     hasLeftGame: boolean;
     bonusSynergies: Map<Synergy, number>;
     pokemonsPlayed: Set<Pkm>;

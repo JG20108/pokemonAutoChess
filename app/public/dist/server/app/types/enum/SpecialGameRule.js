@@ -26,6 +26,8 @@ var SpecialGameRule;
     SpecialGameRule["PSEUDO_JOURNEY"] = "PSEUDO_JOURNEY";
     SpecialGameRule["MONOTYPE"] = "MONOTYPE";
     SpecialGameRule["CHOSEN_ONE"] = "CHOSEN_ONE";
+    SpecialGameRule["DUAL_TYPE_SPECIALIST"] = "DUAL_TYPE_SPECIALIST";
+    SpecialGameRule["GYM_BADGE"] = "GYM_BADGE";
 })(SpecialGameRule || (exports.SpecialGameRule = SpecialGameRule = {}));
 exports.SpecialGameRuleDescription = {
     [SpecialGameRule.EVERYONE_IS_HERE]: "All the additional picks are available immediately",
@@ -50,6 +52,8 @@ exports.SpecialGameRuleDescription = {
     [SpecialGameRule.CHOSEN_ONES]: "The add picks you choose evolve immediately and gain bonus stats.",
     [SpecialGameRule.PSEUDO_JOURNEY]: "Choose a base-form pseudo-legendary at stage 1. You receive a free copy on your bench every stage up to stage 10.",
     [SpecialGameRule.MONOTYPE]: "Choose one synergy type at stage 1. Only Pokémon sharing that synergy can be placed on the board.",
-    [SpecialGameRule.CHOSEN_ONE]: "At stage 1, pick any Unique Pokémon from the full pool. It starts on your bench and cannot be sold."
+    [SpecialGameRule.CHOSEN_ONE]: "At stage 1, pick any Unique Pokémon from the full pool. It starts on your bench and cannot be sold.",
+    [SpecialGameRule.DUAL_TYPE_SPECIALIST]: "Choose TWO synergy types at stage 1. Only Pokémon sharing at least one of your chosen synergies can be placed on the board.",
+    [SpecialGameRule.GYM_BADGE]: "Choose one synergy at stage 1. Each time that synergy reaches a new threshold (up to 3), you earn a free Rare Candy. Dropping below a threshold removes one Candy the same way other synergy items are taken back."
 };
 //# sourceMappingURL=SpecialGameRule.js.map

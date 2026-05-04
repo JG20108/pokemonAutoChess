@@ -21,6 +21,8 @@ export declare enum SpecialGameRule {
     CHOSEN_ONES = "CHOSEN_ONES",
     PSEUDO_JOURNEY = "PSEUDO_JOURNEY",
     MONOTYPE = "MONOTYPE",
-    CHOSEN_ONE = "CHOSEN_ONE"
+    CHOSEN_ONE = "CHOSEN_ONE",
+    DUAL_TYPE_SPECIALIST = "DUAL_TYPE_SPECIALIST",
+    GYM_BADGE = "GYM_BADGE"
 }
 export declare const SpecialGameRuleDescription: Record<SpecialGameRule, string>;

@@ -136,6 +136,7 @@ class Player extends schema_1.Schema {
         this.randomEggsGiven = [];
         this.flowerPotsSpawnOrder = (0, random_1.shuffleArray)([...flower_pots_1.FlowerPots]);
         this.ghost = false;
+        this.gymBadgeThreshold = 0;
         this.hasLeftGame = false;
         this.bonusSynergies = new Map();
         this.pokemonsPlayed = new Set();
@@ -235,7 +236,7 @@ class Player extends schema_1.Schema {
         return newPokemon;
     }
     updateSynergies() {
-        var _a, _b;
+        var _a, _b, _c;
         const pokemons = (0, schemas_1.values)(this.board);
         const previousSynergies = this.synergies.toMap();
         let updatedSynergies = (0, synergies_1.computeSynergies)(pokemons, this.bonusSynergies, this.specialGameRule);
@@ -270,6 +271,35 @@ class Player extends schema_1.Schema {
         if (previousSynergies.get(Synergy_1.Synergy.FAIRY) !==
             updatedSynergies.get(Synergy_1.Synergy.FAIRY)) {
             this.updateFairyWands(previousSynergies, updatedSynergies);
+        }
+        if (this.specialGameRule === SpecialGameRule_1.SpecialGameRule.GYM_BADGE &&
+            this.monotype !== undefined) {
+            const GYM_BADGE_MAX_CANDY_STEPS = 3;
+            const count = (_c = updatedSynergies.get(this.monotype)) !== null && _c !== void 0 ? _c : 0;
+            const thresholds = config_1.SynergyTriggers[this.monotype];
+            const rawStep = thresholds.filter((t) => count >= t).length;
+            const currentStep = Math.min(rawStep, GYM_BADGE_MAX_CANDY_STEPS);
+            if (currentStep > this.gymBadgeThreshold) {
+                const gained = currentStep - this.gymBadgeThreshold;
+                for (let c = 0; c < gained; c++) {
+                    this.items.push(Item_1.Item.RARE_CANDY);
+                }
+            }
+            else if (currentStep < this.gymBadgeThreshold) {
+                const removeGymBadgeRareCandy = () => {
+                    for (const pokemon of (0, schemas_1.values)(this.board)) {
+                        if (pokemon.items.has(Item_1.Item.RARE_CANDY)) {
+                            pokemon.removeItem(Item_1.Item.RARE_CANDY, this);
+                            return;
+                        }
+                    }
+                    (0, array_1.removeInArray)(this.items, Item_1.Item.RARE_CANDY);
+                };
+                for (let r = 0; r < this.gymBadgeThreshold - currentStep; r++) {
+                    removeGymBadgeRareCandy();
+                }
+            }
+            this.gymBadgeThreshold = currentStep;
         }
         this.effects.update(this.synergies, this.board);
         if (this.items.includes(Item_1.Item.MISSION_ORDER_GREEN) &&

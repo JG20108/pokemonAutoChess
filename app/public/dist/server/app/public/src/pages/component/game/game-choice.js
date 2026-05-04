@@ -56,7 +56,15 @@ function GameChoice() {
     const choice = choices[0];
     let message = null;
     if (choice.type === "synergy") {
-        message = t("player_choices.choose_monotype");
+        message =
+            specialGameRule === SpecialGameRule_1.SpecialGameRule.DUAL_TYPE_SPECIALIST
+                ? t("player_choices.choose_dual_type_first")
+                : specialGameRule === SpecialGameRule_1.SpecialGameRule.GYM_BADGE
+                    ? t("player_choices.choose_gym_badge")
+                    : t("player_choices.choose_monotype");
+    }
+    else if (choice.type === "synergy2") {
+        message = t("player_choices.choose_dual_type_second");
     }
     else if (choice.type === "addPick") {
         message = t("player_choices.choose_add_pick");
@@ -92,7 +100,7 @@ function GameChoice() {
     }
     const isChosenOne = choice.type === "starter" &&
         specialGameRule === SpecialGameRule_1.SpecialGameRule.CHOSEN_ONE;
-    return ((0, jsx_runtime_1.jsxs)("div", { className: "game-choice", style: { zIndex: depths_1.DEPTH.MODAL }, children: [(0, jsx_runtime_1.jsxs)("div", { className: "my-container", style: { visibility: visible ? "visible" : "hidden" }, children: [message && (0, jsx_runtime_1.jsx)("h2", { children: message }), choice.type === "synergy" ? ((0, jsx_runtime_1.jsx)("div", { className: "game-choice-synergy-list", children: Object.values(Synergy_1.Synergy).map((synergy, index) => ((0, jsx_runtime_1.jsxs)("div", { className: "my-box active clickable game-choice-synergy-item", onClick: (event) => {
+    return ((0, jsx_runtime_1.jsxs)("div", { className: "game-choice", style: { zIndex: depths_1.DEPTH.MODAL }, children: [(0, jsx_runtime_1.jsxs)("div", { className: "my-container", style: { visibility: visible ? "visible" : "hidden" }, children: [message && (0, jsx_runtime_1.jsx)("h2", { children: message }), choice.type === "synergy" || choice.type === "synergy2" ? ((0, jsx_runtime_1.jsx)("div", { className: "game-choice-synergy-list", children: Object.values(Synergy_1.Synergy).map((synergy, index) => ((0, jsx_runtime_1.jsxs)("div", { className: "my-box active clickable game-choice-synergy-item", onClick: (event) => {
                                 event.stopPropagation();
                                 (0, audio_1.playSound)(audio_1.SOUNDS.BUTTON_CLICK);
                                 (0, network_1.pickChoice)(choice.id, index);

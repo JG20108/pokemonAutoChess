@@ -304,9 +304,13 @@ class OnDragDropPokemonCommand extends command_1.Command {
                             isBoardFull &&
                             (target === null || target === void 0 ? void 0 : target.doesCountForTeamSize) === false) &&
                         !(dropFromBench &&
-                            this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.MONOTYPE &&
+                            (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.MONOTYPE ||
+                                this.state.specialGameRule ===
+                                    SpecialGameRule_1.SpecialGameRule.DUAL_TYPE_SPECIALIST) &&
                             player.monotype !== undefined &&
-                            !pokemon.types.has(player.monotype))) {
+                            !pokemon.types.has(player.monotype) &&
+                            (player.monotype2 === undefined ||
+                                !pokemon.types.has(player.monotype2)))) {
                         this.swapPokemonPositions(player, pokemon, x, y);
                         success = true;
                     }
@@ -359,9 +363,13 @@ class OnSwitchBenchAndBoardCommand extends command_1.Command {
             if (pokemon.canBePlaced &&
                 destination &&
                 !(isBoardFull && pokemon.doesCountForTeamSize) &&
-                !(this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.MONOTYPE &&
+                !((this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.MONOTYPE ||
+                    this.state.specialGameRule ===
+                        SpecialGameRule_1.SpecialGameRule.DUAL_TYPE_SPECIALIST) &&
                     player.monotype !== undefined &&
-                    !pokemon.types.has(player.monotype))) {
+                    !pokemon.types.has(player.monotype) &&
+                    (player.monotype2 === undefined ||
+                        !pokemon.types.has(player.monotype2)))) {
                 const [x, y] = destination;
                 pokemon.positionX = x;
                 pokemon.positionY = y;
@@ -913,6 +921,10 @@ class OnUpdatePhaseCommand extends command_1.Command {
         this.state.phase = Game_1.GamePhaseState.PICK;
         this.state.time =
             ((_a = config_1.StageDuration[this.state.stageLevel]) !== null && _a !== void 0 ? _a : config_1.StageDuration.DEFAULT) * 1000;
+        if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.CHOSEN_ONE &&
+            this.state.stageLevel === 1) {
+            this.state.time = Math.max(this.state.time, 60000);
+        }
         if ([2, 4].includes(this.state.stageLevel) &&
             this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.TECHNOLOGIC) {
             this.state.players.forEach((player) => {

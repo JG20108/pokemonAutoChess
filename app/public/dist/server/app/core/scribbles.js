@@ -49,7 +49,10 @@ exports.PSEUDO_JOURNEY_NORMALIZED_STATS = {
     [Pokemon_1.Pkm.GARCHOMP]: { hp: 240, atk: 24, def: 10, speDef: 8 },
     [Pokemon_1.Pkm.BELDUM]: { hp: 85, atk: 7, def: 7, speDef: 6 },
     [Pokemon_1.Pkm.METANG]: { hp: 155, atk: 14, def: 13, speDef: 10 },
-    [Pokemon_1.Pkm.METAGROSS]: { hp: 240, atk: 24, def: 18, speDef: 14 }
+    [Pokemon_1.Pkm.METAGROSS]: { hp: 240, atk: 24, def: 18, speDef: 14 },
+    [Pokemon_1.Pkm.FRIGIBAX]: { hp: 85, atk: 7, def: 6, speDef: 4 },
+    [Pokemon_1.Pkm.ARCTIBAX]: { hp: 155, atk: 14, def: 10, speDef: 7 },
+    [Pokemon_1.Pkm.BAXCALIBUR]: { hp: 240, atk: 24, def: 16, speDef: 10 },
 };
 function applyPseudoJourneyNormalizedStats(pokemon) {
     const stats = exports.PSEUDO_JOURNEY_NORMALIZED_STATS[pokemon.name];
@@ -69,7 +72,8 @@ exports.PseudoLegendaryPool = [
     Pokemon_1.Pkm.GIBLE,
     Pokemon_1.Pkm.DEINO,
     Pokemon_1.Pkm.GOOMY,
-    Pokemon_1.Pkm.JANGMO_O
+    Pokemon_1.Pkm.JANGMO_O,
+    Pokemon_1.Pkm.FRIGIBAX
 ];
 function pickPseudoLegendaries() {
     return [...exports.PseudoLegendaryPool];

@@ -27,7 +27,7 @@ export default class Shop {
     refillShop(player: Player, state: GameState): void;
     assignShop(player: Player, manualRefresh: boolean, state: GameState): void;
     assignUniquePropositions(player: Player, state: GameState, portalSynergies: Synergy[]): void;
-    getRandomPokemonFromPool(rarity: Rarity, player: Player, finals?: Set<Pkm>, specificTypesWanted?: Synergy[]): Pkm;
+    getRandomPokemonFromPool(rarity: Rarity, player: Player, finals?: Set<Pkm>, specificTypesWanted?: Synergy[], excludedPkms?: ReadonlySet<Pkm>): Pkm;
     pickPokemon(player: Player, state: GameState, shopIndex?: number, noSpecial?: boolean): Pkm;
     pickSpecialPokemon(rarity: Rarity): Pkm;
     pickFish(player: Player, rod: FishingRod, state: GameState): Pkm;
