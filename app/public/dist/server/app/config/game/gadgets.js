@@ -7,6 +7,7 @@ exports.GADGETS_NAMES = [
     "bag",
     "team_planner",
     "jukebox",
+    "certificate",
     "palette",
     "synergy_wheel",
     "gameboy",
@@ -34,11 +35,16 @@ exports.GADGETS = {
     jukebox: {
         name: "jukebox",
         icon: "compact-disc",
-        levelRequired: 5
+        levelRequired: 3
     },
     palette: {
         name: "palette",
         icon: "palette",
+        levelRequired: 5
+    },
+    certificate: {
+        name: "certificate",
+        icon: "certificate",
         levelRequired: 10
     },
     synergy_wheel: {

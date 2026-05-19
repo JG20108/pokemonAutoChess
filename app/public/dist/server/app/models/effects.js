@@ -38,7 +38,7 @@ class Effects extends schema_1.SetSchema {
                 }
             }
             if (p.name === Pokemon_1.Pkm.FALINKS_BRASS) {
-                const nbTroopers = (0, schemas_1.values)(board).filter((p) => p.name === Pokemon_1.Pkm.FALINKS_TROOPER).length;
+                const nbTroopers = (0, schemas_1.schemaValues)(board).filter((p) => p.name === Pokemon_1.Pkm.FALINKS_TROOPER).length;
                 if (nbTroopers < 6)
                     this.add(Effect_1.EffectEnum.FALINKS_BRASS);
                 else
@@ -81,7 +81,7 @@ exports.SynergyEffects = {
         Effect_1.EffectEnum.GUTS,
         Effect_1.EffectEnum.STURDY,
         Effect_1.EffectEnum.DEFIANT,
-        Effect_1.EffectEnum.JUSTIFIED
+        Effect_1.EffectEnum.COACHING
     ],
     [Synergy_1.Synergy.PSYCHIC]: [
         Effect_1.EffectEnum.PRECOGNITION,

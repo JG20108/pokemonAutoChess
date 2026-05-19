@@ -4,6 +4,7 @@ import { Emotion, IFloatingItem, IPokemonAvatar, IPortal, ISynergySymbol } from 
 import { Pkm } from "../../../../types/enum/Pokemon";
 import { TownEncounter } from "../../../../types/enum/TownEncounter";
 import { ILeaderboardInfo } from "../../../../types/interfaces/LeaderboardInfo";
+import { NpcDialog } from "../../../../types/strings/NpcDialog";
 import AnimationManager from "../animation-manager";
 import GameScene from "../scenes/game-scene";
 import { FloatingItemContainer } from "./floating-item-container";
@@ -48,7 +49,7 @@ export default class MinigameManager {
     showEmote(id: string, emote: Emotion): void;
     onNpcDialog({ npc, dialog, ...otherArgs }: {
         npc: Pkm;
-        dialog: string;
+        dialog: NpcDialog;
     }): void;
     showEncounterDescription(desc: string): void;
     closeTooltips(): void;

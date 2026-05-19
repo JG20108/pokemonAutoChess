@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BuyPrices = exports.SellPrices = exports.HIGH_ROLLER_CHANCE = exports.REPEAT_BALL_UNIQUE_INTERVAL = exports.REPEAT_BALL_UNIQUE_CAP = exports.REPEAT_BALL_LEGENDARY_CAP = exports.HONEY_CHANCE = exports.INCENSE_CHANCE = exports.PVE_WILD_CHANCE = exports.REMORAID_RATE = exports.FALINKS_TROOPER_RATE = exports.UNOWN_PSY7_NB_SHOPS_INTERVAL = exports.UNOWN_PSY5_NB_SHOPS_INTERVAL = exports.UNOWN_PSY3_NB_SHOPS_INTERVAL = exports.ARCEUS_RATE = exports.KECLEON_RATE = exports.EEVEE_RATE = exports.MIN_STAGE_FOR_DITTO = exports.DITTO_RATE = exports.RarityProbabilityPerLevel = exports.BoosterRarityProbability = exports.RarityColor = exports.RarityCost = exports.RarityHpCost = exports.NB_UNIQUE_PROPOSITIONS = exports.NB_STARTERS = exports.SHOP_SIZE = void 0;
+exports.BuyPrices = exports.SellPrices = exports.HIGH_ROLLER_CHANCE = exports.TERRA_CYMBAL_CHANCE = exports.SKY_MELODICA_CHANCE = exports.ROCK_HORN_CHANCE = exports.ICY_FLUTE_CHANCE = exports.GRASS_CORNET_CHANCE = exports.FIERY_DRUM_CHANCE = exports.AQUA_MONICA_CHANCE = exports.REPEAT_BALL_UNIQUE_INTERVAL = exports.REPEAT_BALL_UNIQUE_CAP = exports.REPEAT_BALL_LEGENDARY_CAP = exports.HONEY_CHANCE = exports.INCENSE_CHANCE = exports.PVE_WILD_CHANCE = exports.REMORAID_RATE = exports.FALINKS_TROOPER_RATE = exports.UNOWN_PSY7_NB_SHOPS_INTERVAL = exports.UNOWN_PSY5_NB_SHOPS_INTERVAL = exports.UNOWN_PSY3_NB_SHOPS_INTERVAL = exports.ARCEUS_RATE = exports.KECLEON_RATE = exports.EEVEE_RATE = exports.MIN_STAGE_FOR_DITTO = exports.DITTO_RATE = exports.RarityProbabilityPerLevel = exports.BoosterRarityProbability = exports.RarityColor = exports.RarityCost = exports.RarityHpCost = exports.NB_UNIQUE_PROPOSITIONS = exports.NB_STARTERS = exports.SHOP_SIZE = void 0;
 const Game_1 = require("../../types/enum/Game");
 exports.SHOP_SIZE = 6;
 exports.NB_STARTERS = 3;
@@ -76,6 +76,13 @@ exports.HONEY_CHANCE = 5 / 100;
 exports.REPEAT_BALL_LEGENDARY_CAP = 120;
 exports.REPEAT_BALL_UNIQUE_CAP = 80;
 exports.REPEAT_BALL_UNIQUE_INTERVAL = 10;
+exports.AQUA_MONICA_CHANCE = 5 / 100;
+exports.FIERY_DRUM_CHANCE = 5 / 100;
+exports.GRASS_CORNET_CHANCE = 5 / 100;
+exports.ICY_FLUTE_CHANCE = 5 / 100;
+exports.ROCK_HORN_CHANCE = 5 / 100;
+exports.SKY_MELODICA_CHANCE = 5 / 100;
+exports.TERRA_CYMBAL_CHANCE = 5 / 100;
 exports.HIGH_ROLLER_CHANCE = 2 / 100;
 exports.SellPrices = {
     EGG: 2,

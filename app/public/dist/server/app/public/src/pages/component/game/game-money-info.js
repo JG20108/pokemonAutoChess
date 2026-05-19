@@ -23,9 +23,9 @@ function GameMoneyInfo() {
 }
 function GameMoneyDetail() {
     const { t } = (0, react_i18next_1.useTranslation)();
-    const streak = (0, hooks_1.useAppSelector)((state) => state.game.streak);
     const specialGameRule = (0, hooks_1.useAppSelector)((state) => state.game.specialGameRule);
     const currentPlayer = (0, hooks_1.useAppSelector)(hooks_1.selectSpectatedPlayer);
+    const streak = (0, hooks_1.useAppSelector)((state) => state.game.streak);
     const lastPlayerBattle = currentPlayer && currentPlayer.history && currentPlayer.history.length > 0
         ? currentPlayer.history.filter((r) => r.id !== "pve").at(-1)
         : null;
@@ -39,7 +39,7 @@ function GameMoneyDetail() {
     else if (lastBattleResult === Game_1.BattleResult.DEFEAT) {
         streakLabel = t("defeat_count", { count: streak + 1 });
     }
-    return ((0, jsx_runtime_1.jsxs)("div", { className: "game-money-detail", children: [(0, jsx_runtime_1.jsx)("p", { className: "help", children: (0, descriptions_1.addIconsToDescription)(t("passive_income_hint")) }), (0, jsx_runtime_1.jsxs)("p", { style: { marginTop: "0.5em" }, children: [(0, jsx_runtime_1.jsx)(money_1.Money, { value: `${t("streak")}: ${streak === 0 ? 0 : "+" + (0, number_1.max)(5)(streak)}` }), " ", lastBattleResult !== null && `(${streakLabel})`] }), (0, jsx_runtime_1.jsx)("p", { className: "help", children: (0, descriptions_1.addIconsToDescription)(t("victory_income_hint")) }), specialGameRule !== SpecialGameRule_1.SpecialGameRule.BLOOD_MONEY && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsxs)("p", { style: { marginTop: "0.5em" }, children: [(0, jsx_runtime_1.jsx)(money_1.Money, { value: t("interest", { interest }) }), "(", (0, descriptions_1.addIconsToDescription)(t("max_interest", { maxInterest })), ")"] }), (0, jsx_runtime_1.jsx)("p", { className: "help", children: (0, descriptions_1.addIconsToDescription)(t("additional_income_hint", {
+    return ((0, jsx_runtime_1.jsxs)("div", { className: "game-money-detail", children: [(0, jsx_runtime_1.jsx)("p", { className: "help", children: (0, descriptions_1.addIconsToDescription)(t("passive_income_hint")) }), (0, jsx_runtime_1.jsxs)("p", { style: { marginTop: "0.5em" }, children: [(0, jsx_runtime_1.jsx)(money_1.Money, { value: `${t("streak")}: ${streak === 0 ? 0 : "+" + (0, number_1.max)(5)(streak)}` }), " ", lastBattleResult !== null && `(${streakLabel})`] }), (0, jsx_runtime_1.jsx)("p", { className: "help", children: (0, descriptions_1.addIconsToDescription)(t("streak_income_hint")) }), specialGameRule !== SpecialGameRule_1.SpecialGameRule.BLOOD_MONEY && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsxs)("p", { style: { marginTop: "0.5em" }, children: [(0, jsx_runtime_1.jsx)(money_1.Money, { value: t("interest", { interest }) }), "(", (0, descriptions_1.addIconsToDescription)(t("max_interest", { maxInterest })), ")"] }), (0, jsx_runtime_1.jsx)("p", { className: "help", children: (0, descriptions_1.addIconsToDescription)(t("additional_income_hint", {
                             maxInterest,
                             maxInterestGolds: maxInterest * 10
                         })) })] }))] }));

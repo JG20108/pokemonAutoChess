@@ -33,14 +33,14 @@ function main() {
                 yield colyseus_1.matchMaker.createRoom("lobby", {});
                 checkLobby();
                 (0, cronjobs_1.initCronJobs)();
-                yield (0, sprite_gap_scanner_1.warmupSpriteGapScanner)();
+                void (0, sprite_gap_scanner_1.warmupSpriteGapScanner)();
             }
         }
         else {
             yield (0, tools_1.listen)(app_config_1.server, process.env.PORT ? parseInt(process.env.PORT) : 9000);
             yield colyseus_1.matchMaker.createRoom("lobby", {});
             (0, cronjobs_1.initCronJobs)();
-            yield (0, sprite_gap_scanner_1.warmupSpriteGapScanner)();
+            void (0, sprite_gap_scanner_1.warmupSpriteGapScanner)();
         }
         colyseus_1.logger.info("Fetching leaderboards...");
         (0, leaderboard_1.fetchLeaderboards)();

@@ -190,14 +190,14 @@ function TeamBuilder(props) {
         try {
             if (!spectatedPlayer)
                 return;
-            updateBoard((0, schemas_1.values)(spectatedPlayer.board)
+            updateBoard((0, schemas_1.schemaValues)(spectatedPlayer.board)
                 .filter((pokemon) => !(0, board_1.isOnBench)(pokemon))
                 .map((p) => {
                 return {
                     name: p.name,
                     emotion: p.emotion,
                     shiny: p.shiny,
-                    items: (0, schemas_1.values)(p.items),
+                    items: (0, schemas_1.schemaValues)(p.items),
                     x: p.positionX,
                     y: p.positionY
                 };

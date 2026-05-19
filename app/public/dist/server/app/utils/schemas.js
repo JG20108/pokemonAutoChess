@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.keys = keys;
-exports.values = values;
-exports.entries = entries;
+exports.schemaKeys = schemaKeys;
+exports.schemaValues = schemaValues;
+exports.schemaEntries = schemaEntries;
 exports.resetArraySchema = resetArraySchema;
 exports.convertSchemaToRawObject = convertSchemaToRawObject;
 const schema_1 = require("@colyseus/schema");
-function keys(schema) {
+function schemaKeys(schema) {
     const keys = [];
     schema.forEach((value, key) => keys.push(key));
     return keys;
 }
-function values(schema) {
+function schemaValues(schema) {
     const values = [];
     schema.forEach((value) => values.push(value));
     return values;
 }
-function entries(schema) {
+function schemaEntries(schema) {
     const entries = [];
     schema.forEach((value, key) => entries.push([key, value]));
     return entries;

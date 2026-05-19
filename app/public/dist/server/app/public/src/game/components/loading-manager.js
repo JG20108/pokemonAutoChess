@@ -15,9 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.loadEnvironmentMultiAtlas = loadEnvironmentMultiAtlas;
 exports.preloadPortraits = preloadPortraits;
 const i18next_1 = require("i18next");
-const AnimatedTiles_min_js_1 = __importDefault(require("phaser-animated-tiles-phaser3.5/dist/AnimatedTiles.min.js"));
 const package_json_1 = __importDefault(require("../../../../../package.json"));
 const config_1 = require("../../../../config");
+const music_1 = require("../../../../config/game/music");
 const pokemon_customs_1 = require("../../../../models/colyseus-models/pokemon-customs");
 const Dungeon_1 = require("../../../../types/enum/Dungeon");
 const Pokemon_1 = require("../../../../types/enum/Pokemon");
@@ -25,6 +25,7 @@ const avatar_1 = require("../../../../utils/avatar");
 const schemas_1 = require("../../../../utils/schemas");
 const atlas_json_1 = __importDefault(require("../../assets/atlas.json"));
 const audio_1 = require("../../pages/utils/audio");
+const animated_tiles_plugin_1 = __importDefault(require("../plugins/animated-tiles-plugin"));
 const game_scene_1 = __importDefault(require("../scenes/game-scene"));
 const pokemon_1 = require("./pokemon");
 class LoadingManager {
@@ -47,9 +48,10 @@ class LoadingManager {
             scene.load.xhr.timeout = 5000;
             scene.load.image("town_tileset", "/assets/tilesets/Town/tileset.png");
             scene.load.tilemapTiledJSON("town", "/assets/tilesets/Town/town.json");
-            (0, audio_1.preloadMusic)(scene, Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_0);
-            (0, audio_1.preloadMusic)(scene, Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_10);
-            (0, audio_1.preloadMusic)(scene, Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_20);
+            (0, audio_1.preloadMusic)(scene, (0, music_1.getMusicAlt)(Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_0));
+            (0, audio_1.preloadMusic)(scene, (0, music_1.getMusicAlt)(Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_10));
+            (0, audio_1.preloadMusic)(scene, (0, music_1.getMusicAlt)(Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_20));
+            (0, audio_1.preloadMusic)(scene, Dungeon_1.DungeonMusic.CARNIVAL_LUDICOLO);
             scene.load.image("rain", "/assets/environment/rain.png");
             scene.load.image("sand", "/assets/environment/sand.png");
             scene.load.image("wind", "/assets/environment/wind.png");
@@ -82,11 +84,11 @@ class LoadingManager {
                 }
             });
             for (const pack in atlas_json_1.default.packs) {
-                scene.load.multiatlas(atlas_json_1.default.packs[pack].name, `/assets/${pack}/${atlas_json_1.default.packs[pack].name}-${package_json_1.default.version}.json`, `/assets/${pack}/`);
+                scene.load.multiatlas(atlas_json_1.default.packs[pack].name, `/assets/${pack}/${atlas_json_1.default.packs[pack].name}.json?v=${package_json_1.default.assetsVersion}`, `/assets/${pack}/`);
             }
             loadEnvironmentMultiAtlas(this.scene);
             if (scene instanceof game_scene_1.default) {
-                const players = (0, schemas_1.values)((_a = scene.room) === null || _a === void 0 ? void 0 : _a.state.players);
+                const players = (0, schemas_1.schemaValues)((_a = scene.room) === null || _a === void 0 ? void 0 : _a.state.players);
                 const player = (_b = players.find((p) => p.id === scene.uid)) !== null && _b !== void 0 ? _b : players[0];
                 yield scene.preloadMaps(players
                     .map((p) => p.map)
@@ -95,7 +97,7 @@ class LoadingManager {
                 preloadPortraits(this.scene, player);
             }
             (0, pokemon_1.loadCompressedAtlas)(scene, "0000");
-            scene.load.scenePlugin("animatedTiles", AnimatedTiles_min_js_1.default, "animatedTiles", "animatedTiles");
+            scene.load.scenePlugin("animatedTiles", animated_tiles_plugin_1.default, "animatedTiles", "animatedTiles");
         });
     }
 }
@@ -108,6 +110,7 @@ function loadEnvironmentMultiAtlas(scene) {
     scene.load.multiatlas("flower_pots", "/assets/environment/flower_pots.json", "/assets/environment/");
     scene.load.multiatlas("ground_holes", "/assets/environment/ground_holes.json", "/assets/environment/");
     scene.load.multiatlas("loading_pokeball", "/assets/environment/loading_pokeball.json", "/assets/environment/");
+    scene.load.multiatlas("training_bag", "/assets/environment/training_bag.json", "/assets/environment/");
 }
 function preloadPortraits(scene, player) {
     Object.values(Pokemon_1.PkmIndex).forEach((index) => {

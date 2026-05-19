@@ -253,7 +253,7 @@ export declare class RoarOfTimeStrategy extends AbilityStrategy {
 export declare class HealBlockStrategy extends AbilityStrategy {
     process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
 }
-export declare class SpikeArmorStrategy extends AbilityStrategy {
+export declare class SpikyShieldStrategy extends AbilityStrategy {
     process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
 }
 export declare class OriginPulseStrategy extends AbilityStrategy {
@@ -1681,6 +1681,21 @@ export declare class TwineedleStrategy extends AbilityStrategy {
     process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
 }
 export declare class RockWreckerStrategy extends AbilityStrategy {
+    process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
+}
+export declare class SnoreStrategy extends AbilityStrategy {
+    process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
+}
+export declare class StuffCheeksStrategy extends AbilityStrategy {
+    process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
+}
+export declare class AquaStepStrategy extends AbilityStrategy {
+    process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
+}
+export declare class SkitterSmackStrategy extends AbilityStrategy {
+    process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
+}
+export declare class SilkTrapStrategy extends AbilityStrategy {
     process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
 }
 export * from "./hidden-power";

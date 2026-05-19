@@ -1,4 +1,4 @@
-import { type Scene } from "phaser";
+import Phaser, { type Scene } from "phaser";
 import { DungeonMusic } from "../../../../types/enum/Dungeon";
 export declare const SOUNDS: {
     readonly BUTTON_CLICK: "buttonclick.ogg";
@@ -22,7 +22,7 @@ export declare const SOUNDS: {
 };
 type Soundkey = (typeof SOUNDS)[keyof typeof SOUNDS];
 export declare function preloadSounds(): void;
-export declare function preloadMusic(scene: Scene, dungeonMusic: DungeonMusic): void;
+export declare function preloadMusic(scene: Scene, dungeonMusic: DungeonMusic, alt?: string): void;
 export declare function playSound(key: Soundkey, volume?: number): void;
 interface SceneWithMusic extends Phaser.Scene {
     music?: Phaser.Sound.WebAudioSound;

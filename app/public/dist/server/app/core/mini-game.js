@@ -109,7 +109,7 @@ class MiniGame {
                             if (((_g = player === null || player === void 0 ? void 0 : player.money) !== null && _g !== void 0 ? _g : 0) < price) {
                                 client === null || client === void 0 ? void 0 : client.send(types_1.Transfer.NPC_DIALOG, {
                                     npc: encounter,
-                                    dialog: "npc_dialog.tell_price",
+                                    dialog: "tell_price",
                                     price: price
                                 });
                                 return;
@@ -117,7 +117,7 @@ class MiniGame {
                             else {
                                 client === null || client === void 0 ? void 0 : client.send(types_1.Transfer.NPC_DIALOG, {
                                     npc: encounter,
-                                    dialog: "npc_dialog.thank_you"
+                                    dialog: "thank_you"
                                 });
                                 if (player) {
                                     player.money -= price;
@@ -173,48 +173,6 @@ class MiniGame {
         const { players, stageLevel } = state;
         this.timeElapsed = 0;
         this.rotationDirection = 1;
-        this.alivePlayers = new Array();
-        players.forEach((p) => {
-            if (p.alive) {
-                this.alivePlayers.push(p);
-            }
-        });
-        this.alivePlayers.forEach((player, i) => {
-            const x = this.centerX +
-                Math.cos((2 * Math.PI * i) / this.alivePlayers.length) * 300;
-            const y = this.centerY +
-                Math.sin((2 * Math.PI * i) / this.alivePlayers.length) * 250;
-            let retentionDelay = 5000 + (this.alivePlayers.length - player.rank) * 2000;
-            if (stageLevel === 0) {
-                retentionDelay = 12000;
-            }
-            else if (config_1.PortalCarouselStages.includes(stageLevel)) {
-                retentionDelay = 8000;
-            }
-            else if (stageLevel < 5) {
-                retentionDelay = 5000;
-            }
-            if (player.isBot) {
-                retentionDelay += (0, random_1.randomBetween)(1000, 6000);
-            }
-            const avatar = new pokemon_avatar_1.PokemonAvatarModel(player.id, player.avatar, x, y, retentionDelay);
-            if (player.isBot) {
-                avatar.targetX =
-                    this.centerX +
-                        Math.cos((2 * Math.PI * i) / this.alivePlayers.length) *
-                            CAROUSEL_RADIUS_X;
-                avatar.targetY =
-                    this.centerY +
-                        Math.sin((2 * Math.PI * i) / this.alivePlayers.length) *
-                            CAROUSEL_RADIUS_Y;
-            }
-            this.avatars.set(avatar.id, avatar);
-            const body = matter_js_1.Bodies.circle(x, y, AVATAR_RADIUS);
-            body.label = avatar.id;
-            body.collisionFilter.mask = 0;
-            this.bodies.set(avatar.id, body);
-            matter_js_1.Composite.add(this.engine.world, body);
-        });
         if (stageLevel in config_1.TownEncountersByStage) {
             let encounter = (0, random_1.randomWeighted)(config_1.TownEncountersByStage[stageLevel], state.specialGameRule === SpecialGameRule_1.SpecialGameRule.TOWN_FESTIVAL ? undefined : 1);
             if (encounter != null &&
@@ -238,9 +196,52 @@ class MiniGame {
         else {
             state.townEncounter = null;
         }
+        this.alivePlayers = new Array();
+        players.forEach((p) => {
+            if (p.alive) {
+                this.alivePlayers.push(p);
+            }
+        });
+        this.alivePlayers.forEach((player, i) => {
+            const x = this.centerX +
+                Math.cos((2 * Math.PI * i) / this.alivePlayers.length) * 300;
+            const y = this.centerY +
+                Math.sin((2 * Math.PI * i) / this.alivePlayers.length) * 250;
+            let retentionDelay = (state.townEncounter ? 10000 : 5000) +
+                (this.alivePlayers.length - player.rank) * 2000;
+            if (stageLevel === 0) {
+                retentionDelay = 12000;
+            }
+            else if (config_1.PortalCarouselStages.includes(stageLevel)) {
+                retentionDelay = 8000;
+            }
+            else if (stageLevel < 5) {
+                retentionDelay = state.townEncounter ? 10000 : 5000;
+            }
+            if (player.isBot) {
+                retentionDelay += (0, random_1.randomBetween)(1000, 6000);
+            }
+            const avatar = new pokemon_avatar_1.PokemonAvatarModel(player.id, player.avatar, x, y, retentionDelay);
+            if (player.isBot) {
+                avatar.targetX =
+                    this.centerX +
+                        Math.cos((2 * Math.PI * i) / this.alivePlayers.length) *
+                            CAROUSEL_RADIUS_X;
+                avatar.targetY =
+                    this.centerY +
+                        Math.sin((2 * Math.PI * i) / this.alivePlayers.length) *
+                            CAROUSEL_RADIUS_Y;
+            }
+            this.avatars.set(avatar.id, avatar);
+            const body = matter_js_1.Bodies.circle(x, y, AVATAR_RADIUS);
+            body.label = avatar.id;
+            body.collisionFilter.mask = 0;
+            this.bodies.set(avatar.id, body);
+            matter_js_1.Composite.add(this.engine.world, body);
+        });
         if (config_1.PortalCarouselStages.includes(stageLevel)) {
             this.initializePortalCarousel(stageLevel, room);
-            room.broadcast(types_1.Transfer.PRELOAD_MAPS, (0, schemas_1.values)(this.portals).map((p) => p.map));
+            room.broadcast(types_1.Transfer.PRELOAD_MAPS, (0, schemas_1.schemaValues)(this.portals).map((p) => p.map));
         }
         else if (config_1.ItemCarouselStages.includes(stageLevel)) {
             this.initializeItemsCarousel(state);
@@ -403,7 +404,7 @@ class MiniGame {
             itemsSet = Item_1.CraftableItemsNoScarves;
         }
         if (encounter === TownEncounter_1.TownEncounters.KECLEON) {
-            const topSynergies = (0, schemas_1.values)(state.players).flatMap((p) => p.synergies.getTopSynergies(3));
+            const topSynergies = (0, schemas_1.schemaValues)(state.players).flatMap((p) => p.synergies.getTopSynergies(3));
             itemsSet = types_1.SynergyItems.filter((i) => !(0, array_1.isIn)(types_1.MemoryDiscs, i) &&
                 i !== Item_1.Item.SHINY_STONE &&
                 (0, array_1.isIn)(topSynergies, types_1.SynergyGivenByItem[i]));
@@ -430,6 +431,10 @@ class MiniGame {
         }
         if (encounter === TownEncounter_1.TownEncounters.CINCCINO) {
             items.push(Item_1.Item.SILK_SCARF, Item_1.Item.SILK_SCARF, Item_1.Item.SILK_SCARF, Item_1.Item.SILK_SCARF);
+        }
+        if (encounter === TownEncounter_1.TownEncounters.LUDICOLO) {
+            items.push(Item_1.Item.AQUA_MONICA, Item_1.Item.FIERY_DRUM, Item_1.Item.GRASS_CORNET, Item_1.Item.ICY_FLUTE, Item_1.Item.ROCK_HORN, Item_1.Item.SKY_MELODICA, Item_1.Item.TERRA_CYMBAL);
+            nbItemsToPick -= 3;
         }
         if (encounter === TownEncounter_1.TownEncounters.SABLEYE) {
             items.push(...(0, random_1.pickNRandomIn)(Item_1.SynergyGems, 4));
@@ -531,8 +536,8 @@ class MiniGame {
                 });
             });
         }
-        const portalIds = (0, random_1.shuffleArray)((0, schemas_1.keys)(this.portals));
-        const symbols = (0, random_1.shuffleArray)((0, schemas_1.values)(this.symbols));
+        const portalIds = (0, random_1.shuffleArray)((0, schemas_1.schemaKeys)(this.portals));
+        const symbols = (0, random_1.shuffleArray)((0, schemas_1.schemaValues)(this.symbols));
         this.symbolsByPortal = new Map();
         symbols.forEach((symbol, i) => {
             var _a;
@@ -623,7 +628,7 @@ class MiniGame {
             if (avatar.portalId === "") {
                 avatar.portalId = "random";
                 if (state.stageLevel === 0 && this.portals) {
-                    avatar.portalId = (0, random_1.pickRandomIn)((0, schemas_1.values)(this.portals).filter((p) => p.avatarId === "")).id;
+                    avatar.portalId = (0, random_1.pickRandomIn)((0, schemas_1.schemaValues)(this.portals).filter((p) => p.avatarId === "")).id;
                 }
             }
             if (avatar.itemId) {

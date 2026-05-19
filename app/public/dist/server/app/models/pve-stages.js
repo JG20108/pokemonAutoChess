@@ -56,7 +56,7 @@ exports.PVEStages = {
         avatar: Pokemon_1.Pkm.GYARADOS,
         board: [[Pokemon_1.Pkm.GYARADOS, 4, 2]],
         marowakItems: [[Item_1.Item.KINGS_ROCK]],
-        shinyChance: 1 / 50,
+        shinyChance: 1 / 40,
         rewards: [...Item_1.ItemComponentsNoFossilOrScarf, Item_1.Item.RED_SCALE],
         getRewards(_player, shinyEncounter) {
             if (shinyEncounter)
@@ -78,7 +78,7 @@ exports.PVEStages = {
         rewards: Item_1.ItemComponentsNoFossilOrScarf,
         getRewards(player) {
             const rewards = [];
-            if ((0, schemas_1.values)(player.board).some((p) => p.name === Pokemon_1.Pkm.CHARCADET) ||
+            if ((0, schemas_1.schemaValues)(player.board).some((p) => p.name === Pokemon_1.Pkm.CHARCADET) ||
                 player.pokemonsTrainingInDojo.some((p) => p.pokemon.name === Pokemon_1.Pkm.CHARCADET)) {
                 const psyLevel = player.synergies.get(Synergy_1.Synergy.PSYCHIC) || 0;
                 const ghostLevel = player.synergies.get(Synergy_1.Synergy.GHOST) || 0;
@@ -150,7 +150,7 @@ exports.PVEStages = {
         ],
         rewards: Item_1.CraftableItemsNoScarves,
         getRewards(player) {
-            for (const p of (0, schemas_1.values)(player.board)) {
+            for (const p of (0, schemas_1.schemaValues)(player.board)) {
                 if (p.name === Pokemon_1.Pkm.ZACIAN) {
                     return [Item_1.Item.RUSTED_SWORD];
                 }

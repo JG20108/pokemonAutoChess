@@ -22,6 +22,12 @@ function PokemonFilters() {
         "showRegionalPool",
         "showSpecialPool"
     ];
+    const poolByPreference = {
+        showRegularPool: "regular",
+        showAdditionalPool: "additional",
+        showRegionalPool: "regional",
+        showSpecialPool: "special"
+    };
     const isTheOnlyPoolSelected = (pool) => {
         const otherPools = pools.filter((p) => p !== pool);
         return (preferences[pool] === true &&
@@ -29,7 +35,7 @@ function PokemonFilters() {
     };
     return ((0, jsx_runtime_1.jsxs)("details", { className: "pokemon-filters", onToggle: toggle_1.closeSiblingDetails, children: [(0, jsx_runtime_1.jsx)("summary", { children: t("filters") }), (0, jsx_runtime_1.jsxs)("div", { children: [pools.map((pool) => ((0, jsx_runtime_1.jsx)(checkbox_1.Checkbox, { checked: preferences[pool], disabled: isTheOnlyPoolSelected(pool), onToggle: (checked) => {
                             setPreferences({ [pool]: checked });
-                        }, label: t(`pool.${pool.replace("show", "").replace("Pool", "").toLowerCase()}`), isDark: true }, pool))), (0, jsx_runtime_1.jsx)(checkbox_1.Checkbox, { checked: preferences.showEvolutions, onToggle: (checked) => {
+                        }, label: t(`pool.${poolByPreference[pool]}`), isDark: true }, pool))), (0, jsx_runtime_1.jsx)(checkbox_1.Checkbox, { checked: preferences.showEvolutions, onToggle: (checked) => {
                             setPreferences({ showEvolutions: checked });
                         }, label: t("show_evolutions"), isDark: true }), (0, jsx_runtime_1.jsx)(checkbox_1.Checkbox, { checked: preferences.showAltForms, onToggle: (checked) => {
                             setPreferences({ showAltForms: checked });

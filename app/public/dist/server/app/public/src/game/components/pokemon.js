@@ -116,7 +116,7 @@ class PokemonSprite extends draggable_object_1.default {
         const baseHP = (0, precomputed_pokemon_data_1.getPokemonData)(pokemon.name).hp;
         const maxHP = inBattle
             ? pokemon.maxHP
-            : (0, schemas_1.values)(pokemon.items).reduce((acc, item) => { var _a, _b; return acc + ((_b = (_a = config_1.ItemStats[item]) === null || _a === void 0 ? void 0 : _a[Game_1.Stat.HP]) !== null && _b !== void 0 ? _b : 0); }, pokemon.maxHP);
+            : (0, schemas_1.schemaValues)(pokemon.items).reduce((acc, item) => { var _a, _b; return acc + ((_b = (_a = config_1.ItemStats[item]) === null || _a === void 0 ? void 0 : _a[Game_1.Stat.HP]) !== null && _b !== void 0 ? _b : 0); }, pokemon.maxHP);
         const scale = 2 * Math.sqrt(1 + (pokemon.maxHP - baseHP) / baseHP);
         this.sprite
             .setScale(scale)
@@ -135,7 +135,7 @@ class PokemonSprite extends draggable_object_1.default {
                 playerId !== scene.uid &&
                 isGameScene(scene) &&
                 scene.spectate === false) {
-                this.shadow.setTintFill(0xff0000);
+                this.shadow.setTint(0xff0000).setTintMode(phaser_1.default.TintModes.FILL);
             }
             this.add(this.shadow);
         }
@@ -160,7 +160,7 @@ class PokemonSprite extends draggable_object_1.default {
         }
         else {
             if (pokemon.dishes.size > 0) {
-                this.updateDishes((0, schemas_1.values)(pokemon.dishes));
+                this.updateDishes((0, schemas_1.schemaValues)(pokemon.dishes));
             }
         }
         this.draggable =
@@ -575,8 +575,10 @@ class PokemonSprite extends draggable_object_1.default {
         }, 1000);
     }
     superchargeAnimation(scene, alreadyActive, onEntity) {
+        var _a;
         this.addElectricField();
-        this.sprite.postFX.addGlow(0xffff00, 4, 0, false, 0.1, 8);
+        this.sprite.enableFilters();
+        (_a = this.sprite.filters) === null || _a === void 0 ? void 0 : _a.internal.addGlow(0xffff00, 4, 0, 0.1);
         this.emoteAnimation();
         if (!alreadyActive) {
             if (!(0, preferences_1.preference)("disableCameraShake"))
@@ -1318,7 +1320,7 @@ function loadCompressedAtlas(scene, index) {
             const multiatlas = {
                 textures: [
                     {
-                        image: `${image}?v=${package_json_1.default.version}`,
+                        image: `${image}?v=${package_json_1.default.assetsVersion}`,
                         format: "RGBA8888",
                         size: {
                             w: data.s[0],
@@ -1337,7 +1339,7 @@ function loadCompressedAtlas(scene, index) {
             scene.load.multiatlas(index, multiatlas, "/assets/pokemons").start();
         });
         scene.load
-            .json(`pokemon-atlas-${index}`, `/assets/pokemons/${index}.json?v=${package_json_1.default.version}`)
+            .json(`pokemon-atlas-${index}`, `/assets/pokemons/${index}.json?v=${package_json_1.default.assetsVersion}`)
             .start();
     });
     return lazyLoadingRequests[index];

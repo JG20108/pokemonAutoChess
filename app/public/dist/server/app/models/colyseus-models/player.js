@@ -144,6 +144,7 @@ class Player extends schema_1.Schema {
         this.specialGameRule = null;
         this.shopsSinceLastUnownShop = 0;
         this.regions = [];
+        this.unownReminiscences = 0;
         this.id = id;
         this.spectatedPlayerId = id;
         this.name = name;
@@ -214,7 +215,7 @@ class Player extends schema_1.Schema {
         this.history.push(new history_item_1.default(id, name, result, avatar, weather ? weather : Weather_1.Weather.NEUTRAL));
     }
     getPokemonAt(x, y) {
-        return (0, schemas_1.values)(this.board).find((pokemon) => pokemon.positionX == x && pokemon.positionY == y);
+        return (0, schemas_1.schemaValues)(this.board).find((pokemon) => pokemon.positionX == x && pokemon.positionY == y);
     }
     transformPokemon(pokemon, newEntry) {
         const newPokemon = pokemon_factory_1.default.createPokemonFromName(newEntry, this);
@@ -237,7 +238,7 @@ class Player extends schema_1.Schema {
     }
     updateSynergies() {
         var _a, _b, _c;
-        const pokemons = (0, schemas_1.values)(this.board);
+        const pokemons = (0, schemas_1.schemaValues)(this.board);
         const previousSynergies = this.synergies.toMap();
         let updatedSynergies = (0, synergies_1.computeSynergies)(pokemons, this.bonusSynergies, this.specialGameRule);
         const normalNeedsRecomputing = this.updateScarves(previousSynergies, updatedSynergies);
@@ -287,7 +288,7 @@ class Player extends schema_1.Schema {
             }
             else if (currentStep < this.gymBadgeThreshold) {
                 const removeGymBadgeRareCandy = () => {
-                    for (const pokemon of (0, schemas_1.values)(this.board)) {
+                    for (const pokemon of (0, schemas_1.schemaValues)(this.board)) {
                         if (pokemon.items.has(Item_1.Item.RARE_CANDY)) {
                             pokemon.removeItem(Item_1.Item.RARE_CANDY, this);
                             return;
@@ -307,7 +308,7 @@ class Player extends schema_1.Schema {
             this.completeMissionOrder(Item_1.Item.MISSION_ORDER_GREEN);
         }
         if (this.items.includes(Item_1.Item.MISSION_ORDER_PINK) &&
-            (0, schemas_1.values)(this.board).filter((p) => p.stars >= 3).length >= 5) {
+            (0, schemas_1.schemaValues)(this.board).filter((p) => p.stars >= 3).length >= 5) {
             this.completeMissionOrder(Item_1.Item.MISSION_ORDER_PINK);
         }
     }
@@ -324,7 +325,7 @@ class Player extends schema_1.Schema {
         else if (newNbArtifItems < previousNbArtifItems) {
             const lostArtificialItems = this.artificialItems.slice(newNbArtifItems, previousNbArtifItems);
             const removeArtificialItem = (item) => {
-                const pokemons = (0, schemas_1.values)(this.board);
+                const pokemons = (0, schemas_1.schemaValues)(this.board);
                 for (const pokemon of pokemons) {
                     if (pokemon.items.has(item)) {
                         pokemon.removeItem(item, this);
@@ -370,7 +371,7 @@ class Player extends schema_1.Schema {
             const lostScarves = [...previousScarves];
             newScarves.forEach((s) => (0, array_1.removeInArray)(lostScarves, s));
             const removeScarf = (item) => {
-                const pokemons = (0, schemas_1.values)(this.board);
+                const pokemons = (0, schemas_1.schemaValues)(this.board);
                 for (const pokemon of pokemons) {
                     if (pokemon.items.has(item)) {
                         pokemon.removeItem(item, this);
@@ -411,7 +412,7 @@ class Player extends schema_1.Schema {
             const lostTMs = this.tms.slice(newNbTMs, previousNbTMs);
             lostTMs.forEach((tm) => {
                 (0, array_1.removeInArray)(this.items, tm);
-                const pokemonWithThisTm = (0, schemas_1.values)(this.board).find((p) => p.tm === Item_1.AbilityPerTM[tm]);
+                const pokemonWithThisTm = (0, schemas_1.schemaValues)(this.board).find((p) => p.tm === Item_1.AbilityPerTM[tm]);
                 if (pokemonWithThisTm) {
                     pokemonWithThisTm.tm = Ability_1.Ability.DEFAULT;
                     const baseData = (0, precomputed_pokemon_data_1.getPokemonData)(pokemonWithThisTm.name);
@@ -440,7 +441,7 @@ class Player extends schema_1.Schema {
         var _a, _b;
         const gourmetLevel = (0, synergies_1.getSynergyStep)(this.synergies, Synergy_1.Synergy.GOURMET);
         const newNbHats = (_a = [0, 1, 1, 2][gourmetLevel]) !== null && _a !== void 0 ? _a : 0;
-        const hatHolders = (0, schemas_1.values)(this.board).filter((p) => p.items.has(Item_1.Item.CHEF_HAT));
+        const hatHolders = (0, schemas_1.schemaValues)(this.board).filter((p) => p.items.has(Item_1.Item.CHEF_HAT));
         let currentNbHats = this.items.filter((item) => item === Item_1.Item.CHEF_HAT).length +
             hatHolders.length;
         do {
@@ -488,6 +489,36 @@ class Player extends schema_1.Schema {
             });
         }
     }
+    updatePillars() {
+        const expectedNbPillarsByRank = [0, 0, 0];
+        (0, schemas_1.schemaValues)(this.board)
+            .filter((p) => (0, pokemon_factory_1.getPokemonBaseline)(p.name) === Pokemon_1.Pkm.TIMBURR && !(0, board_1.isOnBench)(p))
+            .forEach((p) => {
+            expectedNbPillarsByRank[p.stars - 1] +=
+                p.name === Pokemon_1.Pkm.CONKELDURR ? 2 : 1;
+        });
+        for (let rank = 0; rank < 3; rank++) {
+            const currentPillars = (0, schemas_1.schemaValues)(this.board).filter((p) => p.name === Pokemon_1.Pillars[rank]);
+            const nbExpectedPillars = expectedNbPillarsByRank[rank];
+            if (currentPillars.length < nbExpectedPillars) {
+                const nbPillarsToAdd = nbExpectedPillars - currentPillars.length;
+                for (let i = 0; i < nbPillarsToAdd; i++) {
+                    const freeSpace = (0, board_1.getFirstAvailablePositionOnBoard)(this.board, 1);
+                    if (freeSpace) {
+                        const pillar = pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pillars[rank], this);
+                        pillar.positionX = freeSpace[0];
+                        pillar.positionY = freeSpace[1];
+                        this.board.set(pillar.id, pillar);
+                    }
+                }
+            }
+            else if (nbExpectedPillars < currentPillars.length) {
+                for (let i = 0; i < currentPillars.length - nbExpectedPillars; i++) {
+                    this.board.delete(currentPillars[i].id);
+                }
+            }
+        }
+    }
     updateRegionalPool(state, mapChanged, previousMap) {
         if (this.map === "town") {
             (0, schemas_1.resetArraySchema)(this.regionalPokemons, []);
@@ -524,7 +555,7 @@ class Player extends schema_1.Schema {
                     });
                 }
             }
-            const burmys = (0, schemas_1.values)(this.board).filter((p) => p.passive === Passive_1.Passive.BURMY);
+            const burmys = (0, schemas_1.schemaValues)(this.board).filter((p) => p.passive === Passive_1.Passive.BURMY);
             if (burmys.length > 0 && state.stageLevel >= 20) {
                 const cloakTypesByBurmy = new Map([
                     [Pokemon_1.Pkm.BURMY_PLANT, Synergy_1.Synergy.GRASS],
@@ -618,7 +649,7 @@ class Player extends schema_1.Schema {
     getFinalizedLines() {
         if (this.specialGameRule === SpecialGameRule_1.SpecialGameRule.FAMILY_OUTING)
             return new Set();
-        const finals = new Set((0, schemas_1.values)(this.board)
+        const finals = new Set((0, schemas_1.schemaValues)(this.board)
             .filter((pokemon) => pokemon.final)
             .map((pokemon) => (0, pokemon_factory_1.getPokemonBaseline)(pokemon.name)));
         this.pokemonsTrainingInDojo.forEach((pokemonInDojo) => {
@@ -665,7 +696,7 @@ class Player extends schema_1.Schema {
         this.gameStats.maxSpeed = Math.max(this.gameStats.maxSpeed, ...team.flatMap((e) => e.speed));
         const dps = simulation.getDpsMeter(this.id);
         if (dps) {
-            const dpsList = (0, schemas_1.values)(dps);
+            const dpsList = (0, schemas_1.schemaValues)(dps);
             this.gameStats.maxHeal = Math.max(this.gameStats.maxHeal, ...dpsList.map((d) => d.heal));
             this.gameStats.maxShield = Math.max(this.gameStats.maxShield, ...dpsList.map((d) => d.shield));
             this.gameStats.maxPhysicalDamage = Math.max(this.gameStats.maxPhysicalDamage, ...dpsList.map((d) => d.physicalDamage));

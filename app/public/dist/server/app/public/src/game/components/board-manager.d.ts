@@ -1,4 +1,4 @@
-import { GameObjects } from "phaser";
+import Phaser, { GameObjects } from "phaser";
 import Player from "../../../../models/colyseus-models/player";
 import { PVEStage } from "../../../../models/pve-stages";
 import GameState from "../../../../rooms/states/game-state";
@@ -41,6 +41,8 @@ export default class BoardManager {
     mulchAmountText: Phaser.GameObjects.Text | null;
     mulchIcon: Phaser.GameObjects.Image | null;
     groundHoles: Phaser.GameObjects.Sprite[];
+    trainingBag: Phaser.GameObjects.Sprite | null;
+    trainingRack: Phaser.GameObjects.Sprite | null;
     portal: Portal | undefined;
     smeargle: PokemonSprite | null;
     specialGameRule: SpecialGameRule | null;
@@ -60,6 +62,9 @@ export default class BoardManager {
     hideFlowerPots(): void;
     renderGroundHoles(): void;
     hideGroundHoles(): void;
+    hideTrainingBag(): void;
+    renderTrainingBag(): void;
+    animateTrainingBag(): void;
     displayText(x: number, y: number, label: string, tweenOut?: boolean): GameObjects.Text;
     updatePlayerAvatar(): void;
     updateOpponentAvatar(opponentId: string | null, opponentAvatarString: string | null, isGhostBattle?: boolean): void;
@@ -76,7 +81,7 @@ export default class BoardManager {
     closeTooltips(): void;
     getBenchSize(): number;
     showEmote(playerId: string, emote?: string): void;
-    addSmeargle(): void;
+    addSmeargle(specialGameRule: SpecialGameRule): void;
     addPvePokemons(pveStage: PVEStage, immediately: boolean): void;
     addPortal(): void;
     portalTransition(isRedPlayer: boolean): void;

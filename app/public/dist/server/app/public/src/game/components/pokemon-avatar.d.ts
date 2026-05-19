@@ -1,4 +1,4 @@
-import { GameObjects } from "phaser";
+import Phaser, { GameObjects } from "phaser";
 import { Emotion, IPokemonAvatar } from "../../../../types";
 import GameScene from "../scenes/game-scene";
 import EmoteMenu from "./emote-menu";

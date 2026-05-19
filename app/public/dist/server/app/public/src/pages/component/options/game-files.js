@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = GameFiles;
 const jsx_runtime_1 = require("react/jsx-runtime");
+const phaser_1 = __importDefault(require("phaser"));
 const react_1 = require("react");
 const react_i18next_1 = require("react-i18next");
 const preloading_scene_1 = require("../../../game/scenes/preloading-scene");
@@ -63,8 +67,8 @@ function GameFiles() {
                 setCached(true);
                 setPreloading(false);
             });
-            gameRef.current = new Phaser.Game({
-                type: Phaser.AUTO,
+            gameRef.current = new phaser_1.default.Game({
+                type: phaser_1.default.AUTO,
                 scene: [preloadingScene.current],
                 backgroundColor: "#000000"
             });

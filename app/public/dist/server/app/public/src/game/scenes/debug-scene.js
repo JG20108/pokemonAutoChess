@@ -37,6 +37,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DebugScene = void 0;
+const phaser_1 = __importDefault(require("phaser"));
 const config_1 = require("../../../../config");
 const pokemon_factory_1 = __importDefault(require("../../../../models/pokemon-factory"));
 const Animation_1 = require("../../../../types/Animation");
@@ -57,7 +58,7 @@ const pokemon_1 = __importStar(require("../components/pokemon"));
 const pokemon_animations_1 = require("../components/pokemon-animations");
 const weather_manager_1 = __importDefault(require("../components/weather-manager"));
 const depths_1 = require("../depths");
-class DebugScene extends Phaser.Scene {
+class DebugScene extends phaser_1.default.Scene {
     constructor(height, width, onProgress, onComplete) {
         super();
         this.animationManager = null;
@@ -197,7 +198,7 @@ class DebugScene extends Phaser.Scene {
     updateColorFilter({ red, green, blue, alpha }) {
         var _a;
         (_a = this.colorFilter) === null || _a === void 0 ? void 0 : _a.destroy();
-        this.colorFilter = this.add.existing(new Phaser.GameObjects.Rectangle(this, 1500, 1000, 3000, 2000, new Phaser.Display.Color(red, green, blue).color, alpha / 100).setDepth(depths_1.DEPTH.WEATHER_FX));
+        this.colorFilter = this.add.existing(new phaser_1.default.GameObjects.Rectangle(this, 1500, 1000, 3000, 2000, new phaser_1.default.Display.Color(red, green, blue).color, alpha / 100).setDepth(depths_1.DEPTH.WEATHER_FX));
     }
     updateLandscape() {
         if (!this.map)

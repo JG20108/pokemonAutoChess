@@ -1,4 +1,4 @@
-import { GameObjects } from "phaser";
+import Phaser, { GameObjects } from "phaser";
 import Player from "../../../../models/colyseus-models/player";
 import type GameScene from "../scenes/game-scene";
 import BoardManager from "./board-manager";

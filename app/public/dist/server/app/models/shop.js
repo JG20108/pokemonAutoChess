@@ -316,8 +316,14 @@ class Shop {
         });
     }
     assignShop(player, manualRefresh, state) {
+        var _a;
         player.shop.forEach((pkm) => this.releasePokemon(pkm, player, state));
-        const hasTranscendence = player.effects.has(Effect_1.EffectEnum.TRANSCENDENCE);
+        let psychicLevel = (_a = player.synergies.get(Synergy_1.Synergy.PSYCHIC)) !== null && _a !== void 0 ? _a : 0;
+        if (!manualRefresh && player.unownReminiscences > 0) {
+            psychicLevel += player.unownReminiscences;
+            player.unownReminiscences = 0;
+        }
+        const hasTranscendence = psychicLevel >= config_1.SynergyTriggers[Synergy_1.Synergy.PSYCHIC][2];
         if (hasTranscendence) {
             player.shopsSinceLastUnownShop += 1;
         }
@@ -564,7 +570,7 @@ class Shop {
         const wildChance = (0, synergies_1.getWildChance)(player, state.stageLevel);
         const finals = player.getFinalizedLines();
         let specificTypesWanted = undefined;
-        const attractors = (0, schemas_1.values)(player.board).filter((p) => p.items.has(Item_1.Item.INCENSE) || p.dishes.has(Item_1.Item.HONEY));
+        const attractors = (0, schemas_1.schemaValues)(player.board).filter((p) => p.items.has(Item_1.Item.INCENSE) || p.dishes.has(Item_1.Item.HONEY));
         let attractor = null;
         for (const p of attractors) {
             if (p.items.has(Item_1.Item.INCENSE) && (0, random_1.chance)(config_1.INCENSE_CHANCE, p))
@@ -573,7 +579,7 @@ class Shop {
                 attractor = p;
         }
         if (attractor) {
-            specificTypesWanted = (0, schemas_1.values)(attractor.types);
+            specificTypesWanted = (0, schemas_1.schemaValues)(attractor.types);
         }
         else if ((state.specialGameRule === SpecialGameRule_1.SpecialGameRule.MONOTYPE ||
             state.specialGameRule === SpecialGameRule_1.SpecialGameRule.DUAL_TYPE_SPECIALIST) &&
@@ -583,6 +589,34 @@ class Shop {
         }
         else if (wildChance > 0 && (0, random_1.chance)(wildChance)) {
             specificTypesWanted = [Synergy_1.Synergy.WILD];
+        }
+        else if (player.items.includes(Item_1.Item.AQUA_MONICA) &&
+            (0, random_1.chance)(config_1.AQUA_MONICA_CHANCE)) {
+            specificTypesWanted = [Synergy_1.Synergy.WATER];
+        }
+        else if (player.items.includes(Item_1.Item.FIERY_DRUM) &&
+            (0, random_1.chance)(config_1.FIERY_DRUM_CHANCE)) {
+            specificTypesWanted = [Synergy_1.Synergy.FIRE];
+        }
+        else if (player.items.includes(Item_1.Item.GRASS_CORNET) &&
+            (0, random_1.chance)(config_1.GRASS_CORNET_CHANCE)) {
+            specificTypesWanted = [Synergy_1.Synergy.GRASS];
+        }
+        else if (player.items.includes(Item_1.Item.ICY_FLUTE) &&
+            (0, random_1.chance)(config_1.ICY_FLUTE_CHANCE)) {
+            specificTypesWanted = [Synergy_1.Synergy.ICE];
+        }
+        else if (player.items.includes(Item_1.Item.ROCK_HORN) &&
+            (0, random_1.chance)(config_1.ROCK_HORN_CHANCE)) {
+            specificTypesWanted = [Synergy_1.Synergy.ROCK];
+        }
+        else if (player.items.includes(Item_1.Item.SKY_MELODICA) &&
+            (0, random_1.chance)(config_1.SKY_MELODICA_CHANCE)) {
+            specificTypesWanted = [Synergy_1.Synergy.FLYING];
+        }
+        else if (player.items.includes(Item_1.Item.TERRA_CYMBAL) &&
+            (0, random_1.chance)(config_1.TERRA_CYMBAL_CHANCE)) {
+            specificTypesWanted = [Synergy_1.Synergy.GROUND];
         }
         const probas = config_1.RarityProbabilityPerLevel[player.experienceManager.level];
         const rarity_seed = Math.random();
@@ -611,7 +645,7 @@ class Shop {
             logger_1.logger.error(`error in shop while picking seed = ${rarity_seed}, threshold = ${threshold}`);
             return Pokemon_1.Pkm.MAGIKARP;
         }
-        const repeatBallHolders = (0, schemas_1.values)(player.board).filter((p) => p.items.has(Item_1.Item.REPEAT_BALL));
+        const repeatBallHolders = (0, schemas_1.schemaValues)(player.board).filter((p) => p.items.has(Item_1.Item.REPEAT_BALL));
         const totalRerolls = player.gameStats.rerollCount + state.stageLevel;
         if (repeatBallHolders.length > 0 &&
             shopIndex >= 0 &&
@@ -654,7 +688,7 @@ class Shop {
         return Pokemon_1.Pkm.MAGIKARP;
     }
     pickFish(player, rod, state) {
-        const mantine = (0, schemas_1.values)(player.board).find((p) => p.name === Pokemon_1.Pkm.MANTYKE || p.name === Pokemon_1.Pkm.MANTINE);
+        const mantine = (0, schemas_1.schemaValues)(player.board).find((p) => p.name === Pokemon_1.Pkm.MANTYKE || p.name === Pokemon_1.Pkm.MANTINE);
         const rarityProbability = config_1.FishRarityProbability[rod];
         const rarity_seed = Math.random();
         let threshold = 0;

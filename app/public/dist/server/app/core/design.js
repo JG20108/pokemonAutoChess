@@ -93,6 +93,7 @@ class Design {
         this.terrain[14][7] = config_1.TerrainType.GROUND;
         this.terrain[14][6] = config_1.TerrainType.GROUND;
         this.drawGroundRect(5, 11, 5, 4, false);
+        this.drawGroundRect(11, 16, 2, 2, false);
         this.terrain[8][31] = config_1.TerrainType.GROUND;
     }
     drawGroundRect(x, y, width, height, addWalls = true) {

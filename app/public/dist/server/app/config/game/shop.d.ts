@@ -33,6 +33,13 @@ export declare const HONEY_CHANCE: number;
 export declare const REPEAT_BALL_LEGENDARY_CAP = 120;
 export declare const REPEAT_BALL_UNIQUE_CAP = 80;
 export declare const REPEAT_BALL_UNIQUE_INTERVAL = 10;
+export declare const AQUA_MONICA_CHANCE: number;
+export declare const FIERY_DRUM_CHANCE: number;
+export declare const GRASS_CORNET_CHANCE: number;
+export declare const ICY_FLUTE_CHANCE: number;
+export declare const ROCK_HORN_CHANCE: number;
+export declare const SKY_MELODICA_CHANCE: number;
+export declare const TERRA_CYMBAL_CHANCE: number;
 export declare const HIGH_ROLLER_CHANCE: number;
 export declare const SellPrices: {
     EGG: number;

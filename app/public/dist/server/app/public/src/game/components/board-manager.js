@@ -1,12 +1,46 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BoardMode = void 0;
 const i18next_1 = require("i18next");
-const phaser_1 = require("phaser");
+const phaser_1 = __importStar(require("phaser"));
 const config_1 = require("../../../../config");
+const music_1 = require("../../../../config/game/music");
 const flower_pots_1 = require("../../../../core/flower-pots");
 const pokemon_avatar_1 = require("../../../../models/colyseus-models/pokemon-avatar");
 const pokemon_factory_1 = __importDefault(require("../../../../models/pokemon-factory"));
@@ -53,6 +87,8 @@ class BoardManager {
         this.flowerPokemonsInPots = [];
         this.mulchAmountText = null;
         this.mulchIcon = null;
+        this.trainingBag = null;
+        this.trainingRack = null;
         this.smeargle = null;
         this.specialGameRule = null;
         this.pokemons = new Map();
@@ -98,8 +134,8 @@ class BoardManager {
             }
             if (this.pveChest && this.pveChestGroup) {
                 const rewards = [
-                    ...(0, schemas_1.values)(this.player.pveRewards),
-                    ...(0, schemas_1.values)(this.player.pveRewardsPropositions)
+                    ...(0, schemas_1.schemaValues)(this.player.pveRewards),
+                    ...(0, schemas_1.schemaValues)(this.player.pveRewardsPropositions)
                 ];
                 this.openChest(this.pveChestGroup, this.pveChest, rewards);
             }
@@ -146,6 +182,7 @@ class BoardManager {
             this.renderBerryTrees();
             this.renderFlowerPots();
             this.renderGroundHoles();
+            this.renderTrainingBag();
         }
         if (this.mode === BoardMode.PICK) {
             this.showLightCell();
@@ -160,7 +197,7 @@ class BoardManager {
                 this.smeargle.destroy();
                 this.smeargle = null;
             }
-            this.addSmeargle();
+            this.addSmeargle(this.specialGameRule);
         }
         if (this.state.stageLevel in pve_stages_1.PVEStages && this.mode === BoardMode.PICK) {
             this.addPvePokemons(pve_stages_1.PVEStages[this.state.stageLevel], !phaseJustChanged);
@@ -222,7 +259,7 @@ class BoardManager {
             const simulation = (_b = (_a = this.scene) === null || _a === void 0 ? void 0 : _a.room) === null || _b === void 0 ? void 0 : _b.state.simulations.get(this.player.simulationId);
             const isOnBattle = this.mode === BoardMode.BATTLE &&
                 (simulation === null || simulation === void 0 ? void 0 : simulation.started) &&
-                (0, schemas_1.values)(simulation.blueDpsMeter).some((p) => p.id === potPokemon.id);
+                (0, schemas_1.schemaValues)(simulation.blueDpsMeter).some((p) => p.id === potPokemon.id);
             if (potPokemon && !isOnBattle) {
                 const flowerInPot = new pokemon_1.default(this.scene, flower_pots_1.FLOWER_POTS_POSITIONS_BLUE[i][0], flower_pots_1.FLOWER_POTS_POSITIONS_BLUE[i][1] - 24, potPokemon, this.player.id, false, false);
                 this.animationManager.animatePokemon(flowerInPot, Game_1.PokemonActionState.SLEEP, false, true);
@@ -316,6 +353,44 @@ class BoardManager {
         this.groundHoles.forEach((hole) => hole.destroy());
         this.groundHoles = [];
     }
+    hideTrainingBag() {
+        var _a, _b;
+        (_a = this.trainingRack) === null || _a === void 0 ? void 0 : _a.destroy();
+        (_b = this.trainingBag) === null || _b === void 0 ? void 0 : _b.destroy();
+        this.trainingRack = null;
+        this.trainingBag = null;
+    }
+    renderTrainingBag() {
+        var _a;
+        this.hideTrainingBag();
+        const fightingLevel = (_a = this.player.synergies.get(Synergy_1.Synergy.FIGHTING)) !== null && _a !== void 0 ? _a : 0;
+        if (fightingLevel >= config_1.SynergyTriggers[Synergy_1.Synergy.FIGHTING][3]) {
+            this.trainingRack = this.scene.add
+                .sprite(605, 775, "training_bag", "rack.png")
+                .setScale(1.5)
+                .setDepth(depths_1.DEPTH.INANIMATE_OBJECTS);
+            this.trainingBag = this.scene.add
+                .sprite(621, 750, "training_bag", "bag.png")
+                .setScale(1.5)
+                .setOrigin(35 / 48, 19 / 72)
+                .setDepth(depths_1.DEPTH.INANIMATE_OBJECTS + 0.1);
+        }
+    }
+    animateTrainingBag() {
+        if (!this.trainingBag)
+            return;
+        this.scene.tweens.add({
+            targets: this.trainingBag,
+            angle: {
+                getStart: () => -10,
+                getEnd: () => 10
+            },
+            ease: "Sine.easeInOut",
+            duration: 200,
+            yoyo: true,
+            repeat: -1
+        });
+    }
     displayText(x, y, label, tweenOut = false) {
         const textStyle = {
             fontSize: "24px",
@@ -401,7 +476,7 @@ class BoardManager {
         const players = this.state.players;
         if (!players)
             return;
-        const scoutingPlayers = (0, schemas_1.values)(players).filter((p) => {
+        const scoutingPlayers = (0, schemas_1.schemaValues)(players).filter((p) => {
             var _a;
             const spectatedPlayer = players.get(p.spectatedPlayerId);
             if (!spectatedPlayer ||
@@ -424,7 +499,7 @@ class BoardManager {
         });
         const newScoutingAvatars = scoutingPlayers.filter((p) => this.scoutingAvatars.some((a) => a.playerId === p.id) === false);
         newScoutingAvatars.forEach((player) => {
-            const playerIndex = (0, schemas_1.values)(players).findIndex((p) => p.id === player.id);
+            const playerIndex = (0, schemas_1.schemaValues)(players).findIndex((p) => p.id === player.id);
             const scoutAvatarModel = new pokemon_avatar_1.PokemonAvatarModel(player.id, player.avatar, 0, 0, 0);
             const scoutAvatar = new pokemon_avatar_2.default(this.scene, 1512, 218 + 48 * playerIndex, scoutAvatarModel, player.id, true);
             scoutAvatar.orientation = Game_1.Orientation.DOWNLEFT;
@@ -492,21 +567,32 @@ class BoardManager {
         this.updateScoutingAvatars(true);
     }
     minigameMode() {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         this.mode = BoardMode.TOWN;
         this.scene.setMap("town");
-        if (this.state.stageLevel === config_1.PortalCarouselStages[0])
-            (0, audio_1.playMusic)(this.scene, Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_0);
-        if (this.state.stageLevel === config_1.PortalCarouselStages[1])
-            (0, audio_1.playMusic)(this.scene, Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_10);
-        if (this.state.stageLevel === config_1.PortalCarouselStages[2])
-            (0, audio_1.playMusic)(this.scene, Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_20);
+        if (this.state.townEncounter === TownEncounter_1.TownEncounters.LUDICOLO) {
+            (0, audio_1.playMusic)(this.scene, Dungeon_1.DungeonMusic.CARNIVAL_LUDICOLO);
+            (_a = this.scene.music) === null || _a === void 0 ? void 0 : _a.once("looped", () => {
+                var _a;
+                (0, audio_1.playMusic)(this.scene, (_a = config_1.RegionDetails[this.player.map].music) !== null && _a !== void 0 ? _a : Dungeon_1.DungeonMusic.TREASURE_TOWN);
+            });
+        }
+        else if (this.state.stageLevel === config_1.PortalCarouselStages[0]) {
+            (0, audio_1.playMusic)(this.scene, (0, music_1.getMusicAlt)(Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_0));
+        }
+        else if (this.state.stageLevel === config_1.PortalCarouselStages[1]) {
+            (0, audio_1.playMusic)(this.scene, (0, music_1.getMusicAlt)(Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_10));
+        }
+        else if (this.state.stageLevel === config_1.PortalCarouselStages[2]) {
+            (0, audio_1.playMusic)(this.scene, (0, music_1.getMusicAlt)(Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_20));
+        }
         this.hideLightCell();
         this.hideBerryTrees();
         this.hideFlowerPots();
         this.hideGroundHoles();
+        this.hideTrainingBag();
         this.removePokemonsOnBoard();
-        (_a = this.scene.board) === null || _a === void 0 ? void 0 : _a.pokemons.forEach((p) => p.setAlpha(1));
+        (_b = this.scene.board) === null || _b === void 0 ? void 0 : _b.pokemons.forEach((p) => p.setAlpha(1));
         this.scene.closeTooltips();
         this.scene.input.setDragState(this.scene.input.activePointer, 0);
         if (this.playerAvatar) {
@@ -514,7 +600,7 @@ class BoardManager {
         }
         this.updateOpponentAvatar(null, null);
         this.updateScoutingAvatars(true);
-        (_b = this.scene.minigameManager) === null || _b === void 0 ? void 0 : _b.addVillagers((_d = (_c = this.scene.room) === null || _c === void 0 ? void 0 : _c.state.townEncounter) !== null && _d !== void 0 ? _d : null, stores_1.default.getState().game.podium);
+        (_c = this.scene.minigameManager) === null || _c === void 0 ? void 0 : _c.addVillagers((_e = (_d = this.scene.room) === null || _d === void 0 ? void 0 : _d.state.townEncounter) !== null && _e !== void 0 ? _e : null, stores_1.default.getState().game.podium);
     }
     setPlayer(player) {
         var _a, _b;
@@ -580,7 +666,7 @@ class BoardManager {
                         pokemonSprite.y = coordinates[1];
                     }, this.scene.spectate ? 3000 : 0);
                     stores_1.default.dispatch((0, GameStore_1.refreshShopUI)(0));
-                    this.showSupportItemsVfx((0, schemas_1.values)(pokemon.items), pokemonSprite, pokemon.positionX, pokemon.positionY);
+                    this.showSupportItemsVfx((0, schemas_1.schemaValues)(pokemon.items), pokemonSprite, pokemon.positionX, pokemon.positionY);
                     break;
                 case "positionY": {
                     coordinates = (0, utils_1.transformBoardCoordinates)(pokemon.positionX, pokemon.positionY);
@@ -597,17 +683,21 @@ class BoardManager {
                     }
                     stores_1.default.dispatch((0, GameStore_1.refreshShopUI)(0));
                     if (!(0, board_1.isOnBench)(pokemon)) {
-                        this.showSupportItemsVfx((0, schemas_1.values)(pokemon.items), pokemonSprite, pokemon.positionX, pokemon.positionY);
+                        this.showSupportItemsVfx((0, schemas_1.schemaValues)(pokemon.items), pokemonSprite, pokemon.positionX, pokemon.positionY);
                     }
                     break;
                 }
                 case "action":
                     this.animationManager.animatePokemon(pokemonSprite, value, false);
+                    if (value === Game_1.PokemonActionState.TRAINING &&
+                        pokemon.positionX === 0) {
+                        this.animateTrainingBag();
+                    }
                     break;
                 case "hp":
                 case "maxHP": {
                     const baseHP = (0, precomputed_pokemon_data_1.getPokemonData)(pokemon.name).hp;
-                    const hp = (0, schemas_1.values)(pokemon.items).reduce((acc, item) => { var _a, _b; return acc + ((_b = (_a = config_1.ItemStats[item]) === null || _a === void 0 ? void 0 : _a[Game_1.Stat.HP]) !== null && _b !== void 0 ? _b : 0); }, pokemon.hp);
+                    const hp = (0, schemas_1.schemaValues)(pokemon.items).reduce((acc, item) => { var _a, _b; return acc + ((_b = (_a = config_1.ItemStats[item]) === null || _a === void 0 ? void 0 : _a[Game_1.Stat.HP]) !== null && _b !== void 0 ? _b : 0); }, pokemon.hp);
                     const scale = 2 * Math.sqrt(1 + (pokemon.maxHP - baseHP) / baseHP);
                     pokemonSprite.sprite.setScale(scale);
                     if (previousValue != null && value && value > previousValue)
@@ -710,15 +800,15 @@ class BoardManager {
             }
         }
     }
-    addSmeargle() {
+    addSmeargle(specialGameRule) {
         this.smeargle = new pokemon_special_1.default({
             scene: this.scene,
             x: 1512,
             y: 396,
             name: Pokemon_1.Pkm.SMEARGLE,
             orientation: Game_1.Orientation.DOWNLEFT,
-            dialog: (0, i18next_1.t)(`scribble_description.${this.specialGameRule}`),
-            dialogTitle: (0, i18next_1.t)(`scribble.${this.specialGameRule}`)
+            dialog: (0, i18next_1.t)(`scribble_description.${specialGameRule}`),
+            dialogTitle: (0, i18next_1.t)(`scribble.${specialGameRule}`)
         });
     }
     addPvePokemons(pveStage, immediately) {
@@ -773,13 +863,13 @@ class BoardManager {
             targets: this.portal,
             scale: 1.5,
             duration: 5000,
-            ease: Phaser.Math.Easing.Sine.Out
+            ease: phaser_1.default.Math.Easing.Sine.Out
         });
     }
     portalTransition(isRedPlayer) {
         var _a, _b;
         const [portalX, portalY] = (0, utils_1.transformBoardCoordinates)(3.5, 5);
-        const opponent = (0, schemas_1.values)(this.state.players).find((p) => p.id === this.player.opponentId);
+        const opponent = (0, schemas_1.schemaValues)(this.state.players).find((p) => p.id === this.player.opponentId);
         if (!opponent) {
             logger_1.logger.error("No opponent found for portal transition");
             return;
@@ -788,7 +878,7 @@ class BoardManager {
             if (this.playerAvatar != null) {
                 this.scene.tweens.add({
                     targets: this.playerAvatar,
-                    ease: Phaser.Math.Easing.Quadratic.In,
+                    ease: phaser_1.default.Math.Easing.Quadratic.In,
                     duration: 700,
                     scale: 0,
                     x: portalX,
@@ -800,7 +890,7 @@ class BoardManager {
                 const delay = (0, random_1.randomBetween)(0, 300);
                 this.scene.tweens.add({
                     targets: pokemon,
-                    ease: Phaser.Math.Easing.Quadratic.In,
+                    ease: phaser_1.default.Math.Easing.Quadratic.In,
                     delay,
                     duration: 700,
                     scale: 0,
@@ -810,7 +900,7 @@ class BoardManager {
             }
             this.scene.tweens.add({
                 targets: this.portal,
-                ease: Phaser.Math.Easing.Quadratic.In,
+                ease: phaser_1.default.Math.Easing.Quadratic.In,
                 delay: 700,
                 duration: 300,
                 scale: 0,
@@ -840,7 +930,7 @@ class BoardManager {
                         this.playerAvatar.y = y;
                         this.scene.tweens.add({
                             targets: this.playerAvatar,
-                            ease: Phaser.Math.Easing.Quadratic.Out,
+                            ease: phaser_1.default.Math.Easing.Quadratic.Out,
                             duration: 1000,
                             scale: 1,
                             x: 504,
@@ -859,7 +949,7 @@ class BoardManager {
                         const delay = (0, random_1.randomBetween)(0, 300);
                         this.scene.tweens.add({
                             targets: pokemon,
-                            ease: Phaser.Math.Easing.Quadratic.Out,
+                            ease: phaser_1.default.Math.Easing.Quadratic.Out,
                             delay,
                             duration: 700,
                             scale: 1,
@@ -872,7 +962,7 @@ class BoardManager {
                     });
                     this.scene.tweens.add({
                         targets: this.portal,
-                        ease: Phaser.Math.Easing.Cubic.In,
+                        ease: phaser_1.default.Math.Easing.Cubic.In,
                         delay: 700,
                         duration: 300,
                         scale: 0,
@@ -895,7 +985,7 @@ class BoardManager {
                 this.opponentAvatar.setScale(0);
                 this.scene.tweens.add({
                     targets: this.opponentAvatar,
-                    ease: Phaser.Math.Easing.Quadratic.Out,
+                    ease: phaser_1.default.Math.Easing.Quadratic.Out,
                     duration: 1500,
                     scale: 1,
                     x: 1512,
@@ -908,7 +998,7 @@ class BoardManager {
                 });
             }
             setTimeout(() => {
-                const opponent = (0, schemas_1.values)(this.state.players).find((p) => p.id === this.player.opponentId);
+                const opponent = (0, schemas_1.schemaValues)(this.state.players).find((p) => p.id === this.player.opponentId);
                 if (!opponent)
                     return;
                 opponent.board.forEach((pokemon) => {
@@ -923,7 +1013,7 @@ class BoardManager {
                     const delay = (0, random_1.randomBetween)(0, 300);
                     this.scene.tweens.add({
                         targets: pokemonSprite,
-                        ease: Phaser.Math.Easing.Quadratic.Out,
+                        ease: phaser_1.default.Math.Easing.Quadratic.Out,
                         delay,
                         duration: 700,
                         scale: 1,
@@ -937,7 +1027,7 @@ class BoardManager {
             }, 1000);
             this.scene.tweens.add({
                 targets: this.portal,
-                ease: Phaser.Math.Easing.Cubic.In,
+                ease: phaser_1.default.Math.Easing.Cubic.In,
                 delay: 1700,
                 duration: 300,
                 scale: 0,
@@ -972,7 +1062,7 @@ class BoardManager {
             chestGroup === null || chestGroup === void 0 ? void 0 : chestGroup.addMultiple([itemSprite, shinyEffect]);
             this.scene.tweens.add({
                 targets: [itemSprite, shinyEffect],
-                ease: Phaser.Math.Easing.Quadratic.Out,
+                ease: phaser_1.default.Math.Easing.Quadratic.Out,
                 duration: 1000,
                 y: chest.y - 48,
                 x: chest.x + (i - (rewards.length - 1) / 2) * 70

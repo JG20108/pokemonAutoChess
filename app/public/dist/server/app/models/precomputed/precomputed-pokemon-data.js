@@ -22,7 +22,7 @@ precomputed_pokemons_1.precomputedPokemons.forEach((pokemon) => {
         hp: pokemon.hp,
         pp: pokemon.maxPP,
         range: pokemon.range,
-        types: (0, schemas_1.values)(pokemon.types),
+        types: (0, schemas_1.schemaValues)(pokemon.types),
         evolution: pokemon.evolution === Pokemon_1.Pkm.DEFAULT ? null : pokemon.evolution,
         evolutions: pokemon.evolutions,
         stages: Math.max(...precomputed_pokemons_1.precomputedPokemons

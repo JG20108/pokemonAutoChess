@@ -86,13 +86,13 @@ function GameHistory(props) {
                             if (height === undefined || width === undefined)
                                 return null;
                             return ((0, jsx_runtime_1.jsx)(react_window_1.List, { style: { height, width }, rowCount: gameHistory.length, rowHeight: dynamicRowHeight, rowComponent: GameHistoryRow, rowProps: {
-                                    gameHistory,
-                                    t
+                                    gameHistory
                                 }, onRowsRendered: handleRowsRendered }));
                         } }))] })] }));
 }
-function GameHistoryRow({ index, style, gameHistory, t }) {
+function GameHistoryRow({ index, style, gameHistory }) {
     const r = gameHistory[index];
+    const { t } = (0, react_i18next_1.useTranslation)();
     return ((0, jsx_runtime_1.jsx)("div", { style: style, children: (0, jsx_runtime_1.jsxs)("div", { className: "my-box game-history", children: [(0, jsx_runtime_1.jsxs)("span", { className: "top", children: [(0, jsx_runtime_1.jsx)(game_mode_icon_1.GameModeIcon, { gameMode: r.gameMode }), t("top"), " ", r.rank] }), (0, jsx_runtime_1.jsx)(elo_badge_1.EloBadge, { elo: r.elo }), (0, jsx_runtime_1.jsx)("ul", { className: "synergies", children: getTopSynergies(r.pokemons).map(([type, value]) => ((0, jsx_runtime_1.jsxs)("li", { children: [(0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: type }), (0, jsx_runtime_1.jsx)("span", { children: value })] }, r.time + type))) }), (0, jsx_runtime_1.jsx)("p", { className: "date", children: (0, date_1.formatDate)(r.time) }), (0, jsx_runtime_1.jsx)(team_1.default, { team: r.pokemons })] }) }));
 }
 function getTopSynergies(team) {

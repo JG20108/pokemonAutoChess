@@ -23,6 +23,7 @@ exports.TownEncounters = {
     [Pokemon_1.Pkm.CINCCINO]: Pokemon_1.Pkm.CINCCINO,
     [Pokemon_1.Pkm.MAGNEZONE]: Pokemon_1.Pkm.MAGNEZONE,
     [Pokemon_1.Pkm.KINGAMBIT]: Pokemon_1.Pkm.KINGAMBIT,
-    [Pokemon_1.Pkm.LAPRAS]: Pokemon_1.Pkm.LAPRAS
+    [Pokemon_1.Pkm.LAPRAS]: Pokemon_1.Pkm.LAPRAS,
+    [Pokemon_1.Pkm.LUDICOLO]: Pokemon_1.Pkm.LUDICOLO
 };
 //# sourceMappingURL=TownEncounter.js.map

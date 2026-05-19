@@ -18,10 +18,10 @@ exports.TownEncountersByStage = {
         [Pokemon_1.Pkm.DUSKULL]: 1 / 20,
         [Pokemon_1.Pkm.CINCCINO]: 1 / 20,
         [Pokemon_1.Pkm.MAROWAK]: 1 / 20,
-        [Pokemon_1.Pkm.CELEBI]: 1 / 40,
         [Pokemon_1.Pkm.MAKUHITA]: 1 / 20,
         [Pokemon_1.Pkm.MAGNEZONE]: 1 / 20,
-        [Pokemon_1.Pkm.LAPRAS]: 1 / 20
+        [Pokemon_1.Pkm.LAPRAS]: 1 / 20,
+        [Pokemon_1.Pkm.LUDICOLO]: 1 / 20
     },
     12: {
         [Pokemon_1.Pkm.KANGASKHAN]: 1 / 20,

@@ -187,7 +187,7 @@ export declare class PokemonEntity extends Schema implements IPokemonEntity {
     } | null;
     applyStat(stat: Stat, value: number, permanent?: boolean): void;
     resurrect(): void;
-    eatBerry(berry: Item, stealedFrom?: PokemonEntity, inPuffin?: boolean): void;
+    eatBerry(berry: Item, stealedFrom?: PokemonEntity, healToShield?: boolean, apScaling?: number, crit?: boolean): void;
     broadcastAbility({ skill, ap, positionX, positionY, orientation, targetX, targetY, delay }?: {
         skill?: Ability | string;
         ap?: number;

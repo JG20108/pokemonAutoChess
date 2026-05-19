@@ -39,7 +39,9 @@ function GamePlayerDetail(props) {
                                                 : "4px solid #8c2022",
                                         marginLeft: "6px",
                                         borderRadius: "12px"
-                                    }, src: (0, avatar_1.getAvatarSrc)(record.avatar) }), (0, jsx_runtime_1.jsx)("p", { style: { fontSize: "80%" }, children: (record.id === "pve" ? t(record.name) : record.name).slice(0, 5) })] }, `${record.name}${i}_game-player-detail`));
+                                    }, src: (0, avatar_1.getAvatarSrc)(record.avatar) }), (0, jsx_runtime_1.jsx)("p", { style: { fontSize: "80%" }, children: (record.id === "pve"
+                                        ? t(record.name)
+                                        : record.name).slice(0, 5) })] }, `${record.name}${i}_game-player-detail`));
                     }), (0, jsx_runtime_1.jsx)("div", { className: "spacer" }), distance != null && ((0, jsx_runtime_1.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "4px" }, children: [(0, jsx_runtime_1.jsx)("img", { src: "/assets/ui/time.svg", style: { width: "16px", height: "16px" }, title: t("rounds_since_last_fight", { count: distance }) }), distance] }))] }), (0, jsx_runtime_1.jsx)("div", { style: { display: "flex", justifyContent: "start" }, children: synergyList.map((synergy, i) => {
                     return ((0, jsx_runtime_1.jsx)("div", { style: {
                             display: "flex",

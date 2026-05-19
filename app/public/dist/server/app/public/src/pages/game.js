@@ -67,7 +67,7 @@ function getGameContainer() {
 }
 function cyclePlayers(amt) {
     var _a;
-    const players = (0, schemas_1.values)((_a = gameContainer.room) === null || _a === void 0 ? void 0 : _a.state.players);
+    const players = (0, schemas_1.schemaValues)((_a = gameContainer.room) === null || _a === void 0 ? void 0 : _a.state.players);
     playerClick(players[(players.findIndex((p) => p === gameContainer.player) +
         amt +
         players.length) %
@@ -499,7 +499,7 @@ function Game() {
                 dispatch((0, GameStore_1.setSpecialGameRule)(value));
             });
             $state.additionalPokemons.onChange(() => {
-                dispatch((0, GameStore_1.setAdditionalPokemons)((0, schemas_1.values)(room.state.additionalPokemons)));
+                dispatch((0, GameStore_1.setAdditionalPokemons)((0, schemas_1.schemaValues)(room.state.additionalPokemons)));
             });
             $state.simulations.onRemove(() => {
                 gameContainer.resetSimulation();
@@ -586,7 +586,7 @@ function Game() {
                         dispatch((0, GameStore_1.changePlayer)({
                             id: player.id,
                             field: "choices",
-                            value: (0, schemas_1.values)(player.choices)
+                            value: (0, schemas_1.schemaValues)(player.choices)
                         }));
                     });
                 }

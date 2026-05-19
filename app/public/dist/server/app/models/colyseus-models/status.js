@@ -670,6 +670,11 @@ class Status extends schema_1.Schema {
         }
     }
     updateSleep(dt, pkm) {
+        if (pkm.passive === Passive_1.Passive.COMATOSE) {
+            this.sleep = true;
+            this.sleepCooldown = 1000;
+            return;
+        }
         if (this.sleepCooldown - dt <= 0) {
             this.sleep = false;
             this.ccCooldown = Math.max(this.ccCooldown, config_1.CC_COOLDOWN);
@@ -1001,7 +1006,7 @@ class Status extends schema_1.Schema {
             const pkmTeam = pkm.team === Game_1.Team.RED_TEAM
                 ? pkm.simulation.redTeam
                 : pkm.simulation.blueTeam;
-            if ((0, schemas_1.values)(pkmTeam).some((p) => p.id !== pkm.id && !p.status.possessed)) {
+            if ((0, schemas_1.schemaValues)(pkmTeam).some((p) => p.id !== pkm.id && !p.status.possessed)) {
                 if (!this.possessed) {
                     pkm.team =
                         pkm.team === Game_1.Team.BLUE_TEAM ? Game_1.Team.RED_TEAM : Game_1.Team.BLUE_TEAM;
@@ -1022,7 +1027,7 @@ class Status extends schema_1.Schema {
         const otherTeam = pkm.team === Game_1.Team.RED_TEAM
             ? pkm.simulation.blueTeam
             : pkm.simulation.redTeam;
-        const possessedCount = (0, schemas_1.values)(otherTeam).filter((pokemon) => pokemon.status.possessed).length;
+        const possessedCount = (0, schemas_1.schemaValues)(otherTeam).filter((pokemon) => pokemon.status.possessed).length;
         const lastAliveArePossessed = possessedCount === otherTeam.size;
         this.possessedCooldown -= dt;
         if (this.possessedCooldown <= 0 || lastAliveArePossessed) {

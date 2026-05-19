@@ -109,7 +109,7 @@ function computeSynergies(board, bonusSynergies, specialGameRule) {
                     : Pokemon_1.PkmFamily[pkm.name];
                 if (!dragonDoubleTypes.has(family))
                     dragonDoubleTypes.set(family, new Set());
-                dragonDoubleTypes.get(family).add((0, schemas_1.values)(pkm.types)[1]);
+                dragonDoubleTypes.get(family).add((0, schemas_1.schemaValues)(pkm.types)[1]);
             }
         });
         dragonDoubleTypes.forEach((types) => {
@@ -158,7 +158,7 @@ function computeSynergies(board, bonusSynergies, specialGameRule) {
                 applyDragonDoubleTypes();
             }
             if (pkm.name.startsWith("ARCEUS")) {
-                switch ((0, schemas_1.values)(pkm.types)[0]) {
+                switch ((0, schemas_1.schemaValues)(pkm.types)[0]) {
                     case Synergy_1.Synergy.BUG:
                         pkm.index = Pokemon_1.PkmIndex[Pokemon_1.Pkm.ARCEUS_BUG];
                         break;
@@ -247,7 +247,7 @@ function getWildChance(player, stageLevel) {
     const isPVE = stageLevel === 0 || stageLevel in pve_stages_1.PVEStages;
     const wildLevel = getSynergyStep(player.synergies, Synergy_1.Synergy.WILD);
     const baseChance = isPVE || wildLevel > 0 ? 6 : 0;
-    const nbWildStars = (0, schemas_1.values)(player.board)
+    const nbWildStars = (0, schemas_1.schemaValues)(player.board)
         .filter((p) => p.types.has(Synergy_1.Synergy.WILD) && (0, board_1.isOnBench)(p) === false)
         .reduce((total, p) => total + p.stars, 0);
     const bonusChance = wildLevel > 0 ? nbWildStars * 0.5 : 0;

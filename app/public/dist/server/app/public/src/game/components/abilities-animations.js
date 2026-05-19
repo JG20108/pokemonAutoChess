@@ -390,8 +390,9 @@ function addAbilitySprite(scene, ability, ap, position, options = {}) {
     sprite.setDepth(depth !== null && depth !== void 0 ? depth : depths_1.DEPTH.ABILITY);
     if (tint)
         sprite.setTint(tint);
-    if (tintFill)
-        sprite.setTintFill(tintFill);
+    if (tintFill) {
+        sprite.setTint(tintFill).setTintMode(phaser_1.default.TintModes.FILL);
+    }
     if (rotation !== undefined)
         sprite.setRotation(rotation);
     if (angle !== undefined)
@@ -593,7 +594,25 @@ exports.AbilitiesAnimations = {
     [Ability_1.Ability.SOFT_BOILED]: onCasterScale2,
     [Ability_1.Ability.FAKE_TEARS]: onCasterScale2,
     [Ability_1.Ability.TEA_TIME]: onCasterScale2,
-    [Ability_1.Ability.FUTURE_SIGHT]: onCaster({ depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON }),
+    [Ability_1.Ability.FUTURE_SIGHT]: onTarget({
+        depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON,
+        animOptions: { repeat: 2 }
+    }),
+    ["FUTURE_SIGHT_HIT"]: onTarget({
+        scale: 2,
+        depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON,
+        tint: 0xbb90ff
+    }),
+    [Ability_1.Ability.DOOM_DESIRE]: onTarget({
+        depth: depths_1.DEPTH.ABILITY_MAJOR,
+        scale: 1,
+        positionOffset: [0, -20]
+    }),
+    ["DOOM_DESIRE_HIT"]: onTarget({
+        depth: depths_1.DEPTH.ABILITY_MAJOR,
+        scale: 1,
+        positionOffset: [0, -20]
+    }),
     [Ability_1.Ability.PETAL_DANCE]: onCasterScale2,
     [Ability_1.Ability.AROMATHERAPY]: onCasterScale2,
     [Ability_1.Ability.BOUNCE]: onCasterScale2,
@@ -743,7 +762,7 @@ exports.AbilitiesAnimations = {
         oriented: true,
         rotation: +Math.PI / 2
     }),
-    [Ability_1.Ability.MYSTICAL_FIRE]: onTarget({ positionOffset: [0, -50] }),
+    [Ability_1.Ability.MYSTICAL_FIRE]: onTarget({ scale: 1.5 }),
     [Ability_1.Ability.FLAME_CHARGE]: onCaster({
         oriented: true,
         rotation: +Math.PI / 2,
@@ -973,9 +992,8 @@ exports.AbilitiesAnimations = {
     }),
     [Ability_1.Ability.MUDDY_WATER]: onTarget({ origin: [0.5, 1] }),
     [Ability_1.Ability.FAIRY_LOCK]: onTargetScale1,
-    [Ability_1.Ability.STEAM_ERUPTION]: onTargetScale3,
+    [Ability_1.Ability.STEAM_ERUPTION]: onTargetScale2,
     [Ability_1.Ability.SEARING_SHOT]: onCaster({
-        ability: Ability_1.Ability.STEAM_ERUPTION,
         depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON,
         scale: 3
     }),
@@ -2359,7 +2377,7 @@ exports.AbilitiesAnimations = {
     [Ability_1.Ability.COLUMN_CRUSH]: (args) => {
         var _a;
         const distance = (0, number_1.min)(1)((0, distance_1.distanceE)(args.positionX, args.positionY, args.targetX, args.targetY));
-        const pillarType = (_a = [Pokemon_1.Pkm.PILLAR_WOOD, Pokemon_1.Pkm.PILLAR_IRON, Pokemon_1.Pkm.PILLAR_CONCRETE][args.orientation]) !== null && _a !== void 0 ? _a : Pokemon_1.Pkm.PILLAR_WOOD;
+        const pillarType = (_a = Pokemon_1.Pillars[args.orientation]) !== null && _a !== void 0 ? _a : Pokemon_1.Pkm.PILLAR_WOOD;
         const animKey = `${Pokemon_1.PkmIndex[pillarType]}/${Game_1.PokemonTint.NORMAL}/${Animation_1.AnimationType.Idle}/${Game_1.SpriteType.ANIM}/${Game_1.Orientation.DOWN}`;
         const frame = `${Game_1.PokemonTint.NORMAL}/${Animation_1.AnimationType.Idle}/${Game_1.SpriteType.ANIM}/${Game_1.Orientation.DOWN}/0000`;
         return projectile({
@@ -2568,6 +2586,11 @@ exports.AbilitiesAnimations = {
         depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON,
         ability: Ability_1.Ability.DISCHARGE
     }),
+    [Ability_1.Ability.AQUA_STEP]: onCaster({
+        ability: Ability_1.Ability.AQUA_STEP,
+        scale: 1,
+        positionOffset: [+5, -15]
+    }),
     [Ability_1.Ability.STATIC_SHOCK]: onCaster({
         depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON,
         ability: Ability_1.Ability.DISCHARGE
@@ -2635,6 +2658,12 @@ exports.AbilitiesAnimations = {
         hitAnim: onTarget({ ability: "PUFF_GREEN", scale: 1 }),
         scale: 0.25
     }),
+    ["GREEN_ORB"]: onCaster({
+        ability: "GREEN_ORB",
+        oriented: false,
+        scale: 3,
+        depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON
+    }),
     ["GALARIAN_DARMANITAN_ZEN_BURN"]: onCaster({
         ability: "INFERNO",
         depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON,
@@ -2642,7 +2671,7 @@ exports.AbilitiesAnimations = {
     }),
     ["WARP_WAND"]: onSprite((_a) => {
         var { targetSprite } = _a, args = __rest(_a, ["targetSprite"]);
-        onTarget({ ability: Ability_1.Ability.FUTURE_SIGHT, scale: 1.5 })(args);
+        onTarget({ ability: "WARP", scale: 1.5 })(args);
         if (targetSprite) {
             targetSprite.isTeleporting = true;
             setTimeout(() => {

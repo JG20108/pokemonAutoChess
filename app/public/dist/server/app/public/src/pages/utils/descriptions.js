@@ -14,30 +14,25 @@ const Item_1 = require("../../../../types/enum/Item");
 const Status_1 = require("../../../../types/enum/Status");
 const Synergy_1 = require("../../../../types/enum/Synergy");
 const Weather_1 = require("../../../../types/enum/Weather");
+const TechnicalTerm_1 = require("../../../../types/strings/TechnicalTerm");
+const array_1 = require("../../../../utils/array");
 const number_1 = require("../../../../utils/number");
+const object_1 = require("../../../../utils/object");
 const synergy_icon_1 = __importDefault(require("../component/icons/synergy-icon"));
 const jsx_1 = require("./jsx");
-const DamageTypes = Object.keys(Game_1.Damage);
-const Stats = Object.keys(Game_1.Stat);
-const Statuses = Object.keys(Status_1.Status);
-const Weathers = Object.keys(Weather_1.Weather);
-const Synergies = Object.keys(Synergy_1.Synergy);
-const Items = Object.keys(Item_1.Item);
-const TechnicalTerms = [
-    "STRONGEST",
-    "ADJACENT",
-    "ADJACENT_IN_THE_SAME_ROW",
-    "CONE",
-    "BOARD_EFFECT"
-];
+const DamageTypes = (0, object_1.keys)(Game_1.Damage);
+const Stats = (0, object_1.keys)(Game_1.Stat);
+const Weathers = (0, object_1.keys)(Weather_1.Weather);
+const Synergies = (0, object_1.keys)(Synergy_1.Synergy);
+const Items = (0, object_1.keys)(Item_1.Item);
 exports.iconRegExp = new RegExp(`(?<=\\W|^)(?:${[
     ...DamageTypes,
     ...Stats,
-    ...Statuses,
+    ...Status_1.DocumentedStatuses,
     ...Weathers,
     ...Synergies,
     ...Items,
-    ...TechnicalTerms,
+    ...TechnicalTerm_1.TechnicalTerms,
     "GOLD",
     "STAR"
 ].join("|")}|\\[[^\\]]+\\])(?=\\W|$)`, "g");
@@ -59,31 +54,31 @@ function addIconsToDescription(description, stats) {
             else if (token === "STAR") {
                 d = ((0, jsx_runtime_1.jsx)("img", { className: "description-icon icon-star", src: "/assets/ui/star.svg", alt: "\u2B50" }));
             }
-            else if (DamageTypes.includes(token)) {
+            else if ((0, array_1.isIn)(DamageTypes, token)) {
                 d = ((0, jsx_runtime_1.jsx)("span", { className: token === Game_1.Damage.PHYSICAL
                         ? "damage-physical"
                         : token === Game_1.Damage.SPECIAL
                             ? "damage-special"
                             : "damage-true", children: (0, i18next_1.t)(`damage.${token}`) }));
             }
-            else if (Stats.includes(token)) {
+            else if ((0, array_1.isIn)(Stats, token)) {
                 d = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon stat", children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/icons/${token}.png` }), (0, jsx_runtime_1.jsx)("span", { className: "stat-label", children: (0, i18next_1.t)(`stat.${token}`) })] }));
             }
-            else if (Statuses.includes(token)) {
+            else if ((0, array_1.isIn)(Status_1.DocumentedStatuses, token)) {
                 d = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon status", title: (0, i18next_1.t)(`status_description.${token}`), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/icons/${token}.svg` }), (0, jsx_runtime_1.jsx)("span", { className: (0, jsx_1.cc)("status-label", {
                                 positive: Status_1.PositiveStatuses.includes(token)
                             }), children: (0, i18next_1.t)(`status.${token}`) })] }));
             }
-            else if (Weathers.includes(token)) {
+            else if ((0, array_1.isIn)(Weathers, token)) {
                 d = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon weather", title: (0, i18next_1.t)(`weather_description.${token}`), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/icons/weather/${token.toLowerCase()}.svg` }), (0, jsx_runtime_1.jsx)("span", { className: "weather-label", children: (0, i18next_1.t)(`weather.${token}`) })] }));
             }
-            else if (Items.includes(token)) {
+            else if ((0, array_1.isIn)(Items, token)) {
                 d = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon item", title: (0, i18next_1.t)(`item_description.${token}`), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/item/${token}.png` }), (0, jsx_runtime_1.jsx)("span", { className: "item-label", children: (0, i18next_1.t)(`item.${token}`) })] }));
             }
-            else if (Synergies.includes(token)) {
+            else if ((0, array_1.isIn)(Synergies, token)) {
                 d = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon synergy", children: [(0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: token, size: "1.5em" }), (0, jsx_runtime_1.jsx)("span", { className: "synergy-label", children: (0, i18next_1.t)(`synergy.${token}`) })] }));
             }
-            else if (TechnicalTerms.includes(token)) {
+            else if ((0, array_1.isIn)(TechnicalTerm_1.TechnicalTerms, token)) {
                 d = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon technical-term", title: (0, i18next_1.t)(`technical_terms_definitions.${token}`), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/ui/${token.toLowerCase()}.svg` }), (0, jsx_runtime_1.jsx)("i", { className: "technical-term-label", children: capitalize((0, i18next_1.t)(`technical_terms.${token}`)) })] }));
             }
             else if (/\[[^\]]+\]/.test(token)) {
@@ -155,7 +150,7 @@ function addIconsToHtml(htmlString, stats) {
                     iconHTML =
                         '<img class="description-icon icon-star" src="/assets/ui/star.svg" alt="⭐" />';
                 }
-                else if (DamageTypes.includes(token)) {
+                else if ((0, array_1.isIn)(DamageTypes, token)) {
                     const className = token === Game_1.Damage.PHYSICAL
                         ? "damage-physical"
                         : token === Game_1.Damage.SPECIAL
@@ -163,38 +158,38 @@ function addIconsToHtml(htmlString, stats) {
                             : "damage-true";
                     iconHTML = `<span class="${className}">${(0, i18next_1.t)(`damage.${token}`)}</span>`;
                 }
-                else if (Stats.includes(token)) {
+                else if ((0, array_1.isIn)(Stats, token)) {
                     iconHTML = `<span class="description-icon stat">
             <img src="assets/icons/${token}.png" />
             <span class="stat-label">${(0, i18next_1.t)(`stat.${token}`)}</span>
           </span>`;
                 }
-                else if (Statuses.includes(token)) {
+                else if ((0, array_1.isIn)(Status_1.DocumentedStatuses, token)) {
                     const isPositive = Status_1.PositiveStatuses.includes(token);
                     iconHTML = `<span class="description-icon status" title="${(0, i18next_1.t)(`status_description.${token}`)}">
             <img src="assets/icons/${token}.svg" />
             <span class="status-label${isPositive ? " positive" : ""}">${(0, i18next_1.t)(`status.${token}`)}</span>
           </span>`;
                 }
-                else if (Weathers.includes(token)) {
+                else if ((0, array_1.isIn)(Weathers, token)) {
                     iconHTML = `<span class="description-icon weather" title="${(0, i18next_1.t)(`weather_description.${token}`)}">
             <img src="assets/icons/weather/${token.toLowerCase()}.svg" />
             <span class="weather-label">${(0, i18next_1.t)(`weather.${token}`)}</span>
           </span>`;
                 }
-                else if (Items.includes(token)) {
+                else if ((0, array_1.isIn)(Items, token)) {
                     iconHTML = `<span class="description-icon item" title="${(0, i18next_1.t)(`item_description.${token}`)}" data-tooltip-id="item-detail-tooltip" data-tooltip-content="${token}">
             <img src="assets/item/${token}.png" />
             <span class="item-label">${(0, i18next_1.t)(`item.${token}`)}</span>
           </span>`;
                 }
-                else if (Synergies.includes(token)) {
+                else if ((0, array_1.isIn)(Synergies, token)) {
                     iconHTML = `<span class="description-icon synergy">
             <img src="assets/types/${token}.svg" style="width: 1.5em; height: 1.5em;" />
             <span class="synergy-label">${(0, i18next_1.t)(`synergy.${token}`)}</span>
           </span>`;
                 }
-                else if (TechnicalTerms.includes(token)) {
+                else if ((0, array_1.isIn)(TechnicalTerm_1.TechnicalTerms, token)) {
                     iconHTML = `<span class="description-icon technical-term" title="${(0, i18next_1.t)(`technical_terms_definitions.${token}`)}">
             <img src="assets/ui/${token.toLowerCase()}.svg" />
             <i class="technical-term-label">${(0, i18next_1.t)(`technical_terms.${token}`)}</i>

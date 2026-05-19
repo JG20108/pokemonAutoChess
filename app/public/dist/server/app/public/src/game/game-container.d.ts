@@ -9,6 +9,7 @@ import { IDragDropCombineMessage, IDragDropItemMessage, IDragDropMessage, IPlaye
 import { Ability } from "../../../types/enum/Ability";
 import { AttackType, HealType, Orientation } from "../../../types/enum/Game";
 import { Weather } from "../../../types/enum/Weather";
+import { DisplayText } from "../../../types/strings/DisplayText";
 import GameScene from "./scenes/game-scene";
 declare class GameContainer {
     room: Room<GameState>;
@@ -63,7 +64,7 @@ declare class GameContainer {
     handleDragDropCancel(message: {
         updateBoard: boolean;
         updateItems: boolean;
-        text?: string;
+        text?: DisplayText;
         pokemonId?: string;
     }): void;
     setPlayer(player: Player): void;

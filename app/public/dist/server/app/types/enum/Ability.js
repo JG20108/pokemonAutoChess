@@ -550,5 +550,10 @@ var Ability;
     Ability["MOUNTAIN_GALE"] = "MOUNTAIN_GALE";
     Ability["TWINEEDLE"] = "TWINEEDLE";
     Ability["ROCK_WRECKER"] = "ROCK_WRECKER";
+    Ability["AQUA_STEP"] = "AQUA_STEP";
+    Ability["STUFF_CHEEKS"] = "STUFF_CHEEKS";
+    Ability["SNORE"] = "SNORE";
+    Ability["SILK_TRAP"] = "SILK_TRAP";
+    Ability["SKITTER_SMACK"] = "SKITTER_SMACK";
 })(Ability || (exports.Ability = Ability = {}));
 //# sourceMappingURL=Ability.js.map

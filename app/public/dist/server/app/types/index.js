@@ -211,5 +211,6 @@ var Title;
     Title["POSTMAN"] = "POSTMAN";
     Title["SURVEY_CORPS"] = "SURVEY_CORPS";
     Title["GUILDMASTER"] = "GUILDMASTER";
+    Title["LEGIONNAIRE"] = "LEGIONNAIRE";
 })(Title || (exports.Title = Title = {}));
 //# sourceMappingURL=index.js.map

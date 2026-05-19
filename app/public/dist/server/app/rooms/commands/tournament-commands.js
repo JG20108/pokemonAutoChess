@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EndTournamentCommand = exports.EndTournamentMatchCommand = exports.RemakeTournamentLobbyCommand = exports.CreateTournamentLobbiesCommand = exports.NextTournamentStageCommand = exports.ParticipateInTournamentCommand = exports.DeleteTournamentCommand = exports.OnCreateTournamentCommand = void 0;
 const command_1 = require("@colyseus/command");
 const colyseus_1 = require("colyseus");
+const gadgets_1 = require("../../config/game/gadgets");
 const tournament_logic_1 = require("../../core/tournament-logic");
 const tournament_1 = require("../../models/colyseus-models/tournament");
 const tournament_2 = require("../../models/mongo-models/tournament");
@@ -71,6 +72,10 @@ class ParticipateInTournamentCommand extends command_1.Command {
                 if (!user)
                     return;
                 if (participate) {
+                    if (user.level < gadgets_1.GADGETS.certificate.levelRequired) {
+                        client.send(types_1.Transfer.ALERT, `You need to reach level ${gadgets_1.GADGETS.certificate.levelRequired} to participate in tournaments.`);
+                        return;
+                    }
                     const tournamentPlayer = new tournament_1.TournamentPlayerSchema(user.displayName, user.avatar, user.elo);
                     tournament.players.set(user.uid, tournamentPlayer);
                 }
@@ -109,7 +114,7 @@ class NextTournamentStageCommand extends command_1.Command {
                 tournament.players.forEach((player, playerId) => {
                     var _a;
                     if (player.eliminated && playersInLastRound.has(playerId)) {
-                        const ranks = (0, schemas_1.values)(player.ranks);
+                        const ranks = (0, schemas_1.schemaValues)(player.ranks);
                         const sortKey = isFinalRound
                             ? ((_a = ranks[ranks.length - 1]) !== null && _a !== void 0 ? _a : 8)
                             : ranks.length > 0
@@ -259,7 +264,7 @@ class EndTournamentMatchCommand extends command_1.Command {
                     }
                 });
                 if (!tournament.pendingLobbiesCreation &&
-                    (0, schemas_1.values)(tournament.brackets).every((b) => b.finished)) {
+                    (0, schemas_1.schemaValues)(tournament.brackets).every((b) => b.finished)) {
                     tournament.pendingLobbiesCreation = true;
                     const mongoTournament = yield tournament_2.Tournament.findById(tournamentId);
                     if (mongoTournament) {

@@ -31,7 +31,7 @@ exports.Garganacl = exports.Naclstack = exports.Nacli = exports.Beartic = export
 exports.Skitty = exports.Farigiraf = exports.Girafarig = exports.Whimsicott = exports.Cottonee = exports.IndeedeeMale = exports.IndeedeeFemale = exports.ScreamTail = exports.UrshifuSingle = exports.UrshifuRapid = exports.Kubfu = exports.Rillaboom = exports.Thwackey = exports.Grookey = exports.IronValiant = exports.ZacianCrowned = exports.Zacian = exports.Unfezant = exports.Tranquill = exports.Pidove = exports.Eelektross = exports.Eelektrik = exports.Tynamo = exports.Ceruledge = exports.Armarouge = exports.Charcadet = exports.Lurantis = exports.Fomantis = exports.Archaludon = exports.Duraludon = exports.Veluza = exports.Pecharunt = exports.AlcremieRainbowSwirl = exports.AlcremieCaramelSwirl = exports.AlcremieRubySwirl = exports.AlcremieSalted = exports.AlcremieLemon = exports.AlcremieMint = exports.AlcremieMatcha = exports.AlcremieRuby = exports.AlcremieVanilla = exports.Milcery = exports.Dachsbun = exports.Fidough = exports.Swalot = exports.Gulpin = exports.Slurpuff = exports.Swirlix = exports.Scovillain = exports.Capsakid = void 0;
 exports.Chewtle = exports.Runerigus = exports.GalarianYamask = exports.Cofagrigus = exports.Yamask = exports.Buzzwole = exports.Pachirisu = exports.Orbeetle = exports.Dottler = exports.Blipbug = exports.Lokix = exports.Nymble = exports.Chesnaught = exports.Quilladin = exports.Chespin = exports.Arboliva = exports.Dolliv = exports.Smoliv = exports.Dudunsparse = exports.Dunsparce = exports.Sandaconda = exports.Silicobra = exports.FalinksTrooper = exports.FalinksBrass = exports.Dedenne = exports.Togedemaru = exports.Excadrill = exports.Drilbur = exports.Emolga = exports.Ledian = exports.Ledyba = exports.Celesteela = exports.Revavroom = exports.Varoom = exports.Furfrou = exports.Eldegoss = exports.Gossifleur = exports.Masquerain = exports.Surskit = exports.Fezandipiti = exports.Munkidori = exports.Okidogi = exports.MeowsticFemale = exports.MeowsticMale = exports.Espurr = exports.Cinccino = exports.Minccino = exports.Purugly = exports.Glameow = exports.Delcatty = void 0;
 exports.VivillonFancy = exports.VivillonJungle = exports.VivillonOcean = exports.VivillonSun = exports.VivillonSavanna = exports.VivillonMonsoon = exports.VivillonRiver = exports.VivillonSandstorm = exports.VivillonHighPlains = exports.VivillonArchipelago = exports.VivillonMarine = exports.VivillonModern = exports.VivillonElegant = exports.VivillonGarden = exports.VivillonContinental = exports.VivillonTundra = exports.VivillonPolar = exports.VivillonIcySnow = exports.Vivillon = exports.Spewpa = exports.Scatterbug = exports.Diggersby = exports.Bunnelby = exports.Gogoat = exports.Skiddo = exports.Mudsdale = exports.Mudbray = exports.Pincurchin = exports.Bellibolt = exports.Tadbulb = exports.IronThorns = exports.Orthworm = exports.WalkingWake = exports.FlutterMane = exports.Klinklang = exports.Klang = exports.Klink = exports.BasculegionFemale = exports.BasculegionMale = exports.BasculinWhite = exports.BasculinBlue = exports.BasculinRed = exports.Golisopod = exports.Wimpod = exports.ChiYu = exports.Grapploct = exports.Clobbopus = exports.Houndstone = exports.Greavard = exports.Drednaw = void 0;
-exports.PokemonClasses = exports.Crustle = exports.Dwebble = exports.EiscueNoice = exports.Eiscue = exports.Escavalier = exports.Karrablast = exports.HisuiAvalugg = exports.Avalugg = exports.Bergmite = exports.Cetitan = exports.Cetoddle = exports.TatsugiriStretchy = exports.TatsugiriDroopy = exports.TatsugiriCurly = exports.Dondozo = exports.Toxapex = exports.Mareanie = exports.PalafinHero = exports.Palafin = exports.Finizen = exports.GreatTusk = exports.Boltund = exports.Yamper = exports.Dubwool = exports.Wooloo = exports.OinkologneFemale = exports.OinkologneMale = exports.Lechonk = exports.VivillonPokeball = void 0;
+exports.PokemonClasses = exports.SlitherWing = exports.Spidops = exports.Tarountula = exports.Komala = exports.Quaquaval = exports.Quaxwell = exports.Quaxly = exports.Greedent = exports.Skwovet = exports.Crustle = exports.Dwebble = exports.EiscueNoice = exports.Eiscue = exports.Escavalier = exports.Karrablast = exports.HisuiAvalugg = exports.Avalugg = exports.Bergmite = exports.Cetitan = exports.Cetoddle = exports.TatsugiriStretchy = exports.TatsugiriDroopy = exports.TatsugiriCurly = exports.Dondozo = exports.Toxapex = exports.Mareanie = exports.PalafinHero = exports.Palafin = exports.Finizen = exports.GreatTusk = exports.Boltund = exports.Yamper = exports.Dubwool = exports.Wooloo = exports.OinkologneFemale = exports.OinkologneMale = exports.Lechonk = exports.VivillonPokeball = void 0;
 const schema_1 = require("@colyseus/schema");
 const config_1 = require("../../config");
 const evolution_rules_1 = require("../../core/evolution-rules");
@@ -132,17 +132,13 @@ class Pokemon extends schema_1.Schema {
     }
     onChangePosition(x, y, player, state, doNotRemoveItems = false) {
         if (y === 0 && !doNotRemoveItems) {
-            const itemsToRemove = (0, schemas_1.values)(this.items).filter((item) => {
+            const itemsToRemove = (0, schemas_1.schemaValues)(this.items).filter((item) => {
                 return ((0, array_1.isIn)(Item_1.RemovableItems, item) ||
                     ((state === null || state === void 0 ? void 0 : state.specialGameRule) === SpecialGameRule_1.SpecialGameRule.SLAMINGO &&
                         item !== Item_1.Item.RARE_CANDY));
             });
             player.items.push(...itemsToRemove);
             this.removeItems(itemsToRemove, player);
-        }
-        if (y === 0 && this.tm === Ability_1.Ability.SKILL_SWAP) {
-            this.skill = Ability_1.Ability.SKILL_SWAP;
-            this.maxPP = 100;
         }
     }
     onItemGiven(item, player) {
@@ -176,7 +172,7 @@ class Pokemon extends schema_1.Schema {
             }
         }
         if (originalVariant) {
-            const commonTypes = (0, schemas_1.values)(originalVariant.types).filter((t) => this.types.has(t));
+            const commonTypes = (0, schemas_1.schemaValues)(originalVariant.types).filter((t) => this.types.has(t));
             if (commonTypes.some((t) => regionSynergies.includes(t))) {
                 return false;
             }
@@ -205,7 +201,7 @@ class Pokemon extends schema_1.Schema {
         const nativeTypes = new exports.PokemonClasses[this.name](this.name).types;
         for (const item of items) {
             const synergyRemoved = Item_1.SynergyGivenByItem[item];
-            const otherSynergyItemsHeld = (0, schemas_1.values)(this.items).filter((i) => Item_1.SynergyGivenByItem[i] === synergyRemoved);
+            const otherSynergyItemsHeld = (0, schemas_1.schemaValues)(this.items).filter((i) => Item_1.SynergyGivenByItem[i] === synergyRemoved);
             if (synergyRemoved && otherSynergyItemsHeld.length === 0) {
                 if (nativeTypes.has(synergyRemoved) === false) {
                     this.types.delete(synergyRemoved);
@@ -1471,6 +1467,7 @@ class Bagon extends Pokemon {
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.DRAGON_CLAW;
+        this.regional = true;
     }
 }
 exports.Bagon = Bagon;
@@ -1489,6 +1486,7 @@ class Shelgon extends Pokemon {
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.DRAGON_CLAW;
+        this.regional = true;
     }
 }
 exports.Shelgon = Shelgon;
@@ -1510,6 +1508,7 @@ class Salamence extends Pokemon {
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.DRAGON_CLAW;
+        this.regional = true;
     }
 }
 exports.Salamence = Salamence;
@@ -1529,7 +1528,7 @@ class Ralts extends Pokemon {
         this.speed = 51;
         this.def = 4;
         this.speDef = 8;
-        this.maxPP = 95;
+        this.maxPP = 100;
         this.range = 3;
         this.skill = Ability_1.Ability.FUTURE_SIGHT;
     }
@@ -1557,7 +1556,7 @@ class Kirlia extends Pokemon {
         this.speed = 51;
         this.def = 6;
         this.speDef = 10;
-        this.maxPP = 95;
+        this.maxPP = 100;
         this.range = 3;
         this.skill = Ability_1.Ability.FUTURE_SIGHT;
         this.passive = Passive_1.Passive.KIRLIA;
@@ -1579,7 +1578,7 @@ class Gardevoir extends Pokemon {
         this.speed = 51;
         this.def = 8;
         this.speDef = 16;
-        this.maxPP = 95;
+        this.maxPP = 100;
         this.range = 3;
         this.skill = Ability_1.Ability.FUTURE_SIGHT;
     }
@@ -1618,7 +1617,7 @@ class Fuecoco extends Pokemon {
         this.speed = 46;
         this.def = 4;
         this.speDef = 2;
-        this.maxPP = 60;
+        this.maxPP = 80;
         this.range = 3;
         this.skill = Ability_1.Ability.TORCH_SONG;
     }
@@ -1636,7 +1635,7 @@ class Crocalor extends Pokemon {
         this.speed = 46;
         this.def = 6;
         this.speDef = 4;
-        this.maxPP = 60;
+        this.maxPP = 70;
         this.range = 3;
         this.skill = Ability_1.Ability.TORCH_SONG;
     }
@@ -2433,7 +2432,6 @@ class Deino extends Pokemon {
         this.maxPP = 100;
         this.range = 2;
         this.skill = Ability_1.Ability.DARK_HARVEST;
-        this.regional = true;
     }
 }
 exports.Deino = Deino;
@@ -2452,7 +2450,6 @@ class Zweilous extends Pokemon {
         this.maxPP = 100;
         this.range = 2;
         this.skill = Ability_1.Ability.DARK_HARVEST;
-        this.regional = true;
     }
 }
 exports.Zweilous = Zweilous;
@@ -2470,7 +2467,6 @@ class Hydreigon extends Pokemon {
         this.maxPP = 100;
         this.range = 2;
         this.skill = Ability_1.Ability.DARK_HARVEST;
-        this.regional = true;
     }
 }
 exports.Hydreigon = Hydreigon;
@@ -2517,7 +2513,7 @@ class Poliwhirl extends Pokemon {
         this.skill = Ability_1.Ability.SOAK;
         this.passive = Passive_1.Passive.TADPOLE;
         this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (Math.max(...(0, schemas_1.values)(player.board)
+            if (Math.max(...(0, schemas_1.schemaValues)(player.board)
                 .filter((pkm) => pkm.index === this.index)
                 .map((v) => v.positionY)) === 3) {
                 return Pokemon_1.Pkm.POLIWRATH;
@@ -3368,8 +3364,8 @@ class Swinub extends Pokemon {
         this.hp = 65;
         this.atk = 4;
         this.speed = 51;
-        this.def = 6;
-        this.speDef = 4;
+        this.def = 5;
+        this.speDef = 3;
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.ICICLE_CRASH;
@@ -3386,8 +3382,8 @@ class Piloswine extends Pokemon {
         this.hp = 120;
         this.atk = 8;
         this.speed = 51;
-        this.def = 10;
-        this.speDef = 8;
+        this.def = 8;
+        this.speDef = 6;
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.ICICLE_CRASH;
@@ -4099,7 +4095,7 @@ exports.Florges = Florges;
 class Chikorita extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.FAIRY]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FAIRY]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.BAYLEEF;
@@ -4108,7 +4104,7 @@ class Chikorita extends Pokemon {
         this.speed = 51;
         this.def = 2;
         this.speDef = 2;
-        this.maxPP = 90;
+        this.maxPP = 100;
         this.range = 2;
         this.skill = Ability_1.Ability.SWEET_SCENT;
     }
@@ -4117,7 +4113,7 @@ exports.Chikorita = Chikorita;
 class Bayleef extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.FAIRY]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FAIRY]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.MEGANIUM;
@@ -4126,7 +4122,7 @@ class Bayleef extends Pokemon {
         this.speed = 51;
         this.def = 4;
         this.speDef = 4;
-        this.maxPP = 90;
+        this.maxPP = 100;
         this.range = 2;
         this.skill = Ability_1.Ability.SWEET_SCENT;
     }
@@ -4135,7 +4131,7 @@ exports.Bayleef = Bayleef;
 class Meganium extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.FAIRY]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FAIRY]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 3;
         this.hp = 220;
@@ -4143,7 +4139,7 @@ class Meganium extends Pokemon {
         this.speed = 51;
         this.def = 6;
         this.speDef = 6;
-        this.maxPP = 90;
+        this.maxPP = 100;
         this.range = 2;
         this.skill = Ability_1.Ability.SWEET_SCENT;
     }
@@ -5088,7 +5084,7 @@ exports.Blastoise = Blastoise;
 class Bellsprout extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FLORA]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.GRASS, Synergy_1.Synergy.POISON]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.WEEPINBELL;
@@ -5106,7 +5102,7 @@ exports.Bellsprout = Bellsprout;
 class Weepinbell extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FLORA]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.GRASS, Synergy_1.Synergy.POISON]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.VICTREEBEL;
@@ -5124,7 +5120,7 @@ exports.Weepinbell = Weepinbell;
 class Victreebel extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FLORA]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.FLORA, Synergy_1.Synergy.GRASS, Synergy_1.Synergy.POISON]);
         this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 3;
         this.hp = 200;
@@ -7569,7 +7565,7 @@ class Mawile extends Pokemon {
         this.stars = 3;
         this.hp = 180;
         this.atk = 18;
-        this.speed = 41;
+        this.speed = 47;
         this.def = 12;
         this.speDef = 12;
         this.maxPP = 80;
@@ -7849,10 +7845,10 @@ class Spiritomb extends Pokemon {
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
         this.hp = 150;
-        this.atk = 15;
+        this.atk = 18;
         this.speed = 36;
-        this.def = 8;
-        this.speDef = 8;
+        this.def = 12;
+        this.speDef = 12;
         this.maxPP = 108;
         this.range = 1;
         this.skill = Ability_1.Ability.SOUL_TRAP;
@@ -7926,7 +7922,7 @@ class Lapras extends Pokemon {
         this.speed = 38;
         this.def = 7;
         this.speDef = 9;
-        this.maxPP = 120;
+        this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.DIVE;
     }
@@ -11642,7 +11638,7 @@ class Silvally extends Pokemon {
     onChangePosition(x, y, player, state) {
         super.onChangePosition(x, y, player, state, true);
         if (y === 0) {
-            const itemsToRemove = (0, schemas_1.values)(this.items).filter((item) => {
+            const itemsToRemove = (0, schemas_1.schemaValues)(this.items).filter((item) => {
                 return ((0, array_1.isIn)(Item_1.RemovableItems, item) ||
                     ((state === null || state === void 0 ? void 0 : state.specialGameRule) === SpecialGameRule_1.SpecialGameRule.SLAMINGO &&
                         item !== Item_1.Item.RARE_CANDY) ||
@@ -12311,7 +12307,7 @@ class Popplio extends Pokemon {
         this.speed = 44;
         this.def = 4;
         this.speDef = 4;
-        this.maxPP = 70;
+        this.maxPP = 80;
         this.range = 3;
         this.skill = Ability_1.Ability.SPARKLING_ARIA;
         this.passive = Passive_1.Passive.HATCH;
@@ -12331,7 +12327,7 @@ class Brionne extends Pokemon {
         this.speed = 44;
         this.def = 4;
         this.speDef = 6;
-        this.maxPP = 70;
+        this.maxPP = 80;
         this.range = 3;
         this.skill = Ability_1.Ability.SPARKLING_ARIA;
         this.passive = Passive_1.Passive.HATCH;
@@ -12349,7 +12345,7 @@ class Primarina extends Pokemon {
         this.speed = 44;
         this.def = 4;
         this.speDef = 8;
-        this.maxPP = 70;
+        this.maxPP = 80;
         this.range = 3;
         this.skill = Ability_1.Ability.SPARKLING_ARIA;
     }
@@ -13659,7 +13655,7 @@ class Chingling extends Pokemon {
         this.def = 5;
         this.speDef = 6;
         this.maxPP = 80;
-        this.range = 3;
+        this.range = 2;
         this.skill = Ability_1.Ability.ECHO;
         this.passive = Passive_1.Passive.CHINGLING;
     }
@@ -13677,7 +13673,7 @@ class Chimecho extends Pokemon {
         this.def = 8;
         this.speDef = 9;
         this.maxPP = 80;
-        this.range = 3;
+        this.range = 2;
         this.skill = Ability_1.Ability.ECHO;
         this.passive = Passive_1.Passive.CHIMECHO;
     }
@@ -13904,7 +13900,7 @@ class Shuckle extends Pokemon {
         this.speed = 27;
         this.def = 40;
         this.speDef = 40;
-        this.maxPP = 90;
+        this.maxPP = 50;
         this.range = 1;
         this.skill = Ability_1.Ability.BIDE;
     }
@@ -17339,13 +17335,13 @@ class Kilowattrel extends Pokemon {
 exports.Kilowattrel = Kilowattrel;
 const burmyDivergentEvolutionRule = (cloakType, wormadam) => new evolution_rules_1.ConditionBasedEvolutionRule((pokemon, player, stageLevel) => {
     var _a;
-    const copies = (0, schemas_1.values)(player.board).filter((p) => p.index === pokemon.index && !p.items.has(Item_1.Item.EVIOLITE));
+    const copies = (0, schemas_1.schemaValues)(player.board).filter((p) => p.index === pokemon.index && !p.items.has(Item_1.Item.EVIOLITE));
     if (copies.length >= 3)
         return true;
     return (((_a = config_1.RegionDetails[player.map]) === null || _a === void 0 ? void 0 : _a.synergies.includes(cloakType)) === false &&
         stageLevel >= 20);
 }, (pokemon, player) => {
-    const copies = (0, schemas_1.values)(player.board).filter((p) => p.index === pokemon.index && !p.items.has(Item_1.Item.EVIOLITE));
+    const copies = (0, schemas_1.schemaValues)(player.board).filter((p) => p.index === pokemon.index && !p.items.has(Item_1.Item.EVIOLITE));
     if (copies.length >= 3)
         return wormadam;
     return Pokemon_1.Pkm.MOTHIM;
@@ -19663,44 +19659,6 @@ class Malamar extends Pokemon {
     }
 }
 exports.Malamar = Malamar;
-const updatePillars = (player, pkm, pillarPkm) => {
-    const pkmOnBoard = (0, schemas_1.values)(player.board).filter((p) => p.name === pkm && p.positionY > 0);
-    const pillars = (0, schemas_1.values)(player.board).filter((p) => p.name === pillarPkm);
-    const nbPillars = pkmOnBoard.length * (pkm === Pokemon_1.Pkm.CONKELDURR ? 2 : 1);
-    if (pillars.length < nbPillars) {
-        for (let i = 0; i < nbPillars - pillars.length; i++) {
-            const freeSpace = (0, board_1.getFirstAvailablePositionOnBoard)(player.board, 1);
-            if (freeSpace) {
-                const pillar = pokemon_factory_1.default.createPokemonFromName(pillarPkm, player);
-                pillar.positionX = freeSpace[0];
-                pillar.positionY = freeSpace[1];
-                player.board.set(pillar.id, pillar);
-            }
-        }
-    }
-    else if (nbPillars < pillars.length) {
-        for (let i = 0; i < pillars.length - nbPillars; i++) {
-            player.board.delete(pillars[i].id);
-        }
-    }
-};
-const pillarEvolve = (pillarToRemove, pillarEvolution) => (params) => {
-    const pkmOnBoard = (0, schemas_1.values)(params.player.board).filter((p) => p.name === params.pokemonsBeforeEvolution[0].name && p.positionY > 0);
-    const pillars = (0, schemas_1.values)(params.player.board).filter((p) => p.name === pillarToRemove);
-    for (let i = 0; i < pillars.length - pkmOnBoard.length; i++) {
-        params.player.board.delete(pillars[i].id);
-    }
-    const coords = pillars.length > 0
-        ? [pillars[0].positionX, pillars[0].positionY]
-        : (0, board_1.getFirstAvailablePositionOnBoard)(params.player.board, 1);
-    if (coords && params.pokemonEvolved.positionY > 0) {
-        const pillar = pokemon_factory_1.default.createPokemonFromName(pillarEvolution, params.player);
-        pillar.positionX = coords[0];
-        pillar.positionY = coords[1];
-        params.player.board.set(pillar.id, pillar);
-    }
-    updatePillars(params.player, params.pokemonEvolved.name, pillarEvolution);
-};
 class Timburr extends Pokemon {
     constructor() {
         super(...arguments);
@@ -19717,14 +19675,16 @@ class Timburr extends Pokemon {
         this.range = 1;
         this.skill = Ability_1.Ability.COLUMN_CRUSH;
         this.passive = Passive_1.Passive.PILLAR;
-        this.afterEvolve = pillarEvolve(Pokemon_1.Pkm.PILLAR_WOOD, Pokemon_1.Pkm.PILLAR_IRON);
     }
     onChangePosition(x, y, player, state) {
         super.onChangePosition(x, y, player, state);
-        updatePillars(player, Pokemon_1.Pkm.TIMBURR, Pokemon_1.Pkm.PILLAR_WOOD);
+        player.updatePillars();
     }
     afterSell(player) {
-        updatePillars(player, Pokemon_1.Pkm.TIMBURR, Pokemon_1.Pkm.PILLAR_WOOD);
+        player.updatePillars();
+    }
+    afterEvolve(player) {
+        player.updatePillars();
     }
 }
 exports.Timburr = Timburr;
@@ -19744,14 +19704,16 @@ class Gurdurr extends Pokemon {
         this.range = 1;
         this.skill = Ability_1.Ability.COLUMN_CRUSH;
         this.passive = Passive_1.Passive.PILLAR;
-        this.afterEvolve = pillarEvolve(Pokemon_1.Pkm.PILLAR_IRON, Pokemon_1.Pkm.PILLAR_CONCRETE);
     }
     onChangePosition(x, y, player, state) {
         super.onChangePosition(x, y, player, state);
-        updatePillars(player, Pokemon_1.Pkm.GURDURR, Pokemon_1.Pkm.PILLAR_IRON);
+        player.updatePillars();
     }
     afterSell(player) {
-        updatePillars(player, Pokemon_1.Pkm.GURDURR, Pokemon_1.Pkm.PILLAR_IRON);
+        player.updatePillars();
+    }
+    afterEvolve(player) {
+        player.updatePillars();
     }
 }
 exports.Gurdurr = Gurdurr;
@@ -19773,10 +19735,10 @@ class Conkeldurr extends Pokemon {
     }
     onChangePosition(x, y, player, state) {
         super.onChangePosition(x, y, player, state);
-        updatePillars(player, Pokemon_1.Pkm.CONKELDURR, Pokemon_1.Pkm.PILLAR_CONCRETE);
+        player.updatePillars();
     }
     afterSell(player) {
-        updatePillars(player, Pokemon_1.Pkm.CONKELDURR, Pokemon_1.Pkm.PILLAR_CONCRETE);
+        player.updatePillars();
     }
 }
 exports.Conkeldurr = Conkeldurr;
@@ -19796,7 +19758,6 @@ class PillarWood extends Pokemon {
         this.skill = Ability_1.Ability.DEFAULT;
         this.passive = Passive_1.Passive.INANIMATE;
         this.canHoldItems = false;
-        this.canBeBenched = false;
         this.canBeSold = false;
     }
 }
@@ -19817,7 +19778,6 @@ class PillarIron extends Pokemon {
         this.skill = Ability_1.Ability.DEFAULT;
         this.passive = Passive_1.Passive.INANIMATE;
         this.canHoldItems = false;
-        this.canBeBenched = false;
         this.canBeSold = false;
     }
 }
@@ -19838,7 +19798,6 @@ class PillarConcrete extends Pokemon {
         this.skill = Ability_1.Ability.DEFAULT;
         this.passive = Passive_1.Passive.INANIMATE;
         this.canHoldItems = false;
-        this.canBeBenched = false;
         this.canBeSold = false;
     }
 }
@@ -21023,9 +20982,9 @@ class ScreamTail extends Pokemon {
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
         this.hp = 210;
-        this.atk = 14;
+        this.atk = 16;
         this.speed = 71;
-        this.def = 8;
+        this.def = 12;
         this.speDef = 12;
         this.maxPP = 80;
         this.range = 1;
@@ -22350,7 +22309,7 @@ class Golisopod extends Pokemon {
 exports.Golisopod = Golisopod;
 const basculinOnAcquired = (player) => {
     ;
-    [Pokemon_1.Pkm.BASCULIN_BLUE, Pokemon_1.Pkm.BASCULIN_RED, Pokemon_1.Pkm.BASCULIN_WHITE].every((basculin) => (0, schemas_1.values)(player.board).find((e) => e.name === basculin)) && player.titles.add(types_1.Title.AQUARIOPHILE);
+    [Pokemon_1.Pkm.BASCULIN_BLUE, Pokemon_1.Pkm.BASCULIN_RED, Pokemon_1.Pkm.BASCULIN_WHITE].every((basculin) => (0, schemas_1.schemaValues)(player.board).find((e) => e.name === basculin)) && player.titles.add(types_1.Title.AQUARIOPHILE);
 };
 class BasculinRed extends Pokemon {
     constructor() {
@@ -23804,6 +23763,184 @@ class Crustle extends Pokemon {
     }
 }
 exports.Crustle = Crustle;
+class Skwovet extends Pokemon {
+    constructor() {
+        super(...arguments);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.NORMAL, Synergy_1.Synergy.GOURMET]);
+        this.rarity = Game_1.Rarity.RARE;
+        this.stars = 1;
+        this.evolution = Pokemon_1.Pkm.GREEDENT;
+        this.hp = 90;
+        this.atk = 7;
+        this.speed = 28;
+        this.def = 5;
+        this.speDef = 4;
+        this.maxPP = 100;
+        this.range = 1;
+        this.skill = Ability_1.Ability.STUFF_CHEEKS;
+        this.additional = true;
+    }
+}
+exports.Skwovet = Skwovet;
+class Greedent extends Pokemon {
+    constructor() {
+        super(...arguments);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.NORMAL, Synergy_1.Synergy.GOURMET]);
+        this.rarity = Game_1.Rarity.RARE;
+        this.stars = 2;
+        this.hp = 200;
+        this.atk = 16;
+        this.speed = 28;
+        this.def = 10;
+        this.speDef = 8;
+        this.maxPP = 100;
+        this.range = 1;
+        this.skill = Ability_1.Ability.STUFF_CHEEKS;
+        this.additional = true;
+    }
+}
+exports.Greedent = Greedent;
+class Quaxly extends Pokemon {
+    constructor() {
+        super(...arguments);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.AQUATIC,
+            Synergy_1.Synergy.FIGHTING,
+            Synergy_1.Synergy.FLYING
+        ]);
+        this.rarity = Game_1.Rarity.UNCOMMON;
+        this.stars = 1;
+        this.evolution = Pokemon_1.Pkm.QUAXWELL;
+        this.hp = 60;
+        this.atk = 6;
+        this.speed = 55;
+        this.def = 5;
+        this.speDef = 4;
+        this.maxPP = 100;
+        this.range = 1;
+        this.skill = Ability_1.Ability.AQUA_STEP;
+    }
+}
+exports.Quaxly = Quaxly;
+class Quaxwell extends Pokemon {
+    constructor() {
+        super(...arguments);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.AQUATIC,
+            Synergy_1.Synergy.FIGHTING,
+            Synergy_1.Synergy.FLYING
+        ]);
+        this.rarity = Game_1.Rarity.UNCOMMON;
+        this.stars = 2;
+        this.evolution = Pokemon_1.Pkm.QUAQUAVAL;
+        this.hp = 120;
+        this.atk = 12;
+        this.speed = 55;
+        this.def = 6;
+        this.speDef = 5;
+        this.maxPP = 100;
+        this.range = 1;
+        this.skill = Ability_1.Ability.AQUA_STEP;
+    }
+}
+exports.Quaxwell = Quaxwell;
+class Quaquaval extends Pokemon {
+    constructor() {
+        super(...arguments);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.AQUATIC,
+            Synergy_1.Synergy.FIGHTING,
+            Synergy_1.Synergy.FLYING
+        ]);
+        this.rarity = Game_1.Rarity.UNCOMMON;
+        this.stars = 3;
+        this.hp = 200;
+        this.atk = 24;
+        this.speed = 55;
+        this.def = 8;
+        this.speDef = 7;
+        this.maxPP = 100;
+        this.range = 1;
+        this.skill = Ability_1.Ability.AQUA_STEP;
+    }
+}
+exports.Quaquaval = Quaquaval;
+class Komala extends Pokemon {
+    constructor() {
+        super(...arguments);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.NORMAL, Synergy_1.Synergy.SOUND, Synergy_1.Synergy.GRASS]);
+        this.rarity = Game_1.Rarity.UNIQUE;
+        this.stars = 3;
+        this.hp = 170;
+        this.atk = 20;
+        this.speed = 45;
+        this.def = 7;
+        this.speDef = 13;
+        this.maxPP = 90;
+        this.range = 1;
+        this.skill = Ability_1.Ability.SNORE;
+        this.passive = Passive_1.Passive.COMATOSE;
+    }
+}
+exports.Komala = Komala;
+class Tarountula extends Pokemon {
+    constructor() {
+        super(...arguments);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.BUG, Synergy_1.Synergy.NORMAL]);
+        this.rarity = Game_1.Rarity.UNCOMMON;
+        this.stars = 1;
+        this.evolution = Pokemon_1.Pkm.SPIDOPS;
+        this.hp = 65;
+        this.atk = 6;
+        this.speed = 30;
+        this.def = 5;
+        this.speDef = 4;
+        this.maxPP = 100;
+        this.range = 2;
+        this.skill = Ability_1.Ability.SILK_TRAP;
+        this.additional = true;
+    }
+}
+exports.Tarountula = Tarountula;
+class Spidops extends Pokemon {
+    constructor() {
+        super(...arguments);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.BUG, Synergy_1.Synergy.NORMAL]);
+        this.rarity = Game_1.Rarity.UNCOMMON;
+        this.stars = 2;
+        this.hp = 135;
+        this.atk = 12;
+        this.speed = 30;
+        this.def = 9;
+        this.speDef = 7;
+        this.maxPP = 100;
+        this.range = 2;
+        this.skill = Ability_1.Ability.SILK_TRAP;
+        this.additional = true;
+    }
+}
+exports.Spidops = Spidops;
+class SlitherWing extends Pokemon {
+    constructor() {
+        super(...arguments);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.BUG,
+            Synergy_1.Synergy.FIGHTING,
+            Synergy_1.Synergy.FOSSIL
+        ]);
+        this.rarity = Game_1.Rarity.UNIQUE;
+        this.stars = 3;
+        this.hp = 180;
+        this.atk = 20;
+        this.speed = 45;
+        this.def = 6;
+        this.speDef = 8;
+        this.maxPP = 100;
+        this.range = 1;
+        this.skill = Ability_1.Ability.SKITTER_SMACK;
+    }
+}
+exports.SlitherWing = SlitherWing;
 exports.PokemonClasses = {
     [Pokemon_1.Pkm.DEFAULT]: Pokemon,
     [Pokemon_1.Pkm.DITTO]: Ditto,
@@ -24969,7 +25106,16 @@ exports.PokemonClasses = {
     [Pokemon_1.Pkm.EISCUE]: Eiscue,
     [Pokemon_1.Pkm.EISCUE_NOICE]: EiscueNoice,
     [Pokemon_1.Pkm.DWEBBLE]: Dwebble,
-    [Pokemon_1.Pkm.CRUSTLE]: Crustle
+    [Pokemon_1.Pkm.CRUSTLE]: Crustle,
+    [Pokemon_1.Pkm.SKWOVET]: Skwovet,
+    [Pokemon_1.Pkm.GREEDENT]: Greedent,
+    [Pokemon_1.Pkm.QUAXLY]: Quaxly,
+    [Pokemon_1.Pkm.QUAXWELL]: Quaxwell,
+    [Pokemon_1.Pkm.QUAQUAVAL]: Quaquaval,
+    [Pokemon_1.Pkm.KOMALA]: Komala,
+    [Pokemon_1.Pkm.TAROUNTULA]: Tarountula,
+    [Pokemon_1.Pkm.SPIDOPS]: Spidops,
+    [Pokemon_1.Pkm.SLITHER_WING]: SlitherWing
 };
 Object.values(exports.PokemonClasses).forEach((pokemonClass) => (0, schema_1.entity)(pokemonClass));
 //# sourceMappingURL=pokemon.js.map

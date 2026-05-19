@@ -30,3 +30,4 @@ export declare enum Status {
     BLINDED = "BLINDED"
 }
 export declare const PositiveStatuses: Status[];
+export declare const DocumentedStatuses: (Status.BURN | Status.SILENCE | Status.FATIGUE | Status.POISONNED | Status.FREEZE | Status.PROTECT | Status.SLEEP | Status.CONFUSION | Status.CHARM | Status.FLINCH | Status.WOUND | Status.RAGE | Status.RESURRECTION | Status.PARALYSIS | Status.POKERUS | Status.ARMOR_BREAK | Status.RUNE_PROTECT | Status.CURSE | Status.ELECTRIC_FIELD | Status.PSYCHIC_FIELD | Status.GRASS_FIELD | Status.FAIRY_FIELD | Status.LOCKED | Status.POSSESSED | Status.BLINDED)[];

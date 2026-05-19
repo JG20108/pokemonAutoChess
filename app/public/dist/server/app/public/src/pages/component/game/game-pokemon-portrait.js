@@ -97,10 +97,10 @@ function GamePokemonPortrait(props) {
     const pokemonInPortrait = willEvolve && pokemonEvolution ? pokemonEvolution : pokemon;
     const cost = (0, shop_1.getBuyPrice)(pokemon.name, specialGameRule);
     const gainedSynergies = pokemonEvolution && willEvolve
-        ? (0, schemas_1.values)(pokemonEvolution.types).filter((type) => !pokemon.types.has(type))
+        ? (0, schemas_1.schemaValues)(pokemonEvolution.types).filter((type) => !pokemon.types.has(type))
         : [];
     const lostSynergies = pokemonEvolution && willEvolve
-        ? (0, schemas_1.values)(pokemon.types).filter((type) => !pokemonEvolution.types.has(type))
+        ? (0, schemas_1.schemaValues)(pokemon.types).filter((type) => !pokemonEvolution.types.has(type))
         : [];
     const canBuy = (spectatedPlayer === null || spectatedPlayer === void 0 ? void 0 : spectatedPlayer.alive) && (spectatedPlayer === null || spectatedPlayer === void 0 ? void 0 : spectatedPlayer.money) >= cost;
     return ((0, jsx_runtime_1.jsxs)("div", { className: (0, jsx_1.cc)("my-box", "clickable", "game-pokemon-portrait", {

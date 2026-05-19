@@ -4,13 +4,14 @@ import { Pkm } from "../../../../../types/enum/Pokemon";
 import { Synergy } from "../../../../../types/enum/Synergy";
 import { IPokemonsStatisticV2 } from "../../../models/pokemons-statistic-v2";
 import "./pokemon-distribution.css";
+import { PoolType } from "../../../../../types/enum/PoolType";
 interface PokemonDistributionProps {
     metaPokemons: IPokemonsStatisticV2[];
     eloThreshold: EloRank;
     loading: boolean;
     synergy?: Synergy | "all";
     rarity?: Rarity | "all";
-    pool?: string;
+    pool?: PoolType | "all";
     tier?: string;
     selectedPkm?: Pkm | "";
 }

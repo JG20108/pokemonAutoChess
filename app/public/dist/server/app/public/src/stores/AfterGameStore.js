@@ -1,7 +1,7 @@
 "use strict";
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setGameMode = exports.setElligibilityToELO = exports.setElligibilityToXP = exports.leaveAfter = exports.addPlayer = exports.afterSlice = void 0;
+exports.setGameMode = exports.setElligibilityToELO = exports.setElligibilityToXP = exports.leaveAfter = exports.addPlayer = void 0;
 const toolkit_1 = require("@reduxjs/toolkit");
 const Game_1 = require("../../../types/enum/Game");
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
     eligibleToELO: false,
     gameMode: Game_1.GameMode.CUSTOM_LOBBY
 };
-exports.afterSlice = (0, toolkit_1.createSlice)({
+const afterSlice = (0, toolkit_1.createSlice)({
     name: "after",
     initialState: initialState,
     reducers: {
@@ -29,6 +29,6 @@ exports.afterSlice = (0, toolkit_1.createSlice)({
         }
     }
 });
-_a = exports.afterSlice.actions, exports.addPlayer = _a.addPlayer, exports.leaveAfter = _a.leaveAfter, exports.setElligibilityToXP = _a.setElligibilityToXP, exports.setElligibilityToELO = _a.setElligibilityToELO, exports.setGameMode = _a.setGameMode;
-exports.default = exports.afterSlice.reducer;
+_a = afterSlice.actions, exports.addPlayer = _a.addPlayer, exports.leaveAfter = _a.leaveAfter, exports.setElligibilityToXP = _a.setElligibilityToXP, exports.setElligibilityToELO = _a.setElligibilityToELO, exports.setGameMode = _a.setGameMode;
+exports.default = afterSlice.reducer;
 //# sourceMappingURL=AfterGameStore.js.map

@@ -46,7 +46,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("firebase/compat/app"));
-const phaser_1 = require("phaser");
+const phaser_1 = __importStar(require("phaser"));
 const config_1 = require("../../../../config");
 const flower_pots_1 = require("../../../../core/flower-pots");
 const pokemon_entity_1 = require("../../../../core/pokemon-entity");
@@ -133,7 +133,7 @@ class GameScene extends phaser_1.Scene {
             this.registerKeys();
             this.setupCamera();
             this.input.dragDistanceThreshold = 1;
-            const playerUids = (0, schemas_1.values)(this.room.state.players).map((p) => p.id);
+            const playerUids = (0, schemas_1.schemaValues)(this.room.state.players).map((p) => p.id);
             const player = this.room.state.players.get(this.spectate ? playerUids[0] : this.uid);
             this.setMap(player.map);
             this.setupMouseEvents();
@@ -191,37 +191,42 @@ class GameScene extends phaser_1.Scene {
     registerKeys() {
         const keybindings = (0, preferences_1.preference)("keybindings");
         this.input.keyboard.removeAllListeners();
-        this.input.keyboard.on("keydown-" + keybindings.refresh, (0, function_1.throttle)(() => {
-            (0, audio_1.playSound)(audio_1.SOUNDS.REFRESH, 0.5);
-            this.refreshShop();
-        }, 300));
-        this.input.keyboard.on("keydown-" + keybindings.lock, () => {
-            var _a;
-            (_a = this.room) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.LOCK);
-        });
-        this.input.keyboard.on("keydown-" + keybindings.buy_xp, () => {
-            this.buyExperience();
-        });
-        this.input.keyboard.on("keydown-" + keybindings.sell, (e) => {
-            if (this.pokemonDragged != null)
-                return;
-            if (this.shopIndexHovered !== null) {
-                this.removeFromShop(this.shopIndexHovered);
-                this.shopIndexHovered = null;
-            }
-            else if (this.pokemonHovered &&
-                this.pokemonHovered
-                    .getBounds()
-                    .contains(this.input.activePointer.worldX, this.input.activePointer.worldY)) {
-                this.sellPokemon(this.pokemonHovered);
-                this.pokemonHovered = null;
-            }
-        });
-        this.input.keyboard.on("keydown-" + keybindings.switch, () => {
-            if (this.pokemonHovered) {
-                this.switchBetweenBenchAndBoard(this.pokemonHovered);
-            }
-        });
+        if (!this.spectate) {
+            this.input.keyboard.on("keydown-" + keybindings.refresh, (0, function_1.throttle)(() => {
+                (0, audio_1.playSound)(audio_1.SOUNDS.REFRESH, 0.5);
+                this.refreshShop();
+            }, 300));
+            this.input.keyboard.on("keydown-" + keybindings.lock, () => {
+                var _a;
+                (_a = this.room) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.LOCK);
+            });
+            this.input.keyboard.on("keydown-" + keybindings.buy_xp, () => {
+                this.buyExperience();
+            });
+            this.input.keyboard.on("keydown-" + keybindings.sell, (e) => {
+                if (this.pokemonDragged != null)
+                    return;
+                if (this.shopIndexHovered !== null) {
+                    this.removeFromShop(this.shopIndexHovered);
+                    this.shopIndexHovered = null;
+                }
+                else if (this.pokemonHovered &&
+                    this.pokemonHovered
+                        .getBounds()
+                        .contains(this.input.activePointer.worldX, this.input.activePointer.worldY)) {
+                    this.sellPokemon(this.pokemonHovered);
+                    this.pokemonHovered = null;
+                }
+            });
+            this.input.keyboard.on("keydown-" + keybindings.switch, () => {
+                if (this.pokemonHovered) {
+                    this.switchBetweenBenchAndBoard(this.pokemonHovered);
+                }
+            });
+            this.input.keyboard.on("keydown-" + keybindings.board_return, () => {
+                (0, game_1.playerClick)(this.uid);
+            });
+        }
         this.input.keyboard.on("keydown-" + keybindings.camera_lock, () => {
             (0, preferences_1.savePreferences)({ cameraLocked: !(0, preferences_1.preference)("cameraLocked") });
         });
@@ -230,9 +235,6 @@ class GameScene extends phaser_1.Scene {
         });
         this.input.keyboard.on("keydown-" + keybindings.next_player, () => {
             (0, game_1.cyclePlayers)(1);
-        });
-        this.input.keyboard.on("keydown-" + keybindings.board_return, () => {
-            (0, game_1.playerClick)(this.uid);
         });
     }
     refreshShop() {
@@ -322,7 +324,7 @@ class GameScene extends phaser_1.Scene {
             tilemap.layers.forEach((layer) => {
                 var _a, _b;
                 const tileset = map.addTilesetImage(layer.name, mapName + "/" + layer.name);
-                (_a = tileset.image) === null || _a === void 0 ? void 0 : _a.setFilter(Phaser.Textures.FilterMode.NEAREST);
+                (_a = tileset.image) === null || _a === void 0 ? void 0 : _a.setFilter(phaser_1.default.Textures.FilterMode.NEAREST);
                 (_b = map.createLayer(layer.name, tileset, 0, 0)) === null || _b === void 0 ? void 0 : _b.setScale(2, 2);
             });
             const sys = this.sys;
@@ -423,12 +425,12 @@ class GameScene extends phaser_1.Scene {
                 this.board.closeTooltips();
             }
         });
-        this.input.on(Phaser.Input.Events.GAMEOBJECT_OVER, (pointer, gameObject) => {
+        this.input.on(phaser_1.default.Input.Events.GAMEOBJECT_OVER, (pointer, gameObject) => {
             if (gameObject instanceof pokemon_2.default && gameObject.draggable) {
                 this.setPokemonHovered(gameObject);
             }
         });
-        this.input.on(Phaser.Input.Events.GAMEOBJECT_OUT, (pointer, gameObject) => {
+        this.input.on(phaser_1.default.Input.Events.GAMEOBJECT_OUT, (pointer, gameObject) => {
             if (this.pokemonHovered === gameObject) {
                 this.clearHovered(this.pokemonHovered.sprite);
                 this.pokemonHovered = null;
@@ -661,19 +663,21 @@ class GameScene extends phaser_1.Scene {
         this.setHovered(pokemonSprite.sprite, thickness);
     }
     setHovered(sprite, thickness = 2) {
-        const outline = this.plugins.get("rexOutline");
-        if (!outline)
+        if (this.game.renderer.type !== phaser_1.default.WEBGL)
             return;
-        outline.add(sprite, {
+        sprite.enableFilters();
+        const existingOutline = sprite.getData("rexOutlineController");
+        existingOutline === null || existingOutline === void 0 ? void 0 : existingOutline.destroy();
+        const outline = sprite.filters.internal.addRexOutline({
             thickness,
             outlineColor: 0xffffff
         });
+        sprite.setData("rexOutlineController", outline);
     }
     clearHovered(sprite) {
-        const outline = this.plugins.get("rexOutline");
-        if (!outline)
-            return;
-        outline.remove(sprite);
+        const outline = sprite.getData("rexOutlineController");
+        outline === null || outline === void 0 ? void 0 : outline.destroy();
+        sprite.setData("rexOutlineController", null);
     }
     closeTooltips() {
         var _a, _b, _c, _d;

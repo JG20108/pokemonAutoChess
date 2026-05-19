@@ -21,5 +21,6 @@ export declare const TownEncounters: {
     readonly MAGNEZONE: Pkm.MAGNEZONE;
     readonly KINGAMBIT: Pkm.KINGAMBIT;
     readonly LAPRAS: Pkm.LAPRAS;
+    readonly LUDICOLO: Pkm.LUDICOLO;
 };
 export type TownEncounter = (typeof TownEncounters)[keyof typeof TownEncounters];

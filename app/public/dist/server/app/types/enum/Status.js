@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PositiveStatuses = exports.Status = void 0;
+exports.DocumentedStatuses = exports.PositiveStatuses = exports.Status = void 0;
 var Status;
 (function (Status) {
     Status["BURN"] = "BURN";
@@ -46,5 +46,32 @@ exports.PositiveStatuses = [
     Status.MAGIC_BOUNCE,
     Status.REFLECT,
     Status.RAGE
+];
+exports.DocumentedStatuses = [
+    Status.BURN,
+    Status.POISONNED,
+    Status.PARALYSIS,
+    Status.FREEZE,
+    Status.SLEEP,
+    Status.CONFUSION,
+    Status.ARMOR_BREAK,
+    Status.FATIGUE,
+    Status.SILENCE,
+    Status.CURSE,
+    Status.WOUND,
+    Status.FLINCH,
+    Status.BLINDED,
+    Status.LOCKED,
+    Status.CHARM,
+    Status.POSSESSED,
+    Status.PROTECT,
+    Status.RESURRECTION,
+    Status.RUNE_PROTECT,
+    Status.RAGE,
+    Status.POKERUS,
+    Status.ELECTRIC_FIELD,
+    Status.FAIRY_FIELD,
+    Status.GRASS_FIELD,
+    Status.PSYCHIC_FIELD
 ];
 //# sourceMappingURL=Status.js.map

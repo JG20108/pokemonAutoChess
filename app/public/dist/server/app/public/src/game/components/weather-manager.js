@@ -13,9 +13,6 @@ class WeatherManager {
         this.particlesEmitters = [];
         this.tweens = [];
         this.fxs = [];
-        if (scene.renderer.type === phaser_1.default.WEBGL) {
-            this.scene.cameras.main.initPostPipeline();
-        }
     }
     addRain() {
         const offscreenSource = {
@@ -61,7 +58,11 @@ class WeatherManager {
         if (this.scene.renderer.type === phaser_1.default.WEBGL &&
             !(0, preferences_1.preference)("disableAnimatedTilemap")) {
             this.fxs =
-                (_b = (_a = this.scene.map) === null || _a === void 0 ? void 0 : _a.layers.map((layer) => layer.tilemapLayer.postFX.addDisplacement("distort", -0.001, 0))) !== null && _b !== void 0 ? _b : [];
+                (_b = (_a = this.scene.map) === null || _a === void 0 ? void 0 : _a.layers.map((layer) => {
+                    const tilemapLayer = layer.tilemapLayer;
+                    tilemapLayer.enableFilters();
+                    return tilemapLayer.filters.external.addDisplacement("distort", -0.001, 0);
+                })) !== null && _b !== void 0 ? _b : [];
             this.tweens = [
                 this.scene.tweens.add({
                     targets: this.fxs,
@@ -200,7 +201,11 @@ class WeatherManager {
             this.fxs.forEach((effect) => effect.destroy());
             this.fxs = [];
             const scene = this.scene;
-            (_a = scene.map) === null || _a === void 0 ? void 0 : _a.layers.forEach((layer) => layer.tilemapLayer.clearFX());
+            (_a = scene.map) === null || _a === void 0 ? void 0 : _a.layers.forEach((layer) => {
+                var _a, _b;
+                (_a = layer.tilemapLayer.filters) === null || _a === void 0 ? void 0 : _a.internal.clear();
+                (_b = layer.tilemapLayer.filters) === null || _b === void 0 ? void 0 : _b.external.clear();
+            });
         }
     }
 }

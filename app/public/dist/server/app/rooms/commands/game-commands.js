@@ -66,10 +66,12 @@ const pokemon_1 = require("../../models/colyseus-models/pokemon");
 const synergies_1 = require("../../models/colyseus-models/synergies");
 const user_metadata_1 = __importDefault(require("../../models/mongo-models/user-metadata"));
 const pokemon_factory_1 = __importStar(require("../../models/pokemon-factory"));
+const precomputed_pokemon_data_1 = require("../../models/precomputed/precomputed-pokemon-data");
 const pve_stages_1 = require("../../models/pve-stages");
 const shop_1 = require("../../models/shop");
 const titles_1 = require("../../models/titles");
 const types_1 = require("../../types");
+const Ability_1 = require("../../types/enum/Ability");
 const Dungeon_1 = require("../../types/enum/Dungeon");
 const Effect_1 = require("../../types/enum/Effect");
 const Game_1 = require("../../types/enum/Game");
@@ -289,7 +291,9 @@ class OnDragDropPokemonCommand extends command_1.Command {
                     if (dropOnBench) {
                         if (pokemon.canBeBenched &&
                             (!target || target.canBePlaced) &&
-                            !(isBoardFull && (pokemon === null || pokemon === void 0 ? void 0 : pokemon.doesCountForTeamSize) === false)) {
+                            !(isBoardFull &&
+                                target &&
+                                (pokemon === null || pokemon === void 0 ? void 0 : pokemon.doesCountForTeamSize) === false)) {
                             this.swapPokemonPositions(player, pokemon, x, y);
                             success = true;
                         }
@@ -336,11 +340,11 @@ class OnDragDropPokemonCommand extends command_1.Command {
         if (pokemonToSwap) {
             pokemonToSwap.positionX = pokemon.positionX;
             pokemonToSwap.positionY = pokemon.positionY;
-            pokemonToSwap.onChangePosition(pokemon.positionX, pokemon.positionY, player, this.state);
+            changePokemonPosition(pokemonToSwap, pokemon.positionX, pokemon.positionY, player, this.state);
         }
         pokemon.positionX = x;
         pokemon.positionY = y;
-        pokemon.onChangePosition(x, y, player, this.state);
+        changePokemonPosition(pokemon, x, y, player, this.state);
     }
 }
 exports.OnDragDropPokemonCommand = OnDragDropPokemonCommand;
@@ -580,7 +584,9 @@ class OnDragDropItemCommand extends command_1.Command {
                 return;
             }
             else {
-                client.send(types_1.Transfer.DRAG_DROP_CANCEL, Object.assign(Object.assign({}, message), { text: pokemon.dishes.size > 0 ? "belly_full" : "not_hungry", pokemonId: pokemon.id }));
+                client.send(types_1.Transfer.DRAG_DROP_CANCEL, Object.assign(Object.assign({}, message), { text: (pokemon.dishes.size > 0
+                        ? "belly_full"
+                        : "not_hungry"), pokemonId: pokemon.id }));
                 return;
             }
         }
@@ -594,7 +600,7 @@ class OnDragDropItemCommand extends command_1.Command {
             return;
         }
         const isBasicItem = Item_1.ItemComponents.includes(item);
-        const existingBasicItemToCombine = (0, schemas_1.values)(pokemon.items).find((i) => Item_1.ItemComponents.includes(i));
+        const existingBasicItemToCombine = (0, schemas_1.schemaValues)(pokemon.items).find((i) => Item_1.ItemComponents.includes(i));
         if (pokemon.items.size >= 3 &&
             !(isBasicItem && existingBasicItemToCombine) &&
             Item_1.UnholdableItems.includes(item) === false) {
@@ -698,7 +704,7 @@ class OnShopRerollCommand extends command_1.Command {
                 player.shopFreeRolls--;
             }
             else {
-                const repeatBallHolders = (0, schemas_1.values)(player.board).filter((p) => p.items.has(Item_1.Item.REPEAT_BALL));
+                const repeatBallHolders = (0, schemas_1.schemaValues)(player.board).filter((p) => p.items.has(Item_1.Item.REPEAT_BALL));
                 if (repeatBallHolders.length > 0)
                     player.shopFreeRolls += repeatBallHolders.length;
             }
@@ -761,7 +767,7 @@ class OnJoinCommand extends command_1.Command {
                     client.userData = {};
                 client.userData.spectatedPlayerId = client.auth.uid;
                 client.view = new schema_1.StateView();
-                const players = (0, schemas_1.values)(this.state.players);
+                const players = (0, schemas_1.schemaValues)(this.state.players);
                 const connectedPlayer = players.find((p) => p.id === client.auth.uid);
                 if (connectedPlayer) {
                     client.view.add(connectedPlayer);
@@ -851,7 +857,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
         });
     }
     checkEndGame() {
-        const playersAlive = (0, schemas_1.values)(this.state.players).filter((p) => p.alive);
+        const playersAlive = (0, schemas_1.schemaValues)(this.state.players).filter((p) => p.alive);
         if (playersAlive.length <= 1) {
             this.state.gameFinished = true;
             const winner = playersAlive[0];
@@ -875,7 +881,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
             if (player.alive && !player.isBot) {
                 const nbGimmighoulCoins = player.items.filter((item) => item === Item_1.Item.GIMMIGHOUL_COIN).length;
                 const nbAmuletCoins = player.items.filter((item) => item === Item_1.Item.AMULET_COIN).length +
-                    (0, schemas_1.values)(player.board).filter((pokemon) => pokemon.items.has(Item_1.Item.AMULET_COIN)).length;
+                    (0, schemas_1.schemaValues)(player.board).filter((pokemon) => pokemon.items.has(Item_1.Item.AMULET_COIN)).length;
                 const nbRedScales = player.items.filter((item) => item === Item_1.Item.RED_SCALE).length;
                 player.maxInterest = 5 + nbGimmighoulCoins - nbAmuletCoins;
                 if (specialGameRule !== SpecialGameRule_1.SpecialGameRule.BLOOD_MONEY) {
@@ -989,7 +995,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
         return commands;
     }
     updatePlayerBetweenStages(player) {
-        const board = (0, schemas_1.values)(player.board);
+        const board = (0, schemas_1.schemaValues)(player.board);
         if ((0, synergies_1.getSynergyStep)(player.synergies, Synergy_1.Synergy.FIRE) === 4 &&
             player.items.includes(Item_1.Item.FIRE_SHARD) === false &&
             player.life > 2) {
@@ -1160,7 +1166,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
             const returningPokemons = player.pokemonsTrainingInDojo.filter((p) => p.returnStage === this.state.stageLevel);
             returningPokemons.forEach((p) => {
                 var _a, _b, _c, _d;
-                const substitute = (0, schemas_1.values)(player.board).find((s) => s.name === Pokemon_1.Pkm.SUBSTITUTE && s.id === p.pokemon.id);
+                const substitute = (0, schemas_1.schemaValues)(player.board).find((s) => s.name === Pokemon_1.Pkm.SUBSTITUTE && s.id === p.pokemon.id);
                 if (!substitute)
                     return;
                 p.pokemon.hp += (_a = [50, 100, 150][p.ticketLevel - 1]) !== null && _a !== void 0 ? _a : 0;
@@ -1171,9 +1177,9 @@ class OnUpdatePhaseCommand extends command_1.Command {
                 p.pokemon.positionY = substitute.positionY;
                 player.board.delete(substitute.id);
                 player.board.set(p.pokemon.id, p.pokemon);
-                p.pokemon.types = new schema_1.SetSchema((0, schemas_1.values)(p.pokemon.types));
+                p.pokemon.types = new schema_1.SetSchema((0, schemas_1.schemaValues)(p.pokemon.types));
                 p.pokemon.items = new schema_1.SetSchema();
-                p.pokemon.addItems((0, schemas_1.values)(substitute.items), player);
+                p.pokemon.addItems((0, schemas_1.schemaValues)(substitute.items), player);
                 substitute.items.clear();
                 this.room.checkEvolutionsAfterPokemonAcquired(player.id);
                 player.pokemonsTrainingInDojo.splice(player.pokemonsTrainingInDojo.indexOf(p), 1);
@@ -1183,7 +1189,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
             var _a, _b, _c, _d;
             const passiveEffects = (_b = (_a = passives_1.PassiveEffects[pokemon.passive]) === null || _a === void 0 ? void 0 : _a.filter((p) => p instanceof effect_1.OnStageStartEffect)) !== null && _b !== void 0 ? _b : [];
             passiveEffects.forEach((effect) => effect.apply({ pokemon, player, room: this.room }));
-            const itemEffects = (_d = (_c = (0, schemas_1.values)(pokemon.items)
+            const itemEffects = (_d = (_c = (0, schemas_1.schemaValues)(pokemon.items)
                 .flatMap((item) => items_1.ItemEffects[item])) === null || _c === void 0 ? void 0 : _c.filter((p) => p instanceof effect_1.OnStageStartEffect)) !== null && _d !== void 0 ? _d : [];
             itemEffects.forEach((effect) => effect.apply({ pokemon, player, room: this.room }));
             if (pokemon.evolutionRule instanceof evolution_rules_1.ConditionBasedEvolutionRule) {
@@ -1205,7 +1211,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
             if (teamSize < maxTeamSize) {
                 const numberOfPokemonsToMove = maxTeamSize - teamSize;
                 for (let i = 0; i < numberOfPokemonsToMove; i++) {
-                    const pokemon = (0, schemas_1.values)(player.board)
+                    const pokemon = (0, schemas_1.schemaValues)(player.board)
                         .filter((p) => (0, board_1.isOnBench)(p) && p.canBePlaced)
                         .sort((a, b) => a.positionX - b.positionX)[0];
                     if (pokemon) {
@@ -1215,7 +1221,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
                         if (coordinates) {
                             pokemon.positionX = coordinates[0];
                             pokemon.positionY = coordinates[1];
-                            pokemon.onChangePosition(coordinates[0], coordinates[1], player, this.state);
+                            changePokemonPosition(pokemon, coordinates[0], coordinates[1], player, this.state);
                         }
                     }
                 }
@@ -1270,7 +1276,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
                         if (player.pveRewardsPropositions.length > 0) {
                             player.choices.push(new player_choice_1.PlayerChoice({
                                 type: "item",
-                                items: (0, schemas_1.values)(player.pveRewardsPropositions)
+                                items: (0, schemas_1.schemaValues)(player.pveRewardsPropositions)
                             }));
                             player.pveRewardsPropositions.clear();
                         }
@@ -1282,8 +1288,10 @@ class OnUpdatePhaseCommand extends command_1.Command {
                                 pokemon.evolutionRule.updateHatch(pokemon, player, this.state.stageLevel);
                             }
                         }
-                        if (pokemon.passive === Passive_1.Passive.UNOWN && !(0, board_1.isOnBench)(pokemon)) {
-                            player.board.delete(key);
+                        if (pokemon.action === Game_1.PokemonActionState.TRAINING) {
+                            pokemon.addAttack(4);
+                            pokemon.addMaxHP(Math.ceil(0.1 * (0, precomputed_pokemon_data_1.getPokemonData)(pokemon.name).hp));
+                            pokemon.action = Game_1.PokemonActionState.IDLE;
                         }
                     });
                     player.updateSynergies();
@@ -1312,7 +1320,8 @@ class OnUpdatePhaseCommand extends command_1.Command {
     }
     initializeTownPhase() {
         this.state.phase = Game_1.GamePhaseState.TOWN;
-        const nbPlayersAlive = (0, schemas_1.values)(this.state.players).filter((p) => p.alive).length;
+        this.room.miniGame.initialize(this.state, this.room);
+        const nbPlayersAlive = (0, schemas_1.schemaValues)(this.state.players).filter((p) => p.alive).length;
         let minigamePhaseDuration = config_1.ITEM_CAROUSEL_BASE_DURATION;
         if (config_1.PortalCarouselStages.includes(this.state.stageLevel)) {
             minigamePhaseDuration = config_1.PORTAL_CAROUSEL_BASE_DURATION;
@@ -1320,8 +1329,10 @@ class OnUpdatePhaseCommand extends command_1.Command {
         else if (this.state.stageLevel !== config_1.ItemCarouselStages[0]) {
             minigamePhaseDuration += nbPlayersAlive * 2000;
         }
+        if (this.state.townEncounter != null) {
+            minigamePhaseDuration += 5000;
+        }
         this.state.time = minigamePhaseDuration;
-        this.room.miniGame.initialize(this.state, this.room);
         this.state.players.forEach((player) => {
             if (player.alive) {
                 const itemsToSell = player.items.filter((item) => (0, array_1.isIn)(Item_1.ItemsSoldAtTown, item));
@@ -1506,7 +1517,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
             player.effects.has(Effect_1.EffectEnum.BREEDER) ||
             player.effects.has(Effect_1.EffectEnum.GOLDEN_EGGS);
         const hasLostLastBattle = ((_a = player.history.at(-1)) === null || _a === void 0 ? void 0 : _a.result) === Game_1.BattleResult.DEFEAT;
-        const eggsOnBench = (0, schemas_1.values)(player.board).filter((p) => p.name === Pokemon_1.Pkm.EGG);
+        const eggsOnBench = (0, schemas_1.schemaValues)(player.board).filter((p) => p.name === Pokemon_1.Pkm.EGG);
         const nbOfGoldenEggsOnBench = eggsOnBench.filter((p) => p.shiny).length;
         let nbEggsFound = 0;
         let goldenEggFound = false;
@@ -1515,7 +1526,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
             const GOLDEN_EGG_CHANCE = 0.05;
             const playerEggChanceStacked = player.eggChance;
             const playerGoldenEggChanceStacked = player.goldenEggChance;
-            const babies = (0, schemas_1.values)(player.board).filter((p) => !(0, board_1.isOnBench)(p) && p.types.has(Synergy_1.Synergy.BABY));
+            const babies = (0, schemas_1.schemaValues)(player.board).filter((p) => !(0, board_1.isOnBench)(p) && p.types.has(Synergy_1.Synergy.BABY));
             for (const baby of babies) {
                 if (player.effects.has(Effect_1.EffectEnum.GOLDEN_EGGS) &&
                     nbOfGoldenEggsOnBench === 0 &&
@@ -1588,4 +1599,14 @@ class OnOverwriteBoardCommand extends command_1.Command {
     }
 }
 exports.OnOverwriteBoardCommand = OnOverwriteBoardCommand;
+function changePokemonPosition(pokemon, x, y, player, state) {
+    pokemon.onChangePosition(x, y, player, state);
+    if (y === 0 && pokemon.tm && types_1.TMPerAbility.has(pokemon.tm)) {
+        player.items.push(types_1.TMPerAbility.get(pokemon.tm));
+        pokemon.tm = Ability_1.Ability.DEFAULT;
+        const { skill: baseSkill, pp: baseMaxPP } = (0, precomputed_pokemon_data_1.getPokemonData)(pokemon.name);
+        pokemon.skill = baseSkill;
+        pokemon.maxPP = baseMaxPP;
+    }
+}
 //# sourceMappingURL=game-commands.js.map

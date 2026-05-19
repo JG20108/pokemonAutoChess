@@ -11,7 +11,7 @@ class EloEngine {
     }
     updateRating(expected, actual, current, nbGamesPlayed) {
         const dynamicK = actual > expected
-            ? (0, number_1.min)(this.K)(123 - 70 * Math.log(nbGamesPlayed))
+            ? (0, number_1.min)(this.K)(170 - 80 * Math.log(nbGamesPlayed))
             : this.K;
         return Math.round(current + dynamicK * (actual - expected));
     }

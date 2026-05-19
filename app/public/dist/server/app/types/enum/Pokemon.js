@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NON_PMD_PKM_INDEXES = exports.NonPkm = exports.UnownsForScribble = exports.Unowns = exports.PkmDuos = exports.PkmDuo = exports.PkmRegionalBaseVariants = exports.PkmRegionalVariants = exports.PkmFamily = exports.PkmByIndex = exports.PkmIndex = exports.Pkm = void 0;
+exports.NON_PMD_PKM_INDEXES = exports.NonPkm = exports.Pillars = exports.UnownsForScribble = exports.Unowns = exports.PkmDuos = exports.PkmDuo = exports.PkmRegionalBaseVariants = exports.PkmRegionalVariants = exports.PkmFamily = exports.PkmByIndex = exports.PkmIndex = exports.Pkm = void 0;
 exports.isRegionalVariant = isRegionalVariant;
 var Pkm;
 (function (Pkm) {
@@ -435,6 +435,7 @@ var Pkm;
     Pkm["GRAVELER"] = "GRAVELER";
     Pkm["GREAT_TUSK"] = "GREAT_TUSK";
     Pkm["GREAVARD"] = "GREAVARD";
+    Pkm["GREEDENT"] = "GREEDENT";
     Pkm["GRENINJA"] = "GRENINJA";
     Pkm["GRIMER"] = "GRIMER";
     Pkm["GRIMMSNARL"] = "GRIMMSNARL";
@@ -539,6 +540,7 @@ var Pkm;
     Pkm["KLINK"] = "KLINK";
     Pkm["KLINKLANG"] = "KLINKLANG";
     Pkm["KOFFING"] = "KOFFING";
+    Pkm["KOMALA"] = "KOMALA";
     Pkm["KOMMO_O"] = "KOMMO_O";
     Pkm["KRABBY"] = "KRABBY";
     Pkm["KRICKETOT"] = "KRICKETOT";
@@ -784,6 +786,9 @@ var Pkm;
     Pkm["PURUGLY"] = "PURUGLY";
     Pkm["PYUKUMUKU"] = "PYUKUMUKU";
     Pkm["QUAGSIRE"] = "QUAGSIRE";
+    Pkm["QUAQUAVAL"] = "QUAQUAVAL";
+    Pkm["QUAXLY"] = "QUAXLY";
+    Pkm["QUAXWELL"] = "QUAXWELL";
     Pkm["QUILAVA"] = "QUILAVA";
     Pkm["QUILLADIN"] = "QUILLADIN";
     Pkm["QWILFISH"] = "QWILFISH";
@@ -913,9 +918,11 @@ var Pkm;
     Pkm["SKORUPI"] = "SKORUPI";
     Pkm["SKRELP"] = "SKRELP";
     Pkm["SKUNTANK"] = "SKUNTANK";
+    Pkm["SKWOVET"] = "SKWOVET";
     Pkm["SLAKING"] = "SLAKING";
     Pkm["SLAKOTH"] = "SLAKOTH";
     Pkm["SLIGOO"] = "SLIGOO";
+    Pkm["SLITHER_WING"] = "SLITHER_WING";
     Pkm["SLOWBRO"] = "SLOWBRO";
     Pkm["SLOWKING"] = "SLOWKING";
     Pkm["SLOWPOKE"] = "SLOWPOKE";
@@ -940,6 +947,7 @@ var Pkm;
     Pkm["SPECTRIER"] = "SPECTRIER";
     Pkm["SPEWPA"] = "SPEWPA";
     Pkm["SPHEAL"] = "SPHEAL";
+    Pkm["SPIDOPS"] = "SPIDOPS";
     Pkm["SPINARAK"] = "SPINARAK";
     Pkm["SPINDA"] = "SPINDA";
     Pkm["SPIRITOMB"] = "SPIRITOMB";
@@ -984,6 +992,7 @@ var Pkm;
     Pkm["TAPU_FINI"] = "TAPU_FINI";
     Pkm["TAPU_KOKO"] = "TAPU_KOKO";
     Pkm["TAPU_LELE"] = "TAPU_LELE";
+    Pkm["TAROUNTULA"] = "TAROUNTULA";
     Pkm["TATSUGIRI_CURLY"] = "TATSUGIRI_CURLY";
     Pkm["TATSUGIRI_DROOPY"] = "TATSUGIRI_DROOPY";
     Pkm["TATSUGIRI_STRETCHY"] = "TATSUGIRI_STRETCHY";
@@ -2113,6 +2122,7 @@ exports.PkmIndex = {
     [Pkm.MINIOR_KERNEL_BLUE]: "0774-0005",
     [Pkm.MINIOR_KERNEL_ORANGE]: "0774-0002",
     [Pkm.MINIOR_KERNEL_GREEN]: "0774-0004",
+    [Pkm.KOMALA]: "0775",
     [Pkm.TURTONATOR]: "0776",
     [Pkm.TOGEDEMARU]: "0777",
     [Pkm.MIMIKYU]: "0778",
@@ -2158,6 +2168,8 @@ exports.PkmIndex = {
     [Pkm.SOBBLE]: "0816",
     [Pkm.DRIZZILE]: "0817",
     [Pkm.INTELEON]: "0818",
+    [Pkm.SKWOVET]: "0819",
+    [Pkm.GREEDENT]: "0820",
     [Pkm.ROOKIDEE]: "0821",
     [Pkm.CORVISQUIRE]: "0822",
     [Pkm.CORVIKNIGHT]: "0823",
@@ -2251,8 +2263,13 @@ exports.PkmIndex = {
     [Pkm.FUECOCO]: "0909",
     [Pkm.CROCALOR]: "0910",
     [Pkm.SKELEDIRGE]: "0911",
+    [Pkm.QUAXLY]: "0912",
+    [Pkm.QUAXWELL]: "0913",
+    [Pkm.QUAQUAVAL]: "0914",
     [Pkm.LECHONK]: "0915",
     [Pkm.OINKOLOGNE_MALE]: "0916",
+    [Pkm.TAROUNTULA]: "0917",
+    [Pkm.SPIDOPS]: "0918",
     [Pkm.NYMBLE]: "0919",
     [Pkm.LOKIX]: "0920",
     [Pkm.PAWMI]: "0921",
@@ -2309,6 +2326,7 @@ exports.PkmIndex = {
     [Pkm.GREAT_TUSK]: "0984",
     [Pkm.SCREAM_TAIL]: "0985",
     [Pkm.FLUTTER_MANE]: "0987",
+    [Pkm.SLITHER_WING]: "0988",
     [Pkm.IRON_BUNDLE]: "0991",
     [Pkm.IRON_HANDS]: "0992",
     [Pkm.IRON_THORNS]: "0995",
@@ -3503,7 +3521,16 @@ exports.PkmFamily = {
     [Pkm.EISCUE]: Pkm.EISCUE,
     [Pkm.EISCUE_NOICE]: Pkm.EISCUE,
     [Pkm.DWEBBLE]: Pkm.DWEBBLE,
-    [Pkm.CRUSTLE]: Pkm.DWEBBLE
+    [Pkm.CRUSTLE]: Pkm.DWEBBLE,
+    [Pkm.SKWOVET]: Pkm.SKWOVET,
+    [Pkm.GREEDENT]: Pkm.SKWOVET,
+    [Pkm.QUAXLY]: Pkm.QUAXLY,
+    [Pkm.QUAXWELL]: Pkm.QUAXLY,
+    [Pkm.QUAQUAVAL]: Pkm.QUAXLY,
+    [Pkm.KOMALA]: Pkm.KOMALA,
+    [Pkm.TAROUNTULA]: Pkm.TAROUNTULA,
+    [Pkm.SPIDOPS]: Pkm.TAROUNTULA,
+    [Pkm.SLITHER_WING]: Pkm.SLITHER_WING
 };
 exports.PkmRegionalVariants = {
     [Pkm.RATTATA]: [Pkm.ALOLAN_RATTATA],
@@ -3614,14 +3641,12 @@ exports.UnownsForScribble = [
     Pkm.UNOWN_EXCLAMATION,
     Pkm.UNOWN_QUESTION
 ];
-exports.NonPkm = [
-    Pkm.SUBSTITUTE,
-    Pkm.EGG,
+exports.Pillars = [
     Pkm.PILLAR_WOOD,
     Pkm.PILLAR_IRON,
-    Pkm.PILLAR_CONCRETE,
-    Pkm.DEFAULT
+    Pkm.PILLAR_CONCRETE
 ];
+exports.NonPkm = [Pkm.SUBSTITUTE, Pkm.EGG, ...exports.Pillars, Pkm.DEFAULT];
 exports.NON_PMD_PKM_INDEXES = [
     "0532-0002",
     "0533-0002",

@@ -41,7 +41,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -187,7 +187,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -333,7 +333,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -479,7 +479,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -625,7 +625,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -771,7 +771,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -917,7 +917,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -1063,7 +1063,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -1209,7 +1209,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -1355,7 +1355,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -1501,7 +1501,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -1648,7 +1648,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -1794,7 +1794,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -1940,7 +1940,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -2090,7 +2090,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -2236,7 +2236,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -2387,7 +2387,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -2537,7 +2537,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;
@@ -2686,7 +2686,7 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
             twitchDisplayName?: string | undefined;
         }[];
         botLeaderboard: {
-            name: string;
+            name: import("../../../types/enum/Pokemon").Pkm;
             avatar: string;
             rank: number;
             value: number;

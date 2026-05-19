@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pounceWandEffect = exports.normalShieldEffect = exports.wildBerserkEffect = exports.overgrowEffect = exports.onFlowerMonDeath = exports.FightingKnockbackEffect = exports.FlyingProtectionEffect = exports.OnFieldDeathEffect = exports.humanHealEffect = exports.SoundCryEffect = exports.electricTripleAttackEffect = exports.FireHitEffect = exports.GroundHoleEffect = exports.MonsterKillEffect = void 0;
+exports.pounceWandEffect = exports.normalShieldEffect = exports.wildBerserkEffect = exports.overgrowEffect = exports.onFlowerMonDeath = exports.fightingTrainingEffect = exports.FightingKnockbackEffect = exports.FlyingProtectionEffect = exports.OnFieldDeathEffect = exports.humanHealEffect = exports.SoundCryEffect = exports.electricTripleAttackEffect = exports.FireHitEffect = exports.GroundHoleEffect = exports.MonsterKillEffect = void 0;
 exports.applyWandEffects = applyWandEffects;
 const config_1 = require("../../config");
 const effects_1 = require("../../models/effects");
@@ -13,6 +13,7 @@ const Passive_1 = require("../../types/enum/Passive");
 const Pokemon_1 = require("../../types/enum/Pokemon");
 const Synergy_1 = require("../../types/enum/Synergy");
 const array_1 = require("../../utils/array");
+const board_1 = require("../../utils/board");
 const distance_1 = require("../../utils/distance");
 const number_1 = require("../../utils/number");
 const orientation_1 = require("../../utils/orientation");
@@ -40,7 +41,7 @@ class MonsterKillEffect extends effect_1.OnKillEffect {
         this.hpBoosted += lifeBoost;
         this.count += 1;
         if (attacker.items.has(Item_1.Item.BERSERK_GENE)) {
-            attacker.status.triggerConfusion(3000, attacker, attacker);
+            attacker.status.triggerConfusion(1000, attacker, attacker);
         }
     }
 }
@@ -131,7 +132,7 @@ class SoundCryEffect extends effect_1.OnAbilityCastEffect {
             this.synergyLevel = effects_1.SynergyEffects[Synergy_1.Synergy.SOUND].indexOf(effect);
         }
     }
-    apply(pokemon, board, target, crit) {
+    apply(pokemon, board) {
         var _a, _b, _c;
         pokemon.broadcastAbility({ skill: Ability_1.Ability.ECHO });
         const attackBoost = (_a = [2, 1, 1][this.synergyLevel]) !== null && _a !== void 0 ? _a : 0;
@@ -139,11 +140,21 @@ class SoundCryEffect extends effect_1.OnAbilityCastEffect {
         const manaBoost = (_c = [0, 0, 3][this.synergyLevel]) !== null && _c !== void 0 ? _c : 0;
         const chimecho = board
             .getAdjacentCells(pokemon.positionX, pokemon.positionY)
-            .some((cell) => { var _a; return ((_a = cell.value) === null || _a === void 0 ? void 0 : _a.passive) === Passive_1.Passive.CHIMECHO; });
-        const scale = (chimecho ? 2 : 1) * (pokemon.passive === Passive_1.Passive.MEGA_LAUNCHER ? 3 : 1);
+            .map((cell) => cell.value)
+            .filter((value) => !!value)
+            .find((entity) => entity.passive === Passive_1.Passive.CHIMECHO);
+        if (chimecho) {
+            chimecho.addPP(3, pokemon, 0, false);
+        }
+        const scale = pokemon.passive === Passive_1.Passive.MEGA_LAUNCHER ? 3 : 1;
         board.cells.forEach((ally) => {
             if ((ally === null || ally === void 0 ? void 0 : ally.team) === pokemon.team) {
-                ally.status.sleepCooldown = 0;
+                if (ally.passive === Passive_1.Passive.COMATOSE && ally.status.sleep) {
+                    ally.addAbilityPower(5, pokemon, 0, false);
+                }
+                else {
+                    ally.status.sleepCooldown = 0;
+                }
                 ally.addAttack(attackBoost * scale, pokemon, 0, false);
                 ally.addSpeed(speedBoost * scale, pokemon, 0, false);
                 ally.addPP(manaBoost * scale, pokemon, 0, false);
@@ -235,9 +246,7 @@ class FightingKnockbackEffect extends effect_1.OnDamageReceivedEffect {
     }
     apply({ pokemon, board, isRetaliation }) {
         if (pokemon.count.fightingBlockCount > 0 &&
-            pokemon.count.fightingBlockCount %
-                (this.origin === Effect_1.EffectEnum.JUSTIFIED ? 8 : 10) ===
-                0 &&
+            pokemon.count.fightingBlockCount % 10 === 0 &&
             !isRetaliation &&
             (0, distance_1.distanceC)(pokemon.positionX, pokemon.positionY, pokemon.targetX, pokemon.targetY) === 1) {
             const targetAtContact = board.getEntityOnCell(pokemon.targetX, pokemon.targetY);
@@ -264,6 +273,16 @@ class FightingKnockbackEffect extends effect_1.OnDamageReceivedEffect {
     }
 }
 exports.FightingKnockbackEffect = FightingKnockbackEffect;
+exports.fightingTrainingEffect = new effect_1.OnBenchedDuringFightEffect(({ pokemon, player }) => {
+    const pillar = (0, schemas_1.schemaValues)(player.board).find((p) => {
+        return ((0, array_1.isIn)(Pokemon_1.Pillars, p.name) &&
+            (0, board_1.isOnBench)(p) &&
+            p.positionX === pokemon.positionX - 1);
+    });
+    if (pillar || ((0, board_1.isOnBench)(pokemon) && pokemon.positionX === 0)) {
+        pokemon.action = Game_1.PokemonActionState.TRAINING;
+    }
+});
 exports.onFlowerMonDeath = new effect_1.OnDeathEffect(({ pokemon, board }) => {
     if (!pokemon.player)
         return;
@@ -325,7 +344,7 @@ exports.normalShieldEffect = new effect_1.OnSimulationStartEffect(({ entity, sim
     }
     if (entity.effects.has(Effect_1.EffectEnum.PURE_POWER)) {
         shieldBonus += 30;
-        if ((0, schemas_1.values)(entity.items).some((item) => Item_1.Scarves.includes(item))) {
+        if ((0, schemas_1.schemaValues)(entity.items).some((item) => Item_1.Scarves.includes(item))) {
             entity.addAttack(Math.round(0.3 * entity.baseAtk), entity, 0, false);
             entity.addAbilityPower(30, entity, 0, false);
         }
@@ -424,7 +443,7 @@ function applyWandEffects(pokemon, target, attackDamage, crit) {
         }
     }
     const specialDamage = specialDamageFactor * attackDamage;
-    let { takenDamage, death } = target.handleSpecialDamage(specialDamage, board, Game_1.AttackType.SPECIAL, pokemon, crit, false);
+    let { takenDamage, death } = target.handleSpecialDamage(specialDamage, board, Game_1.AttackType.SPECIAL, pokemon, false, false);
     for (const wand of wands) {
         switch (wand) {
             case Item_1.Item.HP_SWAP_WAND: {
@@ -446,7 +465,7 @@ function applyWandEffects(pokemon, target, attackDamage, crit) {
                     adjacentEnemies
                         .filter((e) => e.id !== target.id)
                         .forEach((enemy) => {
-                        const { takenDamage: additionalDamage, death: adjacentDeath } = enemy.handleSpecialDamage(specialDamage, board, Game_1.AttackType.SPECIAL, pokemon, crit, false);
+                        const { takenDamage: additionalDamage, death: adjacentDeath } = enemy.handleSpecialDamage(specialDamage, board, Game_1.AttackType.SPECIAL, pokemon, false, false);
                         takenDamage += additionalDamage;
                         if (adjacentDeath)
                             death = true;
@@ -458,7 +477,7 @@ function applyWandEffects(pokemon, target, attackDamage, crit) {
                 if (!(0, random_1.chance)(0.8, pokemon) &&
                     pokemon.items.has(Item_1.Item.PROTECTIVE_PADS) === false) {
                     const selfDamage = specialDamage;
-                    pokemon.handleSpecialDamage(selfDamage, board, Game_1.AttackType.SPECIAL, pokemon, crit, false);
+                    pokemon.handleSpecialDamage(selfDamage, board, Game_1.AttackType.SPECIAL, pokemon, false, false);
                 }
                 break;
             }
@@ -521,7 +540,7 @@ function applyWandEffects(pokemon, target, attackDamage, crit) {
                         if (cell.value != null &&
                             cell.value.team !== pokemon.team &&
                             cell.value.id !== target.id) {
-                            const { takenDamage: tunnelTakenDamage, death: tunnelDeath } = cell.value.handleSpecialDamage(specialDamage, board, Game_1.AttackType.SPECIAL, pokemon, crit, false);
+                            const { takenDamage: tunnelTakenDamage, death: tunnelDeath } = cell.value.handleSpecialDamage(specialDamage, board, Game_1.AttackType.SPECIAL, pokemon, false, false);
                             takenDamage += tunnelTakenDamage;
                             if (tunnelDeath)
                                 death = true;

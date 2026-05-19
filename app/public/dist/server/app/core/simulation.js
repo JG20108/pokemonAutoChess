@@ -75,6 +75,8 @@ class Simulation extends schema_1.Schema {
         this.isGhostBattle = isGhostBattle;
         this.board = new board_2.Board(config_1.BOARD_HEIGHT, config_1.BOARD_WIDTH);
         this.started = false;
+        this.bluePlayer.effects.forEach((e) => this.blueEffects.add(e));
+        (_a = this.redPlayer) === null || _a === void 0 ? void 0 : _a.effects.forEach((e) => this.redEffects.add(e));
         const playerEffects = [
             [this.bluePlayer, this.blueEffects, this.redEffects],
             [this.redPlayer, this.redEffects, this.blueEffects]
@@ -90,6 +92,16 @@ class Simulation extends schema_1.Schema {
                         teamEffects,
                         opponentEffects
                     });
+                    if ((0, board_1.isOnBench)(pokemon)) {
+                        if (teamEffects.has(Effect_1.EffectEnum.COACHING) &&
+                            pokemon.types.has(Synergy_1.Synergy.FIGHTING)) {
+                            synergies_2.fightingTrainingEffect.apply({
+                                pokemon,
+                                player,
+                                simulation: this
+                            });
+                        }
+                    }
                 });
             }
         }
@@ -98,8 +110,6 @@ class Simulation extends schema_1.Schema {
             this.blueEffects.add(weatherEffect);
             this.redEffects.add(weatherEffect);
         }
-        this.bluePlayer.effects.forEach((e) => this.blueEffects.add(e));
-        (_a = this.redPlayer) === null || _a === void 0 ? void 0 : _a.effects.forEach((e) => this.redEffects.add(e));
         this.finished = false;
         this.winnerId = "";
         this.stormLightningTimer = (0, random_1.randomBetween)(4000, 8000);
@@ -139,7 +149,7 @@ class Simulation extends schema_1.Schema {
         ]) {
             if (player) {
                 player.board.forEach((pokemon) => {
-                    const entity = (0, schemas_1.values)(team).find((p) => p.refToBoardPokemon === pokemon);
+                    const entity = (0, schemas_1.schemaValues)(team).find((p) => p.refToBoardPokemon === pokemon);
                     if (pokemon.dishes.size > 0) {
                         pokemon.dishes.forEach((dish) => {
                             this.applyDishEffects(dish, pokemon, entity, player);
@@ -340,7 +350,7 @@ class Simulation extends schema_1.Schema {
             pokemon.effectsSet.add(new synergies_2.SoundCryEffect());
         }
         if (pokemon.types.has(Synergy_1.Synergy.ELECTRIC) && pokemon.player) {
-            const nbCellBatteries = (0, schemas_1.values)(pokemon.player.items).filter((item) => item === Item_1.Item.CELL_BATTERY).length;
+            const nbCellBatteries = (0, schemas_1.schemaValues)(pokemon.player.items).filter((item) => item === Item_1.Item.CELL_BATTERY).length;
             if (nbCellBatteries > 0) {
                 pokemon.addSpeed(2 * nbCellBatteries, pokemon, 0, false);
             }
@@ -412,7 +422,7 @@ class Simulation extends schema_1.Schema {
                         const cloneEntity = this.addPokemon(bug, coord.x, coord.y, teamIndex, true);
                         if (pokemonCloned.items.has(Item_1.Item.SHED_SHELL)) {
                             const team = teamIndex === Game_1.Team.BLUE_TEAM ? this.blueTeam : this.redTeam;
-                            const clonedEntity = (0, schemas_1.values)(team).find((p) => p.refToBoardPokemon.id === pokemonCloned.id);
+                            const clonedEntity = (0, schemas_1.schemaValues)(team).find((p) => p.refToBoardPokemon.id === pokemonCloned.id);
                             if (clonedEntity) {
                                 clonedEntity.addMaxHP(-0.5 * pokemonCloned.maxHP, clonedEntity, 0, false);
                             }
@@ -679,7 +689,7 @@ class Simulation extends schema_1.Schema {
             case Effect_1.EffectEnum.GUTS:
             case Effect_1.EffectEnum.STURDY:
             case Effect_1.EffectEnum.DEFIANT:
-            case Effect_1.EffectEnum.JUSTIFIED:
+            case Effect_1.EffectEnum.COACHING:
                 if (types.has(Synergy_1.Synergy.FIGHTING)) {
                     pokemon.effects.add(effect);
                     pokemon.effectsSet.add(new synergies_2.FightingKnockbackEffect(effect));
@@ -776,13 +786,13 @@ class Simulation extends schema_1.Schema {
                 break;
             case Effect_1.EffectEnum.MOUTAIN_RESISTANCE:
                 if (types.has(Synergy_1.Synergy.ROCK)) {
-                    pokemon.addDefense(30, pokemon, 0, false);
+                    pokemon.addDefense(25, pokemon, 0, false);
                     pokemon.effects.add(Effect_1.EffectEnum.MOUTAIN_RESISTANCE);
                 }
                 break;
             case Effect_1.EffectEnum.DIAMOND_STORM:
                 if (types.has(Synergy_1.Synergy.ROCK)) {
-                    pokemon.addDefense(60, pokemon, 0, false);
+                    pokemon.addDefense(50, pokemon, 0, false);
                     pokemon.effects.add(Effect_1.EffectEnum.DIAMOND_STORM);
                 }
                 break;
@@ -809,7 +819,7 @@ class Simulation extends schema_1.Schema {
                 if (types.has(Synergy_1.Synergy.DRAGON)) {
                     pokemon.effects.add(effect);
                     if (player) {
-                        const dragonLevel = (0, schemas_1.values)(player.board).reduce((acc, p) => acc +
+                        const dragonLevel = (0, schemas_1.schemaValues)(player.board).reduce((acc, p) => acc +
                             (p.types.has(Synergy_1.Synergy.DRAGON) && !(0, board_1.isOnBench)(p) ? p.stars : 0), 0);
                         if (effect === Effect_1.EffectEnum.DRAGON_SCALES ||
                             effect === Effect_1.EffectEnum.DRAGON_DANCE) {
@@ -1093,7 +1103,7 @@ class Simulation extends schema_1.Schema {
         if (this.weather === Weather_1.Weather.STORM) {
             this.stormLightningTimer -= dt;
             if (this.stormLightningTimer <= 0 && !this.finished) {
-                this.stormLightningTimer = (0, random_1.randomBetween)(3000, 6000);
+                this.stormLightningTimer = (0, random_1.randomBetween)(2000, 6000);
                 const x = (0, random_1.randomBetween)(0, this.board.columns - 1);
                 const y = (0, random_1.randomBetween)(0, this.board.rows - 1);
                 const pokemonOnCell = this.board.getEntityOnCell(x, y);
@@ -1104,7 +1114,12 @@ class Simulation extends schema_1.Schema {
                     if (nbElectricQuartz > 0) {
                         pokemonOnCell.addShield(50 * nbElectricQuartz, pokemonOnCell, 0, false);
                     }
-                    if (pokemonOnCell.types.has(Synergy_1.Synergy.ELECTRIC) === false) {
+                    if (pokemonOnCell.types.has(Synergy_1.Synergy.ELECTRIC)) {
+                        pokemonOnCell.status.addElectricField(pokemonOnCell);
+                        pokemonOnCell.addSpeed(20, pokemonOnCell, 0, false);
+                        pokemonOnCell.addShield(30, pokemonOnCell, 0, false);
+                    }
+                    else {
                         pokemonOnCell.handleDamage({
                             damage: 100,
                             board: this.board,
@@ -1269,7 +1284,7 @@ class Simulation extends schema_1.Schema {
         const team = opponentTeamNumber === Game_1.Team.RED_TEAM ? this.blueTeam : this.redTeam;
         const opponentTeam = opponentTeamNumber === Game_1.Team.BLUE_TEAM ? this.blueTeam : this.redTeam;
         const opponentsCursable = (0, random_1.shuffleArray)([...opponentTeam.values()]).filter((p) => p.hp > 0);
-        const curser = (0, schemas_1.values)(team).find((e) => e.types.has(Synergy_1.Synergy.GHOST));
+        const curser = (0, schemas_1.schemaValues)(team).find((e) => e.types.has(Synergy_1.Synergy.GHOST));
         if (!curser)
             return;
         if (effect === Effect_1.EffectEnum.CURSE_OF_VULNERABILITY) {

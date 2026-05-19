@@ -1,4 +1,4 @@
-import { GameObjects } from "phaser";
+import Phaser, { GameObjects } from "phaser";
 export default class DraggableObject extends GameObjects.Container {
     dragDisabled: boolean;
     constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, dragDisabled?: boolean);

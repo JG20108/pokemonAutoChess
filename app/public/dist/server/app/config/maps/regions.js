@@ -6,6 +6,7 @@ exports.countRegionsBySynergy = countRegionsBySynergy;
 const Dungeon_1 = require("../../types/enum/Dungeon");
 const Item_1 = require("../../types/enum/Item");
 const Synergy_1 = require("../../types/enum/Synergy");
+const music_1 = require("../game/music");
 exports.RegionDetails = {
     [Dungeon_1.DungeonPMDO.AmpPlains]: {
         synergies: [Synergy_1.Synergy.ELECTRIC, Synergy_1.Synergy.FIELD, Synergy_1.Synergy.SOUND],
@@ -765,7 +766,7 @@ exports.RegionDetails = {
     },
     town: {
         synergies: [],
-        music: Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_0,
+        music: (0, music_1.getMusicAlt)(Dungeon_1.DungeonMusic.TREASURE_TOWN_STAGE_0),
         regionalSpeciality: Item_1.Item.NUTRITIOUS_EGG
     }
 };

@@ -7905,6 +7905,65 @@ exports.PokemonAnimations = {
         emote: Animation_1.AnimationType.Shoot,
         attackSprite: Animation_1.AttackSprite.BUG_MELEE,
         shinyUnavailable: true
+    },
+    [Pokemon_1.Pkm.SKWOVET]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Shoot,
+        emote: Animation_1.AnimationType.Shoot,
+        eat: Animation_1.AnimationType.Charge,
+        attackSprite: Animation_1.AttackSprite.NORMAL_MELEE
+    },
+    [Pokemon_1.Pkm.GREEDENT]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Emit,
+        emote: Animation_1.AnimationType.Shoot,
+        eat: Animation_1.AnimationType.Charge,
+        attackSprite: Animation_1.AttackSprite.NORMAL_MELEE,
+        shinyUnavailable: true
+    },
+    [Pokemon_1.Pkm.QUAXLY]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Swing,
+        emote: Animation_1.AnimationType.Appeal,
+        attackSprite: Animation_1.AttackSprite.FIGHTING_MELEE
+    },
+    [Pokemon_1.Pkm.QUAXWELL]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Kick,
+        emote: Animation_1.AnimationType.Shoot,
+        attackSprite: Animation_1.AttackSprite.FIGHTING_MELEE
+    },
+    [Pokemon_1.Pkm.QUAQUAVAL]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Swing,
+        emote: Animation_1.AnimationType.Shoot,
+        attackSprite: Animation_1.AttackSprite.FIGHTING_MELEE
+    },
+    [Pokemon_1.Pkm.KOMALA]: {
+        attack: Animation_1.AnimationType.Strike,
+        ability: Animation_1.AnimationType.Charge,
+        emote: Animation_1.AnimationType.Sleep,
+        attackSprite: Animation_1.AttackSprite.NORMAL_MELEE
+    },
+    [Pokemon_1.Pkm.TAROUNTULA]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Attack,
+        emote: Animation_1.AnimationType.Attack,
+        attackSprite: Animation_1.AttackSprite.BUG_RANGE,
+        hitSprite: Animation_1.HitSprite.BUG_HIT
+    },
+    [Pokemon_1.Pkm.SPIDOPS]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Shoot,
+        emote: Animation_1.AnimationType.Shoot,
+        attackSprite: Animation_1.AttackSprite.BUG_RANGE,
+        hitSprite: Animation_1.HitSprite.BUG_HIT
+    },
+    [Pokemon_1.Pkm.SLITHER_WING]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Swing,
+        emote: Animation_1.AnimationType.Shoot,
+        attackSprite: Animation_1.AttackSprite.BUG_MELEE
     }
 };
 //# sourceMappingURL=pokemon-animations.js.map

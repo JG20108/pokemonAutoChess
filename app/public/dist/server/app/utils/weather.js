@@ -130,8 +130,8 @@ function getWeather(bluePlayer, redPlayer, redPlayerBoard, isGhostBattle = false
                     boardWeatherScore.set(dominant, ((_o = boardWeatherScore.get(dominant)) !== null && _o !== void 0 ? _o : 0) + 100);
                 }
                 if (pkm.passive === Passive_1.Passive.DROUGHT_OR_ZENITH) {
-                    const nbLight = (0, schemas_1.values)(board).filter((p) => p.types.has(Synergy_1.Synergy.LIGHT));
-                    const nbFire = (0, schemas_1.values)(board).filter((p) => p.types.has(Synergy_1.Synergy.FIRE));
+                    const nbLight = (0, schemas_1.schemaValues)(board).filter((p) => p.types.has(Synergy_1.Synergy.LIGHT));
+                    const nbFire = (0, schemas_1.schemaValues)(board).filter((p) => p.types.has(Synergy_1.Synergy.FIRE));
                     const dominant = nbLight >= nbFire ? Weather_1.Weather.ZENITH : Weather_1.Weather.DROUGHT;
                     boardWeatherScore.set(dominant, ((_p = boardWeatherScore.get(dominant)) !== null && _p !== void 0 ? _p : 0) + 100);
                 }

@@ -27,6 +27,7 @@ const preparation_state_1 = __importDefault(require("./states/preparation-state"
 class PreparationRoom extends colyseus_1.Room {
     constructor() {
         super();
+        this.autoStartTimeout = null;
         this.dispatcher = new command_1.Dispatcher(this);
         this.maxClients = config_1.MAX_PLAYERS_PER_GAME;
         this.roomPassword = null;
@@ -94,7 +95,7 @@ class PreparationRoom extends colyseus_1.Room {
             this.autoDispose = false;
         }
         if (options.autoStartDelayInSeconds) {
-            this.clock.setTimeout(() => {
+            this.autoStartTimeout = this.clock.setTimeout(() => {
                 var _a, _b, _c;
                 if (this.state.gameStartedAt != null) {
                     logger_1.logger.debug("game has started but the prep room is still open, forcing close");
@@ -106,7 +107,7 @@ class PreparationRoom extends colyseus_1.Room {
                         this.presence.publish("tournament-match-end", {
                             tournamentId: (_b = this.metadata) === null || _b === void 0 ? void 0 : _b.tournamentId,
                             bracketId: (_c = this.metadata) === null || _c === void 0 ? void 0 : _c.bracketId,
-                            players: (0, schemas_1.values)(this.state.users).map((p) => ({
+                            players: (0, schemas_1.schemaValues)(this.state.users).map((p) => ({
                                 id: p.uid,
                                 rank: 1
                             }))
@@ -302,7 +303,7 @@ class PreparationRoom extends colyseus_1.Room {
                     }
                 }
                 const isAlreadyInRoom = this.state.users.has(user.uid);
-                const numberOfHumanPlayers = (0, schemas_1.values)(this.state.users).filter((u) => !u.isBot).length;
+                const numberOfHumanPlayers = (0, schemas_1.schemaValues)(this.state.users).filter((u) => !u.isBot).length;
                 if (numberOfHumanPlayers >= config_1.MAX_PLAYERS_PER_GAME && !isAdmin) {
                     client.leave(CloseCodes_1.CloseCodes.ROOM_FULL);
                     return;
@@ -391,7 +392,9 @@ class PreparationRoom extends colyseus_1.Room {
         }
     }
     onRoomDeleted(roomId) {
+        var _a;
         if (this.roomId === roomId) {
+            (_a = this.autoStartTimeout) === null || _a === void 0 ? void 0 : _a.clear();
             this.disconnect(CloseCodes_1.CloseCodes.ROOM_DELETED);
         }
     }

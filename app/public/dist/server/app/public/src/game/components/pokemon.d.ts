@@ -1,5 +1,5 @@
 import Phaser, { GameObjects } from "phaser";
-import type MoveTo from "phaser3-rex-plugins/plugins/moveto";
+import type MoveTo from "phaser4-rex-plugins/plugins/moveto";
 import { type IPokemon, type IPokemonEntity } from "../../../../types";
 import { AbilityAnimationArgs, AttackSprite } from "../../../../types/Animation";
 import { Orientation, PokemonActionState, PokemonTint, Stat } from "../../../../types/enum/Game";

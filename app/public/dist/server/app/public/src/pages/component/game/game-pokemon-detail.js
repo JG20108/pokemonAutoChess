@@ -36,6 +36,9 @@ function GamePokemonDetail(props) {
     var _a, _b, _c, _d;
     const { t } = (0, react_i18next_1.useTranslation)();
     const pokemon = (0, react_1.useMemo)(() => {
+        if (!props.pokemon) {
+            return null;
+        }
         if (typeof props.pokemon === "string") {
             const pokemon = pokemon_factory_1.default.createPokemonFromName(props.pokemon);
             pokemon.pp = pokemon.maxPP;
@@ -44,6 +47,9 @@ function GamePokemonDetail(props) {
         return props.pokemon;
     }, [props.pokemon]);
     const pokemonStats = (0, react_1.useMemo)(() => {
+        if (!pokemon) {
+            return [];
+        }
         const baseStats = pokemon_factory_1.default.createPokemonFromName(pokemon.name);
         const stats = [
             { stat: Game_1.Stat.DEF, value: pokemon.def, baseValue: baseStats.def },
@@ -72,7 +78,7 @@ function GamePokemonDetail(props) {
         ];
         return stats.map((s) => {
             if (props.origin === "team") {
-                s.value = (0, schemas_1.values)(pokemon.items).reduce((acc, item) => {
+                s.value = (0, schemas_1.schemaValues)(pokemon.items).reduce((acc, item) => {
                     var _a, _b;
                     let itemStatBonus = (_b = (_a = config_1.ItemStats[item]) === null || _a === void 0 ? void 0 : _a[s.stat]) !== null && _b !== void 0 ? _b : 0;
                     if (pokemon.items.has(Item_1.Item.BIG_EATER_BELT) &&
@@ -89,25 +95,25 @@ function GamePokemonDetail(props) {
             return s;
         });
     }, [
-        pokemon.name,
-        pokemon.items,
-        pokemon.def,
-        pokemon.atk,
-        pokemon.critChance,
-        pokemon.ap,
-        pokemon.range,
-        pokemon.speDef,
-        pokemon.speed,
-        pokemon.critPower,
-        pokemon.luck,
+        pokemon === null || pokemon === void 0 ? void 0 : pokemon.name,
+        pokemon === null || pokemon === void 0 ? void 0 : pokemon.items,
+        pokemon === null || pokemon === void 0 ? void 0 : pokemon.def,
+        pokemon === null || pokemon === void 0 ? void 0 : pokemon.atk,
+        pokemon === null || pokemon === void 0 ? void 0 : pokemon.critChance,
+        pokemon === null || pokemon === void 0 ? void 0 : pokemon.ap,
+        pokemon === null || pokemon === void 0 ? void 0 : pokemon.range,
+        pokemon === null || pokemon === void 0 ? void 0 : pokemon.speDef,
+        pokemon === null || pokemon === void 0 ? void 0 : pokemon.speed,
+        pokemon === null || pokemon === void 0 ? void 0 : pokemon.critPower,
+        pokemon === null || pokemon === void 0 ? void 0 : pokemon.luck,
         props.origin
     ]);
     const getStatWithItemBonus = (stat) => {
         var _a;
         return (_a = pokemonStats.find((s) => s.stat === stat)) === null || _a === void 0 ? void 0 : _a.value;
     };
-    let dish = dishes_1.DishByPkm[pokemon.name];
-    if (!dish && pokemon.types.has(Synergy_1.Synergy.GOURMET)) {
+    let dish = pokemon ? dishes_1.DishByPkm[pokemon.name] : undefined;
+    if (pokemon && !dish && pokemon.types.has(Synergy_1.Synergy.GOURMET)) {
         if (pokemon.items.has(Item_1.Item.COOKING_POT)) {
             dish = Item_1.Item.HEARTY_STEW;
         }
@@ -116,38 +122,45 @@ function GamePokemonDetail(props) {
         }
     }
     const hp = (0, react_1.useMemo)(() => {
+        if (!pokemon)
+            return undefined;
         if (props.origin === "battle")
             return pokemon.hp;
         if (props.origin === "team") {
-            return (0, schemas_1.values)(pokemon.items).reduce((acc, item) => { var _a, _b; return acc + ((_b = (_a = config_1.ItemStats[item]) === null || _a === void 0 ? void 0 : _a[Game_1.Stat.HP]) !== null && _b !== void 0 ? _b : 0); }, pokemon.hp);
+            return (0, schemas_1.schemaValues)(pokemon.items).reduce((acc, item) => { var _a, _b; return acc + ((_b = (_a = config_1.ItemStats[item]) === null || _a === void 0 ? void 0 : _a[Game_1.Stat.HP]) !== null && _b !== void 0 ? _b : 0); }, pokemon.hp);
         }
         return undefined;
-    }, [pokemon.hp, pokemon.items, props.origin]);
+    }, [pokemon === null || pokemon === void 0 ? void 0 : pokemon.hp, pokemon === null || pokemon === void 0 ? void 0 : pokemon.items, props.origin]);
     const pp = (0, react_1.useMemo)(() => {
+        if (!pokemon)
+            return undefined;
         if (props.origin === "battle")
             return pokemon.pp;
         if (props.origin === "team") {
-            return (0, schemas_1.values)(pokemon.items).reduce((acc, item) => { var _a, _b; return acc + ((_b = (_a = config_1.ItemStats[item]) === null || _a === void 0 ? void 0 : _a[Game_1.Stat.PP]) !== null && _b !== void 0 ? _b : 0); }, pokemon.pp);
+            return (0, schemas_1.schemaValues)(pokemon.items).reduce((acc, item) => { var _a, _b; return acc + ((_b = (_a = config_1.ItemStats[item]) === null || _a === void 0 ? void 0 : _a[Game_1.Stat.PP]) !== null && _b !== void 0 ? _b : 0); }, pokemon.pp);
         }
         return undefined;
-    }, [pokemon.pp, pokemon.items, props.origin]);
+    }, [pokemon === null || pokemon === void 0 ? void 0 : pokemon.pp, pokemon === null || pokemon === void 0 ? void 0 : pokemon.items, props.origin]);
     const shield = (0, react_1.useMemo)(() => {
+        if (!pokemon)
+            return undefined;
         if (props.origin === "battle")
             return pokemon.shield;
         if (props.origin === "team") {
-            return (0, schemas_1.values)(pokemon.items).reduce((acc, item) => { var _a, _b; return acc + ((_b = (_a = config_1.ItemStats[item]) === null || _a === void 0 ? void 0 : _a[Game_1.Stat.SHIELD]) !== null && _b !== void 0 ? _b : 0); }, 0);
+            return (0, schemas_1.schemaValues)(pokemon.items).reduce((acc, item) => { var _a, _b; return acc + ((_b = (_a = config_1.ItemStats[item]) === null || _a === void 0 ? void 0 : _a[Game_1.Stat.SHIELD]) !== null && _b !== void 0 ? _b : 0); }, 0);
         }
         return undefined;
-    }, [pokemon.items, props.origin, pokemon.shield]);
-    let name = t(`pkm.${pokemon.name}`);
-    if (pokemon.index === Pokemon_1.PkmIndex[Pokemon_1.Pkm.SUBSTITUTE] &&
+    }, [pokemon === null || pokemon === void 0 ? void 0 : pokemon.items, props.origin, pokemon === null || pokemon === void 0 ? void 0 : pokemon.shield]);
+    let name = pokemon ? t(`pkm.${pokemon.name}`) : "";
+    if (pokemon &&
+        pokemon.index === Pokemon_1.PkmIndex[Pokemon_1.Pkm.SUBSTITUTE] &&
         "evolution" in pokemon &&
         pokemon.evolution != null &&
         pokemon.evolution != Pokemon_1.Pkm.DEFAULT) {
         name += ` (${t(`pkm.${pokemon.evolution}`)})`;
     }
     const tmIcon = (0, react_1.useMemo)(() => {
-        if (pokemon.tm === Ability_1.Ability.DEFAULT)
+        if (!pokemon || pokemon.tm === Ability_1.Ability.DEFAULT)
             return null;
         let icon = "assets/item/TM.png";
         console.log("TM", pokemon.tm, pokemon.skill);
@@ -162,7 +175,10 @@ function GamePokemonDetail(props) {
             icon = "assets/item/TM_GOLD.png";
         }
         return ((0, jsx_runtime_1.jsx)("img", { src: icon, className: "game-pokemon-detail-ability-icon", alt: t("tm") }));
-    }, [pokemon.tm, pokemon.skill]);
+    }, [pokemon === null || pokemon === void 0 ? void 0 : pokemon.tm, pokemon === null || pokemon === void 0 ? void 0 : pokemon.skill]);
+    if (!pokemon) {
+        return null;
+    }
     return ((0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail", children: [(0, jsx_runtime_1.jsx)(pokemon_portrait_1.default, { className: "game-pokemon-detail-portrait", style: { borderColor: config_1.RarityColor[pokemon.rarity] }, portrait: {
                     index: pokemon.index,
                     shiny: (_a = props.shiny) !== null && _a !== void 0 ? _a : pokemon.shiny,

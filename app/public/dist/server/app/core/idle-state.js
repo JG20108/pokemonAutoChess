@@ -27,6 +27,9 @@ class IdleState extends pokemon_state_1.default {
         }
         else {
             pokemon.cooldown -= dt;
+            if (pokemon.status.skydiving && pokemon.cooldown <= 500) {
+                pokemon.status.skydiving = false;
+            }
         }
     }
     onEnter(pokemon) {

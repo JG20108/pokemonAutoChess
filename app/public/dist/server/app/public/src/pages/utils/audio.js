@@ -31,9 +31,9 @@ const AUDIO_ELEMENTS = {};
 function preloadSounds() {
     Object.values(exports.SOUNDS).forEach((sound) => (AUDIO_ELEMENTS[sound] = new Audio(`assets/sounds/${sound}`)));
 }
-function preloadMusic(scene, dungeonMusic) {
+function preloadMusic(scene, dungeonMusic, alt = "") {
     scene.load.audio("music_" + dungeonMusic, [
-        `assets/musics/ogg/${dungeonMusic}.ogg`
+        `assets/musics/ogg/${dungeonMusic}${alt}.ogg`
     ]);
 }
 function setupSounds() {

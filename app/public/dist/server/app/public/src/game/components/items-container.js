@@ -24,7 +24,7 @@ class ItemsContainer extends phaser_1.GameObjects.Container {
         this.removeAll(true);
         const itemSize = this.pokemonId === null ? 70 : 25;
         const ITEMS_PER_COLUMN = 6;
-        const items = (0, schemas_1.values)(inventory);
+        const items = (0, schemas_1.schemaValues)(inventory);
         this.items = [];
         items
             .sort((a, b) => this.getOrderPriority(b) - this.getOrderPriority(a))

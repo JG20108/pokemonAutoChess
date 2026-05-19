@@ -24,7 +24,7 @@ var EffectEnum;
     EffectEnum["GUTS"] = "GUTS";
     EffectEnum["STURDY"] = "STURDY";
     EffectEnum["DEFIANT"] = "DEFIANT";
-    EffectEnum["JUSTIFIED"] = "JUSTIFIED";
+    EffectEnum["COACHING"] = "COACHING";
     EffectEnum["PRECOGNITION"] = "PRECOGNITION";
     EffectEnum["AURA"] = "AURA";
     EffectEnum["TRANSCENDENCE"] = "TRANSCENDENCE";
@@ -174,7 +174,7 @@ var EffectEnum;
     EffectEnum["JAW_LOCK"] = "JAW_LOCK";
     EffectEnum["BALM_MUSHROOM"] = "BALM_MUSHROOM";
     EffectEnum["PARTING_SHOT"] = "PARTING_SHOT";
-    EffectEnum["BANEFUL_BUNKER"] = "BANEFUL_BUNKER";
+    EffectEnum["NO_PP_GAIN"] = "NO_PP_GAIN";
 })(EffectEnum || (exports.EffectEnum = EffectEnum = {}));
 exports.BoardEffects = [
     EffectEnum.LIGHTNING_STRIKE,

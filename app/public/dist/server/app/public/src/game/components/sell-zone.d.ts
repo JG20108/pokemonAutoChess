@@ -1,4 +1,4 @@
-import { GameObjects } from "phaser";
+import Phaser, { GameObjects } from "phaser";
 import GameScene from "../scenes/game-scene";
 import PokemonSprite from "./pokemon";
 export declare class SellZone extends GameObjects.Container {

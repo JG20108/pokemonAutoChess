@@ -1,3 +1,4 @@
+import Phaser from "phaser";
 import { DesignTiled } from "../../../../core/design";
 import { DungeonPMDO } from "../../../../types/enum/Dungeon";
 import { Orientation } from "../../../../types/enum/Game";

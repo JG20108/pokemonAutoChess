@@ -32,7 +32,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -62,7 +62,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -91,7 +91,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -121,7 +121,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -150,7 +150,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -180,7 +180,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -209,7 +209,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -239,7 +239,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -268,7 +268,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -298,7 +298,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -331,7 +331,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -361,7 +361,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -390,7 +390,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -420,7 +420,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -449,7 +449,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -479,7 +479,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -508,7 +508,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -538,7 +538,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -567,7 +567,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -597,7 +597,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -626,7 +626,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -656,7 +656,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -685,7 +685,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -715,7 +715,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -744,7 +744,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -774,7 +774,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -803,7 +803,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -833,7 +833,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -862,7 +862,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -892,7 +892,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -921,7 +921,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -951,7 +951,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -981,7 +981,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -1011,7 +1011,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -1040,7 +1040,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;
@@ -1070,7 +1070,7 @@ export declare const preparationSlice: import("@reduxjs/toolkit").Slice<IUserPre
             isBot: boolean;
             elo: number;
             games: number;
-            title: string;
+            title: import("../../../types").Title | "";
             role: import("../../../types").Role;
             anonymous: boolean;
             twitchLogin: string;

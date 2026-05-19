@@ -31,7 +31,7 @@ function updatePlayerTitlesAfterFight(player, state) {
                 case Effect_1.EffectEnum.POWER_SURGE:
                     player.titles.add(types_1.Title.ELECTRICIAN);
                     break;
-                case Effect_1.EffectEnum.JUSTIFIED:
+                case Effect_1.EffectEnum.COACHING:
                     player.titles.add(types_1.Title.BLACK_BELT);
                     break;
                 case Effect_1.EffectEnum.TRANSCENDENCE:
@@ -140,7 +140,7 @@ function updatePlayerTitlesAfterFight(player, state) {
         if (state.stageLevel >= 40) {
             player.titles.add(types_1.Title.ETERNAL);
         }
-        const equippedItems = (0, schemas_1.values)(player.board).flatMap((p) => (0, schemas_1.values)(p.items));
+        const equippedItems = (0, schemas_1.schemaValues)(player.board).flatMap((p) => (0, schemas_1.schemaValues)(p.items));
         if (equippedItems.filter((i) => (0, array_1.isIn)(types_1.Scarves, i)).length >= 5) {
             player.titles.add(types_1.Title.SCOUT);
         }

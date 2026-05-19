@@ -11,6 +11,7 @@ export type Keybindings = {
     board_return: string;
     wiki: string;
     team_planner: string;
+    meta_report: string;
 };
 export interface IPreferencesState {
     musicVolume: number;
@@ -47,6 +48,7 @@ export interface IPreferencesState {
     colorblindMode: boolean;
     theme: string;
 }
+export type PreferenceKey = keyof IPreferencesState;
 type Subscription = (newPreferences: IPreferencesState) => void;
 export declare function subscribeToPreferences(fn: Subscription, runInitially?: boolean): () => void;
 export declare function subscribeToPreference<T extends keyof IPreferencesState>(key: T, fn: (newValue: IPreferencesState[T]) => void, runInitially?: boolean): () => void;

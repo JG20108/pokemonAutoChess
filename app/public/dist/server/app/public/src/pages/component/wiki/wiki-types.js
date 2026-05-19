@@ -39,6 +39,7 @@ function WikiType(props) {
     const { t } = (0, react_i18next_1.useTranslation)();
     const [preferences] = (0, preferences_1.usePreferences)();
     const [overlap, setOverlap] = (0, react_1.useState)(null);
+    const effects = effects_1.SynergyEffects[props.type];
     const pokemons = (0, pokemon_filters_1.filterPokemonsAccordingToPreferences)(precomputed_types_1.PRECOMPUTED_POKEMONS_PER_TYPE[props.type], preferences)
         .map((p) => (0, precomputed_pokemon_data_1.getPokemonData)(p))
         .sort((a, b) => a.stars - b.stars);
@@ -62,8 +63,8 @@ function WikiType(props) {
             return 0;
         });
     }
-    return ((0, jsx_runtime_1.jsxs)("div", { style: { padding: "0 1em" }, children: [(0, jsx_runtime_1.jsxs)("h2", { children: [(0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: props.type }), " ", t(`synergy.${props.type}`)] }), (0, jsx_runtime_1.jsx)("p", { children: (0, descriptions_1.addIconsToDescription)(t(`synergy_description.${props.type}`, { additionalInfo: "" })) }), effects_1.SynergyEffects[props.type].map((effect, i) => {
-                return ((0, jsx_runtime_1.jsxs)("div", { style: { display: "flex", alignItems: "center" }, children: [(0, jsx_runtime_1.jsxs)("span", { children: ["(", config_1.SynergyTriggers[props.type][i], ") ", t(`effect.${effect}`), ":\u00A0"] }), (0, jsx_runtime_1.jsx)(effect_description_1.EffectDescriptionComponent, { effect: effect })] }, t(`effect.${effect}`)));
+    return ((0, jsx_runtime_1.jsxs)("div", { style: { padding: "0 1em" }, children: [(0, jsx_runtime_1.jsxs)("h2", { children: [(0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: props.type }), " ", t(`synergy.${props.type}`)] }), (0, jsx_runtime_1.jsx)("p", { children: (0, descriptions_1.addIconsToDescription)(t(`synergy_description.${props.type}`, { additionalInfo: "" })) }), effects.map((effect, i) => {
+                return ((0, jsx_runtime_1.jsxs)("div", { style: { display: "flex", alignItems: "flex-start" }, children: [(0, jsx_runtime_1.jsxs)("span", { style: { whiteSpace: "nowrap" }, children: ["(", config_1.SynergyTriggers[props.type][i], ") ", t(`effect.${effect}`), ":\u00A0"] }), (0, jsx_runtime_1.jsx)(effect_description_1.EffectDescriptionComponent, { effect: effect })] }, t(`effect.${effect}`)));
             }), (0, jsx_runtime_1.jsx)("hr", {}), (0, jsx_runtime_1.jsxs)("div", { style: { float: "right", justifyItems: "end" }, children: [(0, jsx_runtime_1.jsx)(pokemon_filters_1.PokemonFilters, {}), (0, jsx_runtime_1.jsx)(synergy_overlaps_1.SynergyOverlaps, { type: props.type, pokemons: pokemons, overlap: overlap, setOverlap: setOverlap })] }), (0, jsx_runtime_1.jsx)("table", { children: (0, jsx_runtime_1.jsx)("tbody", { children: Object.values(Game_1.Rarity).map((rarity) => {
                         var _a;
                         return ((0, jsx_runtime_1.jsxs)("tr", { children: [(0, jsx_runtime_1.jsx)("td", { style: { color: config_1.RarityColor[rarity] }, children: t(`rarity.${rarity}`) }), (0, jsx_runtime_1.jsx)("td", { children: ((_a = pokemonsPerRarity[rarity]) !== null && _a !== void 0 ? _a : []).map((p) => {

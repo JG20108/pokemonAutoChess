@@ -1,5 +1,5 @@
 import { Room } from "@colyseus/sdk";
-import { GameObjects, Scene } from "phaser";
+import Phaser, { GameObjects, Scene } from "phaser";
 import { DesignTiled } from "../../../../core/design";
 import GameState from "../../../../rooms/states/game-state";
 import { DungeonPMDO } from "../../../../types/enum/Dungeon";

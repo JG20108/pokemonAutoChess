@@ -58,12 +58,12 @@ function EloTab() {
             loadHistory(user.uid, 1);
         }
     }, [user === null || user === void 0 ? void 0 : user.uid]);
-    return user ? ((0, jsx_runtime_1.jsxs)("div", { className: "elo-tab", children: [(0, jsx_runtime_1.jsxs)("p", { children: [t("rank"), ":"] }), (0, jsx_runtime_1.jsx)("img", { style: {
+    return user && rank ? ((0, jsx_runtime_1.jsxs)("div", { className: "elo-tab", children: [(0, jsx_runtime_1.jsxs)("p", { children: [t("rank"), ":"] }), (0, jsx_runtime_1.jsx)("img", { style: {
                     display: "block",
                     margin: "0 auto",
                     width: "200px",
                     maxWidth: "100%"
-                }, src: "assets/ranks/" + rank + ".svg", alt: t("elorank." + rank), title: t("elorank." + rank) }), (0, jsx_runtime_1.jsx)("p", { style: { fontSize: "1.2em", fontWeight: "bold" }, children: t("elorank." + rank) }), (0, jsx_runtime_1.jsxs)("p", { children: [t("profile.elo_tab.current_elo"), ": ", user.elo] }), (0, jsx_runtime_1.jsxs)("p", { children: [t("profile.elo_tab.max_elo_reached"), ": ", user.maxElo] }), (0, jsx_runtime_1.jsx)("p", { children: t("profile.elo_tab.elo_decay_info", {
+                }, src: "assets/ranks/" + rank + ".svg", alt: t(`elorank.${rank}`), title: t(`elorank.${rank}`) }), (0, jsx_runtime_1.jsx)("p", { style: { fontSize: "1.2em", fontWeight: "bold" }, children: t(`elorank.${rank}`) }), (0, jsx_runtime_1.jsxs)("p", { children: [t("profile.elo_tab.current_elo"), ": ", user.elo] }), (0, jsx_runtime_1.jsxs)("p", { children: [t("profile.elo_tab.max_elo_reached"), ": ", user.maxElo] }), (0, jsx_runtime_1.jsx)("p", { children: t("profile.elo_tab.elo_decay_info", {
                     eloLoss: config_1.ELO_DECAY_LOST_PER_DAY
                 }) }), (0, jsx_runtime_1.jsx)("p", { style: { whiteSpace: "pre-line" }, children: isDecaying
                     ? t("profile.elo_tab.elo_decay_active")

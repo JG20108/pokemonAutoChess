@@ -48,7 +48,7 @@ function checkExpeditionCompletion(player, expedition) {
         case Expedition_1.ExpeditionType.RESCUE: {
             const expeditionData = (0, expeditions_2.getExpeditionData)(expedition);
             const pokemonToRescue = (0, config_1.getBaseAltForm)(expeditionData.pokemon);
-            return (0, schemas_1.values)(player.board).some((p) => (0, config_1.getBaseAltForm)(p.name) === pokemonToRescue);
+            return (0, schemas_1.schemaValues)(player.board).some((p) => (0, config_1.getBaseAltForm)(p.name) === pokemonToRescue);
         }
         case Expedition_1.ExpeditionType.EXPLORATION: {
             const expeditionData = (0, expeditions_2.getExpeditionData)(expedition);
@@ -64,7 +64,7 @@ function checkExpeditionCompletion(player, expedition) {
             const expeditionData = (0, expeditions_2.getExpeditionData)(expedition);
             const items = [
                 ...player.items,
-                ...(0, schemas_1.values)(player.board).flatMap((p) => (0, schemas_1.values)(p.items))
+                ...(0, schemas_1.schemaValues)(player.board).flatMap((p) => (0, schemas_1.schemaValues)(p.items))
             ];
             return (items.filter((item) => item === expeditionData.item).length >=
                 expeditionData.quantity);

@@ -126,7 +126,7 @@ exports.gameSlice = (0, toolkit_1.createSlice)({
             }
             const playerToUpdate = state.players.findIndex((player) => player.id === action.payload.id);
             if (playerToUpdate !== -1) {
-                state.players.at(playerToUpdate).synergies = new synergies_1.default(new Map((0, schemas_1.entries)(action.payload.value)));
+                state.players.at(playerToUpdate).synergies = new synergies_1.default(new Map((0, schemas_1.schemaEntries)(action.payload.value)));
             }
         },
         setLife: (state, action) => {

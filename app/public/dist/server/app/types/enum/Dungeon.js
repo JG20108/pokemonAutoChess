@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DungeonPMDO = exports.DungeonMusic = void 0;
+exports.DungeonMusicCredits = exports.DungeonPMDO = exports.DungeonMusic = void 0;
 var DungeonMusic;
 (function (DungeonMusic) {
     DungeonMusic["AEGIS_CAVE"] = "Aegis Cave";
@@ -143,7 +143,11 @@ var DungeonMusic;
     DungeonMusic["TREASURE_TOWN_STAGE_0"] = "Treasure Town Stage 0";
     DungeonMusic["TREASURE_TOWN_STAGE_10"] = "Treasure Town Stage 10";
     DungeonMusic["TREASURE_TOWN_STAGE_20"] = "Treasure Town Stage 20";
+    DungeonMusic["TREASURE_TOWN_STAGE_0_ALT"] = "Treasure Town Stage 0 alt";
+    DungeonMusic["TREASURE_TOWN_STAGE_10_ALT"] = "Treasure Town Stage 10 alt";
+    DungeonMusic["TREASURE_TOWN_STAGE_20_ALT"] = "Treasure Town Stage 20 alt";
     DungeonMusic["TREESHROUD_FOREST"] = "Treeshroud Forest";
+    DungeonMusic["TROUBLE_IN_TOWN"] = "Trouble in Town";
     DungeonMusic["UPPER_STEAM_CAVE"] = "Upper Steam Cave";
     DungeonMusic["VAST_ICE_MOUNTAIN"] = "Vast Ice Mountain";
     DungeonMusic["VAST_ICE_MOUNTAIN_PEAK"] = "Vast Ice Mountain Peak";
@@ -301,4 +305,13 @@ var DungeonPMDO;
     DungeonPMDO["ZeroIsleSouth1"] = "ZeroIsleSouth1";
     DungeonPMDO["ZeroIsleSouth2"] = "ZeroIsleSouth2";
 })(DungeonPMDO || (exports.DungeonPMDO = DungeonPMDO = {}));
+exports.DungeonMusicCredits = {
+    [DungeonMusic.TROUBLE_IN_TOWN]: "John Rei",
+    [DungeonMusic.TREASURE_TOWN_STAGE_0_ALT]: "John Rei",
+    [DungeonMusic.TREASURE_TOWN_STAGE_10_ALT]: "John Rei",
+    [DungeonMusic.TREASURE_TOWN_STAGE_20_ALT]: "John Rei",
+    [DungeonMusic.TREASURE_TOWN_STAGE_0]: "L'Improyable",
+    [DungeonMusic.TREASURE_TOWN_STAGE_10]: "L'Improyable",
+    [DungeonMusic.TREASURE_TOWN_STAGE_20]: "L'Improyable"
+};
 //# sourceMappingURL=Dungeon.js.map

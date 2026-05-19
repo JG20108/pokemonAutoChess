@@ -196,7 +196,7 @@ class AnimationManager {
         });
     }
     createEnvironmentAnimations() {
-        Item_1.Berries.forEach((berryName) => {
+        Item_1.Berries.filter((b) => b !== Item_1.Item.NANAB_BERRY).forEach((berryName) => {
             for (let step = 1; step <= 3; step++) {
                 this.game.anims.create({
                     key: `${berryName}_TREE_STEP_${step}`,
@@ -249,9 +249,12 @@ class AnimationManager {
             case Game_1.PokemonActionState.WALK:
                 return config.walk;
             case Game_1.PokemonActionState.ATTACK:
+            case Game_1.PokemonActionState.TRAINING:
                 return config.attack;
             case Game_1.PokemonActionState.EMOTE:
                 return config.emote;
+            case Game_1.PokemonActionState.ABILITY:
+                return config.ability;
             case Game_1.PokemonActionState.IDLE:
             default:
                 return config.idle;
@@ -276,6 +279,9 @@ class AnimationManager {
         if (action === Game_1.PokemonActionState.EAT &&
             this.game.anims.exists(`${pokemonSprite.pokemon.index}/${pokemonSprite.pokemon.shiny ? Game_1.PokemonTint.SHINY : Game_1.PokemonTint.NORMAL}/${animation}/${Game_1.SpriteType.ANIM}/${Game_1.Orientation.DOWN}`) === false) {
             animation = this.convertPokemonActionStateToAnimationType(Game_1.PokemonActionState.SLEEP, pokemonSprite);
+        }
+        if (action === Game_1.PokemonActionState.TRAINING) {
+            pokemonSprite.orientation = Game_1.Orientation.LEFT;
         }
         try {
             this.play(pokemonSprite, animation, {

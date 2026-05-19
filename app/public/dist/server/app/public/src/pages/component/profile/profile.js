@@ -20,6 +20,7 @@ const react_i18next_1 = require("react-i18next");
 const react_tabs_1 = require("react-tabs");
 const types_1 = require("../../../../../types");
 const function_1 = require("../../../../../utils/function");
+const object_1 = require("../../../../../utils/object");
 const hooks_1 = require("../../../hooks");
 const network_1 = require("../../../network");
 const LobbyStore_1 = require("../../../stores/LobbyStore");
@@ -103,7 +104,10 @@ function Profile() {
         setSuggestions([]);
         setError("");
     }, [dispatch]);
-    return ((0, jsx_runtime_1.jsxs)("div", { className: "profile-modal", children: [(0, jsx_runtime_1.jsxs)("div", { className: "profile-box", children: [(0, jsx_runtime_1.jsxs)("h2", { children: [(_a = profile === null || profile === void 0 ? void 0 : profile.displayName) !== null && _a !== void 0 ? _a : "", " ", t("profile.title")] }), profile && (0, jsx_runtime_1.jsx)(player_box_1.default, { user: profile, history: gameHistory })] }), (0, jsx_runtime_1.jsx)(search_bar_1.SearchBar, { onChange: onSearchQueryChange }), (0, jsx_runtime_1.jsx)("div", { className: "profile-actions", children: loading ? ((0, jsx_runtime_1.jsx)("div", { className: "loading", children: t("loading") })) : error ? ((0, jsx_runtime_1.jsx)("div", { className: "error", children: error })) : searchedUser ? ((0, jsx_runtime_1.jsx)(OtherProfileActions, { rightPanel: rightPanel, setRightPanel: setRightPanel })) : suggestions.length > 0 ? ((0, jsx_runtime_1.jsx)(search_results_1.default, { suggestions: suggestions, onSelect: (suggestion) => (0, network_1.searchById)(suggestion.id) })) : ((0, jsx_runtime_1.jsx)(MyProfileMenu, {})) }), rightPanel === "game" && profile && ((0, jsx_runtime_1.jsx)(game_history_1.default, { uid: profile.uid, onUpdate: setGameHistory })), rightPanel === "chat" && profile && ((0, jsx_runtime_1.jsx)(profile_chat_history_1.ProfileChatHistory, { uid: profile.uid }))] }));
+    return ((0, jsx_runtime_1.jsxs)("div", { className: "profile-modal", children: [(0, jsx_runtime_1.jsxs)("div", { className: "profile-box", children: [(0, jsx_runtime_1.jsxs)("h2", { children: [(_a = profile === null || profile === void 0 ? void 0 : profile.displayName) !== null && _a !== void 0 ? _a : "", " ", t("profile.title")] }), profile && (0, jsx_runtime_1.jsx)(player_box_1.default, { user: profile, history: gameHistory })] }), (0, jsx_runtime_1.jsx)(search_bar_1.SearchBar, { onChange: onSearchQueryChange }), (0, jsx_runtime_1.jsx)("div", { className: "profile-actions", children: loading ? ((0, jsx_runtime_1.jsx)("div", { className: "loading", children: t("loading") })) : error ? ((0, jsx_runtime_1.jsx)("div", { className: "error", children: error })) : suggestions.length > 0 ? ((0, jsx_runtime_1.jsx)(search_results_1.default, { suggestions: suggestions, onSelect: (suggestion) => {
+                        resetSearch();
+                        (0, network_1.searchById)(suggestion.id);
+                    } })) : searchedUser ? ((0, jsx_runtime_1.jsx)(OtherProfileActions, { rightPanel: rightPanel, setRightPanel: setRightPanel })) : ((0, jsx_runtime_1.jsx)(MyProfileMenu, {})) }), rightPanel === "game" && profile && ((0, jsx_runtime_1.jsx)(game_history_1.default, { uid: profile.uid, onUpdate: setGameHistory })), rightPanel === "chat" && profile && ((0, jsx_runtime_1.jsx)(profile_chat_history_1.ProfileChatHistory, { uid: profile.uid }))] }));
 }
 function MyProfileMenu() {
     const { t } = (0, react_i18next_1.useTranslation)();
@@ -149,7 +153,7 @@ function OtherProfileActions(props) {
                     alert(`Role ${profileRole} given to ${user.displayName}`);
                 }, children: t("give_role") }), (0, jsx_runtime_1.jsx)("select", { value: profileRole, onChange: (e) => {
                     setProfileRole(e.target.value);
-                }, children: Object.keys(types_1.Role).map((r) => ((0, jsx_runtime_1.jsx)("option", { value: r, children: t("role." + r).toUpperCase() }, r))) })] })) : null;
+                }, children: (0, object_1.keys)(types_1.Role).map((r) => ((0, jsx_runtime_1.jsx)("option", { value: r, children: t(`role.${r}`).toUpperCase() }, r))) })] })) : null;
     const titleButton = user && role && role === types_1.Role.ADMIN ? ((0, jsx_runtime_1.jsxs)("div", { className: "my-input-group", children: [(0, jsx_runtime_1.jsx)("button", { className: "bubbly blue", onClick: () => {
                     (0, network_1.giveTitle)({ uid: user.uid, title: title });
                     alert(`Title ${title} given to ${user.displayName}`);

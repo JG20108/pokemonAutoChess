@@ -859,6 +859,7 @@ export declare class Bagon extends Pokemon {
     maxPP: number;
     range: number;
     skill: Ability;
+    regional: boolean;
 }
 export declare class Shelgon extends Pokemon {
     types: SetSchema<Synergy>;
@@ -873,6 +874,7 @@ export declare class Shelgon extends Pokemon {
     maxPP: number;
     range: number;
     skill: Ability;
+    regional: boolean;
 }
 export declare class Salamence extends Pokemon {
     types: SetSchema<Synergy>;
@@ -886,6 +888,7 @@ export declare class Salamence extends Pokemon {
     maxPP: number;
     range: number;
     skill: Ability;
+    regional: boolean;
 }
 export declare class Ralts extends Pokemon {
     types: SetSchema<Synergy>;
@@ -1531,7 +1534,6 @@ export declare class Deino extends Pokemon {
     maxPP: number;
     range: number;
     skill: Ability;
-    regional: boolean;
 }
 export declare class Zweilous extends Pokemon {
     types: SetSchema<Synergy>;
@@ -1546,7 +1548,6 @@ export declare class Zweilous extends Pokemon {
     maxPP: number;
     range: number;
     skill: Ability;
-    regional: boolean;
 }
 export declare class Hydreigon extends Pokemon {
     types: SetSchema<Synergy>;
@@ -1560,7 +1561,6 @@ export declare class Hydreigon extends Pokemon {
     maxPP: number;
     range: number;
     skill: Ability;
-    regional: boolean;
 }
 export declare class Poliwag extends Pokemon {
     types: SetSchema<Synergy>;
@@ -13635,11 +13635,7 @@ export declare class Timburr extends Pokemon {
     passive: Passive;
     onChangePosition(x: number, y: number, player: Player, state: GameState): void;
     afterSell(player: any): void;
-    afterEvolve: (params: {
-        pokemonEvolved: Pokemon;
-        pokemonsBeforeEvolution: Pokemon[];
-        player: Player;
-    }) => void;
+    afterEvolve(player: any): void;
 }
 export declare class Gurdurr extends Pokemon {
     types: SetSchema<Synergy>;
@@ -13657,11 +13653,7 @@ export declare class Gurdurr extends Pokemon {
     passive: Passive;
     onChangePosition(x: number, y: number, player: Player, state: GameState): void;
     afterSell(player: any): void;
-    afterEvolve: (params: {
-        pokemonEvolved: Pokemon;
-        pokemonsBeforeEvolution: Pokemon[];
-        player: Player;
-    }) => void;
+    afterEvolve(player: any): void;
 }
 export declare class Conkeldurr extends Pokemon {
     types: SetSchema<Synergy>;
@@ -13693,7 +13685,6 @@ export declare class PillarWood extends Pokemon {
     skill: Ability;
     passive: Passive;
     canHoldItems: boolean;
-    canBeBenched: boolean;
     canBeSold: boolean;
 }
 export declare class PillarIron extends Pokemon {
@@ -13710,7 +13701,6 @@ export declare class PillarIron extends Pokemon {
     skill: Ability;
     passive: Passive;
     canHoldItems: boolean;
-    canBeBenched: boolean;
     canBeSold: boolean;
 }
 export declare class PillarConcrete extends Pokemon {
@@ -13727,7 +13717,6 @@ export declare class PillarConcrete extends Pokemon {
     skill: Ability;
     passive: Passive;
     canHoldItems: boolean;
-    canBeBenched: boolean;
     canBeSold: boolean;
 }
 export declare class Elgyem extends Pokemon {
@@ -16477,6 +16466,132 @@ export declare class Crustle extends Pokemon {
     range: number;
     skill: Ability;
     additional: boolean;
+}
+export declare class Skwovet extends Pokemon {
+    types: SetSchema<Synergy>;
+    rarity: Rarity;
+    stars: number;
+    evolution: Pkm;
+    hp: number;
+    atk: number;
+    speed: number;
+    def: number;
+    speDef: number;
+    maxPP: number;
+    range: number;
+    skill: Ability;
+    additional: boolean;
+}
+export declare class Greedent extends Pokemon {
+    types: SetSchema<Synergy>;
+    rarity: Rarity;
+    stars: number;
+    hp: number;
+    atk: number;
+    speed: number;
+    def: number;
+    speDef: number;
+    maxPP: number;
+    range: number;
+    skill: Ability;
+    additional: boolean;
+}
+export declare class Quaxly extends Pokemon {
+    types: SetSchema<Synergy>;
+    rarity: Rarity;
+    stars: number;
+    evolution: Pkm;
+    hp: number;
+    atk: number;
+    speed: number;
+    def: number;
+    speDef: number;
+    maxPP: number;
+    range: number;
+    skill: Ability;
+}
+export declare class Quaxwell extends Pokemon {
+    types: SetSchema<Synergy>;
+    rarity: Rarity;
+    stars: number;
+    evolution: Pkm;
+    hp: number;
+    atk: number;
+    speed: number;
+    def: number;
+    speDef: number;
+    maxPP: number;
+    range: number;
+    skill: Ability;
+}
+export declare class Quaquaval extends Pokemon {
+    types: SetSchema<Synergy>;
+    rarity: Rarity;
+    stars: number;
+    hp: number;
+    atk: number;
+    speed: number;
+    def: number;
+    speDef: number;
+    maxPP: number;
+    range: number;
+    skill: Ability;
+}
+export declare class Komala extends Pokemon {
+    types: SetSchema<Synergy>;
+    rarity: Rarity;
+    stars: number;
+    hp: number;
+    atk: number;
+    speed: number;
+    def: number;
+    speDef: number;
+    maxPP: number;
+    range: number;
+    skill: Ability;
+    passive: Passive;
+}
+export declare class Tarountula extends Pokemon {
+    types: SetSchema<Synergy>;
+    rarity: Rarity;
+    stars: number;
+    evolution: Pkm;
+    hp: number;
+    atk: number;
+    speed: number;
+    def: number;
+    speDef: number;
+    maxPP: number;
+    range: number;
+    skill: Ability;
+    additional: boolean;
+}
+export declare class Spidops extends Pokemon {
+    types: SetSchema<Synergy>;
+    rarity: Rarity;
+    stars: number;
+    hp: number;
+    atk: number;
+    speed: number;
+    def: number;
+    speDef: number;
+    maxPP: number;
+    range: number;
+    skill: Ability;
+    additional: boolean;
+}
+export declare class SlitherWing extends Pokemon {
+    types: SetSchema<Synergy>;
+    rarity: Rarity;
+    stars: number;
+    hp: number;
+    atk: number;
+    speed: number;
+    def: number;
+    speDef: number;
+    maxPP: number;
+    range: number;
+    skill: Ability;
 }
 export declare const PokemonClasses: Record<Pkm, new (name: Pkm, shiny?: boolean, emotion?: Emotion) => Pokemon>;
 export {};

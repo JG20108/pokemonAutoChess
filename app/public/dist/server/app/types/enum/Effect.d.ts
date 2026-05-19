@@ -20,7 +20,7 @@ export declare enum EffectEnum {
     GUTS = "GUTS",
     STURDY = "STURDY",
     DEFIANT = "DEFIANT",
-    JUSTIFIED = "JUSTIFIED",
+    COACHING = "COACHING",
     PRECOGNITION = "PRECOGNITION",
     AURA = "AURA",
     TRANSCENDENCE = "TRANSCENDENCE",
@@ -170,7 +170,7 @@ export declare enum EffectEnum {
     JAW_LOCK = "JAW_LOCK",
     BALM_MUSHROOM = "BALM_MUSHROOM",
     PARTING_SHOT = "PARTING_SHOT",
-    BANEFUL_BUNKER = "BANEFUL_BUNKER"
+    NO_PP_GAIN = "NO_PP_GAIN"
 }
 export declare const BoardEffects: readonly [EffectEnum.LIGHTNING_STRIKE, EffectEnum.SMOKE, EffectEnum.POISON_GAS, EffectEnum.STRANGE_STEAM_BOARD_EFFECT, EffectEnum.STEALTH_ROCKS, EffectEnum.SPIKES, EffectEnum.TOXIC_SPIKES, EffectEnum.STICKY_WEB, EffectEnum.COTTON_BALL, EffectEnum.HAIL, EffectEnum.EMBER];
 export type BoardEffect = (typeof BoardEffects)[number];

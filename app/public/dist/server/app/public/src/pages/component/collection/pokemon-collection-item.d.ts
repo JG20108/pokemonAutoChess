@@ -7,6 +7,10 @@ export default function PokemonCollectionItem(props: {
     name: Pkm;
     index: string;
     item: IPokemonCollectionItemUnpacked | undefined;
+    isNew: boolean;
+    isFavorite: boolean;
+    isUnlocked: boolean;
+    isUnlockable: boolean;
     filterState: CollectionFilterState;
     setPokemon: Dispatch<SetStateAction<Pkm | "">>;
 }): import("react/jsx-runtime").JSX.Element | null;

@@ -1,4 +1,4 @@
-import { GameObjects } from "phaser";
+import Phaser, { GameObjects } from "phaser";
 import { Item } from "../../../../types/enum/Item";
 import type GameScene from "../scenes/game-scene";
 import DraggableObject from "./draggable-object";

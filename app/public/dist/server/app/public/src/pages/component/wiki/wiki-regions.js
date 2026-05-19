@@ -64,14 +64,14 @@ function WikiRegions() {
                         return ((0, jsx_runtime_1.jsx)(react_window_1.List, { style: { height, width }, rowCount: rowCount, rowHeight: dynamicRowHeight, rowComponent: RegionRow, rowProps: {
                                 regions: sortedRegions,
                                 columnCount,
-                                pokemonsPerRegion,
-                                t
+                                pokemonsPerRegion
                             } }, columnCount));
                     } }) }), (0, jsx_runtime_1.jsx)(game_pokemon_detail_1.GamePokemonDetailTooltip, { origin: "wiki" })] }));
 }
-function RegionRow({ index, style, regions, columnCount, pokemonsPerRegion, t }) {
+function RegionRow({ index, style, regions, columnCount, pokemonsPerRegion }) {
     const startIdx = index * columnCount;
     const rowRegions = regions.slice(startIdx, startIdx + columnCount);
+    const { t } = (0, react_i18next_1.useTranslation)();
     return ((0, jsx_runtime_1.jsx)("div", { style: Object.assign(Object.assign({}, style), { paddingBottom: "0.5em" }), children: (0, jsx_runtime_1.jsx)("div", { style: {
                 display: "grid",
                 gridTemplateColumns: `repeat(${columnCount}, 1fr)`,

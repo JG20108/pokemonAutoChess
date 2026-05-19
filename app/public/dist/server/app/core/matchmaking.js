@@ -54,7 +54,7 @@ function completeMatchupCombination(combination, matchups, players) {
     }
 }
 function selectMatchups(state) {
-    const players = (0, random_1.shuffleArray)((0, schemas_1.values)(state.players).filter((p) => p.alive));
+    const players = (0, random_1.shuffleArray)((0, schemas_1.schemaValues)(state.players).filter((p) => p.alive));
     if (players.length <= 1)
         return [];
     const matchups = getAllPossibleMatchups(players);

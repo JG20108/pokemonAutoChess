@@ -1,5 +1,5 @@
 import { ArraySchema, Schema } from "@colyseus/schema";
-import { IAfterGamePlayer, Role } from "../../types";
+import { IAfterGamePlayer, Role, Title } from "../../types";
 import { Synergy } from "../../types/enum/Synergy";
 import { GameStats } from "../../types/interfaces/GameStats";
 import { IPokemonRecord } from "./game-record";
@@ -17,14 +17,14 @@ export default class AfterGamePlayer extends Schema implements IAfterGamePlayer 
     pokemons: ArraySchema<IPokemonRecord>;
     elo: number;
     games: number;
-    title: string;
+    title: Title | "";
     role: Role;
     synergies: ArraySchema<{
         name: Synergy;
         value: number;
     }>;
     gameStats: GameStatsSchema;
-    constructor(id: string, name: string, avatar: string, rank: number, pokemons: IPokemonRecord[] | ArraySchema<IPokemonRecord>, title: string, role: Role, synergies: Array<{
+    constructor(id: string, name: string, avatar: string, rank: number, pokemons: IPokemonRecord[] | ArraySchema<IPokemonRecord>, title: Title | "", role: Role, synergies: Array<{
         name: Synergy;
         value: number;
     }> | ArraySchema<{

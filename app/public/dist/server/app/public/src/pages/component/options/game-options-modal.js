@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = GameOptionsModal;
 const jsx_runtime_1 = require("react/jsx-runtime");
+const phaser_1 = __importDefault(require("phaser"));
 const react_i18next_1 = require("react-i18next");
 const react_tabs_1 = require("react-tabs");
 const config_1 = require("../../../../../config");
@@ -29,11 +30,11 @@ function GameOptionsModal(props) {
     const profile = (0, hooks_1.useAppSelector)((state) => state.network.profile);
     const profileLevel = (_a = profile === null || profile === void 0 ? void 0 : profile.level) !== null && _a !== void 0 ? _a : 0;
     const renderers = {
-        [Phaser.AUTO]: "Auto",
-        [Phaser.WEBGL]: "WebGL",
-        [Phaser.CANVAS]: "Canvas"
+        [phaser_1.default.AUTO]: "Auto",
+        [phaser_1.default.WEBGL]: "WebGL",
+        [phaser_1.default.CANVAS]: "Canvas"
     };
-    return ((0, jsx_runtime_1.jsx)(modal_1.Modal, { show: props.show, onClose: props.hideModal, header: t("options.title"), className: "game-options-modal anchor-top", children: (0, jsx_runtime_1.jsxs)(react_tabs_1.Tabs, { children: [(0, jsx_runtime_1.jsxs)(react_tabs_1.TabList, { children: [(0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t("options.sound") }, "sound"), (0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t("options.interface") }, "interface"), (0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t("options.hotkeys") }, "hotkeys"), (0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t("options.game_files") }, "files")] }), (0, jsx_runtime_1.jsxs)(react_tabs_1.TabPanel, { children: [(0, jsx_runtime_1.jsxs)("label", { style: { width: "100%" }, children: [t("music_volume"), ": ", preferences.musicVolume, " %", (0, jsx_runtime_1.jsx)("input", { type: "range", min: "0", max: "100", value: preferences.musicVolume, onInput: (e) => setPreferences({
+    return ((0, jsx_runtime_1.jsx)(modal_1.Modal, { show: props.show, onClose: props.hideModal, header: t("options.title"), className: "game-options-modal anchor-top", children: (0, jsx_runtime_1.jsxs)(react_tabs_1.Tabs, { children: [(0, jsx_runtime_1.jsxs)(react_tabs_1.TabList, { children: [(0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t("options.sound") }, "sound"), (0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t("options.interface") }, "interface"), (0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t("options.hotkeys") }, "hotkeys"), (0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t("options.game_files") }, "files")] }), (0, jsx_runtime_1.jsxs)(react_tabs_1.TabPanel, { children: [(0, jsx_runtime_1.jsxs)("label", { style: { width: "100%" }, children: [t("jukebox.music_volume"), ": ", preferences.musicVolume, " %", (0, jsx_runtime_1.jsx)("input", { type: "range", min: "0", max: "100", value: preferences.musicVolume, onInput: (e) => setPreferences({
                                         musicVolume: Number.parseFloat(e.target.value)
                                     }) })] }), (0, jsx_runtime_1.jsxs)("label", { style: { width: "100%" }, children: [t("options.sfx_volume"), ": ", preferences.sfxVolume, " %", (0, jsx_runtime_1.jsx)("input", { type: "range", min: "0", max: "100", value: preferences.sfxVolume, onInput: (e) => setPreferences({
                                         sfxVolume: Number.parseFloat(e.target.value)

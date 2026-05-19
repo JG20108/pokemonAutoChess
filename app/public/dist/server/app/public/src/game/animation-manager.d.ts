@@ -1,3 +1,4 @@
+import type Phaser from "phaser";
 import { AnimationType } from "../../../types/Animation";
 import { PokemonActionState, PokemonTint } from "../../../types/enum/Game";
 import PokemonSprite from "./components/pokemon";

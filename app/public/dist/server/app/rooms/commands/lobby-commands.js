@@ -18,6 +18,7 @@ const colyseus_1 = require("colyseus");
 const crypto_1 = require("crypto");
 const v8_1 = require("v8");
 const config_1 = require("../../config");
+const gadgets_1 = require("../../config/game/gadgets");
 const collection_1 = require("../../core/collection");
 const pending_game_manager_1 = require("../../core/pending-game-manager");
 const user_metadata_1 = __importDefault(require("../../models/mongo-models/user-metadata"));
@@ -508,6 +509,10 @@ class JoinOrOpenRoomCommand extends command_1.Command {
                     break;
                 }
                 case Game_1.GameMode.RANKED: {
+                    if (user.level < gadgets_1.GADGETS.certificate.levelRequired) {
+                        client.send(types_1.Transfer.ALERT, `You need to reach level ${gadgets_1.GADGETS.certificate.levelRequired} to unlock ranked mode.`);
+                        return;
+                    }
                     const userRank = (0, elo_1.getRank)(user.elo);
                     let minRank = EloRank_1.EloRank.LEVEL_BALL;
                     let maxRank = EloRank_1.EloRank.BEAST_BALL;

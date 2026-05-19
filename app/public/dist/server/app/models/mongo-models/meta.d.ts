@@ -25,10 +25,12 @@ export interface IMeta {
     x: number;
     y: number;
 }
-declare const _default: import("mongoose").Model<IMeta, {}, {}, {}, import("mongoose").Document<unknown, {}, IMeta, {}> & IMeta & {
+declare const _default: import("mongoose").Model<IMeta, {}, {}, {}, import("mongoose").Document<unknown, {}, IMeta, {}, import("mongoose").DefaultSchemaOptions> & IMeta & {
     _id: import("mongoose").Types.ObjectId;
 } & {
     __v: number;
-}, any>;
+} & {
+    id: string;
+}, any, IMeta>;
 export default _default;
 export declare function fetchMeta(): Promise<IMeta[]>;

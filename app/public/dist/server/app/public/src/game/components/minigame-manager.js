@@ -15,6 +15,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const i18next_1 = require("i18next");
+const phaser_1 = __importDefault(require("phaser"));
 const config_1 = require("../../../../config");
 const types_1 = require("../../../../types");
 const Game_1 = require("../../../../types/enum/Game");
@@ -65,8 +66,8 @@ class MinigameManager {
             if (!item.data)
                 return;
             const { serverX, serverY } = item.data.values;
-            item.x = Phaser.Math.Linear(item.x, serverX, (0, number_1.clamp)(acceleration / Math.abs(serverX - item.x), min, max));
-            item.y = Phaser.Math.Linear(item.y, serverY, (0, number_1.clamp)(acceleration / Math.abs(serverY - item.y), 0.05, 0.25));
+            item.x = phaser_1.default.Math.Linear(item.x, serverX, (0, number_1.clamp)(acceleration / Math.abs(serverX - item.x), min, max));
+            item.y = phaser_1.default.Math.Linear(item.y, serverY, (0, number_1.clamp)(acceleration / Math.abs(serverY - item.y), 0.05, 0.25));
         };
         this.pokemons.forEach(interpolatePosition(0.2));
         this.items.forEach(interpolatePosition(0.05, 0.25, 100));
@@ -178,7 +179,7 @@ class MinigameManager {
                             y: portalUI.y,
                             scale: 0,
                             duration: 800,
-                            ease: Phaser.Math.Easing.Sine.In
+                            ease: phaser_1.default.Math.Easing.Sine.In
                         });
                     }
             }
@@ -225,7 +226,7 @@ class MinigameManager {
                 targets: arrowIndicator,
                 y: pokemonUI.y - 50,
                 duration: 500,
-                ease: Phaser.Math.Easing.Sine.InOut,
+                ease: phaser_1.default.Math.Easing.Sine.InOut,
                 loop: 5,
                 yoyo: true,
                 onComplete() {
@@ -420,6 +421,14 @@ class MinigameManager {
                 : Game_1.Orientation.UP,
             name: Pokemon_1.Pkm.CINCCINO
         });
+        const ludicolo = new pokemon_special_1.default({
+            scene: this.scene,
+            x: encounter === TownEncounter_1.TownEncounters.LUDICOLO ? cx : 13.5 * 48,
+            y: encounter === TownEncounter_1.TownEncounters.LUDICOLO ? cy : 25.5 * 48,
+            orientation: Game_1.Orientation.DOWN,
+            name: Pokemon_1.Pkm.LUDICOLO,
+            animation: Game_1.PokemonActionState.ABILITY
+        });
         const magnezone = new pokemon_special_1.default({
             scene: this.scene,
             x: encounter === TownEncounter_1.TownEncounters.MAGNEZONE ? cx : 41 * 48,
@@ -462,7 +471,7 @@ class MinigameManager {
             champion.sprite.setDepth(depths_1.DEPTH.POKEMON + (2 - rank));
             return champion;
         });
-        this.villagers.push(kecleon, kecleonShiny, electivire, chansey, kangaskhan, xatu, duskull, regirock, marowak, celebi, mareep, wobbuffet, wynaut, spinda, sableye, munchlax, meowth, makuhita, croagunk, wigglytuff, cincinno, magnezone, kingambit, lapras, ...podiumPokemons);
+        this.villagers.push(kecleon, kecleonShiny, electivire, chansey, kangaskhan, xatu, duskull, regirock, marowak, celebi, mareep, wobbuffet, wynaut, spinda, sableye, munchlax, meowth, makuhita, croagunk, wigglytuff, cincinno, ludicolo, magnezone, kingambit, lapras, ...podiumPokemons);
         const specialGameRule = (_b = (_a = this.scene.room) === null || _a === void 0 ? void 0 : _a.state) === null || _b === void 0 ? void 0 : _b.specialGameRule;
         if (encounter) {
             const cost = specialGameRule === SpecialGameRule_1.SpecialGameRule.TOWN_FESTIVAL
@@ -497,7 +506,7 @@ class MinigameManager {
         const villager = this.villagers.find((pkm) => pkm.name === npc);
         if (villager) {
             if (dialog) {
-                (_b = this.scene.board) === null || _b === void 0 ? void 0 : _b.displayText(villager.x, villager.y - 10, (0, i18next_1.t)(dialog, otherArgs), true);
+                (_b = this.scene.board) === null || _b === void 0 ? void 0 : _b.displayText(villager.x, villager.y - 10, (0, i18next_1.t)(`npc_dialog.${dialog}`, otherArgs), true);
             }
             else {
                 villager.emoteAnimation();

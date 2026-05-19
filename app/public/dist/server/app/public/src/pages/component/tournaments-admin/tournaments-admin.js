@@ -41,7 +41,7 @@ function TournamentsAdmin() {
                                         } })] }), (0, jsx_runtime_1.jsx)("button", { type: "submit", className: "bubbly blue", children: "Create tournament" })] })] })] }));
 }
 function TournamentAdminItem(props) {
-    const brackets = (0, schemas_1.entries)(props.tournament.brackets);
+    const brackets = (0, schemas_1.schemaEntries)(props.tournament.brackets);
     return ((0, jsx_runtime_1.jsxs)("div", { className: "my-box tournament-admin-item", children: [(0, jsx_runtime_1.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "0.5em" }, children: [(0, jsx_runtime_1.jsx)("p", { className: "name", children: props.tournament.name }), (0, jsx_runtime_1.jsx)("p", { className: "date", children: (0, date_1.formatDate)(new Date(props.tournament.startDate)) }), (0, jsx_runtime_1.jsx)("div", { className: "spacer" }), (0, jsx_runtime_1.jsxs)("div", { className: "actions", children: [(0, jsx_runtime_1.jsx)("button", { className: "remove-btn bubbly red", onClick: () => {
                                     if (confirm("Delete tournament and all registrations ?")) {
                                         (0, network_1.deleteTournament)({ id: props.tournament.id });

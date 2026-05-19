@@ -73,7 +73,7 @@ function SynergyDetailComponent(props) {
                 break;
             }
             case Synergy_1.Synergy.DRAGON: {
-                const totalDragonStars = (0, schemas_1.values)(spectatedPlayer.board).reduce((acc, pokemon) => acc +
+                const totalDragonStars = (0, schemas_1.schemaValues)(spectatedPlayer.board).reduce((acc, pokemon) => acc +
                     (pokemon.types.has(Synergy_1.Synergy.DRAGON) && !(0, board_1.isOnBench)(pokemon)
                         ? pokemon.stars
                         : 0), 0);
@@ -103,7 +103,7 @@ function SynergyDetailComponent(props) {
             wands: spectatedPlayer.fairyWands.join(" ")
         });
     }
-    return ((0, jsx_runtime_1.jsxs)("div", { style: { maxWidth: "560px" }, children: [(0, jsx_runtime_1.jsxs)("div", { style: { display: "flex", alignItems: "center" }, children: [(0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: props.type, size: "40px" }), (0, jsx_runtime_1.jsx)("h3", { style: { margin: 0 }, children: t(`synergy.${props.type}`) })] }), (0, jsx_runtime_1.jsx)("p", { style: { whiteSpace: "pre-wrap" }, children: (0, descriptions_1.addIconsToDescription)(t(`synergy_description.${props.type}`, { additionalInfo })) }), effects_1.SynergyEffects[props.type].map((d, i) => {
+    return ((0, jsx_runtime_1.jsxs)("div", { style: { maxWidth: "560px" }, children: [(0, jsx_runtime_1.jsxs)("div", { style: { display: "flex", alignItems: "center" }, children: [(0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: props.type, size: "40px" }), (0, jsx_runtime_1.jsx)("h3", { style: { margin: 0 }, children: t(`synergy.${props.type}`) })] }), (0, jsx_runtime_1.jsx)("p", { style: { whiteSpace: "pre-wrap" }, children: (0, descriptions_1.addIconsToDescription)(t(`synergy_description.${props.type}`, { additionalInfo })) }), effects_1.SynergyEffects[props.type].map((effect, i) => {
                 return ((0, jsx_runtime_1.jsxs)("div", { style: {
                         color: levelReached === config_1.SynergyTriggers[props.type][i]
                             ? "var(--color-fg-primary)"
@@ -116,13 +116,13 @@ function SynergyDetailComponent(props) {
                             : "none",
                         borderRadius: "12px",
                         padding: "5px"
-                    }, children: [(0, jsx_runtime_1.jsxs)("h4", { style: { fontSize: "1.2em", marginBottom: 0 }, children: ["(", config_1.SynergyTriggers[props.type][i], ") ", t(`effect.${d}`)] }), (0, jsx_runtime_1.jsx)(effect_description_1.EffectDescriptionComponent, { effect: d })] }, d));
+                    }, children: [(0, jsx_runtime_1.jsxs)("h4", { style: { fontSize: "1.2em", marginBottom: 0 }, children: ["(", config_1.SynergyTriggers[props.type][i], ") ", t(`effect.${effect}`)] }), (0, jsx_runtime_1.jsx)(effect_description_1.EffectDescriptionComponent, { effect: effect })] }, effect));
             }), (0, jsx_runtime_1.jsx)(PokemonPortraitList, { pokemons: regulars, type: props.type, player: spectatedPlayer }), (0, jsx_runtime_1.jsx)(PokemonPortraitList, { pokemons: additionals, type: props.type, player: spectatedPlayer, marginTop: "0.5em" }), (0, jsx_runtime_1.jsx)(PokemonPortraitList, { pokemons: uniques, type: props.type, player: spectatedPlayer, marginTop: "0.5em" }), (0, jsx_runtime_1.jsx)(PokemonPortraitList, { pokemons: legendaries, type: props.type, player: spectatedPlayer, marginTop: "0.5em" }), (0, jsx_runtime_1.jsx)(PokemonPortraitList, { pokemons: specials, type: props.type, player: spectatedPlayer, marginTop: "0.5em" })] }));
 }
 function PokemonPortraitList(props) {
     const teamFamilies = new Set(props.player == null
         ? []
-        : (0, schemas_1.values)(props.player.board)
+        : (0, schemas_1.schemaValues)(props.player.board)
             .filter((x) => x.types.has(props.type))
             .map((x) => Pokemon_1.PkmFamily[x.name]));
     return ((0, jsx_runtime_1.jsx)("div", { style: Object.assign({ display: "flex", flexWrap: "wrap" }, (props.marginTop ? { marginTop: props.marginTop } : {})), children: props.pokemons.map((p) => ((0, jsx_runtime_1.jsx)(PokemonPortrait, { p: p, type: props.type, player: props.player, teamFamilies: teamFamilies }, p.name))) }));

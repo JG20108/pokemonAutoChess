@@ -430,6 +430,7 @@ export declare enum Pkm {
     GRAVELER = "GRAVELER",
     GREAT_TUSK = "GREAT_TUSK",
     GREAVARD = "GREAVARD",
+    GREEDENT = "GREEDENT",
     GRENINJA = "GRENINJA",
     GRIMER = "GRIMER",
     GRIMMSNARL = "GRIMMSNARL",
@@ -534,6 +535,7 @@ export declare enum Pkm {
     KLINK = "KLINK",
     KLINKLANG = "KLINKLANG",
     KOFFING = "KOFFING",
+    KOMALA = "KOMALA",
     KOMMO_O = "KOMMO_O",
     KRABBY = "KRABBY",
     KRICKETOT = "KRICKETOT",
@@ -779,6 +781,9 @@ export declare enum Pkm {
     PURUGLY = "PURUGLY",
     PYUKUMUKU = "PYUKUMUKU",
     QUAGSIRE = "QUAGSIRE",
+    QUAQUAVAL = "QUAQUAVAL",
+    QUAXLY = "QUAXLY",
+    QUAXWELL = "QUAXWELL",
     QUILAVA = "QUILAVA",
     QUILLADIN = "QUILLADIN",
     QWILFISH = "QWILFISH",
@@ -908,9 +913,11 @@ export declare enum Pkm {
     SKORUPI = "SKORUPI",
     SKRELP = "SKRELP",
     SKUNTANK = "SKUNTANK",
+    SKWOVET = "SKWOVET",
     SLAKING = "SLAKING",
     SLAKOTH = "SLAKOTH",
     SLIGOO = "SLIGOO",
+    SLITHER_WING = "SLITHER_WING",
     SLOWBRO = "SLOWBRO",
     SLOWKING = "SLOWKING",
     SLOWPOKE = "SLOWPOKE",
@@ -935,6 +942,7 @@ export declare enum Pkm {
     SPECTRIER = "SPECTRIER",
     SPEWPA = "SPEWPA",
     SPHEAL = "SPHEAL",
+    SPIDOPS = "SPIDOPS",
     SPINARAK = "SPINARAK",
     SPINDA = "SPINDA",
     SPIRITOMB = "SPIRITOMB",
@@ -979,6 +987,7 @@ export declare enum Pkm {
     TAPU_FINI = "TAPU_FINI",
     TAPU_KOKO = "TAPU_KOKO",
     TAPU_LELE = "TAPU_LELE",
+    TAROUNTULA = "TAROUNTULA",
     TATSUGIRI_CURLY = "TATSUGIRI_CURLY",
     TATSUGIRI_DROOPY = "TATSUGIRI_DROOPY",
     TATSUGIRI_STRETCHY = "TATSUGIRI_STRETCHY",
@@ -1193,5 +1202,6 @@ export type PkmProposition = Pkm | PkmDuo;
 export declare const PkmDuos: Record<PkmDuo, Pkm[]>;
 export declare const Unowns: Pkm[];
 export declare const UnownsForScribble: Pkm[];
+export declare const Pillars: (Pkm.PILLAR_WOOD | Pkm.PILLAR_IRON | Pkm.PILLAR_CONCRETE)[];
 export declare const NonPkm: Pkm[];
 export declare const NON_PMD_PKM_INDEXES: string[];

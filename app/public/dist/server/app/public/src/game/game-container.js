@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sdk_1 = require("@colyseus/sdk");
 const i18next_1 = require("i18next");
 const phaser_1 = __importDefault(require("phaser"));
-const moveto_plugin_js_1 = __importDefault(require("phaser3-rex-plugins/plugins/moveto-plugin.js"));
-const outlinepipeline_plugin_js_1 = __importDefault(require("phaser3-rex-plugins/plugins/outlinepipeline-plugin.js"));
+const moveto_plugin_1 = __importDefault(require("phaser4-rex-plugins/plugins/moveto-plugin"));
+const outlinefilter_plugin_1 = __importDefault(require("phaser4-rex-plugins/plugins/outlinefilter-plugin"));
 const react_1 = __importDefault(require("react"));
 const react_toastify_1 = require("react-toastify");
 const config_1 = require("../../../config");
@@ -15,6 +15,7 @@ const flower_pots_1 = require("../../../core/flower-pots");
 const types_1 = require("../../../types");
 const Effect_1 = require("../../../types/enum/Effect");
 const Game_1 = require("../../../types/enum/Game");
+const Synergy_1 = require("../../../types/enum/Synergy");
 const Weather_1 = require("../../../types/enum/Weather");
 const logger_1 = require("../../../utils/logger");
 const number_1 = require("../../../utils/number");
@@ -219,7 +220,7 @@ class GameContainer {
                 global: [
                     {
                         key: "rexMoveTo",
-                        plugin: moveto_plugin_js_1.default,
+                        plugin: moveto_plugin_1.default,
                         start: true
                     }
                 ]
@@ -233,7 +234,7 @@ class GameContainer {
         });
         this.game.scale.on("resize", this.resize, this);
         if (this.game.renderer.type === phaser_1.default.WEBGL) {
-            this.game.plugins.install("rexOutline", outlinepipeline_plugin_js_1.default, true);
+            this.game.plugins.install("rexOutline", outlinefilter_plugin_1.default, true);
         }
         const unsubscribeToPreferences = (0, preferences_1.subscribeToPreferences)(({ antialiasing }) => {
             var _a;
@@ -395,7 +396,7 @@ class GameContainer {
             $pokemon.dishes.onChange((value, key) => {
                 var _a, _b;
                 if (player.id === this.playerIdSpectated) {
-                    (_b = (_a = this.gameScene) === null || _a === void 0 ? void 0 : _a.board) === null || _b === void 0 ? void 0 : _b.updatePokemonDishes(player.id, pokemon, (0, schemas_1.values)(pokemon.dishes));
+                    (_b = (_a = this.gameScene) === null || _a === void 0 ? void 0 : _a.board) === null || _b === void 0 ? void 0 : _b.updatePokemonDishes(player.id, pokemon, (0, schemas_1.schemaValues)(pokemon.dishes));
                 }
             });
         };
@@ -428,13 +429,18 @@ class GameContainer {
                 (_b = (_a = this.gameScene) === null || _a === void 0 ? void 0 : _a.itemsContainer) === null || _b === void 0 ? void 0 : _b.render(player.items);
             }
         });
-        $player.synergies.onChange(() => {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
+        $player.synergies.onChange((level, synergy) => {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
             if (player.id === this.playerIdSpectated &&
                 ((_b = (_a = this.gameScene) === null || _a === void 0 ? void 0 : _a.board) === null || _b === void 0 ? void 0 : _b.mode) === board_manager_1.BoardMode.PICK) {
-                (_d = (_c = this.gameScene) === null || _c === void 0 ? void 0 : _c.board) === null || _d === void 0 ? void 0 : _d.showLightCell();
-                (_f = (_e = this.gameScene) === null || _e === void 0 ? void 0 : _e.board) === null || _f === void 0 ? void 0 : _f.renderBerryTrees();
-                (_h = (_g = this.gameScene) === null || _g === void 0 ? void 0 : _g.board) === null || _h === void 0 ? void 0 : _h.renderFlowerPots();
+                if (synergy === Synergy_1.Synergy.LIGHT)
+                    (_d = (_c = this.gameScene) === null || _c === void 0 ? void 0 : _c.board) === null || _d === void 0 ? void 0 : _d.showLightCell();
+                if (synergy === Synergy_1.Synergy.GRASS)
+                    (_f = (_e = this.gameScene) === null || _e === void 0 ? void 0 : _e.board) === null || _f === void 0 ? void 0 : _f.renderBerryTrees();
+                if (synergy === Synergy_1.Synergy.FLORA)
+                    (_h = (_g = this.gameScene) === null || _g === void 0 ? void 0 : _g.board) === null || _h === void 0 ? void 0 : _h.renderFlowerPots();
+                if (synergy === Synergy_1.Synergy.FIGHTING)
+                    (_k = (_j = this.gameScene) === null || _j === void 0 ? void 0 : _j.board) === null || _k === void 0 ? void 0 : _k.renderTrainingBag();
             }
         });
         $player.berryTreesStages.onChange((value, key) => {

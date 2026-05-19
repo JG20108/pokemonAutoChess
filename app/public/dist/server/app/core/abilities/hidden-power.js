@@ -28,6 +28,10 @@ class HiddenPowerStrategy extends ability_strategy_1.AbilityStrategy {
     }
     process(unown, board, target, crit) {
         super.process(unown, board, target, crit);
+        if (unown.player && !unown.isSpawn) {
+            unown.player.unownReminiscences++;
+            unown.player.board.delete(unown.refToBoardPokemon.id);
+        }
         unown.state.triggerDeath(unown, null, board, Game_1.AttackType.TRUE);
     }
 }

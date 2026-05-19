@@ -60,7 +60,7 @@ class OnJoinCommand extends command_1.Command {
                     });
                 }
                 else {
-                    const nbHumanPlayers = (0, schemas_1.values)(this.state.users).filter((u) => !u.isBot).length;
+                    const nbHumanPlayers = (0, schemas_1.schemaValues)(this.state.users).filter((u) => !u.isBot).length;
                     const isAdmin = u.role === types_1.Role.ADMIN;
                     if (nbHumanPlayers >= config_1.MAX_PLAYERS_PER_GAME && !isAdmin) {
                         client.leave(CloseCodes_1.CloseCodes.ROOM_FULL);
@@ -104,7 +104,7 @@ class OnJoinCommand extends command_1.Command {
                     });
                 }
                 while (this.state.users.size > config_1.MAX_PLAYERS_PER_GAME) {
-                    const users = (0, schemas_1.entries)(this.state.users);
+                    const users = (0, schemas_1.schemaEntries)(this.state.users);
                     const entryToDelete = users.find(([key, user]) => user.isBot);
                     if (entryToDelete) {
                         const [key, bot] = entryToDelete;
@@ -201,7 +201,7 @@ class OnGameStartRequestCommand extends command_1.Command {
                     this.room.lock();
                     this.room.autoDispose = true;
                     const gameRoom = yield colyseus_1.matchMaker.createRoom("game", {
-                        users: Object.fromEntries((0, schemas_1.entries)(this.state.users)),
+                        users: Object.fromEntries((0, schemas_1.schemaEntries)(this.state.users)),
                         name: this.state.name,
                         ownerName: this.state.ownerName,
                         preparationId: this.room.roomId,
@@ -447,7 +447,7 @@ class OnLeaveCommand extends command_1.Command {
                     });
                     this.state.users.delete(client.auth.uid);
                     if (client.auth.uid === this.state.ownerId) {
-                        const newOwner = (0, schemas_1.values)(this.state.users).find((user) => user.uid !== this.state.ownerId && !user.isBot);
+                        const newOwner = (0, schemas_1.schemaValues)(this.state.users).find((user) => user.uid !== this.state.ownerId && !user.isBot);
                         if (newOwner) {
                             this.state.ownerId = newOwner.uid;
                             this.state.ownerName = newOwner.name;
@@ -485,7 +485,7 @@ class OnToggleReadyCommand extends command_1.Command {
                 : config_1.MAX_PLAYERS_PER_GAME;
             if (this.state.gameMode !== Game_1.GameMode.CUSTOM_LOBBY &&
                 this.state.users.size === nbExpectedPlayers &&
-                (0, schemas_1.values)(this.state.users).every((user) => user.ready)) {
+                (0, schemas_1.schemaValues)(this.state.users).every((user) => user.ready)) {
                 this.room.state.addMessage({
                     authorId: "server",
                     payload: "Lobby is full, starting match in 5 seconds..."

@@ -63,20 +63,20 @@ class CountEvolutionRule extends EvolutionRule {
         if (!pokemon.hasEvolution)
             return false;
         if (pokemon.name === Pokemon_1.Pkm.BERGMITE &&
-            (0, schemas_1.values)(player.board).find((p) => p.name === Pokemon_1.Pkm.AVALUGG || p.name === Pokemon_1.Pkm.HISUI_AVALUGG)) {
+            (0, schemas_1.schemaValues)(player.board).find((p) => p.name === Pokemon_1.Pkm.AVALUGG || p.name === Pokemon_1.Pkm.HISUI_AVALUGG)) {
             return false;
         }
-        const copies = (0, schemas_1.values)(player.board).filter((p) => p.index === pokemon.index && !p.items.has(Item_1.Item.EVIOLITE));
+        const copies = (0, schemas_1.schemaValues)(player.board).filter((p) => p.index === pokemon.index && !p.items.has(Item_1.Item.EVIOLITE));
         return copies.length >= this.numberRequired;
     }
     canEvolveIfGettingOne(pokemon, player) {
         if (!pokemon.hasEvolution)
             return false;
         if (pokemon.name === Pokemon_1.Pkm.BERGMITE &&
-            (0, schemas_1.values)(player.board).find((p) => p.name === Pokemon_1.Pkm.AVALUGG || p.name === Pokemon_1.Pkm.HISUI_AVALUGG)) {
+            (0, schemas_1.schemaValues)(player.board).find((p) => p.name === Pokemon_1.Pkm.AVALUGG || p.name === Pokemon_1.Pkm.HISUI_AVALUGG)) {
             return false;
         }
-        const copies = (0, schemas_1.values)(player.board).filter((p) => p.index === pokemon.index && !p.items.has(Item_1.Item.EVIOLITE));
+        const copies = (0, schemas_1.schemaValues)(player.board).filter((p) => p.index === pokemon.index && !p.items.has(Item_1.Item.EVIOLITE));
         return copies.length === this.numberRequired - 1;
     }
     evolve(pokemon, player, stageLevel) {
@@ -127,17 +127,6 @@ class CountEvolutionRule extends EvolutionRule {
         const pokemonEvolved = pokemon_factory_1.default.createPokemonFromName(pokemonEvolutionName, player);
         carryOverPermanentStats(pokemonEvolved, pokemonsBeforeEvolution);
         pokemonEvolved.stacks = pokemon.stacks;
-        if (pokemonsBeforeEvolution.some((p) => p.dishes.size > 0)) {
-            const dishes = pokemonsBeforeEvolution
-                .filter((p) => p.dishes.size > 0)
-                .flatMap((p) => (0, schemas_1.values)(p.dishes));
-            while (pokemonEvolved.canEat && dishes.length > 0) {
-                const dish = dishes.pop();
-                if (dish && !pokemonEvolved.dishes.has(dish)) {
-                    pokemonEvolved.dishes.add(dish);
-                }
-            }
-        }
         (0, random_1.shuffleArray)(itemsCompleteOnBench);
         (0, random_1.shuffleArray)(itemsCompleteOnBoard);
         const itemsCompleteToAdd = [
@@ -162,12 +151,23 @@ class CountEvolutionRule extends EvolutionRule {
             ...itemsComponentsOnBench
         ];
         for (const itemComponent of itemComponentsToAdd) {
-            if ((0, schemas_1.values)(pokemonEvolved.items).some((i) => Item_1.ItemComponents.includes(i)) ||
+            if ((0, schemas_1.schemaValues)(pokemonEvolved.items).some((i) => Item_1.ItemComponents.includes(i)) ||
                 pokemonEvolved.items.size >= 3) {
                 player.items.push(itemComponent);
             }
             else {
                 pokemonEvolved.items.add(itemComponent);
+            }
+        }
+        if (pokemonsBeforeEvolution.some((p) => p.dishes.size > 0)) {
+            const dishes = pokemonsBeforeEvolution
+                .filter((p) => p.dishes.size > 0)
+                .flatMap((p) => (0, schemas_1.schemaValues)(p.dishes));
+            while (pokemonEvolved.canEat && dishes.length > 0) {
+                const dish = dishes.pop();
+                if (dish && !pokemonEvolved.dishes.has(dish)) {
+                    pokemonEvolved.dishes.add(dish);
+                }
             }
         }
         if (coord) {
@@ -194,13 +194,13 @@ class ItemEvolutionRule extends EvolutionRule {
     canEvolve(pokemon, player, stageLevel) {
         if (pokemon.items.has(Item_1.Item.EVIOLITE))
             return false;
-        const itemsAndDishes = (0, schemas_1.values)(pokemon.items).concat((0, schemas_1.values)(pokemon.dishes));
+        const itemsAndDishes = (0, schemas_1.schemaValues)(pokemon.items).concat((0, schemas_1.schemaValues)(pokemon.dishes));
         const itemEvolution = itemsAndDishes.find((item) => this.itemsTriggeringEvolution.includes(item));
         const pokemonEvolutionName = this.getEvolution(pokemon, player, itemEvolution);
         return itemEvolution != null && pokemonEvolutionName !== pokemon.name;
     }
     evolve(pokemon, player, stageLevel) {
-        const itemEvolution = (0, schemas_1.values)(pokemon.items).find((item) => this.itemsTriggeringEvolution.includes(item));
+        const itemEvolution = (0, schemas_1.schemaValues)(pokemon.items).find((item) => this.itemsTriggeringEvolution.includes(item));
         const pokemonEvolutionName = this.getEvolution(pokemon, player, itemEvolution);
         const pokemonEvolved = player.transformPokemon(pokemon, pokemonEvolutionName);
         return pokemonEvolved;
@@ -281,6 +281,7 @@ class ConditionBasedEvolutionRule extends EvolutionRule {
 }
 exports.ConditionBasedEvolutionRule = ConditionBasedEvolutionRule;
 function carryOverPermanentStats(pokemonEvolved, pokemonsBeforeEvolution) {
+    var _a, _b;
     const permanentBuffStats = [
         "hp",
         "maxHP",
@@ -295,14 +296,30 @@ function carryOverPermanentStats(pokemonEvolved, pokemonsBeforeEvolution) {
     const baseData = pokemon_factory_1.default.createPokemonFromName(pkm);
     for (const stat of permanentBuffStats) {
         const sumOfPermaStatsModifier = (0, array_1.sum)(pokemonsBeforeEvolution.map((p) => p[stat] - baseData[stat]));
-        pokemonEvolved[stat] += sumOfPermaStatsModifier;
+        const statMapping = {
+            hp: Game_1.Stat.HP,
+            maxHP: Game_1.Stat.HP,
+            atk: Game_1.Stat.ATK,
+            def: Game_1.Stat.DEF,
+            speDef: Game_1.Stat.SPE_DEF,
+            speed: Game_1.Stat.SPEED,
+            ap: Game_1.Stat.AP,
+            luck: Game_1.Stat.LUCK
+        };
+        pokemonEvolved.applyStat(statMapping[stat], sumOfPermaStatsModifier);
     }
     const existingTms = pokemonsBeforeEvolution
         .map((p) => p.tm)
         .filter((tm) => tm !== Ability_1.Ability.DEFAULT);
     if (existingTms.length > 0) {
         pokemonEvolved.tm = (0, random_1.pickRandomIn)(existingTms);
-        pokemonEvolved.skill = pokemonEvolved.tm;
+        if (pokemonEvolved.tm === Ability_1.Ability.SKILL_SWAP) {
+            pokemonEvolved.skill =
+                (_b = (_a = pokemonsBeforeEvolution.find((p) => p.tm === Ability_1.Ability.SKILL_SWAP)) === null || _a === void 0 ? void 0 : _a.skill) !== null && _b !== void 0 ? _b : Ability_1.Ability.SKILL_SWAP;
+        }
+        else {
+            pokemonEvolved.skill = pokemonEvolved.tm;
+        }
         pokemonEvolved.maxPP = 100;
     }
 }

@@ -1,4 +1,4 @@
-import { EffectEnum } from "../../../../../types/enum/Effect";
+import { SynergyEffect } from "../../../../../models/effects";
 export declare function EffectDescriptionComponent(props: {
-    effect: EffectEnum;
+    effect: SynergyEffect;
 }): import("react/jsx-runtime").JSX.Element;

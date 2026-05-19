@@ -88,11 +88,11 @@ function PokemonCollection() {
             setFilterState(Object.assign(Object.assign({}, filterState), { filter: "all" }));
         }
     }, [filterState.mode, filterState.filter]);
-    return ((0, jsx_runtime_1.jsxs)("div", { id: "pokemon-collection", children: [(0, jsx_runtime_1.jsxs)("header", { children: [(0, jsx_runtime_1.jsxs)("select", { value: filterState.mode, onChange: (e) => setFilterState(Object.assign(Object.assign({}, filterState), { mode: e.target.value })), children: [(0, jsx_runtime_1.jsx)("option", { value: "collection", children: t("collection") }), (0, jsx_runtime_1.jsx)("option", { value: "shiny", children: t("shiny_hunter") }), (0, jsx_runtime_1.jsx)("option", { value: "pokedex", children: t("pokedex") })] }), (0, jsx_runtime_1.jsxs)("p", { children: [filterState.mode === "shiny"
+    return ((0, jsx_runtime_1.jsxs)("div", { id: "pokemon-collection", children: [(0, jsx_runtime_1.jsxs)("header", { children: [(0, jsx_runtime_1.jsxs)("select", { value: filterState.mode, onChange: (e) => setFilterState(Object.assign(Object.assign({}, filterState), { mode: e.target.value })), children: [(0, jsx_runtime_1.jsx)("option", { value: "collection", children: t("collection.title") }), (0, jsx_runtime_1.jsx)("option", { value: "shiny", children: t("shiny_hunter") }), (0, jsx_runtime_1.jsx)("option", { value: "pokedex", children: t("pokedex") })] }), (0, jsx_runtime_1.jsxs)("p", { children: [filterState.mode === "shiny"
                                 ? t("shiny_hunter")
                                 : filterState.mode === "pokedex"
                                     ? t("pokedex")
-                                    : t("unlocked"), ": ", count, " / ", total] }), (0, jsx_runtime_1.jsxs)("select", { value: filterState.filter, onChange: (e) => setFilterState(Object.assign(Object.assign({}, filterState), { filter: e.target.value })), children: [(0, jsx_runtime_1.jsx)("option", { value: "all", children: t("show_all") }), (0, jsx_runtime_1.jsx)("option", { value: "favorite", children: t("show_favorites") }), filterState.mode !== "pokedex" && ((0, jsx_runtime_1.jsx)("option", { value: "unlockable", children: t("show_unlockable") })), (0, jsx_runtime_1.jsx)("option", { value: "locked", children: t("show_locked") }), (0, jsx_runtime_1.jsx)("option", { value: "unlocked", children: t("show_unlocked") }), filterState.mode !== "pokedex" && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("option", { value: "refundable", children: t("show_refundable") }), (0, jsx_runtime_1.jsx)("option", { value: "new", children: t("show_newly_obtained") })] }))] }), (0, jsx_runtime_1.jsxs)("select", { value: filterState.sort, onChange: (e) => setFilterState(Object.assign(Object.assign({}, filterState), { sort: e.target.value })), children: [(0, jsx_runtime_1.jsx)("option", { value: "index", children: t("sort_by_index") }), (0, jsx_runtime_1.jsx)("option", { value: "shards", children: t("sort_by_shards") }), (0, jsx_runtime_1.jsx)("option", { value: "unlocked", children: t("sort_by_emotes_unlocked") }), (0, jsx_runtime_1.jsx)("option", { value: "played", children: t("sort_by_played") })] }), (0, jsx_runtime_1.jsx)(pokemon_typeahead_1.PokemonTypeahead, { value: selectedPokemon, onChange: setSelectedPokemon })] }), (0, jsx_runtime_1.jsx)("div", { style: { maxWidth: "100%" }, children: (0, jsx_runtime_1.jsxs)(react_tabs_1.Tabs, { children: [(0, jsx_runtime_1.jsxs)(react_tabs_1.TabList, { className: "pokemon-collection-tabs", children: [(0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t("all") }, "title-all"), Object.keys(Synergy_1.Synergy).map((type) => {
+                                    : t("unlocked"), ": ", count, " / ", total] }), (0, jsx_runtime_1.jsxs)("select", { value: filterState.filter, onChange: (e) => setFilterState(Object.assign(Object.assign({}, filterState), { filter: e.target.value })), children: [(0, jsx_runtime_1.jsx)("option", { value: "all", children: t("collection.show_all") }), (0, jsx_runtime_1.jsx)("option", { value: "favorite", children: t("collection.show_favorites") }), filterState.mode !== "pokedex" && ((0, jsx_runtime_1.jsx)("option", { value: "unlockable", children: t("collection.show_unlockable") })), (0, jsx_runtime_1.jsx)("option", { value: "locked", children: t("collection.show_locked") }), (0, jsx_runtime_1.jsx)("option", { value: "unlocked", children: t("collection.show_unlocked") }), filterState.mode !== "pokedex" && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("option", { value: "refundable", children: t("collection.show_refundable") }), (0, jsx_runtime_1.jsx)("option", { value: "new", children: t("collection.show_newly_obtained") })] }))] }), (0, jsx_runtime_1.jsxs)("select", { value: filterState.sort, onChange: (e) => setFilterState(Object.assign(Object.assign({}, filterState), { sort: e.target.value })), children: [(0, jsx_runtime_1.jsx)("option", { value: "index", children: t("collection.sort_by_index") }), (0, jsx_runtime_1.jsx)("option", { value: "shards", children: t("collection.sort_by_shards") }), (0, jsx_runtime_1.jsx)("option", { value: "unlocked", children: t("collection.sort_by_emotes_unlocked") }), (0, jsx_runtime_1.jsx)("option", { value: "played", children: t("collection.sort_by_played") })] }), (0, jsx_runtime_1.jsx)(pokemon_typeahead_1.PokemonTypeahead, { value: selectedPokemon, onChange: setSelectedPokemon })] }), (0, jsx_runtime_1.jsx)("div", { style: { maxWidth: "100%" }, children: (0, jsx_runtime_1.jsxs)(react_tabs_1.Tabs, { children: [(0, jsx_runtime_1.jsxs)(react_tabs_1.TabList, { className: "pokemon-collection-tabs", children: [(0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t("all") }, "title-all"), Object.keys(Synergy_1.Synergy).map((type) => {
                                     return ((0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: (0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: type }) }, "title-" + type));
                                 }), (0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: (0, jsx_runtime_1.jsx)("img", { src: "assets/ui/unown.svg", alt: "?", className: "unown-icon" }) }, "?")] }), ["all"].concat(Object.keys(Synergy_1.Synergy)).map((type) => {
                             return ((0, jsx_runtime_1.jsx)(react_tabs_1.TabPanel, { children: (0, jsx_runtime_1.jsx)(PokemonCollectionList, { type: type, setPokemon: setSelectedPokemon, filterState: filterState }) }, type));
@@ -128,7 +128,7 @@ function PokemonCollectionList(props) {
             }
         });
     }, [props.filterState.sort, getItem]);
-    const pokemonsFiltered = (0, react_1.useMemo)(() => {
+    const pokemonsFilteredByType = (0, react_1.useMemo)(() => {
         return pokemonsSorted.filter((pkm) => {
             const pokemonData = (0, precomputed_pokemon_data_1.getPokemonData)(pkm);
             return (pkm !== Pokemon_1.Pkm.DEFAULT &&
@@ -140,12 +140,13 @@ function PokemonCollectionList(props) {
                     pokemonData.types.includes(Synergy_1.Synergy[props.type])));
         });
     }, [pokemonsSorted, props.type]);
-    const displayedPokemons = (0, react_1.useMemo)(() => {
-        return pokemonsFiltered.filter((pkm) => {
+    const filteredItems = (0, react_1.useMemo)(() => {
+        return pokemonsFilteredByType
+            .map((pkm) => {
             const pokemonData = (0, precomputed_pokemon_data_1.getPokemonData)(pkm);
             const item = getItem(pokemonData.index);
             if ((0, precomputed_emotions_1.getAvailableEmotions)(pokemonData.index, false).length === 0)
-                return false;
+                return null;
             const { dust, emotions, shinyEmotions } = item !== null && item !== void 0 ? item : {
                 dust: 0,
                 emotions: [],
@@ -169,7 +170,7 @@ function PokemonCollectionList(props) {
             const boosterCost = config_1.BoosterPriceByRarity[rarity];
             const availableEmotions = (0, precomputed_emotions_1.getAvailableEmotions)(pokemonData.index, false);
             const shinyAvailableEmotions = (0, precomputed_emotions_1.getAvailableEmotions)(pokemonData.index, true);
-            const canUnlock = props.filterState.mode !== "pokedex" &&
+            const isUnlockable = props.filterState.mode !== "pokedex" &&
                 (availableEmotions.some((e) => !emotions.includes(e) &&
                     dust >= (0, config_1.getEmotionCost)(e, false) &&
                     props.filterState.mode !== "shiny") ||
@@ -180,21 +181,29 @@ function PokemonCollectionList(props) {
                             !((_a = pokemon_animations_1.PokemonAnimations[pkm]) === null || _a === void 0 ? void 0 : _a.shinyUnavailable);
                     }));
             if (props.filterState.filter === "refundable" && dust < boosterCost)
-                return false;
+                return null;
             if (props.filterState.filter === "new" && !isNew)
-                return false;
+                return null;
             if (props.filterState.filter === "unlocked" && !isUnlocked)
-                return false;
-            if (props.filterState.filter === "unlockable" && !canUnlock)
-                return false;
+                return null;
+            if (props.filterState.filter === "unlockable" && !isUnlockable)
+                return null;
             if (props.filterState.filter === "locked" && isUnlocked)
-                return false;
+                return null;
             if (props.filterState.filter === "favorite" && !isFavorite)
-                return false;
-            return true;
-        });
+                return null;
+            return {
+                pkm,
+                item,
+                isNew,
+                isFavorite,
+                isUnlocked,
+                isUnlockable
+            };
+        })
+            .filter((item) => item !== null);
     }, [
-        pokemonsFiltered,
+        pokemonsFilteredByType,
         getItem,
         props.filterState,
         lastBoostersOpened,
@@ -204,9 +213,9 @@ function PokemonCollectionList(props) {
                 if (height === undefined || width === undefined)
                     return null;
                 const columnCount = Math.max(1, Math.floor(width / CELL_WIDTH));
-                const rowCount = Math.ceil(displayedPokemons.length / columnCount);
+                const rowCount = Math.ceil(filteredItems.length / columnCount);
                 return ((0, jsx_runtime_1.jsx)(react_window_1.Grid, { style: { height, width }, columnCount: columnCount, columnWidth: CELL_WIDTH, rowCount: rowCount, rowHeight: CELL_HEIGHT, cellComponent: PokemonCell, cellProps: {
-                        displayedPokemons,
+                        filteredItems,
                         columnCount,
                         getItem,
                         filterState: props.filterState,
@@ -215,12 +224,12 @@ function PokemonCollectionList(props) {
                     } }));
             } }) }));
 }
-function PokemonCell({ columnIndex, rowIndex, style, displayedPokemons, columnCount, getItem, filterState, setPokemon, type }) {
+function PokemonCell({ columnIndex, rowIndex, style, filteredItems, columnCount, getItem, filterState, setPokemon, type }) {
     const index = rowIndex * columnCount + columnIndex;
-    if (index >= displayedPokemons.length)
+    if (index >= filteredItems.length)
         return null;
-    const pkm = displayedPokemons[index];
+    const { pkm, isNew, isFavorite, isUnlocked, isUnlockable } = filteredItems[index];
     const pokemonData = (0, precomputed_pokemon_data_1.getPokemonData)(pkm);
-    return ((0, jsx_runtime_1.jsx)("div", { style: style, children: (0, jsx_runtime_1.jsx)(pokemon_collection_item_1.default, { name: pkm, index: pokemonData.index, item: getItem(pokemonData.index), filterState: filterState, setPokemon: setPokemon }, `${pokemonData.index}-${type}`) }));
+    return ((0, jsx_runtime_1.jsx)("div", { style: style, children: (0, jsx_runtime_1.jsx)(pokemon_collection_item_1.default, { name: pkm, index: pokemonData.index, item: getItem(pokemonData.index), filterState: filterState, setPokemon: setPokemon, isNew: isNew, isFavorite: isFavorite, isUnlocked: isUnlocked, isUnlockable: isUnlockable }, `${pokemonData.index}-${type}`) }));
 }
 //# sourceMappingURL=pokemon-collection.js.map

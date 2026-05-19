@@ -423,7 +423,7 @@ class GameRoom extends colyseus_1.Room {
                     if (this.state.gameLoaded) {
                         client.send(types_1.Transfer.LOADING_COMPLETE);
                     }
-                    else if ((0, schemas_1.values)(this.state.players).every((p) => p.loadingProgress === 100)) {
+                    else if ((0, schemas_1.schemaValues)(this.state.players).every((p) => p.loadingProgress === 100)) {
                         this.broadcast(types_1.Transfer.LOADING_COMPLETE);
                         this.startGame();
                     }
@@ -549,7 +549,7 @@ class GameRoom extends colyseus_1.Room {
                 }
             }
             if (!this.state.gameLoaded &&
-                (0, schemas_1.values)(this.state.players).every((p) => p.loadingProgress === 100)) {
+                (0, schemas_1.schemaValues)(this.state.players).every((p) => p.loadingProgress === 100)) {
                 this.broadcast(types_1.Transfer.LOADING_COMPLETE);
                 this.startGame();
             }
@@ -560,7 +560,7 @@ class GameRoom extends colyseus_1.Room {
             var _a, _b;
             logger_1.logger.info("Dispose Game ", this.roomId);
             this.presence.unsubscribe("room-deleted", this.onRoomDeleted);
-            const players = (0, schemas_1.values)(this.state.players);
+            const players = (0, schemas_1.schemaValues)(this.state.players);
             players.forEach((player) => {
                 (0, pending_game_manager_1.clearPendingGamesOnRoomDispose)(this.presence, player.id, this.roomId);
             });
@@ -651,7 +651,7 @@ class GameRoom extends colyseus_1.Room {
                     usr.wins += 1;
                     if (this.state.gameMode === Game_1.GameMode.RANKED) {
                         player.titles.add(types_1.Title.VANQUISHER);
-                        const minElo = Math.min(...(0, schemas_1.values)(this.state.players).map((p) => p.elo));
+                        const minElo = Math.min(...(0, schemas_1.schemaValues)(this.state.players).map((p) => p.elo));
                         if (usr.elo === minElo && humans.length >= 8) {
                             player.titles.add(types_1.Title.OUTSIDER);
                         }
@@ -759,7 +759,7 @@ class GameRoom extends colyseus_1.Room {
                 if (newTitlesEarned.length > 0) {
                     newTitlesEarned.forEach((title) => {
                         notifications_1.notificationsService.addNotification(player.id, "new_title", title);
-                        if (config_1.TITLES_UNLOCKING_THEMES.includes(title) &&
+                        if ((0, array_1.isIn)(config_1.TITLES_UNLOCKING_THEMES, title) &&
                             usr.level >= gadgets_1.GADGETS.palette.levelRequired) {
                             notifications_1.notificationsService.addNotification(player.id, "new_theme", config_1.THEME_BY_TITLE[title]);
                         }

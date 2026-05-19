@@ -60,7 +60,12 @@ const ImageEndDot = react_1.default.memo(function ImageEndDot(props) {
 function CustomTooltip({ active, payload, label, metric }) {
     if (!active || !(payload === null || payload === void 0 ? void 0 : payload.length))
         return null;
-    const sorted = [...payload].sort((a, b) => metric === "count" ? b.value - a.value : a.value - b.value);
+    const sorted = [...payload].sort((a, b) => {
+        var _a, _b, _c, _d;
+        return metric === "count"
+            ? ((_a = b.value) !== null && _a !== void 0 ? _a : 0) - ((_b = a.value) !== null && _b !== void 0 ? _b : 0)
+            : ((_c = a.value) !== null && _c !== void 0 ? _c : 0) - ((_d = b.value) !== null && _d !== void 0 ? _d : 0);
+    });
     return ((0, jsx_runtime_1.jsxs)("div", { className: "item-history-tooltip", children: [(0, jsx_runtime_1.jsx)("div", { className: "item-history-tooltip-date", children: label }), sorted.slice(0, 10).map((entry) => {
                 var _a;
                 return ((0, jsx_runtime_1.jsxs)("div", { className: "item-history-tooltip-row", children: [(0, jsx_runtime_1.jsx)("img", { src: getItemImagePath(entry.name), width: 20, height: 20 }), (0, jsx_runtime_1.jsx)("span", { style: { color: entry.color }, children: (0, i18next_1.t)(`item.${entry.name}`) }), (0, jsx_runtime_1.jsx)("span", { children: (_a = entry.value) === null || _a === void 0 ? void 0 : _a.toFixed(2) })] }, entry.name));
@@ -123,10 +128,11 @@ function ItemHistoryPanel({ metaItems, eloThreshold, loading, metric, itemFilter
         const allValues = [];
         for (const point of data) {
             for (const key of Object.keys(point)) {
+                const value = point[key];
                 if (key !== "date" &&
                     key !== "dateLabel" &&
-                    typeof point[key] === "number") {
-                    allValues.push(point[key]);
+                    typeof value === "number") {
+                    allValues.push(value);
                 }
             }
         }

@@ -1,3 +1,4 @@
+import Phaser from "phaser";
 import { Wanderer } from "../../../../models/colyseus-models/wanderer";
 import GameScene from "../scenes/game-scene";
 import PokemonSprite from "./pokemon";

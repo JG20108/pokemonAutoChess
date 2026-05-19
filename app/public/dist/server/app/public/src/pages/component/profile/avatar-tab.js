@@ -35,7 +35,9 @@ function AvatarTab() {
                                         ? favorites.filter((fav) => fav !== selectedPkm)
                                         : [...favorites, selectedPkm];
                                     setFavorites(newFavorites);
-                                }, children: ["\u2764\uFE0F\u00A0", isFavorite ? t("remove_from_favorites") : t("add_to_favorites")] })] }))] }), (0, jsx_runtime_1.jsxs)("div", { children: [pokemonCollection.length === 0 && ((0, jsx_runtime_1.jsx)("p", { children: t("profile.avatar.play_more_games_hint") })), selectedPkm ? ((0, jsx_runtime_1.jsx)(SelectedPokemonAvatars, { pokemon: selectedPkm })) : ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsxs)("p", { children: ["\u2764\uFE0F\u00A0", t("favorites")] }), favoritesUnlocked.length > 0 && ((0, jsx_runtime_1.jsx)("div", { className: "avatar-grid", children: favoritesUnlocked.map((item) => {
+                                }, children: ["\u2764\uFE0F\u00A0", isFavorite
+                                        ? t("collection.remove_from_favorites")
+                                        : t("collection.add_to_favorites")] })] }))] }), (0, jsx_runtime_1.jsxs)("div", { children: [pokemonCollection.length === 0 && ((0, jsx_runtime_1.jsx)("p", { children: t("profile.avatar.play_more_games_hint") })), selectedPkm ? ((0, jsx_runtime_1.jsx)(SelectedPokemonAvatars, { pokemon: selectedPkm })) : ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsxs)("p", { children: ["\u2764\uFE0F\u00A0", t("favorites")] }), favoritesUnlocked.length > 0 && ((0, jsx_runtime_1.jsx)("div", { className: "avatar-grid", children: favoritesUnlocked.map((item) => {
                                     return ((0, jsx_runtime_1.jsx)(pokemon_portrait_1.default, { className: "clickable", onClick: () => {
                                             setSelectedPkm(Pokemon_1.PkmByIndex[item.id]);
                                         }, portrait: { index: item.id } }, `${item.id}`));

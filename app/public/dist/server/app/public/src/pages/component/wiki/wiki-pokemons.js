@@ -39,7 +39,7 @@ function WikiPokemons() {
             setSelectedPkm("");
             setTabIndex(index);
         }, children: [(0, jsx_runtime_1.jsxs)("div", { className: "filters", children: [(0, jsx_runtime_1.jsx)(pokemon_filters_1.PokemonFilters, {}), (0, jsx_runtime_1.jsx)(pokemon_typeahead_1.PokemonTypeahead, { value: selectedPkm, onChange: (pkm) => setSelectedPkm(pkm) })] }), (0, jsx_runtime_1.jsxs)(react_tabs_1.TabList, { children: [tabs.map((r) => {
-                        return ((0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { style: { color: config_1.RarityColor[Game_1.Rarity[r]] }, children: t("rarity." + r).toUpperCase() }, "title-" + r));
+                        return ((0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { style: { color: config_1.RarityColor[Game_1.Rarity[r]] }, children: t(`rarity.${r}`).toUpperCase() }, "title-" + r));
                     }), (0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t("all") }, "title-all")] }), Object.values(Game_1.Rarity).map((r) => {
                 return ((0, jsx_runtime_1.jsx)(react_tabs_1.TabPanel, { children: (0, jsx_runtime_1.jsx)(WikiPokemon, { rarity: r, selected: selectedPkm, onSelect: setSelectedPkm }) }, r));
             }), (0, jsx_runtime_1.jsx)(react_tabs_1.TabPanel, { children: (0, jsx_runtime_1.jsx)(WikiAllPokemons, {}) }, "all")] }));

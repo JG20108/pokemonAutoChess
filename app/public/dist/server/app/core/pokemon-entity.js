@@ -125,7 +125,12 @@ class PokemonEntity extends schema_1.Schema {
         this.shieldDamageTaken = 0;
         this.healDone = 0;
         this.shieldDone = 0;
-        this.resetCooldown(500);
+        if (this.types.has(Synergy_1.Synergy.DARK) && this.range === 1) {
+            this.cooldown = 300;
+        }
+        else {
+            this.resetCooldown(500);
+        }
         pokemon.types.forEach((type) => {
             this.types.add(type);
         });
@@ -137,14 +142,14 @@ class PokemonEntity extends schema_1.Schema {
     }
     get canMove() {
         return (!this.status.freeze &&
-            !this.status.sleep &&
+            !(this.status.sleep && this.passive !== Passive_1.Passive.COMATOSE) &&
             !this.status.resurrecting &&
             !this.status.locked &&
             !this.status.tree);
     }
     get canAttack() {
         return (!this.status.freeze &&
-            !this.status.sleep &&
+            !(this.status.sleep && this.passive !== Passive_1.Passive.COMATOSE) &&
             !this.status.resurrecting &&
             !this.status.skydiving &&
             !this.status.tree);
@@ -155,7 +160,9 @@ class PokemonEntity extends schema_1.Schema {
             !this.effects.has(Effect_1.EffectEnum.TELEPORT_NEXT_ATTACK));
     }
     get canBeMoved() {
-        return !this.status.skydiving && !this.status.locked && !this.items.has(Item_1.Item.HEAVY_DUTY_BOOTS);
+        return (!this.status.skydiving &&
+            !this.status.locked &&
+            !this.items.has(Item_1.Item.HEAVY_DUTY_BOOTS));
     }
     get canBeCopied() {
         return this.passive !== Passive_1.Passive.INANIMATE;
@@ -335,6 +342,7 @@ class PokemonEntity extends schema_1.Schema {
         value = applyTwistBandBuff(this, value, caster);
         if (!(value > 0 && this.status.silence) &&
             !(value > 0 && this.status.protect) &&
+            !(value > 0 && this.effects.has(Effect_1.EffectEnum.NO_PP_GAIN)) &&
             !this.status.resurrecting &&
             !(value < 0 && this.status.tree)) {
             this.pp = (0, number_1.clamp)(this.pp + value, 0, this.maxPP * 2 - 1);
@@ -504,7 +512,10 @@ class PokemonEntity extends schema_1.Schema {
             this.items.add(item);
             this.applyItemEffect(item);
         }
-        if (permanent && !this.isGhostOpponent) {
+        if (permanent &&
+            !this.isGhostOpponent &&
+            this.refToBoardPokemon.items.has(item) == false &&
+            this.refToBoardPokemon.items.size < 3) {
             this.refToBoardPokemon.items.add(item);
         }
         if (type && !this.types.has(type)) {
@@ -602,16 +613,9 @@ class PokemonEntity extends schema_1.Schema {
         this.cooldown = 1500;
     }
     onAttack({ target, board, physicalDamage, specialDamage, trueDamage, totalDamage, isTripleAttack, hasAttackKilled, crit }) {
-        var _a;
         this.addPP(config_1.ON_ATTACK_MANA, this, 0, false);
         if (target.effects.has(Effect_1.EffectEnum.OBSTRUCT)) {
             this.addDefense(-2, target, 0, false);
-        }
-        if (target.effects.has(Effect_1.EffectEnum.BANEFUL_BUNKER) &&
-            (0, distance_1.distanceC)(this.positionX, this.positionY, target.positionX, target.positionY) === 1) {
-            const damage = (_a = [10, 20, 30][target.stars - 1]) !== null && _a !== void 0 ? _a : 30;
-            this.handleSpecialDamage(damage, board, Game_1.AttackType.SPECIAL, target, false);
-            this.status.triggerPoison(3000, this, target);
         }
         this.getEffects(effect_1.OnAttackEffect).forEach((effect) => {
             effect.apply({
@@ -790,7 +794,7 @@ class PokemonEntity extends schema_1.Schema {
     }
     onDamageReceived({ attacker, damage, damageBeforeReduction, board, attackType, isRetaliation }) {
         this.count.damageReceivedCount++;
-        const berry = (0, schemas_1.values)(this.items).find((item) => Item_1.Berries.includes(item));
+        const berry = (0, schemas_1.schemaValues)(this.items).find((item) => Item_1.Berries.includes(item));
         if (berry && this.hp > 0 && this.hp < 0.5 * this.maxHP) {
             this.eatBerry(berry);
         }
@@ -978,10 +982,10 @@ class PokemonEntity extends schema_1.Schema {
                 : this.simulation.redTeam;
             if (!team)
                 return;
-            const alliesAlive = (0, schemas_1.values)(team).filter((e) => e.hp > 0 || e.status.resurrecting);
+            const alliesAlive = (0, schemas_1.schemaValues)(team).filter((e) => e.hp > 0 || e.status.resurrecting);
             let koAllies = [];
             if (this.player) {
-                koAllies = (0, schemas_1.values)(this.player.board).filter((p) => p.id !== this.refToBoardPokemon.id &&
+                koAllies = (0, schemas_1.schemaValues)(this.player.board).filter((p) => p.id !== this.refToBoardPokemon.id &&
                     !(0, board_1.isOnBench)(p) &&
                     !alliesAlive.some((ally) => ally.refToBoardPokemon.id === p.id) &&
                     !(p.name === Pokemon_1.Pkm.COMFEY &&
@@ -1046,11 +1050,11 @@ class PokemonEntity extends schema_1.Schema {
         this.pp = 0;
         this.shield = 0;
     }
-    eatBerry(berry, stealedFrom, inPuffin = false) {
+    eatBerry(berry, stealedFrom, healToShield = false, apScaling = 0, crit = false) {
         var _a;
-        const heal = (val) => inPuffin
-            ? this.addShield(val, this, 0, false)
-            : this.handleHeal(val, this, 0, false);
+        const heal = (val) => healToShield
+            ? this.addShield(val, this, apScaling, crit)
+            : this.handleHeal(val, this, apScaling, crit);
         switch (berry) {
             case Item_1.Item.AGUAV_BERRY:
                 heal((0, number_1.min)(50)(0.5 * this.maxHP));

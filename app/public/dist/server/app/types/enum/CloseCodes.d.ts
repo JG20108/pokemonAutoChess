@@ -1,3 +1,4 @@
+import { ErrorMessage } from "../strings/ErrorMessage";
 export declare enum CloseCodes {
     NORMAL_CLOSURE = 1000,
     NO_STATUS_RECEIVED = 1005,
@@ -25,5 +26,5 @@ export declare enum CloseCodes {
     GAME_ALREADY_STARTED = 4130
 }
 export declare const CloseCodesMessages: {
-    [code in CloseCodes]?: string;
+    [code in CloseCodes]?: ErrorMessage;
 };

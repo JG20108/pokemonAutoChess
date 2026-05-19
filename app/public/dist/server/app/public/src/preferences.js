@@ -50,6 +50,7 @@ const defaultPreferences = {
         next_player: "PAGE_DOWN",
         board_return: "HOME",
         wiki: "W",
+        meta_report: "M",
         team_planner: "T"
     }
 };

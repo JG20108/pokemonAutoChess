@@ -76,7 +76,9 @@ exports.DishByPkm = {
     [Pokemon_1.Pkm.TATSUGIRI_CURLY]: null,
     [Pokemon_1.Pkm.TATSUGIRI_DROOPY]: null,
     [Pokemon_1.Pkm.TATSUGIRI_STRETCHY]: null,
-    [Pokemon_1.Pkm.GUZZLORD]: null
+    [Pokemon_1.Pkm.GUZZLORD]: null,
+    [Pokemon_1.Pkm.SKWOVET]: Item_1.Item.BERRIES,
+    [Pokemon_1.Pkm.GREEDENT]: Item_1.Item.BERRIES
 };
 exports.DishEffects = {
     BERRY_JUICE: [
@@ -100,6 +102,7 @@ exports.DishEffects = {
             }, Item_1.Item.BALM_MUSHROOM, 1000));
         })
     ],
+    BERRIES: [],
     BINDING_MOCHI: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.effects.add(Effect_1.EffectEnum.BINDING_MOCHI);
@@ -225,10 +228,10 @@ exports.DishEffects = {
                 entity.items.has(Item_1.Item.GOLDEN_RAZZ_BERRY)) {
                 entity.player.titles.add(types_1.Title.POFFIN_MASTER);
             }
-            (0, schemas_1.values)(entity.items)
+            (0, schemas_1.schemaValues)(entity.items)
                 .filter((item) => Item_1.Berries.includes(item))
                 .forEach((item) => {
-                entity.eatBerry(item, undefined, true);
+                entity.eatBerry(item, undefined, true, 0, false);
             });
         })
     ],
@@ -414,7 +417,7 @@ exports.DishEffects = {
     RICE: [
         new effect_1.OnDishConsumedEffect(({ pokemon, entity, player }) => {
             entity === null || entity === void 0 ? void 0 : entity.addShield(50, entity, 0, false);
-            const tatsugiriOnBoard = (0, schemas_1.values)(player.board).find((e) => e && (0, config_1.getBaseAltForm)(e.name) === Pokemon_1.Pkm.TATSUGIRI_CURLY);
+            const tatsugiriOnBoard = (0, schemas_1.schemaValues)(player.board).find((e) => e && (0, config_1.getBaseAltForm)(e.name) === Pokemon_1.Pkm.TATSUGIRI_CURLY);
             if ((tatsugiriOnBoard === null || tatsugiriOnBoard === void 0 ? void 0 : tatsugiriOnBoard.name) === Pokemon_1.Pkm.TATSUGIRI_CURLY) {
                 entity === null || entity === void 0 ? void 0 : entity.addAttack(8, entity, 0, false);
             }

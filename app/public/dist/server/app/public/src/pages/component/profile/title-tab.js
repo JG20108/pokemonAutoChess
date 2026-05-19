@@ -50,7 +50,7 @@ function TitleTab() {
                             if (user.titles.includes(title.name)) {
                                 dispatch((0, NetworkStore_1.setTitle)(title.name));
                             }
-                        }, children: [(0, jsx_runtime_1.jsx)("span", { className: "title-name", children: t(`title.${title.name}`) }), (0, jsx_runtime_1.jsxs)("div", { className: "title-description", children: [(0, jsx_runtime_1.jsx)("p", { children: (0, descriptions_1.addIconsToDescription)(t(`title_description.${title.name}`)) }), config_1.TITLES_UNLOCKING_THEMES.includes(title.name) && ((0, jsx_runtime_1.jsxs)("p", { children: [(0, jsx_runtime_1.jsx)("img", { src: `/assets/ui/palette.svg`, height: "24", width: "24" }), " ", t("profile.progress.unlocks_theme", {
+                        }, children: [(0, jsx_runtime_1.jsx)("span", { className: "title-name", children: t(`title.${title.name}`) }), (0, jsx_runtime_1.jsxs)("div", { className: "title-description", children: [(0, jsx_runtime_1.jsx)("p", { children: (0, descriptions_1.addIconsToDescription)(t(`title_description.${title.name}`)) }), (0, array_1.isIn)(config_1.TITLES_UNLOCKING_THEMES, title.name) && ((0, jsx_runtime_1.jsxs)("p", { children: [(0, jsx_runtime_1.jsx)("img", { src: `/assets/ui/palette.svg`, height: "24", width: "24" }), " ", t("profile.progress.unlocks_theme", {
                                                 theme: t(`theme.${config_1.THEME_BY_TITLE[title.name]}`)
                                             })] }))] }), (0, jsx_runtime_1.jsxs)("span", { className: "title-rarity", children: [(title.rarity * 100).toFixed(3), "%"] })] }, title.name)))] })] })) : null;
 }

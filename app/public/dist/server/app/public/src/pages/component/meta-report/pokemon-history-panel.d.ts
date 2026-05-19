@@ -4,6 +4,7 @@ import { Pkm } from "../../../../../types/enum/Pokemon";
 import { Synergy } from "../../../../../types/enum/Synergy";
 import { IPokemonsStatisticV2 } from "../../../models/pokemons-statistic-v2";
 import "./pokemon-history-panel.css";
+import { PoolType } from "../../../../../types/enum/PoolType";
 interface PokemonHistoryPanelProps {
     metaPokemons: IPokemonsStatisticV2[];
     eloThreshold: EloRank;
@@ -11,7 +12,7 @@ interface PokemonHistoryPanelProps {
     metric: "count" | "rank";
     synergy?: Synergy | "all";
     rarity?: Rarity | "all";
-    pool?: string;
+    pool?: PoolType | "all";
     tier?: string;
     selectedPkm?: Pkm | "";
 }

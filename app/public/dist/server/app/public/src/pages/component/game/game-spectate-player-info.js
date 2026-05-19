@@ -12,6 +12,7 @@ const money_1 = require("../icons/money");
 const pokemon_portrait_1 = __importDefault(require("../pokemon-portrait"));
 const game_additional_pokemons_1 = require("./game-additional-pokemons");
 const game_regional_pokemons_1 = require("./game-regional-pokemons");
+const game_streak_info_1 = require("./game-streak-info");
 require("./game-spectate-player-info.css");
 function GameSpectatePlayerInfo() {
     const { t } = (0, react_i18next_1.useTranslation)();
@@ -24,7 +25,7 @@ function GameSpectatePlayerInfo() {
                             display: "flex",
                             gap: "1em",
                             alignItems: "center"
-                        }, children: [(0, jsx_runtime_1.jsxs)("span", { children: [t("lvl"), " ", spectatedPlayer.experienceManager.level] }), (0, jsx_runtime_1.jsx)("span", { children: (0, jsx_runtime_1.jsx)(life_1.Life, { value: spectatedPlayer.life }) }), (0, jsx_runtime_1.jsx)("span", { children: (0, jsx_runtime_1.jsx)(money_1.Money, { value: spectatedPlayer.money }) })] }), (0, jsx_runtime_1.jsxs)("div", { style: {
+                        }, children: [(0, jsx_runtime_1.jsxs)("span", { children: [t("lvl"), " ", spectatedPlayer.experienceManager.level] }), (0, jsx_runtime_1.jsx)("span", { children: (0, jsx_runtime_1.jsx)(life_1.Life, { value: spectatedPlayer.life }) }), (0, jsx_runtime_1.jsx)("span", { children: (0, jsx_runtime_1.jsx)(money_1.Money, { value: spectatedPlayer.money }) }), (0, jsx_runtime_1.jsx)(game_streak_info_1.GameStreakInfo, {})] }), (0, jsx_runtime_1.jsxs)("div", { style: {
                             display: "flex",
                             gap: "1em",
                             alignItems: "center"

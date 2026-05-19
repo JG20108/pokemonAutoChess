@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ItemEffects = exports.FishingRodEffect = exports.DojoTicketOnItemDroppedEffect = exports.RunningShoesOnMoveEffect = exports.MachRibbonEffect = exports.SoulDewEffect = exports.loadedDiceOnAttackEffect = exports.blueOrbOnAttackEffect = void 0;
+exports.ItemEffects = exports.FishingRodEffect = exports.DojoTicketOnItemDroppedEffect = exports.RunningShoesOnMoveEffect = exports.GreenOrbEffect = exports.MachRibbonEffect = exports.SoulDewEffect = exports.loadedDiceOnAttackEffect = exports.blueOrbOnAttackEffect = void 0;
 const config_1 = require("../../config");
 const synergies_1 = require("../../models/colyseus-models/synergies");
 const pokemon_factory_1 = __importDefault(require("../../models/pokemon-factory"));
@@ -163,7 +163,7 @@ exports.SoulDewEffect = SoulDewEffect;
 class MachRibbonEffect extends effect_1.PeriodicEffect {
     constructor() {
         super((pokemon) => {
-            pokemon.addSpeed(15, pokemon, 0, false);
+            pokemon.addSpeed(20, pokemon, 0, false);
             pokemon.count.machRibbonCount++;
             if (pokemon.count.machRibbonCount >= 10 && pokemon.player) {
                 pokemon.player.titles.add(types_1.Title.TOP_GUN);
@@ -172,6 +172,23 @@ class MachRibbonEffect extends effect_1.PeriodicEffect {
     }
 }
 exports.MachRibbonEffect = MachRibbonEffect;
+class GreenOrbEffect extends effect_1.PeriodicEffect {
+    constructor() {
+        super((pokemon, board) => {
+            const adjacentCells = board.getAdjacentCells(pokemon.positionX, pokemon.positionY, true);
+            for (const cell of adjacentCells) {
+                if (cell.value && cell.value.team === pokemon.team) {
+                    const { overheal } = cell.value.handleHeal(0.05 * cell.value.maxHP, pokemon, 0, false);
+                    if (overheal > 0) {
+                        cell.value.addPP(0.3 * overheal, pokemon, 0, false);
+                    }
+                }
+            }
+            pokemon.broadcastAbility({ skill: "GREEN_ORB" });
+        }, Item_1.Item.GREEN_ORB, 2000);
+    }
+}
+exports.GreenOrbEffect = GreenOrbEffect;
 class RunningShoesOnMoveEffect extends effect_1.OnMoveEffect {
     constructor() {
         super((pkm) => {
@@ -202,7 +219,7 @@ const ogerponMaskEffect = new effect_1.OnItemDroppedEffect(({ pokemon, player, i
         pokemon.passive === Passive_1.Passive.OGERPON_WELLSPRING ||
         pokemon.passive === Passive_1.Passive.OGERPON_HEARTHFLAME ||
         pokemon.passive === Passive_1.Passive.OGERPON_CORNERSTONE) {
-        const currentMask = (0, schemas_1.values)(pokemon.items).find((i) => Item_1.OgerponMasks.includes(i));
+        const currentMask = (0, schemas_1.schemaValues)(pokemon.items).find((i) => Item_1.OgerponMasks.includes(i));
         if (currentMask) {
             pokemon.items.delete(currentMask);
         }
@@ -237,7 +254,7 @@ class DojoTicketOnItemDroppedEffect extends effect_1.OnItemDroppedEffect {
                 return false;
             const substitute = pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pkm.SUBSTITUTE, player);
             pokemon.items.forEach((item) => substitute.items.add(item));
-            pokemon.removeItems((0, schemas_1.values)(pokemon.items), player);
+            pokemon.removeItems((0, schemas_1.schemaValues)(pokemon.items), player);
             const pokemonLeaving = player.getPokemonAt(pokemon.positionX, pokemon.positionY) || pokemon;
             substitute.id = pokemonLeaving.id;
             substitute.evolution = pokemonLeaving.name;
@@ -281,6 +298,9 @@ const chefCookEffect = new effect_1.OnStageStartEffect(({ pokemon, player, room 
     }
     if (dish && nbDishes > 0) {
         let dishes = Array.from({ length: nbDishes }, () => dish);
+        if (dish === Item_1.Item.BERRIES) {
+            dishes = (0, random_1.pickNRandomIn)(Item_1.NonSpecialBerries.filter((i) => pokemon.items.has(i) === false), nbDishes);
+        }
         if (dish === Item_1.Item.MUSHROOMS) {
             dishes = Array.from({ length: nbDishes }, () => {
                 var _a;
@@ -302,13 +322,21 @@ const chefCookEffect = new effect_1.OnStageStartEffect(({ pokemon, player, room 
             room.clock.setTimeout(() => {
                 dishes.forEach((dish, i) => {
                     var _a;
-                    if ((0, array_1.isIn)(Item_1.DishesGoingToInventory, dish)) {
+                    if (pokemon.name === Pokemon_1.Pkm.SKWOVET || pokemon.name === Pokemon_1.Pkm.GREEDENT) {
+                        if (pokemon.items.size < 3) {
+                            pokemon.addItem(dish, player);
+                        }
+                        else {
+                            player.items.push(dish);
+                        }
+                    }
+                    else if ((0, array_1.isIn)(Item_1.DishesGoingToInventory, dish)) {
                         player.items.push(dish);
                     }
                     else {
-                        let candidates = (0, schemas_1.values)(player.board).filter((p) => p.canEat &&
+                        let candidates = (0, schemas_1.schemaValues)(player.board).filter((p) => p.canEat &&
                             !p.dishes.has(dish) &&
-                            !(0, board_1.isOnBench)(p) &&
+                            (0, board_1.isOnBench)(chef) === (0, board_1.isOnBench)(p) &&
                             (0, distance_1.distanceC)(chef.positionX, chef.positionY, p.positionX, p.positionY) === 1);
                         if (dish === Item_1.Item.HERBA_MYSTICA) {
                             candidates = candidates.filter((p) => Item_1.HerbaMysticas.every((herba) => p.dishes.has(herba) === false));
@@ -580,6 +608,18 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
                 }
             }
         })
+    ], [Item_1.Item.GREEN_ORB]: [
+        new effect_1.OnItemGainedEffect((pokemon) => {
+            pokemon.effectsSet.add(new GreenOrbEffect());
+        }),
+        new effect_1.OnItemRemovedEffect((pokemon) => {
+            for (const effect of pokemon.effectsSet) {
+                if (effect instanceof GreenOrbEffect) {
+                    pokemon.effectsSet.delete(effect);
+                    break;
+                }
+            }
+        })
     ], [Item_1.Item.DEEP_SEA_TOOTH]: [
         new effect_1.OnAttackEffect(({ pokemon, target, board, hasAttackKilled }) => {
             pokemon.addPP(5, pokemon, 0, false);
@@ -631,7 +671,7 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
                 Synergy_1.Synergy.PSYCHIC,
                 Synergy_1.Synergy.FAIRY
             ];
-            const fieldEffect = (0, schemas_1.values)(entity.types).find((type) => terrainTypes.includes(type));
+            const fieldEffect = (0, schemas_1.schemaValues)(entity.types).find((type) => terrainTypes.includes(type));
             switch (fieldEffect) {
                 case Synergy_1.Synergy.ELECTRIC:
                     entity.status.addElectricField(entity);
@@ -881,7 +921,7 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
         new effect_1.OnItemDroppedEffect(({ pokemon, player, item }) => {
             if (pokemon.canEat) {
                 let nbSandwiches = 0;
-                (0, schemas_1.values)(player.board).forEach((pkm) => {
+                (0, schemas_1.schemaValues)(player.board).forEach((pkm) => {
                     if (pkm.canEat &&
                         pokemon &&
                         (0, distance_1.distanceC)(pkm.positionX, pkm.positionY, pokemon.positionX, pokemon.positionY) <= 1) {
@@ -900,7 +940,7 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
     ], [Item_1.Item.LAPRAS_PASSPORT]: [
         new effect_1.OnItemDroppedEffect(({ pokemon, player, item, room }) => {
             const previousMap = player.map;
-            const chosenSynergies = (0, schemas_1.values)(pokemon.types);
+            const chosenSynergies = (0, schemas_1.schemaValues)(pokemon.types);
             const maps = Object.values(Dungeon_1.DungeonPMDO).filter((map) => map !== previousMap);
             let nbMaxInCommon = 0, candidateMaps = [];
             maps.forEach((map) => {
@@ -935,11 +975,7 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
     [
         new effect_1.OnItemDroppedEffect(({ pokemon }) => pokemon.skill === Ability_1.Ability.DECORATE)
     ]
-]))), { [Item_1.Item.BLACK_AUGURITE]: [
-        new effect_1.OnItemDroppedEffect(({ pokemon, player, item, room }) => {
-            return pokemon.passive === Passive_1.Passive.SCYTHER;
-        })
-    ], [Item_1.Item.MALICIOUS_ARMOR]: [
+]))), { [Item_1.Item.MALICIOUS_ARMOR]: [
         new effect_1.OnItemDroppedEffect(({ pokemon, player, room, item }) => {
             return pokemon.passive === Passive_1.Passive.CHARCADET;
         })

@@ -389,7 +389,7 @@ const MilceryFlavorEffect = new effect_1.OnStageStartEffect(({ player, pokemon }
     Synergy_1.SynergyArray.forEach((synergy) => {
         surroundingSynergies.set(synergy, 0);
     });
-    const adjacentAllies = (0, schemas_1.values)(player.board).filter((p) => (0, board_1.isOnBench)(p) === false &&
+    const adjacentAllies = (0, schemas_1.schemaValues)(player.board).filter((p) => (0, board_1.isOnBench)(p) === false &&
         (0, distance_1.distanceC)(milcery.positionX, milcery.positionY, p.positionX, p.positionY) <= 1);
     adjacentAllies.forEach((ally) => {
         ally.types.forEach((synergy) => {
@@ -515,12 +515,15 @@ class FalinksFormationEffect extends effect_1.OnSpawnEffect {
         super((pkm) => {
             if (!pkm.player)
                 return;
-            const troopers = (0, schemas_1.values)(pkm.player.board).filter((p) => p.name === Pokemon_1.Pkm.FALINKS_TROOPER && p.positionY === 0 && p.id !== pkm.id);
+            const troopers = (0, schemas_1.schemaValues)(pkm.player.board).filter((p) => p.name === Pokemon_1.Pkm.FALINKS_TROOPER && p.positionY === 0 && p.id !== pkm.id);
             this.stacks = troopers.length;
             if (this.stacks > 0) {
                 pkm.addAttack(this.stacks * 1, pkm, 0, false);
                 pkm.addDefense(this.stacks * 1, pkm, 0, false);
                 pkm.addShield(this.stacks * 30, pkm, 0, false);
+            }
+            if (this.stacks >= 8 && pkm.player) {
+                pkm.player.titles.add(types_1.Title.LEGIONNAIRE);
             }
         }, Passive_1.Passive.FALINKS);
         this.stacks = 0;
@@ -532,7 +535,7 @@ class BergmiteOnBackEffect extends effect_1.OnSpawnEffect {
         super((pkm) => {
             if (!pkm.player)
                 return;
-            const bergmites = (0, schemas_1.values)(pkm.player.board).filter((p) => p.name === Pokemon_1.Pkm.BERGMITE && p.positionY === 0 && p.id !== pkm.id);
+            const bergmites = (0, schemas_1.schemaValues)(pkm.player.board).filter((p) => p.name === Pokemon_1.Pkm.BERGMITE && p.positionY === 0 && p.id !== pkm.id);
             this.stacks = bergmites.length;
         }, Passive_1.Passive.AVALUGG);
         this.stacks = 0;
@@ -560,7 +563,7 @@ const PyukumukuExplodeOnDeathEffect = new effect_1.OnDeathEffect(({ pokemon, boa
     });
 }, Passive_1.Passive.PYUKUMUKU);
 const comfeyEquipOnSimulationStartEffect = new effect_1.OnSimulationStartEffect(({ simulation, team, entity }) => {
-    const alliesWithFreeSlots = (0, schemas_1.values)(team).filter((p) => p.name !== Pokemon_1.Pkm.COMFEY &&
+    const alliesWithFreeSlots = (0, schemas_1.schemaValues)(team).filter((p) => p.name !== Pokemon_1.Pkm.COMFEY &&
         p.items.size < 3 &&
         p.refToBoardPokemon.canHoldItems);
     if (alliesWithFreeSlots.length > 0) {
@@ -628,7 +631,7 @@ const conversionEffect = new effect_1.OnSimulationStartEffect(({ simulation, pla
     }
     if (synergyCopied === Synergy_1.Synergy.DRAGON) {
         const opponentTeam = simulation.getOpponentTeam(player.id);
-        const dragonLevel = (0, schemas_1.values)(opponentTeam).reduce((acc, p) => acc + (p.types.has(Synergy_1.Synergy.DRAGON) ? p.stars : 0), 0);
+        const dragonLevel = (0, schemas_1.schemaValues)(opponentTeam).reduce((acc, p) => acc + (p.types.has(Synergy_1.Synergy.DRAGON) ? p.stars : 0), 0);
         if (effect === Effect_1.EffectEnum.DRAGON_SCALES ||
             effect === Effect_1.EffectEnum.DRAGON_DANCE) {
             entity.addShield(dragonLevel * 5, entity, 0, false);
@@ -876,6 +879,16 @@ exports.PassiveEffects = {
     ],
     [Passive_1.Passive.VIGOROTH]: [
         new effect_1.OnSpawnEffect((pkm) => pkm.effects.add(Effect_1.EffectEnum.IMMUNITY_SLEEP))
+    ],
+    [Passive_1.Passive.COMATOSE]: [
+        new effect_1.OnSpawnEffect((pkm) => {
+            pkm.status.sleep = true;
+            pkm.status.sleepCooldown = 1000;
+            pkm.effects.add(Effect_1.EffectEnum.IMMUNITY_BURN);
+            pkm.effects.add(Effect_1.EffectEnum.IMMUNITY_POISON);
+            pkm.effects.add(Effect_1.EffectEnum.IMMUNITY_FREEZE);
+            pkm.effects.add(Effect_1.EffectEnum.IMMUNITY_PARALYSIS);
+        })
     ],
     [Passive_1.Passive.MEGA_SABLEYE]: [
         new effect_1.OnSpawnEffect((entity) => entity.status.triggerRuneProtect(60000, entity, entity))

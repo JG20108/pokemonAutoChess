@@ -23,9 +23,6 @@ function SynergyComponent(props) {
         const scene = (0, game_1.getGameScene)();
         if (!scene)
             return;
-        const outline = scene.plugins.get("rexOutline");
-        if (!outline)
-            return;
         if (!(spectatedPlayer === null || spectatedPlayer === void 0 ? void 0 : spectatedPlayer.board))
             return;
         spectatedPlayer.board.forEach((p) => {
@@ -33,10 +30,7 @@ function SynergyComponent(props) {
             if (p.types.has(type)) {
                 const sprite = (_b = (_a = scene.board) === null || _a === void 0 ? void 0 : _a.pokemons.get(p.id)) === null || _b === void 0 ? void 0 : _b.sprite;
                 if (sprite) {
-                    outline.add(sprite, {
-                        thickness: 4,
-                        outlineColor: 0xffffff
-                    });
+                    scene.setHovered(sprite, 4);
                 }
             }
         });
@@ -45,20 +39,15 @@ function SynergyComponent(props) {
         const scene = (0, game_1.getGameScene)();
         if (!scene)
             return;
-        const outline = scene.plugins.get("rexOutline");
-        if (!outline)
-            return;
-        if (spectatedPlayer === null || spectatedPlayer === void 0 ? void 0 : spectatedPlayer.board) {
-            spectatedPlayer.board.forEach((p) => {
-                var _a, _b;
-                if (p.types.has(type)) {
-                    const sprite = (_b = (_a = scene.board) === null || _a === void 0 ? void 0 : _a.pokemons.get(p.id)) === null || _b === void 0 ? void 0 : _b.sprite;
-                    if (sprite) {
-                        outline.remove(sprite);
-                    }
+        spectatedPlayer === null || spectatedPlayer === void 0 ? void 0 : spectatedPlayer.board.forEach((p) => {
+            var _a, _b;
+            if (p.types.has(type)) {
+                const sprite = (_b = (_a = scene.board) === null || _a === void 0 ? void 0 : _a.pokemons.get(p.id)) === null || _b === void 0 ? void 0 : _b.sprite;
+                if (sprite) {
+                    scene.clearHovered(sprite);
                 }
-            });
-        }
+            }
+        });
     };
     const tooltip = ((0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: "detail-" + props.type, className: "custom-theme-tooltip", place: "right-start", delayShow: 100, delayHide: 0, children: (0, jsx_runtime_1.jsx)(synergy_detail_component_1.default, { type: props.type, value: props.value }) }));
     return ((0, jsx_runtime_1.jsxs)("div", { style: {

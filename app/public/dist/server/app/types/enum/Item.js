@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UnholdableItems = exports.Mulches = exports.Sweets = exports.SynergyFlavors = exports.Flavors = exports.HerbaMysticas = exports.ItemsSoldAtTown = exports.DishesGoingToInventory = exports.Mushrooms = exports.Dishes = exports.AbilityPerTM = exports.TMs = exports.TMsGold = exports.TMsSilver = exports.TMsBronze = exports.OgerponMasks = exports.Wands = exports.CraftableNoStonesOrScarves = exports.SynergyGivenByGem = exports.SynergyGivenByItem = exports.SynergyItems = exports.SynergyItemsNoSpecial = exports.ToolsBuried = exports.SynergyGemsBuried = exports.SynergyGems = exports.SynergyStones = exports.CraftableItemsNoScarves = exports.CraftableItems = exports.WeatherByWeatherRocks = exports.WeatherRocksByWeather = exports.WeatherRocks = exports.ShinyItems = exports.ArtificialItems = exports.Tools = exports.Berries = exports.SpecialBerries = exports.NonSpecialBerries = exports.Scarves = exports.ItemRecipe = exports.ItemComponents = exports.ItemComponentsNoScarf = exports.ItemComponentsNoFossilOrScarf = exports.FishingRods = exports.SpecialItems = exports.TownItems = exports.DojoTickets = exports.MissionOrders = exports.MemoryDiscsBySynergy = exports.MemoryDiscs = exports.Item = void 0;
-exports.RemovableItems = exports.ConsumableItems = void 0;
+exports.Sweets = exports.SynergyFlavors = exports.Flavors = exports.HerbaMysticas = exports.ItemsSoldAtTown = exports.DishesGoingToInventory = exports.Mushrooms = exports.Dishes = exports.TMPerAbility = exports.AbilityPerTM = exports.TMs = exports.TMsGold = exports.TMsSilver = exports.TMsBronze = exports.OgerponMasks = exports.Wands = exports.CraftableNoStonesOrScarves = exports.SynergyGivenByGem = exports.SynergyGivenByItem = exports.SynergyItems = exports.SynergyItemsNoSpecial = exports.ToolsBuried = exports.SynergyGemsBuried = exports.SynergyGems = exports.SynergyStones = exports.CraftableItemsNoScarves = exports.CraftableItems = exports.WeatherByWeatherRocks = exports.WeatherRocksByWeather = exports.WeatherRocks = exports.ShinyItems = exports.ArtificialItems = exports.Tools = exports.Berries = exports.SpecialBerries = exports.NonSpecialBerries = exports.Scarves = exports.ItemRecipe = exports.ItemComponents = exports.ItemComponentsNoScarf = exports.ItemComponentsNoFossilOrScarf = exports.FishingRods = exports.SpecialItems = exports.TownItems = exports.SevenTreasures = exports.DojoTickets = exports.MissionOrders = exports.MemoryDiscsBySynergy = exports.MemoryDiscs = exports.Item = void 0;
+exports.RemovableItems = exports.ConsumableItems = exports.UnholdableItems = exports.Mulches = void 0;
 const map_1 = require("../../utils/map");
 const Ability_1 = require("./Ability");
 const Synergy_1 = require("./Synergy");
@@ -214,6 +214,7 @@ var Item;
     Item["BIG_MUSHROOM"] = "BIG_MUSHROOM";
     Item["BALM_MUSHROOM"] = "BALM_MUSHROOM";
     Item["RICE"] = "RICE";
+    Item["BERRIES"] = "BERRIES";
     Item["POFFIN"] = "POFFIN";
     Item["ROCK_SALT"] = "ROCK_SALT";
     Item["NUTRITIOUS_EGG"] = "NUTRITIOUS_EGG";
@@ -327,6 +328,13 @@ var Item;
     Item["SWITCHER_WAND"] = "SWITCHER_WAND";
     Item["WHIRLWIND_WAND"] = "WHIRLWIND_WAND";
     Item["TUNNEL_WAND"] = "TUNNEL_WAND";
+    Item["AQUA_MONICA"] = "AQUA_MONICA";
+    Item["FIERY_DRUM"] = "FIERY_DRUM";
+    Item["GRASS_CORNET"] = "GRASS_CORNET";
+    Item["ICY_FLUTE"] = "ICY_FLUTE";
+    Item["ROCK_HORN"] = "ROCK_HORN";
+    Item["SKY_MELODICA"] = "SKY_MELODICA";
+    Item["TERRA_CYMBAL"] = "TERRA_CYMBAL";
 })(Item || (exports.Item = Item = {}));
 exports.MemoryDiscs = [
     Item.FIRE_MEMORY,
@@ -396,6 +404,15 @@ exports.DojoTickets = [
     Item.SILVER_DOJO_TICKET,
     Item.GOLD_DOJO_TICKET
 ];
+exports.SevenTreasures = [
+    Item.AQUA_MONICA,
+    Item.FIERY_DRUM,
+    Item.GRASS_CORNET,
+    Item.ICY_FLUTE,
+    Item.ROCK_HORN,
+    Item.SKY_MELODICA,
+    Item.TERRA_CYMBAL
+];
 exports.TownItems = [
     Item.TREASURE_BOX,
     Item.AMULET_COIN,
@@ -404,6 +421,7 @@ exports.TownItems = [
     Item.RECYCLE_TICKET,
     ...exports.DojoTickets,
     ...exports.MissionOrders,
+    ...exports.SevenTreasures,
     Item.EGG_FOR_SELL,
     Item.PICNIC_SET,
     Item.WANTED_NOTICE,
@@ -897,6 +915,7 @@ exports.AbilityPerTM = {
     [Item.TM_PROTECT]: Ability_1.Ability.PROTECT,
     [Item.TM_SKILL_SWAP]: Ability_1.Ability.SKILL_SWAP
 };
+exports.TMPerAbility = (0, map_1.reverseMap)((0, map_1.objToMap)(exports.AbilityPerTM));
 exports.Dishes = [
     Item.OLIVE_OIL,
     Item.RAGE_CANDY_BAR,
@@ -941,7 +960,8 @@ exports.Dishes = [
     Item.TINY_MUSHROOM,
     Item.BIG_MUSHROOM,
     Item.BALM_MUSHROOM,
-    Item.RICE
+    Item.RICE,
+    Item.BERRIES
 ];
 exports.Mushrooms = [
     Item.TINY_MUSHROOM,
@@ -1032,6 +1052,7 @@ exports.UnholdableItems = [
     ...exports.SynergyGems,
     ...exports.Mulches,
     ...exports.MissionOrders,
+    ...exports.SevenTreasures,
     Item.METEORITE,
     Item.ROTOM_CATALOG,
     Item.MYSTERY_BOX,

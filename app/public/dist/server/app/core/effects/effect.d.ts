@@ -49,6 +49,15 @@ export declare class OnStageStartEffect extends Effect {
     constructor(effect?: (args: OnStageStartEffectArgs) => void, origin?: EffectOrigin);
     apply(args: OnStageStartEffectArgs): void;
 }
+interface OnBenchedDuringFightEffectArgs {
+    pokemon: Pokemon;
+    player: Player;
+    simulation: Simulation;
+}
+export declare class OnBenchedDuringFightEffect extends Effect {
+    constructor(effect?: (args: OnBenchedDuringFightEffectArgs) => void, origin?: EffectOrigin);
+    apply(args: OnBenchedDuringFightEffectArgs): void;
+}
 interface OnSimulationStartEffectArgs {
     simulation: Simulation;
     player: Player;

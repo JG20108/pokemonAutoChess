@@ -31,6 +31,7 @@ var PokemonActionState;
 (function (PokemonActionState) {
     PokemonActionState["IDLE"] = "Idle";
     PokemonActionState["ATTACK"] = "Attack";
+    PokemonActionState["ABILITY"] = "Ability";
     PokemonActionState["WALK"] = "Walk";
     PokemonActionState["SLEEP"] = "Sleep";
     PokemonActionState["HOP"] = "Hop";
@@ -39,6 +40,7 @@ var PokemonActionState;
     PokemonActionState["EAT"] = "Eat";
     PokemonActionState["FISH"] = "Fish";
     PokemonActionState["BLOSSOM"] = "Blossom";
+    PokemonActionState["TRAINING"] = "Training";
 })(PokemonActionState || (exports.PokemonActionState = PokemonActionState = {}));
 var Orientation;
 (function (Orientation) {

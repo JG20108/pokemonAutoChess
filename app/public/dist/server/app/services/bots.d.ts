@@ -1,11 +1,12 @@
 import { mongo } from "mongoose";
+import { Pkm } from "../types/enum/Pokemon";
 import { IUserMetadataMongo } from "../types/interfaces/UserMetadata";
 import type { IBot, IStep } from "../types/models/bot-v2";
 export type IBotListItem = Omit<IBot, "steps">;
 export declare function fetchBotsList(approved?: boolean, usingPkm?: string): Promise<IBotListItem[]>;
 export declare function fetchBot(id: string): Promise<IBot | null>;
 export declare function addBotToDatabase(bot: {
-    name: string;
+    name: Pkm;
     avatar: string;
     elo: number;
     author: string;

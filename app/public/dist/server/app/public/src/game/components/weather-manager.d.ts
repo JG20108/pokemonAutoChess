@@ -6,7 +6,7 @@ export default class WeatherManager {
     particlesEmitters: Phaser.GameObjects.Particles.ParticleEmitter[];
     image: Phaser.GameObjects.Image | undefined;
     tweens: Phaser.Tweens.Tween[];
-    fxs: Phaser.FX.Controller[];
+    fxs: Phaser.Filters.Controller[];
     constructor(scene: Phaser.Scene);
     addRain(): void;
     addSnow(): void;

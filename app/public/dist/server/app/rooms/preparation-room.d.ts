@@ -1,5 +1,5 @@
 import { Dispatcher } from "@colyseus/command";
-import { Client, ClientArray, Room } from "colyseus";
+import { Client, ClientArray, Delayed, Room } from "colyseus";
 import { UserRecord } from "firebase-admin/lib/auth/user-record";
 import { EloRank } from "../types/enum/EloRank";
 import { GameMode } from "../types/enum/Game";
@@ -12,6 +12,7 @@ export default class PreparationRoom extends Room<{
         auth: UserRecord;
     }>>;
     private roomPassword;
+    autoStartTimeout: Delayed | null;
     constructor();
     setName(name: string): Promise<void>;
     setPassword(password: string | null): Promise<void>;

@@ -41,7 +41,7 @@ export default class Player extends Schema implements IPlayer {
     opponentId: string;
     opponentName: string;
     opponentAvatar: string;
-    opponentTitle: string;
+    opponentTitle: Title | "WILD" | "";
     spectatedPlayerId: string;
     boardSize: number;
     items: ArraySchema<Item>;
@@ -107,6 +107,7 @@ export default class Player extends Schema implements IPlayer {
     specialGameRule: SpecialGameRule | null;
     shopsSinceLastUnownShop: number;
     regions: DungeonPMDO[];
+    unownReminiscences: number;
     constructor(id: string, name: string, elo: number, games: number, avatar: string, isBot: boolean, rank: number, pokemonCollection: Map<string, IPokemonCollectionItemMongo>, title: Title | "", role: Role, state: GameState);
     addExperience(value: number): void;
     addMoney(value: number, countTotalEarned: boolean, origin: PokemonEntity | null): void;
@@ -122,6 +123,7 @@ export default class Player extends Schema implements IPlayer {
     updateFishingRods(): void;
     updateChefsHats(): void;
     updateFairyWands(previousSynergies: Map<Synergy, number>, updatedSynergies: Map<Synergy, number>): void;
+    updatePillars(): void;
     updateRegionalPool(state: GameState, mapChanged: boolean, previousMap?: string): void;
     onLightChange(): void;
     registerPlayedPokemons(): void;

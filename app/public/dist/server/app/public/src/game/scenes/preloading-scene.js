@@ -4,8 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PreloadingScene = void 0;
+const phaser_1 = __importDefault(require("phaser"));
 const loading_manager_1 = __importDefault(require("../components/loading-manager"));
-class PreloadingScene extends Phaser.Scene {
+class PreloadingScene extends phaser_1.default.Scene {
     constructor(onProgress, onComplete) {
         super();
         this.loadingManager = null;

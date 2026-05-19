@@ -8,6 +8,9 @@ export declare class SoulDewEffect extends PeriodicEffect {
 export declare class MachRibbonEffect extends PeriodicEffect {
     constructor();
 }
+export declare class GreenOrbEffect extends PeriodicEffect {
+    constructor();
+}
 export declare class RunningShoesOnMoveEffect extends OnMoveEffect {
     stacks: number;
     constructor();

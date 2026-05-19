@@ -1,14 +1,14 @@
-import { GameObjects } from "phaser";
+import Phaser, { GameObjects } from "phaser";
 import { Emotion, IPokemon, IPokemonEntity } from "../../../../../types";
 import { Pkm } from "../../../../../types/enum/Pokemon";
 import "./game-pokemon-detail.css";
 export declare function GamePokemonDetail(props: {
-    pokemon: Pkm | IPokemon | IPokemonEntity;
+    pokemon: Pkm | IPokemon | IPokemonEntity | null | undefined;
     origin: "shop" | "proposition" | "team" | "planner" | "battle" | "wiki" | "patchnotes" | "after";
     shiny?: boolean;
     emotion?: Emotion;
     isAlly?: boolean;
-}): import("react/jsx-runtime").JSX.Element;
+}): import("react/jsx-runtime").JSX.Element | null;
 export declare class GamePokemonDetailDOMWrapper extends GameObjects.DOMElement {
     dom: HTMLDivElement;
     private root;

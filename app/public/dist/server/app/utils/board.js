@@ -12,7 +12,8 @@ function isOnBench(pokemon) {
     return pokemon.positionY === 0;
 }
 function isPositionEmpty(x, y, board) {
-    return ((0, schemas_1.values)(board).some((p) => p.positionX === x && p.positionY === y) === false);
+    return ((0, schemas_1.schemaValues)(board).some((p) => p.positionX === x && p.positionY === y) ===
+        false);
 }
 function getFirstAvailablePositionInBench(board) {
     for (let i = 0; i < 8; i++) {
