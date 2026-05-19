@@ -415,7 +415,7 @@ export default class Player extends Schema implements IPlayer {
         }
       } else if (currentStep < this.gymBadgeThreshold) {
         const removeGymBadgeRareCandy = () => {
-          for (const pokemon of values(this.board)) {
+          for (const pokemon of schemaValues(this.board)) {
             if (pokemon.items.has(Item.RARE_CANDY)) {
               pokemon.removeItem(Item.RARE_CANDY, this)
               return

@@ -9,7 +9,6 @@ export type ErrorMessage =
   | "USER_RANK_TOO_LOW"
   | "USER_NOT_AUTHENTICATED"
   | "USER_NOT_WHITELISTED"
-  | "USER_TIMEOUT"
   | "ROOM_FULL"
   | "ROOM_EMPTY"
   | "ROOM_DELETED"
