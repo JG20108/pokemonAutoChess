@@ -26,7 +26,7 @@ import {
   Stat
 } from "../../../../types/enum/Game"
 import { Sweets } from "../../../../types/enum/Item"
-import { Pkm, PkmIndex } from "../../../../types/enum/Pokemon"
+import { Pillars, Pkm, PkmIndex } from "../../../../types/enum/Pokemon"
 import { range } from "../../../../utils/array"
 import { distanceE, distanceM } from "../../../../utils/distance"
 import { logger } from "../../../../utils/logger"
@@ -453,7 +453,9 @@ export function addAbilitySprite(
   sprite.setScale(scaleX, scaleY)
   sprite.setDepth(depth ?? DEPTH.ABILITY)
   if (tint) sprite.setTint(tint)
-  if (tintFill) sprite.setTintFill(tintFill)
+  if (tintFill) {
+    sprite.setTint(tintFill).setTintMode(Phaser.TintModes.FILL)
+  }
   if (rotation !== undefined) sprite.setRotation(rotation)
   if (angle !== undefined) sprite.setAngle(angle)
   if (alpha !== undefined) sprite.setAlpha(alpha)
@@ -801,7 +803,25 @@ export const AbilitiesAnimations: {
   [Ability.SOFT_BOILED]: onCasterScale2,
   [Ability.FAKE_TEARS]: onCasterScale2,
   [Ability.TEA_TIME]: onCasterScale2,
-  [Ability.FUTURE_SIGHT]: onCaster({ depth: DEPTH.ABILITY_BELOW_POKEMON }),
+  [Ability.FUTURE_SIGHT]: onTarget({
+    depth: DEPTH.ABILITY_BELOW_POKEMON,
+    animOptions: { repeat: 2 }
+  }),
+  ["FUTURE_SIGHT_HIT"]: onTarget({
+    scale: 2,
+    depth: DEPTH.ABILITY_BELOW_POKEMON,
+    tint: 0xbb90ff
+  }),
+  [Ability.DOOM_DESIRE]: onTarget({
+    depth: DEPTH.ABILITY_MAJOR,
+    scale: 1,
+    positionOffset: [0, -20]
+  }),
+  ["DOOM_DESIRE_HIT"]: onTarget({
+    depth: DEPTH.ABILITY_MAJOR,
+    scale: 1,
+    positionOffset: [0, -20]
+  }),
   [Ability.PETAL_DANCE]: onCasterScale2,
   [Ability.AROMATHERAPY]: onCasterScale2,
   [Ability.BOUNCE]: onCasterScale2,
@@ -949,7 +969,7 @@ export const AbilitiesAnimations: {
     oriented: true,
     rotation: +Math.PI / 2
   }),
-  [Ability.MYSTICAL_FIRE]: onTarget({ positionOffset: [0, -50] }),
+  [Ability.MYSTICAL_FIRE]: onTarget({ scale: 1.5 }),
   [Ability.FLAME_CHARGE]: onCaster({
     oriented: true,
     rotation: +Math.PI / 2,
@@ -1183,9 +1203,8 @@ export const AbilitiesAnimations: {
   }),
   [Ability.MUDDY_WATER]: onTarget({ origin: [0.5, 1] }),
   [Ability.FAIRY_LOCK]: onTargetScale1,
-  [Ability.STEAM_ERUPTION]: onTargetScale3,
+  [Ability.STEAM_ERUPTION]: onTargetScale2,
   [Ability.SEARING_SHOT]: onCaster({
-    ability: Ability.STEAM_ERUPTION,
     depth: DEPTH.ABILITY_BELOW_POKEMON,
     scale: 3
   }),
@@ -2699,10 +2718,7 @@ export const AbilitiesAnimations: {
       distanceE(args.positionX, args.positionY, args.targetX, args.targetY)
     )
     // orientation field is used to pass the type of the pillar
-    const pillarType =
-      [Pkm.PILLAR_WOOD, Pkm.PILLAR_IRON, Pkm.PILLAR_CONCRETE][
-        args.orientation
-      ] ?? Pkm.PILLAR_WOOD
+    const pillarType = Pillars[args.orientation] ?? Pkm.PILLAR_WOOD
     const animKey = `${PkmIndex[pillarType]}/${PokemonTint.NORMAL}/${AnimationType.Idle}/${SpriteType.ANIM}/${Orientation.DOWN}`
     const frame = `${PokemonTint.NORMAL}/${AnimationType.Idle}/${SpriteType.ANIM}/${Orientation.DOWN}/0000`
     return projectile({
@@ -2962,6 +2978,11 @@ export const AbilitiesAnimations: {
     depth: DEPTH.ABILITY_BELOW_POKEMON,
     ability: Ability.DISCHARGE
   }),
+  [Ability.AQUA_STEP]: onCaster({
+    ability: Ability.AQUA_STEP,
+    scale: 1,
+    positionOffset: [+5, -15]
+  }),
   [Ability.STATIC_SHOCK]: onCaster({
     depth: DEPTH.ABILITY_BELOW_POKEMON,
     ability: Ability.DISCHARGE
@@ -3031,13 +3052,19 @@ export const AbilitiesAnimations: {
     hitAnim: onTarget({ ability: "PUFF_GREEN", scale: 1 }),
     scale: 0.25
   }),
+  ["GREEN_ORB"]: onCaster({
+    ability: "GREEN_ORB",
+    oriented: false,
+    scale: 3,
+    depth: DEPTH.ABILITY_BELOW_POKEMON
+  }),
   ["GALARIAN_DARMANITAN_ZEN_BURN"]: onCaster({
     ability: "INFERNO",
     depth: DEPTH.ABILITY_BELOW_POKEMON,
     scale: 2
   }),
   ["WARP_WAND"]: onSprite(({ targetSprite, ...args }) => {
-    onTarget({ ability: Ability.FUTURE_SIGHT, scale: 1.5 })(args)
+    onTarget({ ability: "WARP", scale: 1.5 })(args)
     if (targetSprite) {
       targetSprite.isTeleporting = true
       setTimeout(() => {

@@ -1,14 +1,18 @@
 import {
+  AQUA_MONICA_CHANCE,
   ARCEUS_RATE,
   BuyPrices,
   DITTO_RATE,
   EEVEE_RATE,
   FALINKS_TROOPER_RATE,
+  FIERY_DRUM_CHANCE,
   FishRarityProbability,
+  GRASS_CORNET_CHANCE,
   getAltFormForPlayer,
   getUnownsPoolPerStage,
   HIGH_ROLLER_CHANCE,
   HONEY_CHANCE,
+  ICY_FLUTE_CHANCE,
   INCENSE_CHANCE,
   KECLEON_RATE,
   LegendaryPool,
@@ -25,8 +29,12 @@ import {
   REPEAT_BALL_LEGENDARY_CAP,
   REPEAT_BALL_UNIQUE_CAP,
   REPEAT_BALL_UNIQUE_INTERVAL,
+  ROCK_HORN_CHANCE,
   SellPrices,
   SHOP_SIZE,
+  SKY_MELODICA_CHANCE,
+  SynergyTriggers,
+  TERRA_CYMBAL_CHANCE,
   UNOWN_PSY3_NB_SHOPS_INTERVAL,
   UNOWN_PSY5_NB_SHOPS_INTERVAL,
   UNOWN_PSY7_NB_SHOPS_INTERVAL,
@@ -68,7 +76,7 @@ import {
   randomWeighted,
   shuffleArray
 } from "../utils/random"
-import { values } from "../utils/schemas"
+import { schemaValues } from "../utils/schemas"
 import Player from "./colyseus-models/player"
 import { PlayerChoice, PlayerChoiceType } from "./colyseus-models/player-choice"
 import { Pokemon, PokemonClasses } from "./colyseus-models/pokemon"
@@ -442,7 +450,15 @@ export default class Shop {
   assignShop(player: Player, manualRefresh: boolean, state: GameState) {
     player.shop.forEach((pkm) => this.releasePokemon(pkm, player, state))
 
-    const hasTranscendence = player.effects.has(EffectEnum.TRANSCENDENCE)
+    let psychicLevel = player.synergies.get(Synergy.PSYCHIC) ?? 0
+
+    if (!manualRefresh && player.unownReminiscences > 0) {
+      // consume unown reminescenses for next automatic shopm
+      psychicLevel += player.unownReminiscences
+      player.unownReminiscences = 0
+    }
+
+    const hasTranscendence = psychicLevel >= SynergyTriggers[Synergy.PSYCHIC][2]
     if (hasTranscendence) {
       player.shopsSinceLastUnownShop += 1
     }
@@ -785,7 +801,7 @@ export default class Shop {
     const finals = player.getFinalizedLines()
     let specificTypesWanted: Synergy[] | undefined = undefined
 
-    const attractors = values(player.board).filter(
+    const attractors = schemaValues(player.board).filter(
       (p) => p.items.has(Item.INCENSE) || p.dishes.has(Item.HONEY)
     )
     let attractor: Pokemon | null = null
@@ -795,7 +811,7 @@ export default class Shop {
     }
 
     if (attractor) {
-      specificTypesWanted = values(attractor.types)
+      specificTypesWanted = schemaValues(attractor.types)
     } else if (
       (state.specialGameRule === SpecialGameRule.MONOTYPE ||
         state.specialGameRule === SpecialGameRule.DUAL_TYPE_SPECIALIST) &&
@@ -807,6 +823,41 @@ export default class Shop {
       )
     } else if (wildChance > 0 && chance(wildChance)) {
       specificTypesWanted = [Synergy.WILD]
+    } else if (
+      player.items.includes(Item.AQUA_MONICA) &&
+      chance(AQUA_MONICA_CHANCE)
+    ) {
+      specificTypesWanted = [Synergy.WATER]
+    } else if (
+      player.items.includes(Item.FIERY_DRUM) &&
+      chance(FIERY_DRUM_CHANCE)
+    ) {
+      specificTypesWanted = [Synergy.FIRE]
+    } else if (
+      player.items.includes(Item.GRASS_CORNET) &&
+      chance(GRASS_CORNET_CHANCE)
+    ) {
+      specificTypesWanted = [Synergy.GRASS]
+    } else if (
+      player.items.includes(Item.ICY_FLUTE) &&
+      chance(ICY_FLUTE_CHANCE)
+    ) {
+      specificTypesWanted = [Synergy.ICE]
+    } else if (
+      player.items.includes(Item.ROCK_HORN) &&
+      chance(ROCK_HORN_CHANCE)
+    ) {
+      specificTypesWanted = [Synergy.ROCK]
+    } else if (
+      player.items.includes(Item.SKY_MELODICA) &&
+      chance(SKY_MELODICA_CHANCE)
+    ) {
+      specificTypesWanted = [Synergy.FLYING]
+    } else if (
+      player.items.includes(Item.TERRA_CYMBAL) &&
+      chance(TERRA_CYMBAL_CHANCE)
+    ) {
+      specificTypesWanted = [Synergy.GROUND]
     }
 
     const probas = RarityProbabilityPerLevel[player.experienceManager.level]
@@ -842,7 +893,7 @@ export default class Shop {
       return Pkm.MAGIKARP
     }
 
-    const repeatBallHolders = values(player.board).filter((p) =>
+    const repeatBallHolders = schemaValues(player.board).filter((p) =>
       p.items.has(Item.REPEAT_BALL)
     )
     const totalRerolls = player.gameStats.rerollCount + state.stageLevel
@@ -908,7 +959,7 @@ export default class Shop {
   }
 
   pickFish(player: Player, rod: FishingRod, state: GameState): Pkm {
-    const mantine = values(player.board).find(
+    const mantine = schemaValues(player.board).find(
       (p) => p.name === Pkm.MANTYKE || p.name === Pkm.MANTINE
     )
 

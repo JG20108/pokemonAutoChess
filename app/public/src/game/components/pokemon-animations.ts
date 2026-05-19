@@ -8005,5 +8005,64 @@ export const PokemonAnimations: {
     emote: AnimationType.Shoot,
     attackSprite: AttackSprite.BUG_MELEE,
     shinyUnavailable: true
+  },
+  [Pkm.SKWOVET]: {
+    attack: AnimationType.Attack,
+    ability: AnimationType.Shoot,
+    emote: AnimationType.Shoot,
+    eat: AnimationType.Charge,
+    attackSprite: AttackSprite.NORMAL_MELEE
+  },
+  [Pkm.GREEDENT]: {
+    attack: AnimationType.Attack,
+    ability: AnimationType.Emit,
+    emote: AnimationType.Shoot,
+    eat: AnimationType.Charge,
+    attackSprite: AttackSprite.NORMAL_MELEE,
+    shinyUnavailable: true
+  },
+  [Pkm.QUAXLY]: {
+    attack: AnimationType.Attack,
+    ability: AnimationType.Swing,
+    emote: AnimationType.Appeal,
+    attackSprite: AttackSprite.FIGHTING_MELEE
+  },
+  [Pkm.QUAXWELL]: {
+    attack: AnimationType.Attack,
+    ability: AnimationType.Kick,
+    emote: AnimationType.Shoot,
+    attackSprite: AttackSprite.FIGHTING_MELEE
+  },
+  [Pkm.QUAQUAVAL]: {
+    attack: AnimationType.Attack,
+    ability: AnimationType.Swing,
+    emote: AnimationType.Shoot,
+    attackSprite: AttackSprite.FIGHTING_MELEE
+  },
+  [Pkm.KOMALA]: {
+    attack: AnimationType.Strike,
+    ability: AnimationType.Charge,
+    emote: AnimationType.Sleep,
+    attackSprite: AttackSprite.NORMAL_MELEE
+  },
+  [Pkm.TAROUNTULA]: {
+    attack: AnimationType.Attack,
+    ability: AnimationType.Attack,
+    emote: AnimationType.Attack,
+    attackSprite: AttackSprite.BUG_RANGE,
+    hitSprite: HitSprite.BUG_HIT
+  },
+  [Pkm.SPIDOPS]: {
+    attack: AnimationType.Attack,
+    ability: AnimationType.Shoot,
+    emote: AnimationType.Shoot,
+    attackSprite: AttackSprite.BUG_RANGE,
+    hitSprite: HitSprite.BUG_HIT
+  },
+  [Pkm.SLITHER_WING]: {
+    attack: AnimationType.Attack,
+    ability: AnimationType.Swing,
+    emote: AnimationType.Shoot,
+    attackSprite: AttackSprite.BUG_MELEE
   }
 }

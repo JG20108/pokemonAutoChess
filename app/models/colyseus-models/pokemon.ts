@@ -47,14 +47,10 @@ import { SpecialGameRule } from "../../types/enum/SpecialGameRule"
 import { Synergy } from "../../types/enum/Synergy"
 import { Weather } from "../../types/enum/Weather"
 import { isIn, removeInArray } from "../../utils/array"
-import {
-  getFirstAvailablePositionInBench,
-  getFirstAvailablePositionOnBoard,
-  isOnBench
-} from "../../utils/board"
+import { getFirstAvailablePositionInBench, isOnBench } from "../../utils/board"
 import { distanceC } from "../../utils/distance"
 import { clamp, min } from "../../utils/number"
-import { values } from "../../utils/schemas"
+import { schemaValues } from "../../utils/schemas"
 import { SynergyEffects } from "../effects"
 import PokemonFactory from "../pokemon-factory"
 import Player from "./player"
@@ -167,7 +163,7 @@ export class Pokemon extends Schema implements IPokemon {
   ) {
     // called after manually changing position of the pokemon on board
     if (y === 0 && !doNotRemoveItems) {
-      const itemsToRemove = values(this.items).filter((item) => {
+      const itemsToRemove = schemaValues(this.items).filter((item) => {
         return (
           isIn(RemovableItems, item) ||
           (state?.specialGameRule === SpecialGameRule.SLAMINGO &&
@@ -176,10 +172,6 @@ export class Pokemon extends Schema implements IPokemon {
       })
       player.items.push(...itemsToRemove)
       this.removeItems(itemsToRemove, player)
-    }
-    if (y === 0 && this.tm === Ability.SKILL_SWAP) {
-      this.skill = Ability.SKILL_SWAP
-      this.maxPP = 100
     }
   }
 
@@ -249,7 +241,7 @@ export class Pokemon extends Schema implements IPokemon {
     }
 
     if (originalVariant) {
-      const commonTypes = values(originalVariant.types).filter((t) =>
+      const commonTypes = schemaValues(originalVariant.types).filter((t) =>
         this.types.has(t)
       )
       if (commonTypes.some((t) => regionSynergies.includes(t))) {
@@ -291,7 +283,7 @@ export class Pokemon extends Schema implements IPokemon {
     const nativeTypes = new PokemonClasses[this.name](this.name).types
     for (const item of items) {
       const synergyRemoved = SynergyGivenByItem[item]
-      const otherSynergyItemsHeld = values(this.items).filter(
+      const otherSynergyItemsHeld = schemaValues(this.items).filter(
         (i) => SynergyGivenByItem[i] === synergyRemoved
       )
 
@@ -1330,6 +1322,7 @@ export class Bagon extends Pokemon {
   maxPP = 100
   range = 1
   skill = Ability.DRAGON_CLAW
+  regional = true
 }
 
 export class Shelgon extends Pokemon {
@@ -1345,6 +1338,7 @@ export class Shelgon extends Pokemon {
   maxPP = 100
   range = 1
   skill = Ability.DRAGON_CLAW
+  regional = true
 }
 
 export class Salamence extends Pokemon {
@@ -1363,6 +1357,7 @@ export class Salamence extends Pokemon {
   maxPP = 100
   range = 1
   skill = Ability.DRAGON_CLAW
+  regional = true
 }
 
 export class Ralts extends Pokemon {
@@ -1379,7 +1374,7 @@ export class Ralts extends Pokemon {
   speed = 51
   def = 4
   speDef = 8
-  maxPP = 95
+  maxPP = 100
   range = 3
   skill = Ability.FUTURE_SIGHT
 }
@@ -1403,7 +1398,7 @@ export class Kirlia extends Pokemon {
   speed = 51
   def = 6
   speDef = 10
-  maxPP = 95
+  maxPP = 100
   range = 3
   skill = Ability.FUTURE_SIGHT
   passive = Passive.KIRLIA
@@ -1422,7 +1417,7 @@ export class Gardevoir extends Pokemon {
   speed = 51
   def = 8
   speDef = 16
-  maxPP = 95
+  maxPP = 100
   range = 3
   skill = Ability.FUTURE_SIGHT
 }
@@ -1455,7 +1450,7 @@ export class Fuecoco extends Pokemon {
   speed = 46
   def = 4
   speDef = 2
-  maxPP = 60
+  maxPP = 80
   range = 3
   skill = Ability.TORCH_SONG
 }
@@ -1470,7 +1465,7 @@ export class Crocalor extends Pokemon {
   speed = 46
   def = 6
   speDef = 4
-  maxPP = 60
+  maxPP = 70
   range = 3
   skill = Ability.TORCH_SONG
 }
@@ -2147,7 +2142,6 @@ export class Deino extends Pokemon {
   maxPP = 100
   range = 2
   skill = Ability.DARK_HARVEST
-  regional = true
 }
 
 export class Zweilous extends Pokemon {
@@ -2163,7 +2157,6 @@ export class Zweilous extends Pokemon {
   maxPP = 100
   range = 2
   skill = Ability.DARK_HARVEST
-  regional = true
 }
 
 export class Hydreigon extends Pokemon {
@@ -2178,7 +2171,6 @@ export class Hydreigon extends Pokemon {
   maxPP = 100
   range = 2
   skill = Ability.DARK_HARVEST
-  regional = true
 }
 
 export class Poliwag extends Pokemon {
@@ -2224,7 +2216,7 @@ export class Poliwhirl extends Pokemon {
     (pokemon: Pokemon, player: IPlayer) => {
       if (
         Math.max(
-          ...values(player.board)
+          ...schemaValues(player.board)
             .filter((pkm) => pkm.index === this.index)
             .map((v) => v.positionY)
         ) === 3
@@ -2956,8 +2948,8 @@ export class Swinub extends Pokemon {
   hp = 65
   atk = 4
   speed = 51
-  def = 6
-  speDef = 4
+  def = 5
+  speDef = 3
   maxPP = 100
   range = 1
   skill = Ability.ICICLE_CRASH
@@ -2971,8 +2963,8 @@ export class Piloswine extends Pokemon {
   hp = 120
   atk = 8
   speed = 51
-  def = 10
-  speDef = 8
+  def = 8
+  speDef = 6
   maxPP = 100
   range = 1
   skill = Ability.ICICLE_CRASH
@@ -3576,7 +3568,7 @@ export class Florges extends Pokemon {
 }
 
 export class Chikorita extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.FAIRY])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.GRASS, Synergy.FAIRY])
   rarity = Rarity.SPECIAL
   stars = 1
   evolution = Pkm.BAYLEEF
@@ -3585,13 +3577,13 @@ export class Chikorita extends Pokemon {
   speed = 51
   def = 2
   speDef = 2
-  maxPP = 90
+  maxPP = 100
   range = 2
   skill = Ability.SWEET_SCENT
 }
 
 export class Bayleef extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.FAIRY])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.GRASS, Synergy.FAIRY])
   rarity = Rarity.SPECIAL
   stars = 2
   evolution = Pkm.MEGANIUM
@@ -3600,13 +3592,13 @@ export class Bayleef extends Pokemon {
   speed = 51
   def = 4
   speDef = 4
-  maxPP = 90
+  maxPP = 100
   range = 2
   skill = Ability.SWEET_SCENT
 }
 
 export class Meganium extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.FAIRY])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.GRASS, Synergy.FAIRY])
   rarity = Rarity.SPECIAL
   stars = 3
   hp = 220
@@ -3614,7 +3606,7 @@ export class Meganium extends Pokemon {
   speed = 51
   def = 6
   speDef = 6
-  maxPP = 90
+  maxPP = 100
   range = 2
   skill = Ability.SWEET_SCENT
 }
@@ -4441,7 +4433,7 @@ export class Blastoise extends Pokemon {
 }
 
 export class Bellsprout extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.FLORA])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.GRASS, Synergy.POISON])
   rarity = Rarity.SPECIAL
   stars = 1
   evolution = Pkm.WEEPINBELL
@@ -4456,7 +4448,7 @@ export class Bellsprout extends Pokemon {
 }
 
 export class Weepinbell extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.FLORA])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.GRASS, Synergy.POISON])
   rarity = Rarity.SPECIAL
   stars = 2
   evolution = Pkm.VICTREEBEL
@@ -4471,7 +4463,7 @@ export class Weepinbell extends Pokemon {
 }
 
 export class Victreebel extends Pokemon {
-  types = new SetSchema<Synergy>([Synergy.GRASS, Synergy.FLORA])
+  types = new SetSchema<Synergy>([Synergy.FLORA, Synergy.GRASS, Synergy.POISON])
   rarity = Rarity.SPECIAL
   stars = 3
   hp = 200
@@ -6661,7 +6653,7 @@ export class Mawile extends Pokemon {
   stars = 3
   hp = 180
   atk = 18
-  speed = 41
+  speed = 47
   def = 12
   speDef = 12
   maxPP = 80
@@ -6912,10 +6904,10 @@ export class Spiritomb extends Pokemon {
   rarity = Rarity.UNIQUE
   stars = 3
   hp = 150
-  atk = 15
+  atk = 18
   speed = 36
-  def = 8
-  speDef = 8
+  def = 12
+  speDef = 12
   maxPP = 108
   range = 1
   skill = Ability.SOUL_TRAP
@@ -6977,7 +6969,7 @@ export class Lapras extends Pokemon {
   speed = 38
   def = 7
   speDef = 9
-  maxPP = 120
+  maxPP = 100
   range = 1
   skill = Ability.DIVE
 }
@@ -10173,7 +10165,7 @@ export class Silvally extends Pokemon {
   onChangePosition(x: number, y: number, player: Player, state: GameState) {
     super.onChangePosition(x, y, player, state, true)
     if (y === 0) {
-      const itemsToRemove = values(this.items).filter((item) => {
+      const itemsToRemove = schemaValues(this.items).filter((item) => {
         return (
           isIn(RemovableItems, item) ||
           (state?.specialGameRule === SpecialGameRule.SLAMINGO &&
@@ -10761,7 +10753,7 @@ export class Popplio extends Pokemon {
   speed = 44
   def = 4
   speDef = 4
-  maxPP = 70
+  maxPP = 80
   range = 3
   skill = Ability.SPARKLING_ARIA
   passive = Passive.HATCH
@@ -10778,7 +10770,7 @@ export class Brionne extends Pokemon {
   speed = 44
   def = 4
   speDef = 6
-  maxPP = 70
+  maxPP = 80
   range = 3
   skill = Ability.SPARKLING_ARIA
   passive = Passive.HATCH
@@ -10793,7 +10785,7 @@ export class Primarina extends Pokemon {
   speed = 44
   def = 4
   speDef = 8
-  maxPP = 70
+  maxPP = 80
   range = 3
   skill = Ability.SPARKLING_ARIA
 }
@@ -11910,7 +11902,7 @@ export class Chingling extends Pokemon {
   def = 5
   speDef = 6
   maxPP = 80
-  range = 3
+  range = 2
   skill = Ability.ECHO
   passive = Passive.CHINGLING
 }
@@ -11925,7 +11917,7 @@ export class Chimecho extends Pokemon {
   def = 8
   speDef = 9
   maxPP = 80
-  range = 3
+  range = 2
   skill = Ability.ECHO
   passive = Passive.CHIMECHO
 }
@@ -12128,7 +12120,7 @@ export class Shuckle extends Pokemon {
   speed = 27
   def = 40
   speDef = 40
-  maxPP = 90
+  maxPP = 50
   range = 1
   skill = Ability.BIDE
 }
@@ -15111,7 +15103,7 @@ export const burmyDivergentEvolutionRule = (
 ) =>
   new ConditionBasedEvolutionRule(
     (pokemon: Pokemon, player: Player, stageLevel: number) => {
-      const copies = values(player.board).filter(
+      const copies = schemaValues(player.board).filter(
         (p) => p.index === pokemon.index && !p.items.has(Item.EVIOLITE)
       )
       if (copies.length >= 3) return true
@@ -15121,7 +15113,7 @@ export const burmyDivergentEvolutionRule = (
       )
     },
     (pokemon, player) => {
-      const copies = values(player.board).filter(
+      const copies = schemaValues(player.board).filter(
         (p) => p.index === pokemon.index && !p.items.has(Item.EVIOLITE)
       )
       if (copies.length >= 3) return wormadam
@@ -17141,62 +17133,6 @@ export class Malamar extends Pokemon {
   additional = true
 }
 
-const updatePillars = (player: Player, pkm: Pkm, pillarPkm: Pkm) => {
-  const pkmOnBoard = values(player.board).filter(
-    (p) => p.name === pkm && p.positionY > 0
-  )
-  const pillars = values(player.board).filter((p) => p.name === pillarPkm)
-  const nbPillars = pkmOnBoard.length * (pkm === Pkm.CONKELDURR ? 2 : 1)
-  if (pillars.length < nbPillars) {
-    for (let i = 0; i < nbPillars - pillars.length; i++) {
-      const freeSpace = getFirstAvailablePositionOnBoard(player.board, 1)
-      if (freeSpace) {
-        const pillar = PokemonFactory.createPokemonFromName(pillarPkm, player)
-        pillar.positionX = freeSpace[0]
-        pillar.positionY = freeSpace[1]
-        player.board.set(pillar.id, pillar)
-      }
-    }
-  } else if (nbPillars < pillars.length) {
-    for (let i = 0; i < pillars.length - nbPillars; i++) {
-      player.board.delete(pillars[i].id)
-    }
-  }
-}
-
-const pillarEvolve =
-  (pillarToRemove: Pkm, pillarEvolution: Pkm) =>
-  (params: {
-    pokemonEvolved: Pokemon
-    pokemonsBeforeEvolution: Pokemon[]
-    player: Player
-  }) => {
-    const pkmOnBoard = values(params.player.board).filter(
-      (p) =>
-        p.name === params.pokemonsBeforeEvolution[0].name && p.positionY > 0
-    )
-    const pillars = values(params.player.board).filter(
-      (p) => p.name === pillarToRemove
-    )
-    for (let i = 0; i < pillars.length - pkmOnBoard.length; i++) {
-      params.player.board.delete(pillars[i].id)
-    }
-    const coords =
-      pillars.length > 0
-        ? [pillars[0].positionX, pillars[0].positionY]
-        : getFirstAvailablePositionOnBoard(params.player.board, 1)
-    if (coords && params.pokemonEvolved.positionY > 0) {
-      const pillar = PokemonFactory.createPokemonFromName(
-        pillarEvolution,
-        params.player
-      )
-      pillar.positionX = coords[0]
-      pillar.positionY = coords[1]
-      params.player.board.set(pillar.id, pillar)
-    }
-    updatePillars(params.player, params.pokemonEvolved.name, pillarEvolution)
-  }
-
 export class Timburr extends Pokemon {
   types = new SetSchema<Synergy>([Synergy.FIGHTING, Synergy.HUMAN])
   rarity = Rarity.ULTRA
@@ -17213,12 +17149,14 @@ export class Timburr extends Pokemon {
   passive = Passive.PILLAR
   onChangePosition(x: number, y: number, player: Player, state: GameState) {
     super.onChangePosition(x, y, player, state)
-    updatePillars(player, Pkm.TIMBURR, Pkm.PILLAR_WOOD)
+    player.updatePillars()
   }
   afterSell(player) {
-    updatePillars(player, Pkm.TIMBURR, Pkm.PILLAR_WOOD)
+    player.updatePillars()
   }
-  afterEvolve = pillarEvolve(Pkm.PILLAR_WOOD, Pkm.PILLAR_IRON)
+  afterEvolve(player) {
+    player.updatePillars()
+  }
 }
 
 export class Gurdurr extends Pokemon {
@@ -17237,12 +17175,14 @@ export class Gurdurr extends Pokemon {
   passive = Passive.PILLAR
   onChangePosition(x: number, y: number, player: Player, state: GameState) {
     super.onChangePosition(x, y, player, state)
-    updatePillars(player, Pkm.GURDURR, Pkm.PILLAR_IRON)
+    player.updatePillars()
   }
   afterSell(player) {
-    updatePillars(player, Pkm.GURDURR, Pkm.PILLAR_IRON)
+    player.updatePillars()
   }
-  afterEvolve = pillarEvolve(Pkm.PILLAR_IRON, Pkm.PILLAR_CONCRETE)
+  afterEvolve(player) {
+    player.updatePillars()
+  }
 }
 
 export class Conkeldurr extends Pokemon {
@@ -17260,10 +17200,10 @@ export class Conkeldurr extends Pokemon {
   passive = Passive.PILLAR
   onChangePosition(x: number, y: number, player: Player, state: GameState) {
     super.onChangePosition(x, y, player, state)
-    updatePillars(player, Pkm.CONKELDURR, Pkm.PILLAR_CONCRETE)
+    player.updatePillars()
   }
   afterSell(player) {
-    updatePillars(player, Pkm.CONKELDURR, Pkm.PILLAR_CONCRETE)
+    player.updatePillars()
   }
 }
 
@@ -17281,7 +17221,6 @@ export class PillarWood extends Pokemon {
   skill = Ability.DEFAULT
   passive = Passive.INANIMATE
   canHoldItems = false
-  canBeBenched = false
   canBeSold = false
 }
 
@@ -17299,7 +17238,6 @@ export class PillarIron extends Pokemon {
   skill = Ability.DEFAULT
   passive = Passive.INANIMATE
   canHoldItems = false
-  canBeBenched = false
   canBeSold = false
 }
 
@@ -17317,7 +17255,6 @@ export class PillarConcrete extends Pokemon {
   skill = Ability.DEFAULT
   passive = Passive.INANIMATE
   canHoldItems = false
-  canBeBenched = false
   canBeSold = false
 }
 
@@ -18352,9 +18289,9 @@ export class ScreamTail extends Pokemon {
   rarity = Rarity.UNIQUE
   stars = 3
   hp = 210
-  atk = 14
+  atk = 16
   speed = 71
-  def = 8
+  def = 12
   speDef = 12
   maxPP = 80
   range = 1
@@ -19489,7 +19426,7 @@ export class Golisopod extends Pokemon {
 
 const basculinOnAcquired = (player: Player) => {
   ;[Pkm.BASCULIN_BLUE, Pkm.BASCULIN_RED, Pkm.BASCULIN_WHITE].every((basculin) =>
-    values(player.board).find((e) => e.name === basculin)
+    schemaValues(player.board).find((e) => e.name === basculin)
   ) && player.titles.add(Title.AQUARIOPHILE)
 }
 
@@ -20736,6 +20673,156 @@ export class Crustle extends Pokemon {
   additional = true
 }
 
+export class Skwovet extends Pokemon {
+  types = new SetSchema<Synergy>([Synergy.NORMAL, Synergy.GOURMET])
+  rarity = Rarity.RARE
+  stars = 1
+  evolution = Pkm.GREEDENT
+  hp = 90
+  atk = 7
+  speed = 28
+  def = 5
+  speDef = 4
+  maxPP = 100
+  range = 1
+  skill = Ability.STUFF_CHEEKS
+  additional = true
+}
+
+export class Greedent extends Pokemon {
+  types = new SetSchema<Synergy>([Synergy.NORMAL, Synergy.GOURMET])
+  rarity = Rarity.RARE
+  stars = 2
+  hp = 200
+  atk = 16
+  speed = 28
+  def = 10
+  speDef = 8
+  maxPP = 100
+  range = 1
+  skill = Ability.STUFF_CHEEKS
+  additional = true
+}
+export class Quaxly extends Pokemon {
+  types = new SetSchema<Synergy>([
+    Synergy.AQUATIC,
+    Synergy.FIGHTING,
+    Synergy.FLYING
+  ])
+  rarity = Rarity.UNCOMMON
+  stars = 1
+  evolution = Pkm.QUAXWELL
+  hp = 60
+  atk = 6
+  speed = 55
+  def = 5
+  speDef = 4
+  maxPP = 100
+  range = 1
+  skill = Ability.AQUA_STEP
+}
+
+export class Quaxwell extends Pokemon {
+  types = new SetSchema<Synergy>([
+    Synergy.AQUATIC,
+    Synergy.FIGHTING,
+    Synergy.FLYING
+  ])
+  rarity = Rarity.UNCOMMON
+  stars = 2
+  evolution = Pkm.QUAQUAVAL
+  hp = 120
+  atk = 12
+  speed = 55
+  def = 6
+  speDef = 5
+  maxPP = 100
+  range = 1
+  skill = Ability.AQUA_STEP
+}
+
+export class Quaquaval extends Pokemon {
+  types = new SetSchema<Synergy>([
+    Synergy.AQUATIC,
+    Synergy.FIGHTING,
+    Synergy.FLYING
+  ])
+  rarity = Rarity.UNCOMMON
+  stars = 3
+  hp = 200
+  atk = 24
+  speed = 55
+  def = 8
+  speDef = 7
+  maxPP = 100
+  range = 1
+  skill = Ability.AQUA_STEP
+}
+
+export class Komala extends Pokemon {
+  types = new SetSchema<Synergy>([Synergy.NORMAL, Synergy.SOUND, Synergy.GRASS])
+  rarity = Rarity.UNIQUE
+  stars = 3
+  hp = 170
+  atk = 20
+  speed = 45
+  def = 7
+  speDef = 13
+  maxPP = 90
+  range = 1
+  skill = Ability.SNORE
+  passive = Passive.COMATOSE
+}
+
+export class Tarountula extends Pokemon {
+  types = new SetSchema<Synergy>([Synergy.BUG, Synergy.NORMAL])
+  rarity = Rarity.UNCOMMON
+  stars = 1
+  evolution = Pkm.SPIDOPS
+  hp = 65
+  atk = 6
+  speed = 30
+  def = 5
+  speDef = 4
+  maxPP = 100
+  range = 2
+  skill = Ability.SILK_TRAP
+  additional = true
+}
+
+export class Spidops extends Pokemon {
+  types = new SetSchema<Synergy>([Synergy.BUG, Synergy.NORMAL])
+  rarity = Rarity.UNCOMMON
+  stars = 2
+  hp = 135
+  atk = 12
+  speed = 30
+  def = 9
+  speDef = 7
+  maxPP = 100
+  range = 2
+  skill = Ability.SILK_TRAP
+  additional = true
+}
+
+export class SlitherWing extends Pokemon {
+  types = new SetSchema<Synergy>([
+    Synergy.BUG,
+    Synergy.FIGHTING,
+    Synergy.FOSSIL
+  ])
+  rarity = Rarity.UNIQUE
+  stars = 3
+  hp = 180
+  atk = 20
+  speed = 45
+  def = 6
+  speDef = 8
+  maxPP = 100
+  range = 1
+  skill = Ability.SKITTER_SMACK
+}
+
 export const PokemonClasses: Record<
   Pkm,
   new (
@@ -21922,7 +22009,16 @@ export const PokemonClasses: Record<
   [Pkm.EISCUE]: Eiscue,
   [Pkm.EISCUE_NOICE]: EiscueNoice,
   [Pkm.DWEBBLE]: Dwebble,
-  [Pkm.CRUSTLE]: Crustle
+  [Pkm.CRUSTLE]: Crustle,
+  [Pkm.SKWOVET]: Skwovet,
+  [Pkm.GREEDENT]: Greedent,
+  [Pkm.QUAXLY]: Quaxly,
+  [Pkm.QUAXWELL]: Quaxwell,
+  [Pkm.QUAQUAVAL]: Quaquaval,
+  [Pkm.KOMALA]: Komala,
+  [Pkm.TAROUNTULA]: Tarountula,
+  [Pkm.SPIDOPS]: Spidops,
+  [Pkm.SLITHER_WING]: SlitherWing
 }
 
 // declare all the classes in colyseus schema TypeRegistry

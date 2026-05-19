@@ -1,4 +1,4 @@
-import { type Scene } from "phaser"
+import Phaser, { type Scene } from "phaser"
 import { DungeonMusic } from "../../../../types/enum/Dungeon"
 import { logger } from "../../../../utils/logger"
 import { preference, subscribeToPreferences } from "../../preferences"
@@ -34,9 +34,9 @@ export function preloadSounds() {
   )
 }
 
-export function preloadMusic(scene: Scene, dungeonMusic: DungeonMusic) {
+export function preloadMusic(scene: Scene, dungeonMusic: DungeonMusic, alt="") {
   scene.load.audio("music_" + dungeonMusic, [
-    `assets/musics/ogg/${dungeonMusic}.ogg`
+    `assets/musics/ogg/${dungeonMusic}${alt}.ogg`
   ])
 }
 
