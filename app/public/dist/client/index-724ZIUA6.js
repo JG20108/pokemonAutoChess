@@ -42111,7 +42111,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     name: "pokemon-auto-chess",
     version: "6.9.0",
     assetsVersion: "6.9.0.2026-05-20.0",
-    translationsVersion: "6.9.0-2026-05-19.1",
+    translationsVersion: "6.9.0-2026-05-20.1",
     description: "",
     keywords: [],
     license: "BSD-3-Clause",
@@ -57205,7 +57205,7 @@ Check @type() annotation`);
     ["ARTIFICIAL" /* ARTIFICIAL */]: [2, 4, 6],
     ["BABY" /* BABY */]: [3, 5, 7],
     ["LIGHT" /* LIGHT */]: [3, 4, 5, 6],
-    ["WILD" /* WILD */]: [2, 4, 6, 9],
+    ["WILD" /* WILD */]: [2, 4, 6, 8],
     ["AMORPHOUS" /* AMORPHOUS */]: [3, 5, 7],
     ["GOURMET" /* GOURMET */]: [3, 4, 5]
   };
@@ -65282,10 +65282,11 @@ Take a look at the reducer(s) handling this action type: ${action.type}.
   function getWildChance(player, stageLevel) {
     const isPVE = stageLevel === 0 || stageLevel in PVEStages;
     const wildLevel = getSynergyStep(player.synergies, "WILD" /* WILD */);
-    const baseChance = isPVE || wildLevel > 0 ? 6 : 0;
+    const baseChance = isPVE || wildLevel > 0 ? 8 : 0;
     const nbWildStars = schemaValues(player.board).filter((p) => p.types.has("WILD" /* WILD */) && isOnBench(p) === false).reduce((total, p) => total + p.stars, 0);
-    const bonusChance = wildLevel > 0 ? nbWildStars * 0.5 : 0;
-    return (baseChance + bonusChance) / 100;
+    const bonusChance = wildLevel > 0 ? nbWildStars * 0.75 : 0;
+    const runAwayBonus = wildLevel >= 2 ? nbWildStars * 5 : 0;
+    return (baseChance + bonusChance + runAwayBonus) / 100;
   }
 
   // app/public/src/pages/game.tsx
@@ -251274,7 +251275,7 @@ void main() {
           pokemon.status.triggerProtect(1500);
           pokemon.removeItem("SHINY_CHARM" /* SHINY_CHARM */);
         }
-        if (pokemon.hasSynergyEffect("FOSSIL" /* FOSSIL */) && pokemon.hp - residualDamage <= 0.3 * pokemon.maxHP) {
+        if (pokemon.hasSynergyEffect("FOSSIL" /* FOSSIL */) && pokemon.hp - residualDamage <= 0.5 * pokemon.maxHP) {
           const shield = Math.round(
             pokemon.maxHP * (pokemon.effects.has("FORGOTTEN_POWER" /* FORGOTTEN_POWER */) ? 1 : pokemon.effects.has("ELDER_POWER" /* ELDER_POWER */) ? 0.7 : 0.4)
           );
