@@ -3221,6 +3221,9 @@ declare const resources: {
             CASTFORM: string;
             MANAPHY: string;
             PRIMAL: string;
+            KYOGRE: string;
+            GROUDON: string;
+            RAYQUAZA: string;
             WONDER_GUARD: string;
             ELECTRIC_TERRAIN: string;
             GRASSY_TERRAIN: string;

@@ -246,11 +246,12 @@ function getSynergyStep(synergies, type) {
 function getWildChance(player, stageLevel) {
     const isPVE = stageLevel === 0 || stageLevel in pve_stages_1.PVEStages;
     const wildLevel = getSynergyStep(player.synergies, Synergy_1.Synergy.WILD);
-    const baseChance = isPVE || wildLevel > 0 ? 6 : 0;
+    const baseChance = isPVE || wildLevel > 0 ? 8 : 0;
     const nbWildStars = (0, schemas_1.schemaValues)(player.board)
         .filter((p) => p.types.has(Synergy_1.Synergy.WILD) && (0, board_1.isOnBench)(p) === false)
         .reduce((total, p) => total + p.stars, 0);
-    const bonusChance = wildLevel > 0 ? nbWildStars * 0.5 : 0;
-    return (baseChance + bonusChance) / 100;
+    const bonusChance = wildLevel > 0 ? nbWildStars * 0.75 : 0;
+    const runAwayBonus = wildLevel >= 2 ? nbWildStars * 5 : 0;
+    return (baseChance + bonusChance + runAwayBonus) / 100;
 }
 //# sourceMappingURL=synergies.js.map

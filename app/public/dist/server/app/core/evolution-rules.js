@@ -45,7 +45,7 @@ class EvolutionRule {
                 pokemon.passive === Passive_1.Passive.COSMOEM) &&
                 pokemonEvolved.passive !== Passive_1.Passive.COSMOG &&
                 pokemonEvolved.passive !== Passive_1.Passive.COSMOEM) {
-                pokemon.addMaxHP(10);
+                pokemon.addMaxHP(15);
                 pokemon.stacks++;
                 pokemon.evolutionRule.tryEvolve(pokemon, player, stageLevel);
             }

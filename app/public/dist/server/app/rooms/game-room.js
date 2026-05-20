@@ -494,10 +494,18 @@ class GameRoom extends colyseus_1.Room {
             this.dispatcher.dispatch(new game_commands_1.OnJoinCommand(), { client });
             const pendingGame = yield (0, pending_game_manager_1.getPendingGame)(this.presence, client.auth.uid);
             if ((pendingGame === null || pendingGame === void 0 ? void 0 : pendingGame.gameId) === this.roomId) {
+                logger_1.logger.info(`Player ${client.auth.uid} rejoining their active game room ${this.roomId}; clearing pending game record`);
                 (0, pending_game_manager_1.clearPendingGame)(this.presence, client.auth.uid);
             }
             else if (pendingGame != null && !pendingGame.isExpired) {
-                client.leave(CloseCodes_1.CloseCodes.USER_IN_ANOTHER_GAME);
+                if (pendingGame.gameId === this.roomId) {
+                    logger_1.logger.warn(`Player ${client.auth.uid} pending game matched current room ${this.roomId} in fallback check; allowing reconnection and clearing pending game`);
+                    (0, pending_game_manager_1.clearPendingGame)(this.presence, client.auth.uid);
+                }
+                else {
+                    logger_1.logger.warn(`Player ${client.auth.uid} attempted to join room ${this.roomId} but has an active pending game in room ${pendingGame.gameId} (expires: ${pendingGame.reconnectionDeadline.toISOString()}); rejecting with USER_IN_ANOTHER_GAME`);
+                    client.leave(CloseCodes_1.CloseCodes.USER_IN_ANOTHER_GAME);
+                }
             }
         });
     }

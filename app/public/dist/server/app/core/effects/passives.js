@@ -1107,6 +1107,11 @@ exports.PassiveEffects = {
             });
         }, Passive_1.Passive.GEARS)
     ],
+    [Passive_1.Passive.TOXIC_BOOST]: [
+        new effect_1.OnSpawnEffect((pkm) => {
+            pkm.status.triggerPoison(300000, pkm, pkm);
+        }, Passive_1.Passive.TOXIC_BOOST)
+    ],
     [Passive_1.Passive.TADBULB]: [
         new effect_1.OnSimulationStartEffect(({ simulation, entity }) => {
             if (entity.status.light) {

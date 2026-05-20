@@ -33,7 +33,7 @@ exports.SynergyTriggers = {
     [Synergy_1.Synergy.ARTIFICIAL]: [2, 4, 6],
     [Synergy_1.Synergy.BABY]: [3, 5, 7],
     [Synergy_1.Synergy.LIGHT]: [3, 4, 5, 6],
-    [Synergy_1.Synergy.WILD]: [2, 4, 6, 9],
+    [Synergy_1.Synergy.WILD]: [2, 4, 6, 8],
     [Synergy_1.Synergy.AMORPHOUS]: [3, 5, 7],
     [Synergy_1.Synergy.GOURMET]: [3, 4, 5]
 };

@@ -4,7 +4,7 @@ exports.BuyPrices = exports.SellPrices = exports.HIGH_ROLLER_CHANCE = exports.TE
 const Game_1 = require("../../types/enum/Game");
 exports.SHOP_SIZE = 6;
 exports.NB_STARTERS = 3;
-exports.NB_UNIQUE_PROPOSITIONS = 6;
+exports.NB_UNIQUE_PROPOSITIONS = 8;
 exports.RarityHpCost = Object.freeze({
     [Game_1.Rarity.COMMON]: 1,
     [Game_1.Rarity.UNCOMMON]: 1,

@@ -6893,7 +6893,7 @@ class Kyogre extends Pokemon {
         this.maxPP = 100;
         this.range = 3;
         this.skill = Ability_1.Ability.ORIGIN_PULSE;
-        this.passive = Passive_1.Passive.PRIMAL;
+        this.passive = Passive_1.Passive.KYOGRE;
     }
 }
 exports.Kyogre = Kyogre;
@@ -6913,7 +6913,7 @@ class Groudon extends Pokemon {
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.PRECIPICE_BLADES;
-        this.passive = Passive_1.Passive.PRIMAL;
+        this.passive = Passive_1.Passive.GROUDON;
     }
 }
 exports.Groudon = Groudon;
@@ -6933,7 +6933,7 @@ class Rayquaza extends Pokemon {
         this.maxPP = 120;
         this.range = 1;
         this.skill = Ability_1.Ability.DRACO_METEOR;
-        this.passive = Passive_1.Passive.PRIMAL;
+        this.passive = Passive_1.Passive.RAYQUAZA;
     }
 }
 exports.Rayquaza = Rayquaza;
@@ -17056,13 +17056,13 @@ class Cosmog extends Pokemon {
         this.rarity = Game_1.Rarity.UNIQUE;
         this.evolution = Pokemon_1.Pkm.COSMOEM;
         this.evolutionRule = new evolution_rules_1.StackBasedEvolutionRule();
-        this.stacksRequired = 8;
+        this.stacksRequired = 5;
         this.stars = 1;
-        this.hp = 140;
-        this.atk = 5;
-        this.speed = 37;
-        this.def = 8;
-        this.speDef = 8;
+        this.hp = 165;
+        this.atk = 7;
+        this.speed = 40;
+        this.def = 9;
+        this.speDef = 9;
         this.maxPP = 100;
         this.range = 4;
         this.skill = Ability_1.Ability.TELEPORT;
@@ -17085,21 +17085,20 @@ class Cosmoem extends Pokemon {
             else
                 return Pokemon_1.Pkm.LUNALA;
         });
-        this.stacksRequired = 8;
-        this.hp = 220;
-        this.atk = 5;
-        this.speed = 37;
-        this.def = 16;
-        this.speDef = 16;
+        this.stacksRequired = 5;
+        this.hp = 250;
+        this.atk = 8;
+        this.speed = 40;
+        this.def = 18;
+        this.speDef = 18;
         this.maxPP = 100;
         this.range = 4;
         this.skill = Ability_1.Ability.TELEPORT;
         this.passive = Passive_1.Passive.COSMOEM;
     }
     onAcquired(player) {
+        this.hp -= this.stacks * 15;
         this.stacks = -1;
-        this.hp -= 10;
-        this.hp -= 80;
         this.maxHP = this.hp;
     }
 }
@@ -17124,7 +17123,7 @@ class Solgaleo extends Pokemon {
         this.skill = Ability_1.Ability.SUNSTEEL_STRIKE;
     }
     onAcquired(player) {
-        this.hp -= 80;
+        this.hp -= this.stacks * 15;
         this.maxHP = this.hp;
         player.titles.add(types_1.Title.STARGAZER);
     }
@@ -17150,7 +17149,7 @@ class Lunala extends Pokemon {
         this.skill = Ability_1.Ability.MOONGEIST_BEAM;
     }
     onAcquired(player) {
-        this.hp -= 80;
+        this.hp -= this.stacks * 15;
         this.maxHP = this.hp;
         player.titles.add(types_1.Title.STARGAZER);
     }

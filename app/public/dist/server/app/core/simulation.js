@@ -640,6 +640,15 @@ class Simulation extends schema_1.Schema {
             case Effect_1.EffectEnum.FORGOTTEN_POWER:
                 if (types.has(Synergy_1.Synergy.FOSSIL)) {
                     pokemon.effects.add(effect);
+                    const fossilStatScale = effect === Effect_1.EffectEnum.FORGOTTEN_POWER
+                        ? { hp: 0.12, atk: 0.08, def: 0.08 }
+                        : effect === Effect_1.EffectEnum.ELDER_POWER
+                            ? { hp: 0.1, atk: 0.06, def: 0.06 }
+                            : { hp: 0.08, atk: 0.05, def: 0.05 };
+                    pokemon.addMaxHP(Math.ceil(fossilStatScale.hp * pokemon.maxHP), pokemon, 0, false);
+                    pokemon.addAttack(Math.ceil(fossilStatScale.atk * pokemon.baseAtk), pokemon, 0, false);
+                    pokemon.addDefense(Math.ceil(fossilStatScale.def * pokemon.baseDef), pokemon, 0, false);
+                    pokemon.addSpecialDefense(Math.ceil(fossilStatScale.def * pokemon.baseSpeDef), pokemon, 0, false);
                 }
                 break;
             case Effect_1.EffectEnum.FLAME_BODY:
@@ -978,6 +987,7 @@ class Simulation extends schema_1.Schema {
                 if (types.has(Synergy_1.Synergy.WILD)) {
                     pokemon.effects.add(Effect_1.EffectEnum.QUICK_FEET);
                     pokemon.addSpeed(20, pokemon, 0, false);
+                    pokemon.addAttack(Math.ceil(0.05 * pokemon.baseAtk), pokemon, 0, false);
                 }
                 break;
             case Effect_1.EffectEnum.RUN_AWAY:

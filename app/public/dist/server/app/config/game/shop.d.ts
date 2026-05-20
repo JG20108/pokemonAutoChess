@@ -1,7 +1,7 @@
 import { Rarity } from "../../types/enum/Game";
 export declare const SHOP_SIZE = 6;
 export declare const NB_STARTERS = 3;
-export declare const NB_UNIQUE_PROPOSITIONS = 6;
+export declare const NB_UNIQUE_PROPOSITIONS = 8;
 export declare const RarityHpCost: {
     [key in Rarity]: number;
 };
