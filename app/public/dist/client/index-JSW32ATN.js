@@ -249073,6 +249073,11 @@ void main() {
         });
       }, "GEARS" /* GEARS */)
     ],
+    ["TOXIC_BOOST" /* TOXIC_BOOST */]: [
+      new OnSpawnEffect((pkm) => {
+        pkm.status.triggerPoison(3e5, pkm, pkm);
+      }, "TOXIC_BOOST" /* TOXIC_BOOST */)
+    ],
     ["TADBULB" /* TADBULB */]: [
       new OnSimulationStartEffect(({ simulation, entity: entity2 }) => {
         if (entity2.status.light) {
