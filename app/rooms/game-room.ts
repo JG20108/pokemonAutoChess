@@ -656,9 +656,25 @@ export default class GameRoom extends Room<{ state: GameState }> {
     const pendingGame = await getPendingGame(this.presence, client.auth.uid)
     if (pendingGame?.gameId === this.roomId) {
       // user reconnected without reconnection token (new browser/machine/session)
+      logger.info(
+        `Player ${client.auth.uid} rejoining their active game room ${this.roomId}; clearing pending game record`
+      )
       clearPendingGame(this.presence, client.auth.uid)
     } else if (pendingGame != null && !pendingGame.isExpired) {
-      client.leave(CloseCodes.USER_IN_ANOTHER_GAME)
+      // Safeguard: if the pending game points to this room (e.g. due to a race
+      // between onDrop's setPendingGame and this onJoin), always allow the
+      // reconnection rather than incorrectly ejecting the player.
+      if (pendingGame.gameId === this.roomId) {
+        logger.warn(
+          `Player ${client.auth.uid} pending game matched current room ${this.roomId} in fallback check; allowing reconnection and clearing pending game`
+        )
+        clearPendingGame(this.presence, client.auth.uid)
+      } else {
+        logger.warn(
+          `Player ${client.auth.uid} attempted to join room ${this.roomId} but has an active pending game in room ${pendingGame.gameId} (expires: ${pendingGame.reconnectionDeadline.toISOString()}); rejecting with USER_IN_ANOTHER_GAME`
+        )
+        client.leave(CloseCodes.USER_IN_ANOTHER_GAME)
+      }
     }
   }
 
