@@ -957,8 +957,8 @@ class Simulation extends schema_1.Schema {
                     pokemon.addAttack(Math.ceil(pokemon.atk * 0.2), pokemon, 0, false);
                     pokemon.addAbilityPower(20, pokemon, 0, false);
                     pokemon.status.triggerRuneProtect(8000, pokemon, pokemon);
-                    pokemon.addDefense(0.5 * pokemon.baseDef, pokemon, 0, false);
-                    pokemon.addSpecialDefense(0.5 * pokemon.baseSpeDef, pokemon, 0, false);
+                    pokemon.addDefense(0.3 * pokemon.baseDef, pokemon, 0, false);
+                    pokemon.addSpecialDefense(0.3 * pokemon.baseSpeDef, pokemon, 0, false);
                 }
                 break;
             case Effect_1.EffectEnum.MAX_ILLUMINATION:
@@ -968,8 +968,8 @@ class Simulation extends schema_1.Schema {
                     pokemon.addAttack(Math.ceil(pokemon.atk * 0.2), pokemon, 0, false);
                     pokemon.addAbilityPower(20, pokemon, 0, false);
                     pokemon.status.triggerRuneProtect(8000, pokemon, pokemon);
-                    pokemon.addDefense(0.5 * pokemon.baseDef, pokemon, 0, false);
-                    pokemon.addSpecialDefense(0.5 * pokemon.baseSpeDef, pokemon, 0, false);
+                    pokemon.addDefense(0.3 * pokemon.baseDef, pokemon, 0, false);
+                    pokemon.addSpecialDefense(0.3 * pokemon.baseSpeDef, pokemon, 0, false);
                     pokemon.addShield(100, pokemon, 0, false);
                     pokemon.status.addResurrection(pokemon);
                 }

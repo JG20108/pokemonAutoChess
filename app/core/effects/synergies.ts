@@ -135,7 +135,7 @@ export const electricTripleAttackEffect = new OnAttackEffect(
     } else if (pokemon.effects.has(EffectEnum.POWER_SURGE)) {
       shouldTriggerTripleAttack = pokemon.count.attackCount % 3 === 0
     } else if (pokemon.effects.has(EffectEnum.SUPERCHARGED)) {
-      shouldTriggerTripleAttack = pokemon.count.attackCount % 3 === 0
+      shouldTriggerTripleAttack = pokemon.count.attackCount % 4 === 0
       isSupercharged = true
     }
     if (shouldTriggerTripleAttack) {
@@ -152,10 +152,10 @@ export const electricTripleAttackEffect = new OnAttackEffect(
       pokemon.state.attack(pokemon, board, target, true)
       pokemon.state.attack(pokemon, board, target, true)
       if (isSupercharged && target) {
-        target.addPP(-10, pokemon, 0, false)
+        target.addPP(-5, pokemon, 0, false)
         target.count.manaBurnCount++
         if (pokemon.player && !pokemon.isGhostOpponent) {
-          pokemon.player.chargeCellBattery(5)
+          pokemon.player.chargeCellBattery(3)
         }
       }
     }
