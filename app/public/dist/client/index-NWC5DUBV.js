@@ -219632,7 +219632,7 @@ void main() {
       this.maxPP = 100;
       this.range = 3;
       this.skill = "ORIGIN_PULSE" /* ORIGIN_PULSE */;
-      this.passive = "PRIMAL" /* PRIMAL */;
+      this.passive = "KYOGRE" /* KYOGRE */;
     }
   };
   var Groudon = class extends Pokemon {
@@ -219651,7 +219651,7 @@ void main() {
       this.maxPP = 100;
       this.range = 1;
       this.skill = "PRECIPICE_BLADES" /* PRECIPICE_BLADES */;
-      this.passive = "PRIMAL" /* PRIMAL */;
+      this.passive = "GROUDON" /* GROUDON */;
     }
   };
   var Rayquaza = class extends Pokemon {
@@ -219670,7 +219670,7 @@ void main() {
       this.maxPP = 120;
       this.range = 1;
       this.skill = "DRACO_METEOR" /* DRACO_METEOR */;
-      this.passive = "PRIMAL" /* PRIMAL */;
+      this.passive = "RAYQUAZA" /* RAYQUAZA */;
     }
   };
   var Eevee = class extends Pokemon {
@@ -229291,13 +229291,13 @@ void main() {
       this.rarity = "UNIQUE" /* UNIQUE */;
       this.evolution = "COSMOEM" /* COSMOEM */;
       this.evolutionRule = new StackBasedEvolutionRule();
-      this.stacksRequired = 8;
+      this.stacksRequired = 5;
       this.stars = 1;
-      this.hp = 140;
-      this.atk = 5;
-      this.speed = 37;
-      this.def = 8;
-      this.speDef = 8;
+      this.hp = 165;
+      this.atk = 7;
+      this.speed = 40;
+      this.def = 9;
+      this.speDef = 9;
       this.maxPP = 100;
       this.range = 4;
       this.skill = "TELEPORT" /* TELEPORT */;
@@ -229316,21 +229316,20 @@ void main() {
           return "SOLGALEO" /* SOLGALEO */;
         else return "LUNALA" /* LUNALA */;
       });
-      this.stacksRequired = 8;
-      this.hp = 220;
-      this.atk = 5;
-      this.speed = 37;
-      this.def = 16;
-      this.speDef = 16;
+      this.stacksRequired = 5;
+      this.hp = 250;
+      this.atk = 8;
+      this.speed = 40;
+      this.def = 18;
+      this.speDef = 18;
       this.maxPP = 100;
       this.range = 4;
       this.skill = "TELEPORT" /* TELEPORT */;
       this.passive = "COSMOEM" /* COSMOEM */;
     }
     onAcquired(player) {
+      this.hp -= this.stacks * 15;
       this.stacks = -1;
-      this.hp -= 10;
-      this.hp -= 80;
       this.maxHP = this.hp;
     }
   };
@@ -229354,7 +229353,7 @@ void main() {
       this.skill = "SUNSTEEL_STRIKE" /* SUNSTEEL_STRIKE */;
     }
     onAcquired(player) {
-      this.hp -= 80;
+      this.hp -= this.stacks * 15;
       this.maxHP = this.hp;
       player.titles.add("STARGAZER" /* STARGAZER */);
     }
@@ -229379,7 +229378,7 @@ void main() {
       this.skill = "MOONGEIST_BEAM" /* MOONGEIST_BEAM */;
     }
     onAcquired(player) {
-      this.hp -= 80;
+      this.hp -= this.stacks * 15;
       this.maxHP = this.hp;
       player.titles.add("STARGAZER" /* STARGAZER */);
     }
@@ -237147,7 +237146,7 @@ void main() {
       player.updateSynergies();
       player.board.forEach((pokemon) => {
         if ((pokemon.passive === "COSMOG" /* COSMOG */ || pokemon.passive === "COSMOEM" /* COSMOEM */) && pokemonEvolved.passive !== "COSMOG" /* COSMOG */ && pokemonEvolved.passive !== "COSMOEM" /* COSMOEM */) {
-          pokemon.addMaxHP(10);
+          pokemon.addMaxHP(15);
           pokemon.stacks++;
           pokemon.evolutionRule.tryEvolve(pokemon, player, stageLevel);
         }

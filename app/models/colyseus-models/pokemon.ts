@@ -6038,7 +6038,7 @@ export class Kyogre extends Pokemon {
   maxPP = 100
   range = 3
   skill = Ability.ORIGIN_PULSE
-  passive = Passive.PRIMAL
+  passive = Passive.KYOGRE
 }
 
 export class Groudon extends Pokemon {
@@ -6055,7 +6055,7 @@ export class Groudon extends Pokemon {
   maxPP = 100
   range = 1
   skill = Ability.PRECIPICE_BLADES
-  passive = Passive.PRIMAL
+  passive = Passive.GROUDON
 }
 
 export class Rayquaza extends Pokemon {
@@ -6072,7 +6072,7 @@ export class Rayquaza extends Pokemon {
   maxPP = 120
   range = 1
   skill = Ability.DRACO_METEOR
-  passive = Passive.PRIMAL
+  passive = Passive.RAYQUAZA
 }
 
 export class Eevee extends Pokemon {
@@ -14856,13 +14856,13 @@ export class Cosmog extends Pokemon {
   rarity = Rarity.UNIQUE
   evolution = Pkm.COSMOEM
   evolutionRule = new StackBasedEvolutionRule()
-  stacksRequired = 8
+  stacksRequired = 5
   stars = 1
-  hp = 140
-  atk = 5
-  speed = 37
-  def = 8
-  speDef = 8
+  hp = 165
+  atk = 7
+  speed = 40
+  def = 9
+  speDef = 9
   maxPP = 100
   range = 4
   skill = Ability.TELEPORT
@@ -14883,18 +14883,17 @@ export class Cosmoem extends Pokemon {
       return Pkm.SOLGALEO
     else return Pkm.LUNALA
   })
-  stacksRequired = 8
+  stacksRequired = 5
   onAcquired(player: Player) {
+    this.hp -= this.stacks * 15 // revert hp buffs of cosmog
     this.stacks = -1 // because cosmoem will proc the passive as well after evolution
-    this.hp -= 10
-    this.hp -= 80 // revert hp buffs of cosmog
     this.maxHP = this.hp
   }
-  hp = 220
-  atk = 5
-  speed = 37
-  def = 16
-  speDef = 16
+  hp = 250
+  atk = 8
+  speed = 40
+  def = 18
+  speDef = 18
   maxPP = 100
   range = 4
   skill = Ability.TELEPORT
@@ -14918,7 +14917,7 @@ export class Solgaleo extends Pokemon {
   range = 1
   skill = Ability.SUNSTEEL_STRIKE
   onAcquired(player: Player) {
-    this.hp -= 80 // revert hp buffs of cosmoem
+    this.hp -= this.stacks * 15 // revert hp buffs of cosmoem
     this.maxHP = this.hp
     player.titles.add(Title.STARGAZER)
   }
@@ -14941,7 +14940,7 @@ export class Lunala extends Pokemon {
   range = 4
   skill = Ability.MOONGEIST_BEAM
   onAcquired(player: Player) {
-    this.hp -= 80 // revert hp buffs of cosmoem
+    this.hp -= this.stacks * 15 // revert hp buffs of cosmoem
     this.maxHP = this.hp
     player.titles.add(Title.STARGAZER)
   }
