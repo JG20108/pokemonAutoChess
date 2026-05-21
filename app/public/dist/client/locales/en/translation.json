@@ -2542,7 +2542,7 @@
 		"LIGHT_PULSE": "Also give +8 PP per second",
 		"ETERNAL_LIGHT": "Also increase base DEF and SPE_DEF by 30% and give RUNE_PROTECT for 8 seconds",
 		"MAX_ILLUMINATION": "Also give 100 SHIELD and RESURRECTION",
-		"QUICK_FEET": "WILD Pokémon get +20 SPEED and +5% base ATK, and can now be found in shops at every stage (8% base chance + 0.75% for each WILD STAR on board).",
+		"QUICK_FEET": "WILD Pokémon get +20 SPEED and +3% base ATK, and can now be found in shops at every stage (7% base chance + 0.6% for each WILD STAR on board).",
 		"RUN_AWAY": "+40 SPEED. +5% extra Wild shop chance for each WILD STAR on board.",
 		"HUSTLE": "+40 SPEED and +40% base ATK",
 		"BERSERK": "Once below 30% HP, gain 30 SHIELD and double these ATK and SPEED buffs for 3 seconds.",

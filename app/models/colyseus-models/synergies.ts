@@ -283,13 +283,13 @@ export function getSynergyStep(
 export function getWildChance(player: IPlayer, stageLevel: number): number {
   const isPVE = stageLevel === 0 || stageLevel in PVEStages
   const wildLevel = getSynergyStep(player.synergies, Synergy.WILD)
-  // 8% base chance in PvE stage or if Wild is active
-  const baseChance = isPVE || wildLevel > 0 ? 8 : 0
-  // each star of a wild pokemon on board gives 0.75% wild chance
+  // 7% base chance in PvE stage or if Wild is active
+  const baseChance = isPVE || wildLevel > 0 ? 7 : 0
+  // each star of a wild pokemon on board gives 0.6% wild chance
   const nbWildStars = schemaValues(player.board)
     .filter((p) => p.types.has(Synergy.WILD) && isOnBench(p) === false)
     .reduce((total, p) => total + p.stars, 0)
-  const bonusChance = wildLevel > 0 ? nbWildStars * 0.75 : 0
+  const bonusChance = wildLevel > 0 ? nbWildStars * 0.6 : 0
   // Run Away (Wild 4+): +5% shop chance per wild star on board
   const runAwayBonus = wildLevel >= 2 ? nbWildStars * 5 : 0
   return (baseChance + bonusChance + runAwayBonus) / 100

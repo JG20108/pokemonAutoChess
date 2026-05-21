@@ -2448,7 +2448,7 @@
 		"LIGHT_PULSE": "También otorga +8 PP cada segundo",
 		"ETERNAL_LIGHT": "También otorga 30% DEF y SPE_DEF y RUNE_PROTECT por 8s",
 		"MAX_ILLUMINATION": "También otorga RESURRECTION y 100 SHIELD",
-		"QUICK_FEET": "Los Pokémon WILD obtienen +20 SPEED y +5% de ATK base, y pueden aparecer en tiendas en cada etapa (8% base + 0,75% por cada WILD STAR en el tablero).",
+		"QUICK_FEET": "Los Pokémon WILD obtienen +20 SPEED y +3% de ATK base, y pueden aparecer en tiendas en cada etapa (7% base + 0,6% por cada WILD STAR en el tablero).",
 		"RUN_AWAY": "+40 SPEED. +5% de probabilidad extra en tienda por cada WILD STAR en el tablero.",
 		"HUSTLE": "+40% de ATK y +40 de SPEED",
 		"BERSERK": "Una vez que esté por debajo del 30% de HP, gana 30 SHIELD y duplica estas mejoras ATK y SPEED durante 3 segundos.",

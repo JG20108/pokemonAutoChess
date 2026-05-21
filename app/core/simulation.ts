@@ -1312,7 +1312,7 @@ export default class Simulation extends Schema implements ISimulation {
         if (types.has(Synergy.WILD)) {
           pokemon.effects.add(EffectEnum.QUICK_FEET)
           pokemon.addSpeed(20, pokemon, 0, false)
-          pokemon.addAttack(Math.ceil(0.05 * pokemon.baseAtk), pokemon, 0, false)
+          pokemon.addAttack(Math.ceil(0.03 * pokemon.baseAtk), pokemon, 0, false)
         }
         break
 
