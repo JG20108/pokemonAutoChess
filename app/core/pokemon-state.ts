@@ -639,20 +639,20 @@ export default abstract class PokemonState {
 
       if (
         pokemon.hasSynergyEffect(Synergy.FOSSIL) &&
-        pokemon.hp - residualDamage <= 0.5 * pokemon.maxHP
+        pokemon.hp - residualDamage <= 0.4 * pokemon.maxHP
       ) {
         const shield = Math.round(
           pokemon.maxHP *
             (pokemon.effects.has(EffectEnum.FORGOTTEN_POWER)
-              ? 1
+              ? 0.85
               : pokemon.effects.has(EffectEnum.ELDER_POWER)
-                ? 0.7
+                ? 0.6
                 : 0.4)
         )
         const attackBonus = pokemon.effects.has(EffectEnum.FORGOTTEN_POWER)
-          ? 1
+          ? 0.85
           : pokemon.effects.has(EffectEnum.ELDER_POWER)
-            ? 0.7
+            ? 0.6
             : 0.4
         pokemon.addShield(shield, pokemon, 0, false)
 

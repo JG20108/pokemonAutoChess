@@ -641,10 +641,10 @@ class Simulation extends schema_1.Schema {
                 if (types.has(Synergy_1.Synergy.FOSSIL)) {
                     pokemon.effects.add(effect);
                     const fossilStatScale = effect === Effect_1.EffectEnum.FORGOTTEN_POWER
-                        ? { hp: 0.12, atk: 0.08, def: 0.08 }
+                        ? { hp: 0.1, atk: 0.06, def: 0.06 }
                         : effect === Effect_1.EffectEnum.ELDER_POWER
-                            ? { hp: 0.1, atk: 0.06, def: 0.06 }
-                            : { hp: 0.08, atk: 0.05, def: 0.05 };
+                            ? { hp: 0.08, atk: 0.05, def: 0.05 }
+                            : { hp: 0.06, atk: 0.04, def: 0.04 };
                     pokemon.addMaxHP(Math.ceil(fossilStatScale.hp * pokemon.maxHP), pokemon, 0, false);
                     pokemon.addAttack(Math.ceil(fossilStatScale.atk * pokemon.baseAtk), pokemon, 0, false);
                     pokemon.addDefense(Math.ceil(fossilStatScale.def * pokemon.baseDef), pokemon, 0, false);

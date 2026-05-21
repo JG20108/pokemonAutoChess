@@ -484,17 +484,17 @@ class PokemonState {
                 pokemon.removeItem(Item_1.Item.SHINY_CHARM);
             }
             if (pokemon.hasSynergyEffect(Synergy_1.Synergy.FOSSIL) &&
-                pokemon.hp - residualDamage <= 0.5 * pokemon.maxHP) {
+                pokemon.hp - residualDamage <= 0.4 * pokemon.maxHP) {
                 const shield = Math.round(pokemon.maxHP *
                     (pokemon.effects.has(Effect_1.EffectEnum.FORGOTTEN_POWER)
-                        ? 1
+                        ? 0.85
                         : pokemon.effects.has(Effect_1.EffectEnum.ELDER_POWER)
-                            ? 0.7
+                            ? 0.6
                             : 0.4));
                 const attackBonus = pokemon.effects.has(Effect_1.EffectEnum.FORGOTTEN_POWER)
-                    ? 1
+                    ? 0.85
                     : pokemon.effects.has(Effect_1.EffectEnum.ELDER_POWER)
-                        ? 0.7
+                        ? 0.6
                         : 0.4;
                 pokemon.addShield(shield, pokemon, 0, false);
                 const damageOnShield = (0, number_1.max)(0.5 * shield)(residualDamage);
