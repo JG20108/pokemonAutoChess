@@ -25,6 +25,7 @@ const Game_1 = require("../../types/enum/Game");
 const Item_1 = require("../../types/enum/Item");
 const Passive_1 = require("../../types/enum/Passive");
 const Pokemon_1 = require("../../types/enum/Pokemon");
+const SpecialGameRule_1 = require("../../types/enum/SpecialGameRule");
 const Synergy_1 = require("../../types/enum/Synergy");
 const Wanderer_1 = require("../../types/enum/Wanderer");
 const array_1 = require("../../utils/array");
@@ -998,7 +999,9 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
             if (!evolution ||
                 evolution === Pokemon_1.Pkm.DEFAULT ||
                 pokemon.items.has(Item_1.Item.EVIOLITE) ||
-                pokemon.items.size >= 3) {
+                pokemon.items.size >= 3 ||
+                (room.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.GYM_BADGE &&
+                    (0, config_1.isGymBadgeRareCandyBlocked)(pokemon.name, evolution))) {
                 return false;
             }
             const pokemonEvolved = player.transformPokemon(pokemon, evolution);

@@ -1,4 +1,8 @@
-import { ARMOR_FACTOR, RegionDetails } from "../../config"
+import {
+  ARMOR_FACTOR,
+  isGymBadgeRareCandyBlocked,
+  RegionDetails
+} from "../../config"
 import { getSynergyStep } from "../../models/colyseus-models/synergies"
 import PokemonFactory from "../../models/pokemon-factory"
 import { PVEStages } from "../../models/pve-stages"
@@ -27,6 +31,7 @@ import {
 } from "../../types/enum/Item"
 import { Passive } from "../../types/enum/Passive"
 import { NonPkm, Pkm, PkmFamily } from "../../types/enum/Pokemon"
+import { SpecialGameRule } from "../../types/enum/SpecialGameRule"
 import { Synergy } from "../../types/enum/Synergy"
 import { WandererBehavior, WandererType } from "../../types/enum/Wanderer"
 import { isIn, removeInArray } from "../../utils/array"
@@ -1302,7 +1307,9 @@ export const ItemEffects: { [i in Item]?: (Effect | (() => Effect))[] } = {
         !evolution ||
         evolution === Pkm.DEFAULT ||
         pokemon.items.has(Item.EVIOLITE) ||
-        pokemon.items.size >= 3
+        pokemon.items.size >= 3 ||
+        (room.state.specialGameRule === SpecialGameRule.GYM_BADGE &&
+          isGymBadgeRareCandyBlocked(pokemon.name, evolution))
       ) {
         return false // prevent item from being equipped
       }

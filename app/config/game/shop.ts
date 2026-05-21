@@ -1,4 +1,5 @@
 import { Rarity } from "../../types/enum/Game"
+import { Pkm } from "../../types/enum/Pokemon"
 
 export const SHOP_SIZE = 6
 export const NB_STARTERS = 3
@@ -124,4 +125,22 @@ export const BuyPrices = {
   FALINKS_TROOPER: 3,
   MELTAN: 0,
   UNOWN: 1
+}
+
+/** GYM_BADGE free Rare Candy must not skip these cheap Water → tier-3 special evolutions. */
+export const GYM_BADGE_RARE_CANDY_BLOCKED_EVOLUTIONS = new Set<Pkm>([
+  Pkm.GYARADOS,
+  Pkm.MILOTIC,
+  Pkm.WISHIWASHI_SCHOOL
+])
+
+export function isGymBadgeRareCandyBlocked(
+  pokemonName: Pkm,
+  evolutionTarget: Pkm | undefined
+): boolean {
+  return (
+    GYM_BADGE_RARE_CANDY_BLOCKED_EVOLUTIONS.has(pokemonName) ||
+    (evolutionTarget !== undefined &&
+      GYM_BADGE_RARE_CANDY_BLOCKED_EVOLUTIONS.has(evolutionTarget))
+  )
 }

@@ -69,3 +69,5 @@ export declare const BuyPrices: {
     MELTAN: number;
     UNOWN: number;
 };
+export declare const GYM_BADGE_RARE_CANDY_BLOCKED_EVOLUTIONS: Set<import("../../types/enum/Pokemon").Pkm>;
+export declare function isGymBadgeRareCandyBlocked(pokemonName: import("../../types/enum/Pokemon").Pkm, evolutionTarget: import("../../types/enum/Pokemon").Pkm | undefined): boolean;
