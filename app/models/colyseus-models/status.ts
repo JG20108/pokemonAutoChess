@@ -687,7 +687,7 @@ export default class Status extends Schema implements IStatus {
       this.ccCooldown <= 0
     ) {
       if (pkm.simulation.weather === Weather.SNOW) {
-        duration *= 1.3
+        duration *= 1.2
         const nbIcyRocks = pkm.player
           ? count(pkm.player.items, Item.ICY_ROCK)
           : 0

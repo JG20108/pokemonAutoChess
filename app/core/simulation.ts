@@ -1149,26 +1149,26 @@ export default class Simulation extends Schema implements ISimulation {
 
       case EffectEnum.CHILLY:
         pokemon.effects.add(EffectEnum.CHILLY)
-        pokemon.addSpecialDefense(4, pokemon, 0, false)
+        pokemon.addSpecialDefense(3, pokemon, 0, false)
         pokemon.addDefense(2, pokemon, 0, false)
         break
 
       case EffectEnum.FROSTY:
         pokemon.effects.add(EffectEnum.FROSTY)
-        pokemon.addSpecialDefense(12, pokemon, 0, false)
-        pokemon.addDefense(5, pokemon, 0, false)
+        pokemon.addSpecialDefense(10, pokemon, 0, false)
+        pokemon.addDefense(4, pokemon, 0, false)
         break
 
       case EffectEnum.FREEZING:
         pokemon.effects.add(EffectEnum.FREEZING)
-        pokemon.addSpecialDefense(25, pokemon, 0, false)
-        pokemon.addDefense(10, pokemon, 0, false)
+        pokemon.addSpecialDefense(20, pokemon, 0, false)
+        pokemon.addDefense(8, pokemon, 0, false)
         break
 
       case EffectEnum.SHEER_COLD:
         pokemon.effects.add(EffectEnum.SHEER_COLD)
-        pokemon.addSpecialDefense(50, pokemon, 0, false)
-        pokemon.addDefense(20, pokemon, 0, false)
+        pokemon.addSpecialDefense(40, pokemon, 0, false)
+        pokemon.addDefense(16, pokemon, 0, false)
         break
 
       case EffectEnum.POISONOUS:
