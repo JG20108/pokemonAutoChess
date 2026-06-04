@@ -47,7 +47,6 @@ import {
 } from "../core/scribbles"
 import type GameState from "../rooms/states/game-state"
 import type { IPokemon, IPokemonEntity } from "../types"
-import { Ability } from "../types/enum/Ability"
 import { EffectEnum } from "../types/enum/Effect"
 import { Rarity } from "../types/enum/Game"
 import {
@@ -163,8 +162,6 @@ export function getPoolSize(rarity: Rarity, maxStars: number): number {
 
 /**
  * All evolution forms covered by PSEUDO_JOURNEY stat normalisation.
- * Defined here (not imported from scribbles.ts) to avoid a circular
- * dependency: scribbles.ts already imports getRegularsTier1 from shop.ts.
  * Must stay in sync with PSEUDO_JOURNEY_NORMALIZED_STATS in scribbles.ts.
  */
 const PSEUDO_JOURNEY_LINE_PKMS: ReadonlySet<Pkm> = new Set([
@@ -191,30 +188,6 @@ const PSEUDO_JOURNEY_SHOP_EXCLUDED_PKMS: ReadonlySet<Pkm> = new Set([
   Pkm.DRAKLOAK,
   Pkm.DRAGAPULT
 ])
-
-export function getRegularsTier1(pokemons: Pkm[]) {
-  return pokemons.filter((p) => {
-    const pokemonData = getPokemonData(p)
-    return (
-      pokemonData.stars === 1 &&
-      pokemonData.skill !== Ability.DEFAULT &&
-      !pokemonData.additional &&
-      !pokemonData.regional
-    )
-  })
-}
-
-export function getAdditionalsTier1(pokemons: Pkm[]) {
-  return pokemons.filter((p) => {
-    const pokemonData = getPokemonData(p)
-    return (
-      pokemonData.stars === 1 &&
-      pokemonData.skill !== Ability.DEFAULT &&
-      pokemonData.additional &&
-      !pokemonData.regional
-    )
-  })
-}
 
 
 export function getSellPrice(

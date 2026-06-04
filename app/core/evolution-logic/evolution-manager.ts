@@ -96,7 +96,7 @@ export const EvolutionManager = {
         pokemonEvolved.passive !== Passive.COSMOG &&
         pokemonEvolved.passive !== Passive.COSMOEM
       ) {
-        pokemon.addMaxHP(10)
+        pokemon.addMaxHP(15)
         pokemon.stacks++
         this.tryEvolve(pokemon, player, ...additionalArgs)
       }
