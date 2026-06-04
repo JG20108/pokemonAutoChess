@@ -74,7 +74,7 @@ import {
 } from "../types/enum/Pokemon"
 import { applyPseudoJourneyNormalizedStats } from "../core/scribbles"
 import { SpecialGameRule } from "../types/enum/SpecialGameRule"
-import type { Synergy } from "../types/enum/Synergy"
+import { Synergy } from "../types/enum/Synergy"
 import { GameEvent } from "../types/events"
 import type { IPokemonCollectionItemMongo } from "../types/interfaces/UserMetadata"
 import type { IDetailledPokemon } from "../types/models/bot-v2"
