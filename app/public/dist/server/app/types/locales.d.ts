@@ -644,7 +644,7 @@ declare const resources: {
             SUDOWOODO: string;
             PHIONE: string;
             COMBEE: string;
-            VESPIQUEEN: string;
+            VESPIQUEN: string;
             SHUCKLE: string;
             TEPIG: string;
             PIGNITE: string;
@@ -1385,6 +1385,9 @@ declare const resources: {
             HEX: string;
             GROWTH: string;
             HEAL_ORDER: string;
+            DEFEND_ORDER: string;
+            ATTACK_ORDER: string;
+            BUG_BITE: string;
             SHELL_TRAP: string;
             DIG: string;
             FIRE_SPIN: string;
@@ -1942,6 +1945,9 @@ declare const resources: {
             HEX: string;
             GROWTH: string;
             HEAL_ORDER: string;
+            DEFEND_ORDER: string;
+            ATTACK_ORDER: string;
+            BUG_BITE: string;
             SHELL_TRAP: string;
             DIG: string;
             FIRE_SPIN: string;
@@ -3406,6 +3412,7 @@ declare const resources: {
             EISCUE_ICE_FACE: string;
             COMATOSE: string;
             WALL_OF_STONE: string;
+            VESPIQUEN: string;
         };
         stat: {
             ATK: string;
@@ -3844,10 +3851,12 @@ declare const resources: {
         best_regions: string;
         back_to_lobby: string;
         boosters: string;
-        first_place: string;
-        second_place: string;
-        third_place: string;
-        th_place: string;
+        rank_labels: {
+            first_place: string;
+            second_place: string;
+            third_place: string;
+            th_place: string;
+        };
         rank: string;
         player: string;
         stats: string;
@@ -3861,16 +3870,6 @@ declare const resources: {
         spectating: string;
         join: string;
         reconnect: string;
-        participate: string;
-        participating: string;
-        participants: string;
-        brackets: string;
-        ranking: string;
-        players_remaining: string;
-        cancel_tournament_participation: string;
-        register_tournament_participation: string;
-        registrations_open_info: string;
-        starts_at: string;
         no_elo: string;
         enable_elo: string;
         disable_elo: string;
@@ -4043,6 +4042,7 @@ declare const resources: {
             super: string;
             autumn: string;
             lilac: string;
+            rainbow: string;
             umbra: string;
             unown: string;
             zengarden: string;
@@ -4121,6 +4121,8 @@ declare const resources: {
             filter_female: string;
             filter_cutscene: string;
             filter_alcremie: string;
+            filter_beta: string;
+            filter_mega: string;
             normal: string;
             shiny: string;
         };
@@ -4131,7 +4133,15 @@ declare const resources: {
         name: string;
         give_boosters: string;
         give_all_portraits: string;
-        heap_snapshot: string;
+        admin_panel: {
+            title: string;
+            heap_snapshot: string;
+            refresh_leaderboards: string;
+            refresh_meta_reports: string;
+            refresh_sprite_gap_data: string;
+            refresh_twitch_streams: string;
+            refresh_twitch_blacklist: string;
+        };
         banned: string;
         ban_user: string;
         unban_user: string;
@@ -4481,6 +4491,16 @@ declare const resources: {
         };
         tournament: {
             tournament_mode_locked: string;
+            participate: string;
+            participating: string;
+            participants: string;
+            brackets: string;
+            ranking: string;
+            players_remaining: string;
+            cancel_tournament_participation: string;
+            register_tournament_participation: string;
+            registrations_open_info: string;
+            starts_at: string;
         };
         npc_dialog: {
             welcome: string;
@@ -4952,6 +4972,7 @@ declare const resources: {
             count: string;
         };
         notification: {
+            info_title: string;
             level_up_title: string;
             level_up_message: string;
             new_title_title: string;

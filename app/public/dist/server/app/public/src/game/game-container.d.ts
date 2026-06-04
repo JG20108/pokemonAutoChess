@@ -1,15 +1,15 @@
-import { SchemaCallbackProxy } from "@colyseus/schema";
-import { Room } from "@colyseus/sdk";
+import type { SchemaCallbackProxy } from "@colyseus/schema";
+import { type Room } from "@colyseus/sdk";
 import Phaser from "phaser";
-import { PokemonEntity } from "../../../core/pokemon-entity";
-import Simulation from "../../../core/simulation";
-import Player from "../../../models/colyseus-models/player";
-import GameState from "../../../rooms/states/game-state";
-import { IDragDropCombineMessage, IDragDropItemMessage, IDragDropMessage, IPlayer, IPokemon } from "../../../types";
-import { Ability } from "../../../types/enum/Ability";
-import { AttackType, HealType, Orientation } from "../../../types/enum/Game";
+import type { PokemonEntity } from "../../../core/pokemon-entity";
+import type Simulation from "../../../core/simulation";
+import type Player from "../../../models/colyseus-models/player";
+import type GameState from "../../../rooms/states/game-state";
+import { type IDragDropCombineMessage, type IDragDropItemMessage, type IDragDropMessage, type IPlayer, type IPokemon } from "../../../types";
+import type { Ability } from "../../../types/enum/Ability";
+import { type AttackType, type HealType, type Orientation } from "../../../types/enum/Game";
 import { Weather } from "../../../types/enum/Weather";
-import { DisplayText } from "../../../types/strings/DisplayText";
+import type { DisplayText } from "../../../types/strings/DisplayText";
 import GameScene from "./scenes/game-scene";
 declare class GameContainer {
     room: Room<GameState>;

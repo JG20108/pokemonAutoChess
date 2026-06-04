@@ -10,21 +10,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PokemonEntity = void 0;
-exports.getStrongestUnit = getStrongestUnit;
-exports.getUnitScore = getUnitScore;
 exports.canSell = canSell;
-exports.getMoveSpeed = getMoveSpeed;
 const schema_1 = require("@colyseus/schema");
 const config_1 = require("../config");
+const synergies_1 = require("../config/game/synergies");
 const count_1 = __importDefault(require("../models/colyseus-models/count"));
 const player_1 = __importDefault(require("../models/colyseus-models/player"));
 const pokemon_1 = require("../models/colyseus-models/pokemon");
 const status_1 = __importDefault(require("../models/colyseus-models/status"));
-const effects_1 = require("../models/effects");
 const pokemon_factory_1 = __importDefault(require("../models/pokemon-factory"));
 const precomputed_pokemon_data_1 = require("../models/precomputed/precomputed-pokemon-data");
-const shop_1 = require("../models/shop");
 const types_1 = require("../types");
+const EvolutionRules_1 = require("../types/EvolutionRules");
 const Ability_1 = require("../types/enum/Ability");
 const Effect_1 = require("../types/enum/Effect");
 const Game_1 = require("../types/enum/Game");
@@ -45,7 +42,8 @@ const attacking_state_1 = __importDefault(require("./attacking-state"));
 const effect_1 = require("./effects/effect");
 const items_1 = require("./effects/items");
 const passives_1 = require("./effects/passives");
-const synergies_1 = require("./effects/synergies");
+const synergies_2 = require("./effects/synergies");
+const evolution_manager_1 = require("./evolution-logic/evolution-manager");
 const idle_state_1 = require("./idle-state");
 const moving_state_1 = __importDefault(require("./moving-state"));
 const simulation_command_1 = require("./simulation-command");
@@ -201,7 +199,7 @@ class PokemonEntity extends schema_1.Schema {
                 !this.items.has(Item_1.Item.LIGHT_BALL)));
     }
     hasSynergyEffect(synergy) {
-        return effects_1.SynergyEffects[synergy].some((effect) => this.effects.has(effect));
+        return synergies_1.SynergyEffects[synergy].some((effect) => this.effects.has(effect));
     }
     resetCooldown(baseDuration, speed = this.speed) {
         this.cooldown = Math.round(baseDuration / (0.4 + speed * 0.007));
@@ -565,7 +563,7 @@ class PokemonEntity extends schema_1.Schema {
         const default_types = (0, precomputed_pokemon_data_1.getPokemonData)(this.name).types;
         if (type && !default_types.includes(type)) {
             this.types.delete(type);
-            effects_1.SynergyEffects[type].forEach((effectName) => {
+            synergies_1.SynergyEffects[type].forEach((effectName) => {
                 this.effects.delete(effectName);
                 this.effectsSet.forEach((effect) => {
                     if (effect.origin === effectName)
@@ -684,9 +682,9 @@ class PokemonEntity extends schema_1.Schema {
             const nbIcyRocks = this.player && this.simulation.weather === Weather_1.Weather.SNOW
                 ? (0, array_1.count)(this.player.items, Item_1.Item.ICY_ROCK)
                 : 0;
-            const freezeChance = 0.25 + nbIcyRocks * 0.05;
+            const freezeChance = 0.2 + nbIcyRocks * 0.05;
             if ((0, random_1.chance)(freezeChance, this)) {
-                target.status.triggerFreeze(2500, target, this);
+                target.status.triggerFreeze(2200, target, this);
             }
         }
         if (this.hasSynergyEffect(Synergy_1.Synergy.FIRE)) {
@@ -1013,11 +1011,11 @@ class PokemonEntity extends schema_1.Schema {
                 const spawnedEntity = this.simulation.addPokemon(mon, coord.x, coord.y, this.team, true);
                 spawnedEntity.shield = 0;
                 spawnedEntity
-                    .getEffects(synergies_1.FlyingProtectionEffect)
+                    .getEffects(synergies_2.FlyingProtectionEffect)
                     .forEach((effect) => {
                     effect.flyingProtection = 0;
                 });
-                effects_1.SynergyEffects[Synergy_1.Synergy.FOSSIL].forEach((e) => spawnedEntity.effects.delete(e));
+                synergies_1.SynergyEffects[Synergy_1.Synergy.FOSSIL].forEach((e) => spawnedEntity.effects.delete(e));
             });
         }
         const removedItems = [Item_1.Item.DYNAMAX_BAND, Item_1.Item.SACRED_ASH, Item_1.Item.MAX_REVIVE];
@@ -1027,14 +1025,14 @@ class PokemonEntity extends schema_1.Schema {
             }
         });
         this.effectsSet.forEach((effect) => {
-            if (effect instanceof synergies_1.MonsterKillEffect) {
+            if (effect instanceof synergies_2.MonsterKillEffect) {
                 effect.hpBoosted = 0;
                 effect.count = 0;
             }
-            else if (effect instanceof synergies_1.FireHitEffect) {
+            else if (effect instanceof synergies_2.FireHitEffect) {
                 effect.count = 0;
             }
-            else if (effect instanceof synergies_1.FlyingProtectionEffect) {
+            else if (effect instanceof synergies_2.FlyingProtectionEffect) {
                 effect.flyingProtection = 0;
             }
         });
@@ -1244,8 +1242,10 @@ class PokemonEntity extends schema_1.Schema {
             return;
         this.refToBoardPokemon.stacks += amount;
         this.stacks = this.refToBoardPokemon.stacks;
-        if (this.stacks === this.stacksRequired) {
-            const pokemonEvolved = this.refToBoardPokemon.evolutionRule.tryEvolve(this.refToBoardPokemon, this.player, this.simulation.stageLevel);
+        if (this.refToBoardPokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.STACK &&
+            this.stacksRequired > 0 &&
+            this.stacks === this.stacksRequired) {
+            const pokemonEvolved = evolution_manager_1.EvolutionManager.tryEvolve(this.refToBoardPokemon, this.player, this.stacks);
             if (pokemonEvolved) {
                 this.index = pokemonEvolved.index;
                 this.name = pokemonEvolved.name;
@@ -1376,27 +1376,11 @@ __decorate([
 __decorate([
     (0, schema_1.type)("uint8")
 ], PokemonEntity.prototype, "stacksRequired", void 0);
-function getStrongestUnit(pokemons) {
-    const pokemonScores = pokemons.map((pokemon) => getUnitScore(pokemon));
-    const bestScore = Math.max(...pokemonScores);
-    return (0, random_1.pickRandomIn)(pokemons.filter((p, i) => pokemonScores[i] === bestScore));
-}
-function getUnitScore(pokemon) {
-    let score = 0;
-    score += 100 * pokemon.items.size;
-    score += 10 * pokemon.stars;
-    score += (0, shop_1.getSellPrice)(pokemon, null, true);
-    return score;
-}
 function canSell(pkm, specialGameRule) {
     if (specialGameRule === SpecialGameRule_1.SpecialGameRule.DITTO_PARTY && pkm === Pokemon_1.Pkm.DITTO) {
         return false;
     }
     return new pokemon_1.PokemonClasses[pkm](pkm).canBeSold;
-}
-function getMoveSpeed(pokemon) {
-    const speed = pokemon.status.paralysis ? pokemon.speed / 2 : pokemon.speed;
-    return 0.5 + speed / 100;
 }
 function applyBigEaterBeltStatBuff(pokemon, value, caster, nbDigits = 0) {
     const isBuffOrBuffLost = value > 0 ||

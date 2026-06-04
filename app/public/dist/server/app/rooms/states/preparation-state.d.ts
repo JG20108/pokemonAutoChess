@@ -1,9 +1,9 @@
 import { ArraySchema, MapSchema, Schema } from "@colyseus/schema";
 import { GameUser } from "../../models/colyseus-models/game-user";
 import Message from "../../models/colyseus-models/message";
-import { EloRank } from "../../types/enum/EloRank";
+import type { EloRank } from "../../types/enum/EloRank";
 import { GameMode } from "../../types/enum/Game";
-import { SpecialGameRule } from "../../types/enum/SpecialGameRule";
+import type { SpecialGameRule } from "../../types/enum/SpecialGameRule";
 export interface IPreparationState {
     users: MapSchema<GameUser>;
     messages: ArraySchema<Message>;

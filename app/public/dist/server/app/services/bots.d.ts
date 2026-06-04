@@ -1,6 +1,6 @@
-import { mongo } from "mongoose";
-import { Pkm } from "../types/enum/Pokemon";
-import { IUserMetadataMongo } from "../types/interfaces/UserMetadata";
+import type { mongo } from "mongoose";
+import type { Pkm } from "../types/enum/Pokemon";
+import type { IUserMetadataMongo } from "../types/interfaces/UserMetadata";
 import type { IBot, IStep } from "../types/models/bot-v2";
 export type IBotListItem = Omit<IBot, "steps">;
 export declare function fetchBotsList(approved?: boolean, usingPkm?: string): Promise<IBotListItem[]>;

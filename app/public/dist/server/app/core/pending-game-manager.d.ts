@@ -1,4 +1,4 @@
-import { type Presence } from "@colyseus/core";
+import type { Presence } from "@colyseus/core";
 interface PendingGame {
     gameId: string;
     reconnectionDeadline: Date;

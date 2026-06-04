@@ -9,13 +9,14 @@ exports.THEMES = [
     "default",
     "super",
     "lilac",
+    "rainbow",
     "unown",
+    "origin",
     "umbra",
     "autumn",
     "redsea",
     "zengarden",
-    "deerling",
-    "origin"
+    "deerling"
 ];
 exports.VIDEO_BG_THEMES = [
     "umbra",
@@ -26,6 +27,7 @@ exports.VIDEO_BG_THEMES = [
 ];
 exports.TITLE_BY_THEME = {
     unown: types_1.Title.ARCHEOLOGIST,
+    rainbow: types_1.Title.HARLEQUIN,
     autumn: types_1.Title.POKEMON_RANGER,
     umbra: types_1.Title.DELINQUENT,
     redsea: types_1.Title.FISHERMAN,

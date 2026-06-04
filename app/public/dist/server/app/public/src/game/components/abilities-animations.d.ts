@@ -1,9 +1,9 @@
 import { GameObjects } from "phaser";
-import { AbilityAnimation, AbilityAnimationArgs, AbilityAnimationOptions, HitSprite } from "../../../../types/Animation";
+import { type AbilityAnimation, type AbilityAnimationArgs, type AbilityAnimationOptions, type HitSprite } from "../../../../types/Animation";
 import { Ability } from "../../../../types/enum/Ability";
 import { Stat } from "../../../../types/enum/Game";
-import { DebugScene } from "../scenes/debug-scene";
-import GameScene from "../scenes/game-scene";
+import type { DebugScene } from "../scenes/debug-scene";
+import type GameScene from "../scenes/game-scene";
 import PokemonSprite from "./pokemon";
 export declare function displayHit(scene: GameScene | DebugScene, hitSpriteTypes: HitSprite | HitSprite[], x: number, y: number, flip: boolean): null | undefined;
 export declare function hiddenPowerAnimation(args: AbilityAnimationArgs): void;

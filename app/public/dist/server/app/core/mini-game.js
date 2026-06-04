@@ -697,10 +697,11 @@ class MiniGame {
             });
         }
         if (state.townEncounter === TownEncounter_1.TownEncounters.WIGGLYTUFF) {
+            const candidateMissions = Item_1.MissionOrders.filter((m) => state.shinyEncounter ? m !== Item_1.Item.MISSION_ORDER_GOLD : true);
             this.alivePlayers.forEach((player) => {
                 player.choices.push(new player_choice_1.PlayerChoice({
                     type: "mission_order",
-                    items: (0, random_1.pickNRandomIn)(Item_1.MissionOrders, 3)
+                    items: (0, random_1.pickNRandomIn)(candidateMissions, 3)
                 }));
             });
         }

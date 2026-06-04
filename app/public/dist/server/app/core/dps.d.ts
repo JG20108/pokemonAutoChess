@@ -1,5 +1,5 @@
 import { Schema } from "@colyseus/schema";
-import { IDps } from "../types";
+import type { IDps } from "../types";
 export default class Dps extends Schema implements IDps {
     id: string;
     name: string;

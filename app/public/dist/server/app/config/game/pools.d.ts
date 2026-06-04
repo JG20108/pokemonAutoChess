@@ -1,5 +1,5 @@
 import { Rarity } from "../../types/enum/Game";
-import { PkmProposition } from "../../types/enum/Pokemon";
+import { type PkmProposition } from "../../types/enum/Pokemon";
 export declare const PoolSize: {
     [key in Rarity]: [number, number, number];
 };

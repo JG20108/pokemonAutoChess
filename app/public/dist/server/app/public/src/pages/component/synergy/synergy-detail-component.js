@@ -7,8 +7,8 @@ exports.default = SynergyDetailComponent;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_i18next_1 = require("react-i18next");
 const config_1 = require("../../../../../config");
-const synergies_1 = require("../../../../../models/colyseus-models/synergies");
-const effects_1 = require("../../../../../models/effects");
+const synergies_1 = require("../../../../../config/game/synergies");
+const synergies_2 = require("../../../../../models/colyseus-models/synergies");
 const precomputed_pokemon_data_1 = require("../../../../../models/precomputed/precomputed-pokemon-data");
 const precomputed_types_and_categories_1 = require("../../../../../models/precomputed/precomputed-types-and-categories");
 const Pokemon_1 = require("../../../../../types/enum/Pokemon");
@@ -58,7 +58,7 @@ function SynergyDetailComponent(props) {
     if (spectatedPlayer) {
         switch (props.type) {
             case Synergy_1.Synergy.WILD: {
-                const wildChance = (0, synergies_1.getWildChance)(spectatedPlayer, stageLevel);
+                const wildChance = (0, synergies_2.getWildChance)(spectatedPlayer, stageLevel);
                 additionalInfo = t("synergy_description.WILD_ADDITIONAL", {
                     wildChance: (0, number_1.roundToNDigits)(wildChance * 100, 1)
                 });
@@ -103,7 +103,7 @@ function SynergyDetailComponent(props) {
             wands: spectatedPlayer.fairyWands.join(" ")
         });
     }
-    return ((0, jsx_runtime_1.jsxs)("div", { style: { maxWidth: "560px" }, children: [(0, jsx_runtime_1.jsxs)("div", { style: { display: "flex", alignItems: "center" }, children: [(0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: props.type, size: "40px" }), (0, jsx_runtime_1.jsx)("h3", { style: { margin: 0 }, children: t(`synergy.${props.type}`) })] }), (0, jsx_runtime_1.jsx)("p", { style: { whiteSpace: "pre-wrap" }, children: (0, descriptions_1.addIconsToDescription)(t(`synergy_description.${props.type}`, { additionalInfo })) }), effects_1.SynergyEffects[props.type].map((effect, i) => {
+    return ((0, jsx_runtime_1.jsxs)("div", { style: { maxWidth: "560px" }, children: [(0, jsx_runtime_1.jsxs)("div", { style: { display: "flex", alignItems: "center" }, children: [(0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: props.type, size: "40px" }), (0, jsx_runtime_1.jsx)("h3", { style: { margin: 0 }, children: t(`synergy.${props.type}`) })] }), (0, jsx_runtime_1.jsx)("p", { style: { whiteSpace: "pre-wrap" }, children: (0, descriptions_1.addIconsToDescription)(t(`synergy_description.${props.type}`, { additionalInfo })) }), synergies_1.SynergyEffects[props.type].map((effect, i) => {
                 return ((0, jsx_runtime_1.jsxs)("div", { style: {
                         color: levelReached === config_1.SynergyTriggers[props.type][i]
                             ? "var(--color-fg-primary)"

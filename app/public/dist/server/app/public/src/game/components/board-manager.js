@@ -46,6 +46,7 @@ const pokemon_avatar_1 = require("../../../../models/colyseus-models/pokemon-ava
 const pokemon_factory_1 = __importDefault(require("../../../../models/pokemon-factory"));
 const precomputed_pokemon_data_1 = require("../../../../models/precomputed/precomputed-pokemon-data");
 const pve_stages_1 = require("../../../../models/pve-stages");
+const types_1 = require("../../../../types");
 const Dungeon_1 = require("../../../../types/enum/Dungeon");
 const Game_1 = require("../../../../types/enum/Game");
 const Item_1 = require("../../../../types/enum/Item");
@@ -249,7 +250,7 @@ class BoardManager {
         this.hideFlowerPots();
         const nbPots = this.getNbFlowerPots();
         for (let i = 0; i < nbPots; i++) {
-            const potSprite = this.scene.add.sprite(flower_pots_1.FLOWER_POTS_POSITIONS_BLUE[i][0], flower_pots_1.FLOWER_POTS_POSITIONS_BLUE[i][1], "flower_pots", flower_pots_1.FlowerPots[i] + ".png");
+            const potSprite = this.scene.add.sprite(flower_pots_1.FLOWER_POTS_POSITIONS_BLUE[i][0], flower_pots_1.FLOWER_POTS_POSITIONS_BLUE[i][1], "flower_pots", types_1.FlowerPots[i] + ".png");
             potSprite
                 .setDepth(i % 2 ? depths_1.DEPTH.INANIMATE_OBJECTS : depths_1.DEPTH.INANIMATE_OBJECTS + 0.1)
                 .setScale(2, 2)

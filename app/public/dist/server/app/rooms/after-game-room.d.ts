@@ -1,7 +1,7 @@
 import { Dispatcher } from "@colyseus/command";
-import { Client, Room } from "colyseus";
-import { IAfterGamePlayer } from "../types";
-import { GameMode } from "../types/enum/Game";
+import { type Client, Room } from "colyseus";
+import type { IAfterGamePlayer } from "../types";
+import type { GameMode } from "../types/enum/Game";
 import AfterGameState from "./states/after-game-state";
 export default class AfterGameRoom extends Room<{
     state: AfterGameState;

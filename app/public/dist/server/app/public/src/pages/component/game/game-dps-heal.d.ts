@@ -1,4 +1,4 @@
-import { IDps } from "../../../../../types";
+import type { IDps } from "../../../../../types";
 export default function GameDpsHeal(props: {
     maxHeal: number;
     dpsMeter: IDps;

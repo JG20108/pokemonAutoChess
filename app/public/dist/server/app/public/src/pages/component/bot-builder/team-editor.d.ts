@@ -1,5 +1,5 @@
-import React from "react";
-import { IDetailledPokemon } from "../../../models/bot-v2";
+import type React from "react";
+import type { IDetailledPokemon } from "../../../models/bot-v2";
 export default function TeamEditor(props: {
     board: IDetailledPokemon[];
     showBench?: boolean;

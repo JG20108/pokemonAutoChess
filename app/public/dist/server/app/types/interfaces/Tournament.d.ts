@@ -1,5 +1,5 @@
-import { ArraySchema, MapSchema } from "@colyseus/schema";
-import { TournamentBracketSchema, TournamentPlayerSchema } from "../../models/colyseus-models/tournament";
+import type { ArraySchema, MapSchema } from "@colyseus/schema";
+import type { TournamentBracketSchema, TournamentPlayerSchema } from "../../models/colyseus-models/tournament";
 export interface ITournament {
     id: string;
     name: string;

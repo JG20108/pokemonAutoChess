@@ -14,7 +14,6 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const react_i18next_1 = require("react-i18next");
 const config_1 = require("../../../../../config");
-const types_1 = require("../../../../../types");
 const hooks_1 = require("../../../hooks");
 const network_1 = require("../../../network");
 const NetworkStore_1 = require("../../../stores/NetworkStore");
@@ -30,7 +29,7 @@ function AccountTab() {
             alert(t("profile.account.delete_account_confirmation_failed"));
         }
     };
-    return user ? ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)(ChangeNameForm, {}), (0, jsx_runtime_1.jsx)(TwitchLinkSection, {}), (0, jsx_runtime_1.jsx)("h3", { children: t("profile.account.user_id") }), (0, jsx_runtime_1.jsxs)("p", { children: [t("profile.account.user_id_hint1"), " ", (0, jsx_runtime_1.jsx)("span", { style: { color: "red" }, children: user.uid })] }), (0, jsx_runtime_1.jsx)("p", { children: t("profile.account.user_id_hint2") }), (0, jsx_runtime_1.jsx)("h3", { children: t("profile.account.delete_account") }), (0, jsx_runtime_1.jsx)("p", { children: t("profile.account.delete_account_hint") }), (0, jsx_runtime_1.jsx)("button", { className: "bubbly red", onClick: () => promptDeleteAccount(), children: t("profile.account.delete_account") }), user.role === types_1.Role.ADMIN && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("h3", { children: t("heap_snapshot") }), (0, jsx_runtime_1.jsx)("button", { className: "bubbly red", onClick: () => (0, network_1.heapSnapshot)(), children: t("heap_snapshot") })] }))] })) : null;
+    return user ? ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)(ChangeNameForm, {}), (0, jsx_runtime_1.jsx)(TwitchLinkSection, {}), (0, jsx_runtime_1.jsx)("h3", { children: t("profile.account.user_id") }), (0, jsx_runtime_1.jsxs)("p", { children: [t("profile.account.user_id_hint1"), " ", (0, jsx_runtime_1.jsx)("span", { style: { color: "red" }, children: user.uid })] }), (0, jsx_runtime_1.jsx)("p", { children: t("profile.account.user_id_hint2") }), (0, jsx_runtime_1.jsx)("h3", { children: t("profile.account.delete_account") }), (0, jsx_runtime_1.jsx)("p", { children: t("profile.account.delete_account_hint") }), (0, jsx_runtime_1.jsx)("button", { className: "bubbly red", onClick: () => promptDeleteAccount(), children: t("profile.account.delete_account") })] })) : null;
 }
 function TwitchLinkSection() {
     const dispatch = (0, hooks_1.useAppDispatch)();

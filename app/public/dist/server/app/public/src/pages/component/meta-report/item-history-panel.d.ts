@@ -1,6 +1,6 @@
-import { EloRank } from "../../../../../types/enum/EloRank";
-import { Item } from "../../../../../types/enum/Item";
-import { IItemsStatisticV2 } from "../../../models/items-statistic-v2";
+import type { EloRank } from "../../../../../types/enum/EloRank";
+import type { Item } from "../../../../../types/enum/Item";
+import type { IItemsStatisticV2 } from "../../../models/items-statistic-v2";
 import "./item-history-panel.css";
 interface ItemHistoryPanelProps {
     metaItems: IItemsStatisticV2[];

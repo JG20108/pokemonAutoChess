@@ -1,8 +1,8 @@
 import { MapSchema, Schema } from "@colyseus/schema";
-import Player from "../models/colyseus-models/player";
-import { Pokemon } from "../models/colyseus-models/pokemon";
-import GameRoom from "../rooms/game-room";
-import { IPokemon, IPokemonEntity, ISimulation, Transfer } from "../types";
+import type Player from "../models/colyseus-models/player";
+import type { Pokemon } from "../models/colyseus-models/pokemon";
+import type GameRoom from "../rooms/game-room";
+import { type IPokemon, type IPokemonEntity, type ISimulation, Transfer } from "../types";
 import { Ability } from "../types/enum/Ability";
 import { EffectEnum } from "../types/enum/Effect";
 import { Team } from "../types/enum/Game";
@@ -15,8 +15,8 @@ import { PokemonEntity } from "./pokemon-entity";
 export default class Simulation extends Schema implements ISimulation {
     weather: Weather;
     winnerId: string;
-    blueTeam: MapSchema<IPokemonEntity, string>;
-    redTeam: MapSchema<IPokemonEntity, string>;
+    blueTeam: MapSchema<PokemonEntity, string>;
+    redTeam: MapSchema<PokemonEntity, string>;
     blueDpsMeter: MapSchema<Dps, string>;
     redDpsMeter: MapSchema<Dps, string>;
     id: string;
@@ -48,8 +48,8 @@ export default class Simulation extends Schema implements ISimulation {
     start(): void;
     getEffects(playerId: string): Set<EffectEnum> | undefined;
     getDpsMeter(playerId: string): MapSchema<Dps, string> | undefined;
-    getTeam(playerId: string): MapSchema<IPokemonEntity, string> | undefined;
-    getOpponentTeam(playerId: string): MapSchema<IPokemonEntity, string> | undefined;
+    getTeam(playerId: string): MapSchema<PokemonEntity, string> | undefined;
+    getOpponentTeam(playerId: string): MapSchema<PokemonEntity, string> | undefined;
     addPokemon(pokemon: Pokemon, x: number, y: number, team: Team, isSpawn?: boolean): PokemonEntity;
     getFirstFreeCell(team: Team): {
         x: number;
@@ -69,7 +69,7 @@ export default class Simulation extends Schema implements ISimulation {
     } | null;
     applyItemsEffects(pokemon: PokemonEntity): void;
     applySynergyEffects(pokemon: PokemonEntity, singleType?: Synergy): void;
-    applyDishEffects(dish: Item, pokemon: Pokemon, entity: PokemonEntity | undefined, player: Player): void;
+    applyDishEffects(dish: Item, pokemon: Pokemon, entity: PokemonEntity | undefined, player: Player | undefined): void;
     applyPostEffects(blueBoard: MapSchema<Pokemon>, redBoard: MapSchema<Pokemon>): void;
     applyEffect(pokemon: IPokemonEntity, effect: EffectEnum): void;
     update(dt: number): void;

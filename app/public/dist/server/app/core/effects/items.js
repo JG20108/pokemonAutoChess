@@ -18,6 +18,7 @@ const synergies_1 = require("../../models/colyseus-models/synergies");
 const pokemon_factory_1 = __importDefault(require("../../models/pokemon-factory"));
 const pve_stages_1 = require("../../models/pve-stages");
 const types_1 = require("../../types");
+const EvolutionRules_1 = require("../../types/EvolutionRules");
 const Ability_1 = require("../../types/enum/Ability");
 const Dungeon_1 = require("../../types/enum/Dungeon");
 const Effect_1 = require("../../types/enum/Effect");
@@ -36,10 +37,10 @@ const random_1 = require("../../utils/random");
 const schemas_1 = require("../../utils/schemas");
 const abilities_1 = require("../abilities/abilities");
 const dishes_1 = require("../dishes");
-const evolution_rules_1 = require("../evolution-rules");
+const evolution_manager_1 = require("../evolution-logic/evolution-manager");
 const flower_pots_1 = require("../flower-pots");
-const pokemon_entity_1 = require("../pokemon-entity");
 const simulation_command_1 = require("../simulation-command");
+const unit_score_1 = require("../unit-score");
 const effect_1 = require("./effect");
 exports.blueOrbOnAttackEffect = new effect_1.OnAttackEffect(({ pokemon, target, board }) => {
     pokemon.count.staticHolderCount++;
@@ -259,7 +260,7 @@ class DojoTicketOnItemDroppedEffect extends effect_1.OnItemDroppedEffect {
             const pokemonLeaving = player.getPokemonAt(pokemon.positionX, pokemon.positionY) || pokemon;
             substitute.id = pokemonLeaving.id;
             substitute.evolution = pokemonLeaving.name;
-            substitute.evolutionRule = new evolution_rules_1.ConditionBasedEvolutionRule(() => false);
+            substitute.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.STATE, condition: () => false };
             substitute.positionX = pokemonLeaving.positionX;
             substitute.positionY = pokemonLeaving.positionY;
             player.board.delete(pokemonLeaving.id);
@@ -270,6 +271,7 @@ class DojoTicketOnItemDroppedEffect extends effect_1.OnItemDroppedEffect {
                 returnStage: room.state.stageLevel + ((_a = [3, 4, 5][ticketLevel - 1]) !== null && _a !== void 0 ? _a : 5)
             });
             (0, array_1.removeInArray)(player.items, item);
+            player.updateSynergies();
             return false;
         });
     }
@@ -342,7 +344,7 @@ const chefCookEffect = new effect_1.OnStageStartEffect(({ pokemon, player, room 
                         if (dish === Item_1.Item.HERBA_MYSTICA) {
                             candidates = candidates.filter((p) => Item_1.HerbaMysticas.every((herba) => p.dishes.has(herba) === false));
                         }
-                        candidates.sort((a, b) => (0, pokemon_entity_1.getUnitScore)(b) - (0, pokemon_entity_1.getUnitScore)(a));
+                        candidates.sort((a, b) => (0, unit_score_1.getUnitScore)(b) - (0, unit_score_1.getUnitScore)(a));
                         const pokemon = (_a = candidates[0]) !== null && _a !== void 0 ? _a : chef;
                         if (!pokemon.canEat)
                             return;
@@ -994,8 +996,7 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
         })
     ], [Item_1.Item.RARE_CANDY]: [
         new effect_1.OnItemDroppedEffect(({ pokemon, player, room, item }) => {
-            var _a;
-            const evolution = (_a = pokemon.evolutionRule) === null || _a === void 0 ? void 0 : _a.getEvolution(pokemon, player);
+            const evolution = evolution_manager_1.EvolutionManager.getEvolution(pokemon, player);
             if (!evolution ||
                 evolution === Pokemon_1.Pkm.DEFAULT ||
                 pokemon.items.has(Item_1.Item.EVIOLITE) ||
@@ -1005,17 +1006,29 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
                 return false;
             }
             const pokemonEvolved = player.transformPokemon(pokemon, evolution);
-            pokemon.afterEvolve({
-                pokemonEvolved,
-                pokemonsBeforeEvolution: [pokemon],
-                player
-            });
+            const additionalArgs = [];
+            if (pokemonEvolved.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.ITEM) {
+                additionalArgs.push(item);
+            }
+            else if (pokemonEvolved.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.MONEY) {
+                additionalArgs.push(player.money);
+            }
+            else if (pokemonEvolved.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.PLACEMENT) {
+                additionalArgs.push(player.board);
+            }
+            else if (pokemonEvolved.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.STACK) {
+                additionalArgs.push(pokemonEvolved.stacks);
+            }
+            else if (pokemonEvolved.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.STATE) {
+                additionalArgs.push(room.state);
+            }
+            evolution_manager_1.EvolutionManager.afterEvolve(pokemonEvolved, pokemon, player, ...additionalArgs);
             pokemonEvolved.items.add(item);
             (0, array_1.removeInArray)(player.items, item);
             if (pokemonEvolved.items.has(Item_1.Item.SHINY_CHARM)) {
                 pokemonEvolved.shiny = true;
             }
-            room.checkEvolutionsAfterItemAcquired(player.id, pokemon);
+            room.checkEvolutionsAfterItemAcquired(player.id, pokemon, item);
             player.updateSynergies();
             return false;
         })

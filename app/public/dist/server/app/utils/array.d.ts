@@ -1,4 +1,4 @@
-import { ArraySchema } from "@colyseus/schema";
+import type { ArraySchema } from "@colyseus/schema";
 export declare function isIn<T>(values: readonly T[], x: any): x is T;
 export declare const groupBy: <T, K extends keyof any>(arr: T[], key: (i: T) => K) => Record<K, T[]>;
 export declare function sum(arr: number[]): number;

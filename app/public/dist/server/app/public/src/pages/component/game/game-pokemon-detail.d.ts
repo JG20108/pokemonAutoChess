@@ -1,5 +1,6 @@
-import Phaser, { GameObjects } from "phaser";
-import { Emotion, IPokemon, IPokemonEntity } from "../../../../../types";
+import type Phaser from "phaser";
+import { GameObjects } from "phaser";
+import type { Emotion, IPokemon, IPokemonEntity } from "../../../../../types";
 import { Pkm } from "../../../../../types/enum/Pokemon";
 import "./game-pokemon-detail.css";
 export declare function GamePokemonDetail(props: {

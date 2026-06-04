@@ -1,8 +1,8 @@
 import { Schema } from "@colyseus/schema";
-import { Constraint } from "matter-js";
-import { IPokemonAvatar } from "../../types";
+import type { Constraint } from "matter-js";
+import type { IPokemonAvatar } from "../../types";
 import { Orientation, PokemonActionState } from "../../types/enum/Game";
-import { Pkm } from "../../types/enum/Pokemon";
+import type { Pkm } from "../../types/enum/Pokemon";
 export declare class PokemonAvatarModel extends Schema implements IPokemonAvatar {
     id: string;
     name: Pkm;

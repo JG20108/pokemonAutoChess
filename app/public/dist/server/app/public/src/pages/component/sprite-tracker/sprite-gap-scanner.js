@@ -53,17 +53,17 @@ function SpriteGapScanner() {
         var _a;
         const entries = (_a = data === null || data === void 0 ? void 0 : data.spriteOnly) !== null && _a !== void 0 ? _a : [];
         return entries.filter((entry) => {
-            const name = entry.formName.toLowerCase();
-            const monsterName = entry.monsterName.toLowerCase();
-            if (name.includes("alternate") && !filterAlternate)
+            const form = entry.formName.toLowerCase();
+            const pkm = entry.pkm.toLowerCase();
+            if (form.includes("alternate") && !filterAlternate)
                 return false;
-            if (name.includes("altcolor") && !filterAltcolor)
+            if (form.includes("altcolor") && !filterAltcolor)
                 return false;
-            if (name.includes("female") && !filterFemale)
+            if (form.includes("female") && !filterFemale)
                 return false;
-            if (name.includes("cutscene") && !filterCutscene)
+            if (form.includes("cutscene") && !filterCutscene)
                 return false;
-            if (monsterName.includes("alcremie") && !filterAlcremie)
+            if (pkm.includes("alcremie") && !filterAlcremie)
                 return false;
             return true;
         });
@@ -85,7 +85,7 @@ function SpriteGapScanner() {
         let alcremie = 0;
         for (const entry of entries) {
             const formName = entry.formName.toLowerCase();
-            const monsterName = entry.monsterName.toLowerCase();
+            const pkm = entry.pkm.toLowerCase();
             if (formName.includes("alternate"))
                 alternate += 1;
             if (formName.includes("altcolor"))
@@ -94,7 +94,7 @@ function SpriteGapScanner() {
                 female += 1;
             if (formName.includes("cutscene"))
                 cutscene += 1;
-            if (monsterName.includes("alcremie"))
+            if (pkm.includes("alcremie"))
                 alcremie += 1;
         }
         return { alternate, altcolor, female, cutscene, alcremie };
@@ -137,6 +137,6 @@ function SpriteGapScanner() {
                             count: filterCounts.cutscene
                         }), checked: filterCutscene, onToggle: setFilterCutscene, isDark: true }), (0, jsx_runtime_1.jsx)(checkbox_1.Checkbox, { label: t("sprite_tracker.filter_alcremie", {
                             count: filterCounts.alcremie
-                        }), checked: filterAlcremie, onToggle: setFilterAlcremie, isDark: true })] }), (0, jsx_runtime_1.jsx)("div", { className: "content", children: (0, jsx_runtime_1.jsx)("div", { className: "entry-list", children: filteredSpriteOnly.length === 0 ? ((0, jsx_runtime_1.jsx)("p", { className: "empty-state", children: t("no_results_found") })) : (filteredSpriteOnly.map((entry) => ((0, jsx_runtime_1.jsx)("div", { className: "entry sprite-only-entry", children: (0, jsx_runtime_1.jsx)("div", { className: "entry-header", children: (0, jsx_runtime_1.jsxs)("div", { className: "entry-info", children: [(0, jsx_runtime_1.jsx)("strong", { children: entry.index }), (0, jsx_runtime_1.jsx)("a", { className: "pokemon-name entry-name-link", href: getSpriteCollabUrl(entry.index), target: "_blank", rel: "noreferrer", children: entry.monsterName })] }) }) }, entry.index)))) }) })] }));
+                        }), checked: filterAlcremie, onToggle: setFilterAlcremie, isDark: true })] }), (0, jsx_runtime_1.jsx)("div", { className: "content", children: (0, jsx_runtime_1.jsx)("div", { className: "entry-list", children: filteredSpriteOnly.length === 0 ? ((0, jsx_runtime_1.jsx)("p", { className: "empty-state", children: t("no_results_found") })) : (filteredSpriteOnly.map((entry) => ((0, jsx_runtime_1.jsx)("div", { className: "entry sprite-only-entry", children: (0, jsx_runtime_1.jsx)("div", { className: "entry-header", children: (0, jsx_runtime_1.jsxs)("div", { className: "entry-info", children: [(0, jsx_runtime_1.jsx)("strong", { children: entry.index }), (0, jsx_runtime_1.jsx)("a", { className: "pokemon-name entry-name-link", href: getSpriteCollabUrl(entry.index), target: "_blank", rel: "noreferrer", children: entry.pkm })] }) }) }, entry.index)))) }) })] }));
 }
 //# sourceMappingURL=sprite-gap-scanner.js.map

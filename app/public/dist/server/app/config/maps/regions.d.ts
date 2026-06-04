@@ -1,5 +1,5 @@
 import { DungeonMusic, DungeonPMDO } from "../../types/enum/Dungeon";
-import { Dish } from "../../types/enum/Item";
+import { type Dish } from "../../types/enum/Item";
 import { Synergy } from "../../types/enum/Synergy";
 export interface RegionDetail {
     synergies: Synergy[];

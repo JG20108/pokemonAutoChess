@@ -1,4 +1,4 @@
-import { Emotion } from "../../../../../types";
+import { type Emotion } from "../../../../../types";
 import "./pokemon-emotion.css";
 export default function PokemonEmotion(props: {
     index: string;

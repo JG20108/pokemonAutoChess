@@ -1,4 +1,4 @@
-import { ILeaderboardBotInfo, ILeaderboardInfo } from "../../../../../types/interfaces/LeaderboardInfo";
+import type { ILeaderboardBotInfo, ILeaderboardInfo } from "../../../../../types/interfaces/LeaderboardInfo";
 export default function Leaderboard(props: {
     isBot: boolean;
     infos: ILeaderboardInfo[] | ILeaderboardBotInfo[];

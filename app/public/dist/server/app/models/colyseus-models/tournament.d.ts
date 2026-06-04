@@ -1,5 +1,5 @@
 import { ArraySchema, MapSchema, Schema } from "@colyseus/schema";
-import { ITournament, ITournamentBracket, ITournamentPlayer } from "../../types/interfaces/Tournament";
+import type { ITournament, ITournamentBracket, ITournamentPlayer } from "../../types/interfaces/Tournament";
 export declare class TournamentPlayerSchema extends Schema implements ITournamentPlayer {
     name: string;
     avatar: string;

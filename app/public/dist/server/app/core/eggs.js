@@ -12,11 +12,12 @@ const Game_1 = require("../types/enum/Game");
 const Pokemon_1 = require("../types/enum/Pokemon");
 const board_1 = require("../utils/board");
 const random_1 = require("../utils/random");
+const hatch_time_1 = require("./evolution-logic/hatch-time");
 function createRandomEgg(player, shiny) {
     const hatchList = precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.HATCH.filter((p) => (0, precomputed_pokemon_data_1.getPokemonData)(p).stars === 1);
     const egg = pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pkm.EGG, { shiny });
     egg.action = Game_1.PokemonActionState.SLEEP;
-    egg.stacksRequired = egg.evolutionRule.getHatchTime(egg, player);
+    egg.stacksRequired = (0, hatch_time_1.getHatchTime)(egg, player);
     if (player) {
         const remainingEggs = hatchList.filter((p) => !player.randomEggsGiven.includes(p));
         egg.evolution = (0, random_1.pickRandomIn)(remainingEggs.length > 0 ? remainingEggs : hatchList);

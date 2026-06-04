@@ -1,5 +1,5 @@
-import React from "react";
-import { PkmWithCustom } from "../../../../../types";
+import type React from "react";
+import type { PkmWithCustom } from "../../../../../types";
 import { Item } from "../../../../../types/enum/Item";
 export default function ItemPicker(props: {
     selected?: PkmWithCustom | Item;

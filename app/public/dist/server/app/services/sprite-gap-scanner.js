@@ -125,7 +125,7 @@ function satisfiesPacCriteria(form, index) {
     }
     return true;
 }
-function fetchSpriteCollabMonsters() {
+function fetchSpriteCollabMons() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield fetch("https://spriteserver.pmdcollab.org/graphql", {
@@ -152,7 +152,7 @@ function fetchSpriteCollabMonsters() {
         }
     });
 }
-function parseMonsterForms(monsters) {
+function parseMonsForms(monsters) {
     var _a, _b, _c;
     const spriteIndexMap = new Map();
     for (const monster of monsters) {
@@ -167,7 +167,7 @@ function parseMonsterForms(monsters) {
             const portraitUrl = (_c = (_a = normalPortrait === null || normalPortrait === void 0 ? void 0 : normalPortrait.url) !== null && _a !== void 0 ? _a : (_b = form.portraits.emotions[0]) === null || _b === void 0 ? void 0 : _b.url) !== null && _c !== void 0 ? _c : undefined;
             spriteIndexMap.set(index, {
                 index,
-                monsterName: monster.name,
+                pkm: monster.name,
                 formName: form.fullName,
                 displayName: `${monster.name} - ${form.fullName}`,
                 formPath: form.fullPath,
@@ -203,9 +203,9 @@ function refreshSpriteGapDataInternal() {
         const startTime = Date.now();
         try {
             logger_1.logger.info("[SPRITE_GAP_SCANNER] Starting data refresh...");
-            const monsters = yield fetchSpriteCollabMonsters();
-            logger_1.logger.info(`[SPRITE_GAP_SCANNER] Fetched ${monsters.length} monsters from SpriteCollab`);
-            const spriteIndexMap = parseMonsterForms(monsters);
+            const mons = yield fetchSpriteCollabMons();
+            logger_1.logger.info(`[SPRITE_GAP_SCANNER] Fetched ${mons.length} monsters from SpriteCollab`);
+            const spriteIndexMap = parseMonsForms(mons);
             const result = compareIndexes(spriteIndexMap);
             result.stats.refreshDurationMs = Date.now() - startTime;
             cache = {

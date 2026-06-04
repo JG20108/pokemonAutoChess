@@ -1,4 +1,4 @@
-import { ITournament, ITournamentBracket, ITournamentPlayer } from "../types/interfaces/Tournament";
+import type { ITournament, ITournamentBracket, ITournamentPlayer } from "../types/interfaces/Tournament";
 export declare function getRemainingPlayers(tournament: ITournament): (ITournamentPlayer & {
     id: string;
 })[];

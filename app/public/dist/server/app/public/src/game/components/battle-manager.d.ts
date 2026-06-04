@@ -1,14 +1,14 @@
 import { GameObjects } from "phaser";
-import Simulation from "../../../../core/simulation";
-import Count from "../../../../models/colyseus-models/count";
-import Player from "../../../../models/colyseus-models/player";
-import Status from "../../../../models/colyseus-models/status";
-import { IBoardEvent, IPokemonEntity } from "../../../../types";
+import type Simulation from "../../../../core/simulation";
+import type Count from "../../../../models/colyseus-models/count";
+import type Player from "../../../../models/colyseus-models/player";
+import type Status from "../../../../models/colyseus-models/status";
+import type { IBoardEvent, IPokemonEntity } from "../../../../types";
 import { Ability } from "../../../../types/enum/Ability";
-import { AttackType, HealType, Orientation } from "../../../../types/enum/Game";
+import { AttackType, HealType, type Orientation } from "../../../../types/enum/Game";
 import type { NonFunctionPropNames } from "../../../../types/HelperTypes";
-import AnimationManager from "../animation-manager";
-import GameScene from "../scenes/game-scene";
+import type AnimationManager from "../animation-manager";
+import type GameScene from "../scenes/game-scene";
 import PokemonSprite from "./pokemon";
 export default class BattleManager {
     group: GameObjects.Group;

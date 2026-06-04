@@ -1,4 +1,4 @@
-import { IPlayer } from "../../../../../types";
+import type { IPlayer } from "../../../../../types";
 import "react-circular-progressbar/dist/styles.css";
 import "./game-player.css";
 export default function GamePlayer(props: {

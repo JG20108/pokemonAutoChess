@@ -5,7 +5,7 @@ exports.getUnownsPoolPerStage = getUnownsPoolPerStage;
 exports.getAltFormForPlayer = getAltFormForPlayer;
 exports.getBaseAltForm = getBaseAltForm;
 exports.getAllAltForms = getAllAltForms;
-const flower_pots_1 = require("../../core/flower-pots");
+const types_1 = require("../../types");
 const Pokemon_1 = require("../../types/enum/Pokemon");
 const Synergy_1 = require("../../types/enum/Synergy");
 const array_1 = require("../../utils/array");
@@ -88,39 +88,39 @@ function getAltFormForPlayer(pkm, player) {
     switch (basePkm) {
         case Pokemon_1.Pkm.FLABEBE: {
             switch (player.flowerPotsSpawnOrder[0]) {
-                case flower_pots_1.FlowerPot.YELLOW:
+                case types_1.FlowerPot.YELLOW:
                     return Pokemon_1.Pkm.FLABEBE_YELLOW;
-                case flower_pots_1.FlowerPot.ORANGE:
+                case types_1.FlowerPot.ORANGE:
                     return Pokemon_1.Pkm.FLABEBE_ORANGE;
-                case flower_pots_1.FlowerPot.BLUE:
+                case types_1.FlowerPot.BLUE:
                     return Pokemon_1.Pkm.FLABEBE_BLUE;
-                case flower_pots_1.FlowerPot.WHITE:
+                case types_1.FlowerPot.WHITE:
                     return Pokemon_1.Pkm.FLABEBE_WHITE;
             }
             return Pokemon_1.Pkm.FLABEBE;
         }
         case Pokemon_1.Pkm.FLOETTE: {
             switch (player.flowerPotsSpawnOrder[0]) {
-                case flower_pots_1.FlowerPot.YELLOW:
+                case types_1.FlowerPot.YELLOW:
                     return Pokemon_1.Pkm.FLOETTE_YELLOW;
-                case flower_pots_1.FlowerPot.ORANGE:
+                case types_1.FlowerPot.ORANGE:
                     return Pokemon_1.Pkm.FLOETTE_ORANGE;
-                case flower_pots_1.FlowerPot.BLUE:
+                case types_1.FlowerPot.BLUE:
                     return Pokemon_1.Pkm.FLOETTE_BLUE;
-                case flower_pots_1.FlowerPot.WHITE:
+                case types_1.FlowerPot.WHITE:
                     return Pokemon_1.Pkm.FLOETTE_WHITE;
             }
             return Pokemon_1.Pkm.FLOETTE;
         }
         case Pokemon_1.Pkm.FLORGES: {
             switch (player.flowerPotsSpawnOrder[0]) {
-                case flower_pots_1.FlowerPot.YELLOW:
+                case types_1.FlowerPot.YELLOW:
                     return Pokemon_1.Pkm.FLORGES_YELLOW;
-                case flower_pots_1.FlowerPot.ORANGE:
+                case types_1.FlowerPot.ORANGE:
                     return Pokemon_1.Pkm.FLORGES_ORANGE;
-                case flower_pots_1.FlowerPot.BLUE:
+                case types_1.FlowerPot.BLUE:
                     return Pokemon_1.Pkm.FLORGES_BLUE;
-                case flower_pots_1.FlowerPot.WHITE:
+                case types_1.FlowerPot.WHITE:
                     return Pokemon_1.Pkm.FLORGES_WHITE;
             }
             return Pokemon_1.Pkm.FLORGES;

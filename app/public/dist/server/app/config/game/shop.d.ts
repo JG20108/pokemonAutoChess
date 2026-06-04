@@ -1,4 +1,5 @@
 import { Rarity } from "../../types/enum/Game";
+import { Pkm } from "../../types/enum/Pokemon";
 export declare const SHOP_SIZE = 6;
 export declare const NB_STARTERS = 3;
 export declare const NB_UNIQUE_PROPOSITIONS = 8;
@@ -69,5 +70,5 @@ export declare const BuyPrices: {
     MELTAN: number;
     UNOWN: number;
 };
-export declare const GYM_BADGE_RARE_CANDY_BLOCKED_EVOLUTIONS: Set<import("../../types/enum/Pokemon").Pkm>;
-export declare function isGymBadgeRareCandyBlocked(pokemonName: import("../../types/enum/Pokemon").Pkm, evolutionTarget: import("../../types/enum/Pokemon").Pkm | undefined): boolean;
+export declare const GYM_BADGE_RARE_CANDY_BLOCKED_EVOLUTIONS: Set<Pkm>;
+export declare function isGymBadgeRareCandyBlocked(pokemonName: Pkm, evolutionTarget: Pkm | undefined): boolean;

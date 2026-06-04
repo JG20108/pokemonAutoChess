@@ -1,5 +1,5 @@
-import { PkmWithCustom } from "../../../../../types";
-import { IBot, IDetailledPokemon } from "../../../models/bot-v2";
+import { type PkmWithCustom } from "../../../../../types";
+import type { IBot, IDetailledPokemon } from "../../../models/bot-v2";
 import "./team-builder.css";
 export default function TeamBuilder(props: {
     bot?: IBot;

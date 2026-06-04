@@ -1,8 +1,8 @@
-import { Room } from "@colyseus/sdk";
+import type { Room } from "@colyseus/sdk";
 import Phaser, { GameObjects, Scene } from "phaser";
-import { DesignTiled } from "../../../../core/design";
-import GameState from "../../../../rooms/states/game-state";
-import { DungeonPMDO } from "../../../../types/enum/Dungeon";
+import type { DesignTiled } from "../../../../core/design";
+import type GameState from "../../../../rooms/states/game-state";
+import { type DungeonPMDO } from "../../../../types/enum/Dungeon";
 import { GamePhaseState } from "../../../../types/enum/Game";
 import AnimationManager from "../animation-manager";
 import BattleManager from "../components/battle-manager";

@@ -1,11 +1,12 @@
 import { Command } from "@colyseus/command";
-import { Client } from "colyseus";
-import Player from "../../models/colyseus-models/player";
-import { Pokemon } from "../../models/colyseus-models/pokemon";
-import { IClient, IDragDropCombineMessage, IDragDropItemMessage, IDragDropMessage } from "../../types";
+import { type Client } from "colyseus";
+import type Player from "../../models/colyseus-models/player";
+import { type Pokemon } from "../../models/colyseus-models/pokemon";
+import { type IClient, type IDragDropCombineMessage, type IDragDropItemMessage, type IDragDropMessage } from "../../types";
 import { SpecialGameRule } from "../../types/enum/SpecialGameRule";
 import type { IDetailledPokemon } from "../../types/models/bot-v2";
-import GameRoom from "../game-room";
+import type GameRoom from "../game-room";
+import type GameState from "../states/game-state";
 export declare class OnBuyPokemonCommand extends Command<GameRoom, {
     playerId: string;
     index: number;
@@ -147,3 +148,13 @@ export declare class OnOverwriteBoardCommand extends Command<GameRoom> {
         board: IDetailledPokemon[];
     }): void;
 }
+export declare function onPokemonChangePosition({ pokemon, newX, newY, player, oldX, oldY, state, doNotRemoveItems }: {
+    pokemon: Pokemon;
+    newX: number;
+    newY: number;
+    player: Player;
+    oldX: number;
+    oldY: number;
+    state: GameState;
+    doNotRemoveItems?: boolean;
+}): void;

@@ -1,5 +1,5 @@
-import { Synergy } from "../../../../../types/enum/Synergy";
-import { IPokemonData } from "../../../../../types/interfaces/PokemonData";
+import { type Synergy } from "../../../../../types/enum/Synergy";
+import type { IPokemonData } from "../../../../../types/interfaces/PokemonData";
 import "./synergy-overlaps.css";
 export declare function SynergyOverlaps(props: {
     type: Synergy;

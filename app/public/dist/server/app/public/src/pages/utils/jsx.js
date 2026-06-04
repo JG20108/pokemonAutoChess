@@ -13,18 +13,22 @@ function cc(...classes) {
         return classes[0].toString();
 }
 function jsxTextContent(node) {
-    if (typeof node === 'string' || typeof node === 'number' || typeof node === 'boolean') {
+    if (typeof node === "string" ||
+        typeof node === "number" ||
+        typeof node === "boolean") {
         return node.toString();
     }
     if (!node) {
-        return '';
+        return "";
     }
     if (Array.isArray(node)) {
-        return node.map((entry) => jsxTextContent(entry)).join('');
+        return node.map((entry) => jsxTextContent(entry)).join("");
     }
-    const props = node.props ? node.props : {};
+    const props = node.props
+        ? node.props
+        : {};
     if (!props || !props.children) {
-        return '';
+        return "";
     }
     return jsxTextContent(props.children);
 }

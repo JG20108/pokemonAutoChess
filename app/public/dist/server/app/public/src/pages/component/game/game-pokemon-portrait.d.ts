@@ -1,7 +1,7 @@
-import React from "react";
-import { Pokemon } from "../../../../../models/colyseus-models/pokemon";
-import { PokemonCustoms } from "../../../../../models/colyseus-models/pokemon-customs";
-import { Pkm } from "../../../../../types/enum/Pokemon";
+import type React from "react";
+import type { Pokemon } from "../../../../../models/colyseus-models/pokemon";
+import { type PokemonCustoms } from "../../../../../models/colyseus-models/pokemon-customs";
+import { type Pkm } from "../../../../../types/enum/Pokemon";
 import "./game-pokemon-portrait.css";
 export declare function getCachedPortrait(index: string, customs?: PokemonCustoms): string;
 export default function GamePokemonPortrait(props: {

@@ -1,4 +1,4 @@
-import { Synergy } from "../../../../../types/enum/Synergy";
+import type { Synergy } from "../../../../../types/enum/Synergy";
 export default function SynergyComponent(props: {
     type: Synergy;
     value: number;

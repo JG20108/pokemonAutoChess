@@ -1,7 +1,7 @@
 import { Schema } from "@colyseus/schema";
 import type { Board } from "../../core/board";
-import { PokemonEntity } from "../../core/pokemon-entity";
-import { IPokemonEntity, ISimulation, IStatus } from "../../types";
+import type { PokemonEntity } from "../../core/pokemon-entity";
+import { type IPokemonEntity, type ISimulation, type IStatus } from "../../types";
 export default class Status extends Schema implements IStatus {
     burn: boolean;
     silence: boolean;

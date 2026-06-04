@@ -1,11 +1,11 @@
 import { Command } from "@colyseus/command";
-import { Client } from "colyseus";
-import { Emotion, Role, Title } from "../../types";
+import { type Client } from "colyseus";
+import { Emotion, Role, type Title } from "../../types";
 import { EloRank } from "../../types/enum/EloRank";
 import { GameMode } from "../../types/enum/Game";
-import { Language } from "../../types/enum/Language";
-import { IUserMetadataMongo } from "../../types/interfaces/UserMetadata";
-import CustomLobbyRoom from "../custom-lobby-room";
+import type { Language } from "../../types/enum/Language";
+import type { IUserMetadataMongo } from "../../types/interfaces/UserMetadata";
+import type CustomLobbyRoom from "../custom-lobby-room";
 export declare class OnJoinCommand extends Command<CustomLobbyRoom, {
     client: Client;
     user: IUserMetadataMongo | null;
@@ -37,13 +37,6 @@ export declare class DeleteAccountCommand extends Command<CustomLobbyRoom> {
     execute({ client }: {
         client: Client;
     }): Promise<void>;
-}
-export declare class HeapSnapshotCommand extends Command<CustomLobbyRoom, {
-    client: Client;
-}> {
-    execute({ client }: {
-        client: Client;
-    }): void;
 }
 export declare class GiveBoostersCommand extends Command<CustomLobbyRoom, {
     client: Client;

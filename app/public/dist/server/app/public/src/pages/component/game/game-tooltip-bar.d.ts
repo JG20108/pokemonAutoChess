@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import "./game-tooltip-bar.css";
 type BarType = "HP_ALLY" | "HP_ENEMY" | "PP" | "XP";
 interface GameTooltipBarProps {

@@ -1,4 +1,4 @@
-import { IBot } from "../../../models/bot-v2";
+import type { IBot } from "../../../models/bot-v2";
 export default function ImportBotModal(props: {
     bot: IBot;
     hideModal: () => void;

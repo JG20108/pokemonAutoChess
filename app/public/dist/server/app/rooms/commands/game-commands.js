@@ -46,16 +46,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OnOverwriteBoardCommand = exports.OnUpdatePhaseCommand = exports.OnUpdateCommand = exports.OnJoinCommand = exports.OnPickBerryCommand = exports.OnLevelUpCommand = exports.OnSpectateCommand = exports.OnLockCommand = exports.OnShopRerollCommand = exports.OnSellPokemonCommand = exports.OnDragDropItemCommand = exports.OnDragDropCombineCommand = exports.OnSwitchBenchAndBoardCommand = exports.OnDragDropPokemonCommand = exports.OnPokemonCatchCommand = exports.OnRemoveFromShopCommand = exports.OnBuyPokemonCommand = void 0;
+exports.onPokemonChangePosition = onPokemonChangePosition;
 const command_1 = require("@colyseus/command");
 const schema_1 = require("@colyseus/schema");
 const colyseus_1 = require("colyseus");
 const config_1 = require("../../config");
 const abilities_1 = require("../../core/abilities/abilities");
+const cast_1 = require("../../core/abilities/cast");
 const effect_1 = require("../../core/effects/effect");
 const items_1 = require("../../core/effects/items");
 const passives_1 = require("../../core/effects/passives");
 const eggs_1 = require("../../core/eggs");
-const evolution_rules_1 = require("../../core/evolution-rules");
+const evolution_manager_1 = require("../../core/evolution-logic/evolution-manager");
 const flower_pots_1 = require("../../core/flower-pots");
 const matchmaking_1 = require("../../core/matchmaking");
 const pokemon_entity_1 = require("../../core/pokemon-entity");
@@ -71,6 +73,7 @@ const pve_stages_1 = require("../../models/pve-stages");
 const shop_1 = require("../../models/shop");
 const titles_1 = require("../../models/titles");
 const types_1 = require("../../types");
+const EvolutionRules_1 = require("../../types/EvolutionRules");
 const Ability_1 = require("../../types/enum/Ability");
 const Dungeon_1 = require("../../types/enum/Dungeon");
 const Effect_1 = require("../../types/enum/Effect");
@@ -103,8 +106,8 @@ class OnBuyPokemonCommand extends command_1.Command {
             return;
         const pokemon = pokemon_factory_1.default.createPokemonFromName(name, player);
         const isEvolution = pokemon.evolutionRule &&
-            pokemon.evolutionRule instanceof evolution_rules_1.CountEvolutionRule &&
-            pokemon.evolutionRule.canEvolveIfGettingOne(pokemon, player);
+            pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.COUNT &&
+            evolution_manager_1.EvolutionManager.canEvolveIfGettingOne(pokemon, player);
         const cost = (0, shop_1.getBuyPrice)(name, this.state.specialGameRule);
         const freeSpaceOnBench = (0, board_1.getFreeSpaceOnBench)(player.board);
         const hasSpaceOnBench = freeSpaceOnBench > 0 || isEvolution;
@@ -192,8 +195,8 @@ class OnPokemonCatchCommand extends command_1.Command {
                 const freeSpaceOnBench = (0, board_1.getFreeSpaceOnBench)(player.board);
                 const hasSpaceOnBench = freeSpaceOnBench > 0 ||
                     (pokemon.evolutionRule &&
-                        pokemon.evolutionRule instanceof evolution_rules_1.CountEvolutionRule &&
-                        pokemon.evolutionRule.canEvolveIfGettingOne(pokemon, player));
+                        pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.COUNT &&
+                        evolution_manager_1.EvolutionManager.canEvolveIfGettingOne(pokemon, player));
                 if (hasSpaceOnBench) {
                     const x = (0, board_1.getFirstAvailablePositionInBench)(player.board);
                     pokemon.positionX = x !== null ? x : -1;
@@ -338,13 +341,33 @@ class OnDragDropPokemonCommand extends command_1.Command {
     swapPokemonPositions(player, pokemon, x, y) {
         const pokemonToSwap = player.getPokemonAt(x, y);
         if (pokemonToSwap) {
+            const oldX = pokemonToSwap.positionX;
+            const oldY = pokemonToSwap.positionY;
             pokemonToSwap.positionX = pokemon.positionX;
             pokemonToSwap.positionY = pokemon.positionY;
-            changePokemonPosition(pokemonToSwap, pokemon.positionX, pokemon.positionY, player, this.state);
+            onPokemonChangePosition({
+                pokemon: pokemonToSwap,
+                newX: pokemon.positionX,
+                newY: pokemon.positionY,
+                oldX,
+                oldY,
+                player,
+                state: this.state
+            });
         }
+        const oldX = pokemon.positionX;
+        const oldY = pokemon.positionY;
         pokemon.positionX = x;
         pokemon.positionY = y;
-        changePokemonPosition(pokemon, x, y, player, this.state);
+        onPokemonChangePosition({
+            pokemon,
+            newX: x,
+            newY: y,
+            oldX,
+            oldY,
+            player,
+            state: this.state
+        });
     }
 }
 exports.OnDragDropPokemonCommand = OnDragDropPokemonCommand;
@@ -375,17 +398,37 @@ class OnSwitchBenchAndBoardCommand extends command_1.Command {
                     (player.monotype2 === undefined ||
                         !pokemon.types.has(player.monotype2)))) {
                 const [x, y] = destination;
+                const oldX = pokemon.positionX;
+                const oldY = pokemon.positionY;
                 pokemon.positionX = x;
                 pokemon.positionY = y;
-                pokemon.onChangePosition(x, y, player, this.state);
+                onPokemonChangePosition({
+                    pokemon,
+                    newX: x,
+                    newY: y,
+                    oldX,
+                    oldY,
+                    player,
+                    state: this.state
+                });
             }
         }
         else {
             const x = (0, board_1.getFirstAvailablePositionInBench)(player.board);
             if (x !== null) {
+                const oldX = pokemon.positionX;
+                const oldY = pokemon.positionY;
                 pokemon.positionX = x;
                 pokemon.positionY = 0;
-                pokemon.onChangePosition(x, 0, player, this.state);
+                onPokemonChangePosition({
+                    pokemon,
+                    newX: x,
+                    newY: 0,
+                    oldX: oldX,
+                    oldY: oldY,
+                    player,
+                    state: this.state
+                });
             }
         }
         player.updateSynergies();
@@ -576,7 +619,7 @@ class OnDragDropItemCommand extends command_1.Command {
                 (0, array_1.removeInArray)(player.items, item);
                 client.send(types_1.Transfer.DRAG_DROP_CANCEL, message);
                 pokemon.items.add(item);
-                const pokemonEvolved = this.room.checkEvolutionsAfterItemAcquired(playerId, pokemon);
+                const pokemonEvolved = this.room.checkEvolutionsAfterItemAcquired(playerId, pokemon, item);
                 if (pokemonEvolved)
                     pokemonEvolved.items.delete(item);
                 else
@@ -640,7 +683,7 @@ class OnDragDropItemCommand extends command_1.Command {
             }
         }
         else {
-            if (((0, array_1.isIn)(Item_1.SynergyStones, item) || item === Item_1.Item.FRIEND_BOW) &&
+            if ((0, array_1.isIn)(Item_1.SynergyStones, item) &&
                 pokemon.types.has(Item_1.SynergyGivenByItem[item])) {
                 client.send(types_1.Transfer.DRAG_DROP_CANCEL, message);
                 return;
@@ -651,7 +694,7 @@ class OnDragDropItemCommand extends command_1.Command {
         if (pokemon.items.has(Item_1.Item.SHINY_CHARM)) {
             pokemon.shiny = true;
         }
-        this.room.checkEvolutionsAfterItemAcquired(playerId, pokemon);
+        this.room.checkEvolutionsAfterItemAcquired(playerId, pokemon, item);
         if (pokemon.items.has(item) && (0, array_1.isIn)(Item_1.UnholdableItems, item)) {
             pokemon.items.delete(item);
             if (!(0, array_1.isIn)(Item_1.ConsumableItems, item) && !(0, array_1.isIn)(Item_1.Mulches, item)) {
@@ -1064,7 +1107,8 @@ class OnUpdatePhaseCommand extends command_1.Command {
             player.board.forEach((pokemon, pokemonId) => {
                 if (pokemon.types.has(Synergy_1.Synergy.GROUND) &&
                     !(0, board_1.isOnBench)(pokemon) &&
-                    pokemon.items.has(Item_1.Item.CHEF_HAT) === false) {
+                    !(pokemon.items.has(Item_1.Item.CHEF_HAT) &&
+                        player.synergies.hasSynergyActive(Synergy_1.Synergy.GOURMET))) {
                     const index = (pokemon.positionY - 1) * config_1.BOARD_WIDTH + pokemon.positionX;
                     const hasAlreadyReachedMaxDepth = player.groundHoles[index] === 5;
                     const isReachingMaxDepth = player.groundHoles[index] === 4;
@@ -1090,13 +1134,19 @@ class OnUpdatePhaseCommand extends command_1.Command {
                             buriedItem
                         });
                         this.room.clock.setTimeout(() => {
+                            var _a;
                             player.groundHoles[index] = (0, number_1.max)(5)(player.groundHoles[index] + 1);
-                            if (pokemon.passive === Passive_1.Passive.ORTHWORM) {
-                                pokemon.addMaxHP(5);
-                            }
+                            (_a = passives_1.PassiveEffects[pokemon.passive]) === null || _a === void 0 ? void 0 : _a.forEach((effect) => {
+                                if (effect instanceof effect_1.OnGroundDiggingEffect) {
+                                    effect.apply({ pokemon, player });
+                                }
+                            });
                             player.board.forEach((pokemon) => {
-                                if (pokemon.evolutionRule instanceof evolution_rules_1.ConditionBasedEvolutionRule) {
-                                    pokemon.evolutionRule.tryEvolve(pokemon, player, this.state.stageLevel);
+                                if (pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.STATE) {
+                                    evolution_manager_1.EvolutionManager.tryEvolve(pokemon, player, this.state);
+                                }
+                                else if (pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.STACK) {
+                                    evolution_manager_1.EvolutionManager.tryEvolve(pokemon, player, pokemon.stacks);
                                 }
                             });
                         }, 1000);
@@ -1192,8 +1242,8 @@ class OnUpdatePhaseCommand extends command_1.Command {
             const itemEffects = (_d = (_c = (0, schemas_1.schemaValues)(pokemon.items)
                 .flatMap((item) => items_1.ItemEffects[item])) === null || _c === void 0 ? void 0 : _c.filter((p) => p instanceof effect_1.OnStageStartEffect)) !== null && _d !== void 0 ? _d : [];
             itemEffects.forEach((effect) => effect.apply({ pokemon, player, room: this.room }));
-            if (pokemon.evolutionRule instanceof evolution_rules_1.ConditionBasedEvolutionRule) {
-                pokemon.evolutionRule.tryEvolve(pokemon, player, this.state.stageLevel);
+            if (pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.STATE) {
+                evolution_manager_1.EvolutionManager.tryEvolve(pokemon, player, this.state);
             }
         });
         player.items.forEach((item) => {
@@ -1219,9 +1269,19 @@ class OnUpdatePhaseCommand extends command_1.Command {
                             ? 3
                             : pokemon.range);
                         if (coordinates) {
+                            const oldX = pokemon.positionX;
+                            const oldY = pokemon.positionY;
                             pokemon.positionX = coordinates[0];
                             pokemon.positionY = coordinates[1];
-                            changePokemonPosition(pokemon, coordinates[0], coordinates[1], player, this.state);
+                            onPokemonChangePosition({
+                                pokemon,
+                                newX: coordinates[0],
+                                newY: coordinates[1],
+                                oldX,
+                                oldY,
+                                player,
+                                state: this.state
+                            });
                         }
                     }
                 }
@@ -1283,10 +1343,9 @@ class OnUpdatePhaseCommand extends command_1.Command {
                     }
                     this.spawnBabyEggs(player, isPVE);
                     player.board.forEach((pokemon, key) => {
-                        if (pokemon.evolutionRule) {
-                            if (pokemon.evolutionRule instanceof evolution_rules_1.HatchEvolutionRule) {
-                                pokemon.evolutionRule.updateHatch(pokemon, player, this.state.stageLevel);
-                            }
+                        var _a;
+                        if (((_a = pokemon.evolutionRule) === null || _a === void 0 ? void 0 : _a.type) === EvolutionRules_1.EvolutionRuleType.HATCH) {
+                            evolution_manager_1.EvolutionManager.updateHatch(pokemon, player);
                         }
                         if (pokemon.action === Game_1.PokemonActionState.TRAINING) {
                             pokemon.addAttack(4);
@@ -1436,7 +1495,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
                         if (simulation.finished)
                             return;
                         const caster = new pokemon_entity_1.PokemonEntity(pokemon_factory_1.default.createPokemonFromName(unown), 9, 2, player.team, simulation);
-                        (0, abilities_1.castAbility)(caster.skill, caster, simulation.board, null, false);
+                        (0, cast_1.castAbility)(abilities_1.AbilityStrategies[caster.skill], caster, simulation.board, null, false);
                     }, 10000);
                 });
             });
@@ -1599,14 +1658,56 @@ class OnOverwriteBoardCommand extends command_1.Command {
     }
 }
 exports.OnOverwriteBoardCommand = OnOverwriteBoardCommand;
-function changePokemonPosition(pokemon, x, y, player, state) {
-    pokemon.onChangePosition(x, y, player, state);
-    if (y === 0 && pokemon.tm && types_1.TMPerAbility.has(pokemon.tm)) {
-        player.items.push(types_1.TMPerAbility.get(pokemon.tm));
-        pokemon.tm = Ability_1.Ability.DEFAULT;
-        const { skill: baseSkill, pp: baseMaxPP } = (0, precomputed_pokemon_data_1.getPokemonData)(pokemon.name);
-        pokemon.skill = baseSkill;
-        pokemon.maxPP = baseMaxPP;
+function onPokemonChangePosition({ pokemon, newX, newY, player, oldX, oldY, state, doNotRemoveItems = false }) {
+    var _a, _b;
+    if (pokemon.passive !== Passive_1.Passive.NONE) {
+        const hasLight = ((_a = player.synergies.get(Synergy_1.Synergy.LIGHT)) !== null && _a !== void 0 ? _a : 0) >=
+            config_1.SynergyTriggers[Synergy_1.Synergy.LIGHT][0];
+        const inSpotlight = hasLight &&
+            ((newX === player.lightX && newY === player.lightY) ||
+                pokemon.items.has(Item_1.Item.SHINY_STONE));
+        (_b = passives_1.PassiveEffects[pokemon.passive]) === null || _b === void 0 ? void 0 : _b.forEach((effect) => {
+            if (effect instanceof effect_1.OnChangePositionEffect) {
+                effect.apply({
+                    pokemon,
+                    player,
+                    state,
+                    oldX,
+                    oldY,
+                    newX,
+                    newY
+                });
+            }
+            if (effect instanceof effect_1.OnSpotlightChangeEffect) {
+                effect.apply({
+                    pokemon,
+                    player,
+                    inSpotlight
+                });
+            }
+        });
+    }
+    if (pokemon.name === Pokemon_1.Pkm.MANTYKE || pokemon.name === Pokemon_1.Pkm.REMORAID) {
+        for (const pokemon of player.board.values()) {
+            if (pokemon.name === Pokemon_1.Pkm.MANTYKE) {
+                evolution_manager_1.EvolutionManager.tryEvolve(pokemon, player, player.board);
+            }
+        }
+    }
+    if (newY === 0 && !doNotRemoveItems) {
+        const itemsToRemove = (0, schemas_1.schemaValues)(pokemon.items).filter((item) => {
+            return ((0, array_1.isIn)(types_1.RemovableItems, item) ||
+                ((state === null || state === void 0 ? void 0 : state.specialGameRule) === SpecialGameRule_1.SpecialGameRule.SLAMINGO &&
+                    item !== Item_1.Item.RARE_CANDY));
+        });
+        player.items.push(...itemsToRemove);
+        pokemon.removeItems(itemsToRemove, player);
+        if (pokemon.tm && types_1.TMPerAbility.has(pokemon.tm)) {
+            player.items.push(types_1.TMPerAbility.get(pokemon.tm));
+            pokemon.tm = Ability_1.Ability.DEFAULT;
+            pokemon.skill = pokemon.baseSkill;
+            pokemon.maxPP = pokemon.baseMaxPP;
+        }
     }
 }
 //# sourceMappingURL=game-commands.js.map

@@ -1,10 +1,10 @@
-import { User } from "@firebase/auth-types";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { Emotion, Title } from "../../../types";
+import type { User } from "@firebase/auth-types";
+import { type PayloadAction } from "@reduxjs/toolkit";
+import { type Emotion, type Title } from "../../../types";
 import { ConnectionStatus } from "../../../types/enum/ConnectionStatus";
-import { Language } from "../../../types/enum/Language";
-import { IUserMetadataJSON, IUserMetadataUnpacked } from "../../../types/interfaces/UserMetadata";
-import { INotification } from "../../../types/notifications";
+import type { Language } from "../../../types/enum/Language";
+import type { IUserMetadataJSON, IUserMetadataUnpacked } from "../../../types/interfaces/UserMetadata";
+import type { INotification } from "../../../types/notifications";
 export interface INetwork {
     uid: string;
     displayName: string;

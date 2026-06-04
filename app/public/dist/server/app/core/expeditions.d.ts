@@ -1,5 +1,5 @@
-import { BattleMissionData, DeliveryMissionData, Expedition, ExpeditionData, ExpeditionRank, ExpeditionType, ExplorationMissionData, RescueMissionData } from "../types/enum/Expedition";
-import { IUserMetadataClient, IUserMetadataMongo, IUserMetadataUnpacked } from "../types/interfaces/UserMetadata";
+import { type BattleMissionData, type DeliveryMissionData, type Expedition, type ExpeditionData, ExpeditionRank, ExpeditionType, type ExplorationMissionData, type RescueMissionData } from "../types/enum/Expedition";
+import type { IUserMetadataClient, IUserMetadataMongo, IUserMetadataUnpacked } from "../types/interfaces/UserMetadata";
 export declare function getPlayerExpeditions(user: IUserMetadataClient | IUserMetadataMongo | IUserMetadataUnpacked): Expedition[];
 export declare function getExpeditionTier(level: number, index: number): ExpeditionRank;
 export declare function getExpeditionLabel(expedition: Expedition): string;

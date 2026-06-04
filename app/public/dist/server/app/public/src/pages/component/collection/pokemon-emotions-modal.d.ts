@@ -1,4 +1,4 @@
-import { Pkm } from "../../../../../types/enum/Pokemon";
+import { type Pkm } from "../../../../../types/enum/Pokemon";
 import "./pokemon-emotions-modal.css";
 export default function PokemonEmotionsModal(props: {
     pokemon: Pkm;

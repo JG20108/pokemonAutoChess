@@ -48,7 +48,7 @@ exports.deleteTournament = deleteTournament;
 exports.remakeTournamentLobby = remakeTournamentLobby;
 exports.participateInTournament = participateInTournament;
 exports.giveBooster = giveBooster;
-exports.heapSnapshot = heapSnapshot;
+exports.sendMaintenanceOrder = sendMaintenanceOrder;
 exports.deleteAccount = deleteAccount;
 exports.giveRole = giveRole;
 exports.giveTitle = giveTitle;
@@ -377,9 +377,9 @@ function giveBooster(params) {
     var _a;
     (_a = exports.rooms.lobby) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.GIVE_BOOSTER, params);
 }
-function heapSnapshot() {
+function sendMaintenanceOrder(order) {
     var _a;
-    (_a = exports.rooms.lobby) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.HEAP_SNAPSHOT);
+    (_a = exports.rooms.lobby) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.MAINTENANCE, order);
 }
 function deleteAccount() {
     var _a;

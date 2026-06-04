@@ -6,5 +6,5 @@ interface MainSidebarProps {
     leaveLabel: string;
 }
 export declare function MainSidebar(props: MainSidebarProps): import("react/jsx-runtime").JSX.Element;
-export type Modals = "announcement" | "booster" | "moderation" | "collection" | "jukebox" | "keybinds" | "meta" | "news" | "options" | "pokeguesser" | "profile" | "servers" | "sprite-tracker" | "synergy-wheel" | "team-builder" | "tier-list" | "tournaments" | "wiki";
+export type Modals = "announcement" | "booster" | "moderation" | "admin" | "collection" | "jukebox" | "keybinds" | "meta" | "news" | "options" | "pokeguesser" | "profile" | "servers" | "sprite-tracker" | "synergy-wheel" | "team-builder" | "tier-list" | "wiki";
 export {};

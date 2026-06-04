@@ -34,7 +34,7 @@ exports.DishByPkm = {
     [Pokemon_1.Pkm.TROPIUS]: Item_1.Item.NANAB_BERRY,
     [Pokemon_1.Pkm.SHUCKLE]: Item_1.Item.BERRY_JUICE,
     [Pokemon_1.Pkm.COMBEE]: Item_1.Item.HONEY,
-    [Pokemon_1.Pkm.VESPIQUEEN]: Item_1.Item.HONEY,
+    [Pokemon_1.Pkm.VESPIQUEN]: Item_1.Item.HONEY,
     [Pokemon_1.Pkm.CHANSEY]: Item_1.Item.NUTRITIOUS_EGG,
     [Pokemon_1.Pkm.BLISSEY]: Item_1.Item.NUTRITIOUS_EGG,
     [Pokemon_1.Pkm.NACLI]: Item_1.Item.ROCK_SALT,
@@ -417,6 +417,8 @@ exports.DishEffects = {
     RICE: [
         new effect_1.OnDishConsumedEffect(({ pokemon, entity, player }) => {
             entity === null || entity === void 0 ? void 0 : entity.addShield(50, entity, 0, false);
+            if (!player)
+                return;
             const tatsugiriOnBoard = (0, schemas_1.schemaValues)(player.board).find((e) => e && (0, config_1.getBaseAltForm)(e.name) === Pokemon_1.Pkm.TATSUGIRI_CURLY);
             if ((tatsugiriOnBoard === null || tatsugiriOnBoard === void 0 ? void 0 : tatsugiriOnBoard.name) === Pokemon_1.Pkm.TATSUGIRI_CURLY) {
                 entity === null || entity === void 0 ? void 0 : entity.addAttack(8, entity, 0, false);

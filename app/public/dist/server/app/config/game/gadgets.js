@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GADGETS_UNLOCKED_BY_LEVEL = exports.GADGETS = exports.GADGETS_NAMES = void 0;
-const __1 = require("..");
+const game_1 = require("./game");
 exports.GADGETS_NAMES = [
     "trainer_card",
     "bag",
@@ -66,7 +66,7 @@ exports.GADGETS = {
         name: "bot_builder",
         icon: "bot",
         levelRequired: 40,
-        disabled: !__1.BOTS_ENABLED
+        disabled: !game_1.BOTS_ENABLED
     },
     tier_list_maker: {
         name: "tier_list_maker",

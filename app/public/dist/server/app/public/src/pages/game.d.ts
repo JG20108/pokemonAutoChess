@@ -1,5 +1,5 @@
 import GameContainer from "../game/game-container";
-import GameScene from "../game/scenes/game-scene";
+import type GameScene from "../game/scenes/game-scene";
 export declare function getGameScene(): GameScene | undefined;
 export declare function getGameContainer(): GameContainer;
 export declare function cyclePlayers(amt: number): void;

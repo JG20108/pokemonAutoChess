@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
-import { Pokemon } from "../../../../../models/colyseus-models/pokemon";
+import { type Dispatch, type SetStateAction } from "react";
+import type { Pokemon } from "../../../../../models/colyseus-models/pokemon";
 import { Pkm } from "../../../../../types/enum/Pokemon";
 import "./pokeguesser.css";
 export default function Pokeguesser(props: {

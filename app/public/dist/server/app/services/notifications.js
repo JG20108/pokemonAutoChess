@@ -2,12 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.notificationsService = void 0;
 const colyseus_1 = require("colyseus");
+const types_1 = require("../types");
 const logger_1 = require("../utils/logger");
 class NotificationsService {
     constructor() {
         this.notifications = new Map();
     }
-    addNotification(userId, type, message) {
+    addNotification(userId, type, message, client) {
         const notification = {
             id: `${userId}-${Date.now()}-${Math.random()}`,
             userId,
@@ -16,6 +17,7 @@ class NotificationsService {
             timestamp: Date.now()
         };
         colyseus_1.matchMaker.presence.publish("notification-added", notification);
+        client === null || client === void 0 ? void 0 : client.send(types_1.Transfer.NOTIFICATIONS, [notification]);
     }
     onNotificationAdded(notification) {
         if (!this.notifications.has(notification.userId)) {

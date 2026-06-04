@@ -1,4 +1,4 @@
-import { IDps } from "../../../../../types";
+import type { IDps } from "../../../../../types";
 export default function GameDpsTaken(props: {
     maxDamageTaken: number;
     dps: IDps;

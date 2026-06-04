@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OnShieldDepletedEffect = exports.OnMoveEffect = exports.OnDamageDealtEffect = exports.OnAttackReceivedEffect = exports.OnDamageReceivedEffect = exports.OnAbilityCastEffect = exports.OnAttackEffect = exports.BeforeAttackEffect = exports.OnHitEffect = exports.PeriodicEffect = exports.OnResurrectEffect = exports.OnDeathEffect = exports.OnKillEffect = exports.OnItemDroppedEffect = exports.OnSimulationStartEffect = exports.OnBenchedDuringFightEffect = exports.OnStageStartEffect = exports.OnItemRemovedEffect = exports.OnItemGainedEffect = exports.OnDishConsumedEffect = exports.OnSpawnEffect = exports.Effect = void 0;
+exports.OnGroundDiggingEffect = exports.OnShieldDepletedEffect = exports.OnMoveEffect = exports.OnDamageDealtEffect = exports.OnAttackReceivedEffect = exports.OnDamageReceivedEffect = exports.OnAbilityCastEffect = exports.OnAttackEffect = exports.BeforeAttackEffect = exports.OnHitEffect = exports.PeriodicEffect = exports.OnResurrectEffect = exports.OnDeathEffect = exports.OnKillEffect = exports.OnItemDroppedEffect = exports.OnSimulationStartEffect = exports.OnBenchedDuringFightEffect = exports.OnSpotlightChangeEffect = exports.OnEvolutionEffect = exports.OnChangePositionEffect = exports.OnStageStartEffect = exports.OnItemRemovedEffect = exports.OnItemGainedEffect = exports.OnDishConsumedEffect = exports.OnSpawnEffect = exports.Effect = void 0;
 class Effect {
     apply(...args) { }
     constructor(effect, origin) {
@@ -47,6 +47,27 @@ class OnStageStartEffect extends Effect {
     apply(args) { }
 }
 exports.OnStageStartEffect = OnStageStartEffect;
+class OnChangePositionEffect extends Effect {
+    constructor(effect, origin) {
+        super(effect, origin);
+    }
+    apply(args) { }
+}
+exports.OnChangePositionEffect = OnChangePositionEffect;
+class OnEvolutionEffect extends Effect {
+    constructor(effect, origin) {
+        super(effect, origin);
+    }
+    apply(args) { }
+}
+exports.OnEvolutionEffect = OnEvolutionEffect;
+class OnSpotlightChangeEffect extends Effect {
+    constructor(effect, origin) {
+        super(effect, origin);
+    }
+    apply(args) { }
+}
+exports.OnSpotlightChangeEffect = OnSpotlightChangeEffect;
 class OnBenchedDuringFightEffect extends Effect {
     constructor(effect, origin) {
         super(effect, origin);
@@ -171,4 +192,11 @@ class OnShieldDepletedEffect extends Effect {
     }
 }
 exports.OnShieldDepletedEffect = OnShieldDepletedEffect;
+class OnGroundDiggingEffect extends Effect {
+    apply(args) { }
+    constructor(effect, origin) {
+        super(effect, origin);
+    }
+}
+exports.OnGroundDiggingEffect = OnGroundDiggingEffect;
 //# sourceMappingURL=effect.js.map

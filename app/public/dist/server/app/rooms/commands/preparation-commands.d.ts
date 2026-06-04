@@ -1,12 +1,12 @@
 import { Command } from "@colyseus/command";
-import { Client } from "colyseus";
-import { UserRecord } from "firebase-admin/lib/auth/user-record";
-import { IGameUser } from "../../models/colyseus-models/game-user";
-import { EloRank } from "../../types/enum/EloRank";
+import { type Client } from "colyseus";
+import type { UserRecord } from "firebase-admin/lib/auth/user-record";
+import { type IGameUser } from "../../models/colyseus-models/game-user";
+import type { EloRank } from "../../types/enum/EloRank";
 import { BotDifficulty } from "../../types/enum/Game";
 import { SpecialGameRule } from "../../types/enum/SpecialGameRule";
 import type { IBot } from "../../types/models/bot-v2";
-import PreparationRoom from "../preparation-room";
+import type PreparationRoom from "../preparation-room";
 export declare class OnJoinCommand extends Command<PreparationRoom, {
     client: Client<{
         auth: UserRecord;

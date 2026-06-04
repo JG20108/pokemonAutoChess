@@ -1,4 +1,4 @@
-import { ICreditName } from "../types";
+import { type ICreditName } from "../types";
 export interface PokemonCredits {
     portrait_credit: Credit;
     sprite_credit: Credit;

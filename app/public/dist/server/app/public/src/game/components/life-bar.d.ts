@@ -1,5 +1,6 @@
-import Phaser, { GameObjects } from "phaser";
-import { Team } from "../../../../types/enum/Game";
+import type Phaser from "phaser";
+import { GameObjects } from "phaser";
+import type { Team } from "../../../../types/enum/Game";
 export default class LifeBar extends GameObjects.Graphics {
     maxHp: number;
     hp: number;

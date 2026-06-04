@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Board = void 0;
+exports.effectInOrientation = effectInOrientation;
+exports.effectInLine = effectInLine;
 const types_1 = require("../types");
 const Effect_1 = require("../types/enum/Effect");
 const Game_1 = require("../types/enum/Game");
@@ -8,7 +10,6 @@ const distance_1 = require("../utils/distance");
 const logger_1 = require("../utils/logger");
 const orientation_1 = require("../utils/orientation");
 const random_1 = require("../utils/random");
-const pokemon_entity_1 = require("./pokemon-entity");
 class Board {
     constructor(rows, colums) {
         this.rows = rows;
@@ -308,7 +309,7 @@ class Board {
                 target: target
             };
         };
-        const enemies = this.cells.filter((e) => e instanceof pokemon_entity_1.PokemonEntity && e.hp > 0 && e.team !== entity.team);
+        const enemies = this.cells.filter((e) => e != null && e.hp > 0 && e.team !== entity.team);
         if (enemies.length === 0) {
             return null;
         }
@@ -511,16 +512,14 @@ class Board {
     }
     getClosestEnemy(positionX, positionY, enemyTeam) {
         const closestEnemy = this.cells
-            .filter((entity) => entity instanceof pokemon_entity_1.PokemonEntity &&
-            entity.team === enemyTeam &&
-            entity.hp > 0)
+            .filter((entity) => entity != null && entity.team === enemyTeam && entity.hp > 0)
             .sort((a, b) => (0, distance_1.distanceC)(a.positionX, a.positionY, positionX, positionY) -
             (0, distance_1.distanceC)(b.positionX, b.positionY, positionX, positionY))[0];
         return closestEnemy;
     }
     getClosestAlly(positionX, positionY, allyTeam, excludeId) {
         const closestAlly = this.cells
-            .filter((entity) => entity instanceof pokemon_entity_1.PokemonEntity &&
+            .filter((entity) => entity != null &&
             entity.team === allyTeam &&
             entity.hp > 0 &&
             (!excludeId || entity.id !== excludeId))
@@ -530,12 +529,84 @@ class Board {
     }
     getClosestEnemies(positionX, positionY, enemyTeam) {
         return this.cells
-            .filter((entity) => entity instanceof pokemon_entity_1.PokemonEntity &&
-            entity.team === enemyTeam &&
-            entity.hp > 0)
+            .filter((entity) => entity != null && entity.team === enemyTeam && entity.hp > 0)
             .sort((a, b) => (0, distance_1.distanceC)(a.positionX, a.positionY, positionX, positionY) -
             (0, distance_1.distanceC)(b.positionX, b.positionY, positionX, positionY));
     }
 }
 exports.Board = Board;
+function effectInOrientation(board, pokemon, target, effect, maxRange) {
+    const orientation = typeof target === "string"
+        ? target
+        : board.orientation(pokemon.positionX, pokemon.positionY, target.positionX, target.positionY, pokemon, target);
+    const targetsHit = new Set();
+    const applyEffect = (x, y) => {
+        if (maxRange != null) {
+            const distance = (0, distance_1.distanceC)(x, y, pokemon.positionX, pokemon.positionY);
+            if (distance > maxRange) {
+                return;
+            }
+        }
+        const value = board.getEntityOnCell(x, y);
+        if (value != null && value.team !== pokemon.team) {
+            targetsHit.add(value);
+        }
+        effect({ x, y, value });
+    };
+    switch (orientation) {
+        case Game_1.Orientation.UP:
+            for (let y = pokemon.positionY + 1; y < board.rows; y++) {
+                applyEffect(pokemon.positionX, y);
+            }
+            break;
+        case Game_1.Orientation.UPRIGHT:
+            for (let x = pokemon.positionX + 1, y = pokemon.positionY + 1; x < board.columns && y < board.rows; x++, y++) {
+                applyEffect(x, y);
+            }
+            break;
+        case Game_1.Orientation.RIGHT:
+            for (let x = pokemon.positionX + 1; x < board.rows; x++) {
+                applyEffect(x, pokemon.positionY);
+            }
+            break;
+        case Game_1.Orientation.DOWNRIGHT:
+            for (let x = pokemon.positionX + 1, y = pokemon.positionY - 1; x < board.columns && y >= 0; x++, y--) {
+                applyEffect(x, y);
+            }
+            break;
+        case Game_1.Orientation.DOWN:
+            for (let y = pokemon.positionY - 1; y >= 0; y--) {
+                applyEffect(pokemon.positionX, y);
+            }
+            break;
+        case Game_1.Orientation.DOWNLEFT:
+            for (let x = pokemon.positionX - 1, y = pokemon.positionY - 1; x >= 0 && y >= 0; x--, y--) {
+                applyEffect(x, y);
+            }
+            break;
+        case Game_1.Orientation.LEFT:
+            for (let x = pokemon.positionX - 1; x >= 0; x--) {
+                applyEffect(x, pokemon.positionY);
+            }
+            break;
+        case Game_1.Orientation.UPLEFT:
+            for (let x = pokemon.positionX - 1, y = pokemon.positionY + 1; x >= 0 && y < board.rows; x--, y++) {
+                applyEffect(x, y);
+            }
+            break;
+    }
+    const isEntity = (obj) => obj.hasOwnProperty("positionX");
+    if (isEntity(target) && targetsHit.size === 0) {
+        effect({ x: target.positionX, y: target.positionY, value: target });
+    }
+}
+function effectInLine(board, pokemon, target, effect) {
+    const angleToTarget = Math.atan2(target.positionY - pokemon.positionY, target.positionX - pokemon.positionX);
+    const distance = 12;
+    const finalX = Math.round(pokemon.positionX + distance * Math.cos(angleToTarget));
+    const finalY = Math.round(pokemon.positionY + distance * Math.sin(angleToTarget));
+    board
+        .getCellsBetween(pokemon.positionX, pokemon.positionY, finalX, finalY)
+        .forEach(effect);
+}
 //# sourceMappingURL=board.js.map

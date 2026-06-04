@@ -1,4 +1,4 @@
-import { ITypeStatistics } from "../types/meta";
+import type { ITypeStatistics } from "../types/meta";
 import type { IDendrogram } from "../types/models/dendrogram";
 import type { IGameActivity } from "../types/models/game-activity";
 import type { IItemsStatisticV2 } from "../types/models/items-statistic-v2";

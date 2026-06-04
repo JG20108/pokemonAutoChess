@@ -1,5 +1,7 @@
 import { Pkm } from "../../types/enum/Pokemon";
-import { IPokemonData } from "../../types/interfaces/PokemonData";
+import type { IPokemonData } from "../../types/interfaces/PokemonData";
 export declare const PRECOMPUTED_POKEMONS_DATA: { [pkm in Pkm]?: Omit<IPokemonData, "name" | "index">; };
 export declare const PRECOMPUTED_REGIONAL_MONS: Pkm[];
 export declare function getPokemonData(name: Pkm): IPokemonData;
+export declare function getRegularsTier1(pokemons: Pkm[]): Pkm[];
+export declare function getAdditionalsTier1(pokemons: Pkm[]): Pkm[];

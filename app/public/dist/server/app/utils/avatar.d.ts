@@ -1,4 +1,4 @@
-import { Emotion, PkmWithCustom } from "../types";
+import { Emotion, type PkmWithCustom } from "../types";
 export declare function getPortraitSrc(index: string, shiny?: boolean, emotion?: Emotion): string;
 export declare function getPkmFromPortraitSrc(src: string): PkmWithCustom | null;
 export declare function getAvatarSrc(avatar: string): string;

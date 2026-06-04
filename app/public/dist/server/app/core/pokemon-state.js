@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const config_1 = require("../config");
-const effects_1 = require("../models/effects");
+const synergies_1 = require("../config/game/synergies");
 const types_1 = require("../types");
 const Effect_1 = require("../types/enum/Effect");
 const Game_1 = require("../types/enum/Game");
 const Item_1 = require("../types/enum/Item");
 const Passive_1 = require("../types/enum/Passive");
+const Pokemon_1 = require("../types/enum/Pokemon");
 const Synergy_1 = require("../types/enum/Synergy");
 const Weather_1 = require("../types/enum/Weather");
 const array_1 = require("../utils/array");
@@ -15,13 +16,13 @@ const logger_1 = require("../utils/logger");
 const number_1 = require("../utils/number");
 const random_1 = require("../utils/random");
 const effect_1 = require("./effects/effect");
-const synergies_1 = require("./effects/synergies");
+const synergies_2 = require("./effects/synergies");
 class PokemonState {
     constructor() {
         this.name = "";
     }
     attack(pokemon, board, target, isTripleAttack = false) {
-        var _a;
+        var _a, _b, _c;
         if (target && target.hp > 0) {
             let damage = pokemon.atk;
             let physicalDamage = 0;
@@ -89,7 +90,7 @@ class PokemonState {
                 damage = 0;
             }
             if (pokemon.types.has(Synergy_1.Synergy.FAIRY)) {
-                const { takenDamage, death } = (0, synergies_1.applyWandEffects)(pokemon, target, damage, crit);
+                const { takenDamage, death } = (0, synergies_2.applyWandEffects)(pokemon, target, damage, crit);
                 totalTakenDamage += takenDamage;
                 if (death)
                     hasAttackKilled = true;
@@ -116,7 +117,7 @@ class PokemonState {
                 trueDamagePart += 1.0;
             }
             else if (pokemon.effects.has(Effect_1.EffectEnum.MAX_MELTDOWN)) {
-                trueDamagePart += 1.2;
+                trueDamagePart += 1.25;
             }
             if (pokemon.items.has(Item_1.Item.RED_ORB)) {
                 trueDamagePart += 0.25;
@@ -138,6 +139,20 @@ class PokemonState {
                     (1 + pokemon.ap / 100) *
                     (abilityCrit ? pokemon.critPower : 1));
                 pokemon.effects.delete(Effect_1.EffectEnum.SHADOW_PUNCH_NEXT_ATTACK);
+            }
+            if (pokemon.effects.has(Effect_1.EffectEnum.ATTACK_ORDER_NEXT_ATTACK)) {
+                const abilityCrit = pokemon.effects.has(Effect_1.EffectEnum.ABILITY_CRIT) && crit;
+                const nbComfeeAllies = board.cells.reduce((count, ally) => {
+                    if (ally && ally.team === pokemon.team && ally.name === Pokemon_1.Pkm.COMBEE) {
+                        return count + 1;
+                    }
+                    return count;
+                }, 0);
+                specialDamage += Math.ceil((((_b = [20, 40, 60][pokemon.stars - 1]) !== null && _b !== void 0 ? _b : 60) +
+                    nbComfeeAllies * ((_c = [10, 20, 30][pokemon.stars - 1]) !== null && _c !== void 0 ? _c : 60)) *
+                    (1 + pokemon.ap / 100) *
+                    (abilityCrit ? pokemon.critPower : 1));
+                pokemon.effects.delete(Effect_1.EffectEnum.ATTACK_ORDER_NEXT_ATTACK);
             }
             if (trueDamagePart > 0) {
                 trueDamage = Math.ceil(damage * trueDamagePart);
@@ -360,7 +375,7 @@ class PokemonState {
             if (pokemon.status.freeze &&
                 attacker &&
                 attacker.effects.has(Effect_1.EffectEnum.SHEER_COLD)) {
-                damage *= 1.5;
+                damage *= 1.35;
             }
             let def = pokemon.status.armorReduction
                 ? Math.round(pokemon.def / 2)
@@ -392,7 +407,7 @@ class PokemonState {
                         isRetaliation: true
                     });
                     if (pokemon.hasSynergyEffect(Synergy_1.Synergy.HUMAN))
-                        synergies_1.humanHealEffect.apply({
+                        synergies_2.humanHealEffect.apply({
                             pokemon,
                             target: attacker,
                             damage: reflectDamage,
@@ -505,7 +520,7 @@ class PokemonState {
                 pokemon.addAttack(pokemon.baseAtk * attackBonus, pokemon, 0, false);
                 pokemon.resetCooldown(500);
                 pokemon.broadcastAbility({ skill: "FOSSIL_RESURRECT" });
-                effects_1.SynergyEffects[Synergy_1.Synergy.FOSSIL].forEach((e) => {
+                synergies_1.SynergyEffects[Synergy_1.Synergy.FOSSIL].forEach((e) => {
                     pokemon.effects.delete(e);
                 });
             }

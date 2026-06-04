@@ -1,4 +1,4 @@
-import { ChatRoom } from "../../../network";
+import { type ChatRoom } from "../../../network";
 import "./chat.css";
 export default function Chat(props: {
     source: ChatRoom;

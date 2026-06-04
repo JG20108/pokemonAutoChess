@@ -1,6 +1,6 @@
 import { DungeonPMDO } from "../../types/enum/Dungeon";
-import { GameMode } from "../../types/enum/Game";
-import { Synergy } from "../../types/enum/Synergy";
+import type { GameMode } from "../../types/enum/Game";
+import type { Synergy } from "../../types/enum/Synergy";
 export interface Pokemon {
     name: string;
     avatar: string;

@@ -1,5 +1,5 @@
 import { GameObjects } from "phaser";
-import { PortraitOptions } from "../../pages/component/pokemon-portrait";
+import { type PortraitOptions } from "../../pages/component/pokemon-portrait";
 export declare class GameDialog extends GameObjects.DOMElement {
     dom: HTMLDivElement;
     constructor({ scene, dialog, dialogTitle, portrait, extraClass }: {

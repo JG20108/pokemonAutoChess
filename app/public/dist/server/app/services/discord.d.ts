@@ -1,4 +1,4 @@
-import { IUserMetadataMongo } from "../types/interfaces/UserMetadata";
+import type { IUserMetadataMongo } from "../types/interfaces/UserMetadata";
 import type { IBot } from "../types/models/bot-v2";
 export declare const discordService: {
     announceBan(user: IUserMetadataMongo, bannedUser: IUserMetadataMongo, reason: string): void;

@@ -12,11 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteRoomCommand = exports.OpenGameCommand = exports.JoinOrOpenRoomCommand = exports.SelectLanguageCommand = exports.UnbanUserCommand = exports.BanUserCommand = exports.OnSearchByIdCommand = exports.ChangeAvatarCommand = exports.ChangeTitleCommand = exports.ChangeNameCommand = exports.RemoveMessageCommand = exports.OnNewMessageCommand = exports.GiveRoleCommand = exports.GiveAllPortraitsCommand = exports.GiveBoostersCommand = exports.HeapSnapshotCommand = exports.DeleteAccountCommand = exports.GiveTitleCommand = exports.OnLeaveCommand = exports.OnJoinCommand = void 0;
+exports.DeleteRoomCommand = exports.OpenGameCommand = exports.JoinOrOpenRoomCommand = exports.SelectLanguageCommand = exports.UnbanUserCommand = exports.BanUserCommand = exports.OnSearchByIdCommand = exports.ChangeAvatarCommand = exports.ChangeTitleCommand = exports.ChangeNameCommand = exports.RemoveMessageCommand = exports.OnNewMessageCommand = exports.GiveRoleCommand = exports.GiveAllPortraitsCommand = exports.GiveBoostersCommand = exports.DeleteAccountCommand = exports.GiveTitleCommand = exports.OnLeaveCommand = exports.OnJoinCommand = void 0;
 const command_1 = require("@colyseus/command");
 const colyseus_1 = require("colyseus");
 const crypto_1 = require("crypto");
-const v8_1 = require("v8");
 const config_1 = require("../../config");
 const gadgets_1 = require("../../config/game/gadgets");
 const collection_1 = require("../../core/collection");
@@ -57,14 +56,25 @@ class OnJoinCommand extends command_1.Command {
                 else {
                     const starterBoosters = 3;
                     const starterPokemon = (0, random_1.pickRandomIn)(Starters_1.Starters);
-                    const starterAvatar = Pokemon_1.PkmIndex[starterPokemon] + "/Normal";
                     const randomName = (0, name_generation_1.generateRandomName)(starterPokemon);
+                    const starterAvatar = Pokemon_1.PkmIndex[starterPokemon] + "/Normal";
+                    const starterCollection = new Map();
+                    const starterCollectionItem = {
+                        id: Pokemon_1.PkmIndex[starterPokemon],
+                        unlocked: Buffer.alloc(5, 0),
+                        dust: 0,
+                        selectedEmotion: types_1.Emotion.NORMAL,
+                        selectedShiny: false,
+                        played: 0
+                    };
+                    collection_1.CollectionUtils.unlockEmotion(starterCollectionItem.unlocked, types_1.Emotion.NORMAL, false);
+                    starterCollection.set(Pokemon_1.PkmIndex[starterPokemon], starterCollectionItem);
                     yield user_metadata_1.default.create({
                         uid: client.auth.uid,
                         displayName: randomName,
                         avatar: starterAvatar,
                         booster: starterBoosters,
-                        pokemonCollection: new Map()
+                        pokemonCollection: starterCollection
                     });
                     const newUser = {
                         uid: client.auth.uid,
@@ -80,7 +90,7 @@ class OnJoinCommand extends command_1.Command {
                         eventPoints: 0,
                         maxEventPoints: 0,
                         eventFinishTime: null,
-                        pokemonCollection: new Map(),
+                        pokemonCollection: starterCollection,
                         booster: starterBoosters,
                         titles: [],
                         title: "",
@@ -150,16 +160,6 @@ class DeleteAccountCommand extends command_1.Command {
     }
 }
 exports.DeleteAccountCommand = DeleteAccountCommand;
-class HeapSnapshotCommand extends command_1.Command {
-    execute({ client }) {
-        const u = this.room.users.get(client.auth.uid);
-        if (u && u.role === types_1.Role.ADMIN) {
-            logger_1.logger.info("writing heap snapshot");
-            (0, v8_1.writeHeapSnapshot)();
-        }
-    }
-}
-exports.HeapSnapshotCommand = HeapSnapshotCommand;
 class GiveBoostersCommand extends command_1.Command {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ client, uid, numberOfBoosters = 1 }) {

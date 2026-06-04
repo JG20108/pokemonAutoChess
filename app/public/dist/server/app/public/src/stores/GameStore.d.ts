@@ -1,11 +1,11 @@
-import { Slice } from "@reduxjs/toolkit";
-import { Emotion, IDps, IExperienceManager, IPlayer, ISimulation } from "../../../types";
+import { type Slice } from "@reduxjs/toolkit";
+import type { Emotion, IDps, IExperienceManager, IPlayer, ISimulation } from "../../../types";
 import { GameMode, GamePhaseState, Team } from "../../../types/enum/Game";
-import { Item } from "../../../types/enum/Item";
-import { Pkm, PkmProposition } from "../../../types/enum/Pokemon";
-import { SpecialGameRule } from "../../../types/enum/SpecialGameRule";
+import type { Item } from "../../../types/enum/Item";
+import type { Pkm, PkmProposition } from "../../../types/enum/Pokemon";
+import type { SpecialGameRule } from "../../../types/enum/SpecialGameRule";
 import { Weather } from "../../../types/enum/Weather";
-import { ILeaderboardInfo } from "../../../types/interfaces/LeaderboardInfo";
+import type { ILeaderboardInfo } from "../../../types/interfaces/LeaderboardInfo";
 export interface GameStateStore {
     afterGameId: string;
     gameMode: GameMode;

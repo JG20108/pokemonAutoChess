@@ -1,4 +1,4 @@
-import { Emotion } from "../types";
+import type { Emotion } from "../types";
 import type { IUserMetadataMongo } from "../types/interfaces/UserMetadata";
 export type CollectionMutationResult = {
     userDoc: IUserMetadataMongo;

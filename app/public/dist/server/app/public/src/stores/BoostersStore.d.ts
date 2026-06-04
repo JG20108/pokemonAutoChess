@@ -1,4 +1,4 @@
-import { PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction } from "@reduxjs/toolkit";
 import type { Booster } from "../../../types/Booster";
 export interface IUserBoostersState {
     boosterContent: Booster;

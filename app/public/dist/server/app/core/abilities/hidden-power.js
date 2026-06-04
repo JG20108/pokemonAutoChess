@@ -9,7 +9,6 @@ const config_1 = require("../../config");
 const pokemon_factory_1 = __importDefault(require("../../models/pokemon-factory"));
 const precomputed_pokemon_data_1 = require("../../models/precomputed/precomputed-pokemon-data");
 const precomputed_types_and_categories_1 = require("../../models/precomputed/precomputed-types-and-categories");
-const Ability_1 = require("../../types/enum/Ability");
 const Game_1 = require("../../types/enum/Game");
 const Item_1 = require("../../types/enum/Item");
 const Pokemon_1 = require("../../types/enum/Pokemon");
@@ -18,8 +17,12 @@ const board_1 = require("../../utils/board");
 const number_1 = require("../../utils/number");
 const random_1 = require("../../utils/random");
 const eggs_1 = require("../eggs");
-const abilities_1 = require("./abilities");
+const hatch_time_1 = require("../evolution-logic/hatch-time");
 const ability_strategy_1 = require("./ability-strategy");
+const cast_1 = require("./cast");
+const explosion_1 = require("./explosion");
+const meditate_1 = require("./meditate");
+const thunder_shock_1 = require("./thunder-shock");
 class HiddenPowerStrategy extends ability_strategy_1.AbilityStrategy {
     constructor() {
         super(...arguments);
@@ -100,7 +103,7 @@ class HiddenPowerEStrategy extends HiddenPowerStrategy {
             const egg = (0, eggs_1.giveRandomEgg)(unown.player, false);
             if (!egg)
                 return;
-            egg.stacks = egg.evolutionRule.getHatchTime(egg, unown.player) - 1;
+            egg.stacks = (0, hatch_time_1.getHatchTime)(egg, unown.player) - 1;
         }
     }
 }
@@ -204,7 +207,7 @@ class HiddenPowerNStrategy extends HiddenPowerStrategy {
                 const target = board.getEntityOnCell(pokemon.targetX, pokemon.targetY);
                 if (target) {
                     pokemon.addShield(50, unown, 1, false);
-                    (0, abilities_1.castAbility)(Ability_1.Ability.EXPLOSION, pokemon, board, target, false);
+                    (0, cast_1.castAbility)(explosion_1.explosionStrategy, pokemon, board, target, false);
                 }
             }
         });
@@ -332,7 +335,7 @@ class HiddenPowerVStrategy extends HiddenPowerStrategy {
         super.process(unown, board, target, crit);
         board.forEach((x, y, enemy) => {
             if (enemy && unown.team !== enemy.team) {
-                (0, abilities_1.castAbility)(Ability_1.Ability.THUNDER_SHOCK, unown, board, enemy, false);
+                (0, cast_1.castAbility)(thunder_shock_1.thunderShockStrategy, unown, board, enemy, false);
             }
         });
     }
@@ -399,7 +402,7 @@ class HiddenPowerYStrategy extends HiddenPowerStrategy {
         super.process(unown, board, target, crit);
         board.forEach((x, y, ally) => {
             if (ally && unown.team === ally.team) {
-                (0, abilities_1.castAbility)(Ability_1.Ability.MEDITATE, ally, board, ally, false);
+                (0, cast_1.castAbility)(meditate_1.meditateStrategy, ally, board, ally, false);
             }
         });
     }

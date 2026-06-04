@@ -1,7 +1,7 @@
 import { GameObjects } from "phaser";
-import { IPlayer } from "../../../../types";
-import { Emotion } from "../../../../types/enum/Emotion";
-import GameScene from "../scenes/game-scene";
+import type { IPlayer } from "../../../../types";
+import { type Emotion } from "../../../../types/enum/Emotion";
+import type GameScene from "../scenes/game-scene";
 import "./emote-menu.css";
 export declare function EmoteMenuComponent(props: {
     player: IPlayer;

@@ -1,4 +1,4 @@
-import { IUserMetadataJSON, IUserMetadataLean, IUserMetadataMongo } from "../../types/interfaces/UserMetadata";
+import type { IUserMetadataJSON, IUserMetadataLean, IUserMetadataMongo } from "../../types/interfaces/UserMetadata";
 declare const _default: import("mongoose").Model<IUserMetadataMongo, {}, {}, {}, import("mongoose").Document<unknown, {}, IUserMetadataMongo, {}, import("mongoose").DefaultSchemaOptions> & IUserMetadataMongo & {
     _id: import("mongoose").Types.ObjectId;
 } & {

@@ -1,16 +1,17 @@
-import { MapSchema } from "@colyseus/schema";
-import Player from "../../models/colyseus-models/player";
-import { Pokemon } from "../../models/colyseus-models/pokemon";
-import GameRoom from "../../rooms/game-room";
-import { IPokemonEntity } from "../../types";
-import { Ability } from "../../types/enum/Ability";
-import { EffectEnum } from "../../types/enum/Effect";
-import { AttackType } from "../../types/enum/Game";
-import { Item } from "../../types/enum/Item";
-import { Passive } from "../../types/enum/Passive";
+import type { MapSchema } from "@colyseus/schema";
+import type Player from "../../models/colyseus-models/player";
+import type { Pokemon } from "../../models/colyseus-models/pokemon";
+import type GameRoom from "../../rooms/game-room";
+import type GameState from "../../rooms/states/game-state";
+import type { IPokemonEntity } from "../../types";
+import type { Ability } from "../../types/enum/Ability";
+import type { EffectEnum } from "../../types/enum/Effect";
+import type { AttackType } from "../../types/enum/Game";
+import type { Item } from "../../types/enum/Item";
+import type { Passive } from "../../types/enum/Passive";
 import type { Board } from "../board";
-import { PokemonEntity } from "../pokemon-entity";
-import Simulation from "../simulation";
+import type { PokemonEntity } from "../pokemon-entity";
+import type Simulation from "../simulation";
 type EffectOrigin = EffectEnum | Item | Passive | Ability;
 export declare abstract class Effect {
     priority: number;
@@ -25,7 +26,7 @@ export declare class OnSpawnEffect extends Effect {
 interface OnDishConsumedEffectArgs {
     pokemon: Pokemon;
     dish: Item;
-    player: Player;
+    player?: Player;
     entity?: PokemonEntity;
 }
 export declare class OnDishConsumedEffect extends Effect {
@@ -49,6 +50,41 @@ export declare class OnStageStartEffect extends Effect {
     constructor(effect?: (args: OnStageStartEffectArgs) => void, origin?: EffectOrigin);
     apply(args: OnStageStartEffectArgs): void;
 }
+interface OnChangePositionEffectArgs {
+    pokemon: Pokemon;
+    player: Player;
+    state: GameState;
+    oldX: number;
+    oldY: number;
+    newX: number;
+    newY: number;
+}
+export declare class OnChangePositionEffect extends Effect {
+    constructor(effect?: (args: OnChangePositionEffectArgs) => void, origin?: EffectOrigin);
+    apply(args: OnChangePositionEffectArgs): void;
+}
+export declare class OnEvolutionEffect extends Effect {
+    constructor(effect?: (args: {
+        pokemonEvolved: Pokemon;
+        player: Player;
+    }) => void, origin?: EffectOrigin);
+    apply(args: {
+        pokemonEvolved: Pokemon;
+        player: Player;
+    }): void;
+}
+export declare class OnSpotlightChangeEffect extends Effect {
+    constructor(effect?: (args: {
+        pokemon: Pokemon;
+        player: Player;
+        inSpotlight: boolean;
+    }) => void, origin?: EffectOrigin);
+    apply(args: {
+        pokemon: Pokemon;
+        player: Player;
+        inSpotlight: boolean;
+    }): void;
+}
 interface OnBenchedDuringFightEffectArgs {
     pokemon: Pokemon;
     player: Player;
@@ -60,7 +96,7 @@ export declare class OnBenchedDuringFightEffect extends Effect {
 }
 interface OnSimulationStartEffectArgs {
     simulation: Simulation;
-    player: Player;
+    player?: Player;
     team: MapSchema<IPokemonEntity>;
     entity: PokemonEntity;
 }
@@ -198,5 +234,15 @@ interface OnShieldDepletedEffectArgs {
 export declare class OnShieldDepletedEffect extends Effect {
     apply(args: OnShieldDepletedEffectArgs): void;
     constructor(effect?: (args: OnShieldDepletedEffectArgs) => void, origin?: EffectOrigin);
+}
+export declare class OnGroundDiggingEffect extends Effect {
+    apply(args: {
+        pokemon: Pokemon;
+        player: Player;
+    }): void;
+    constructor(effect?: (args: {
+        pokemon: Pokemon;
+        player: Player;
+    }) => void, origin?: EffectOrigin);
 }
 export {};

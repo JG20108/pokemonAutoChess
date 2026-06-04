@@ -48,7 +48,7 @@ class PokemonFactory {
         if (name in pokemon_1.PokemonClasses) {
             const PokemonClass = pokemon_1.PokemonClasses[name];
             const pokemon = new PokemonClass(name, shiny, emotion);
-            pokemon.maxHP = pokemon.hp;
+            pokemon.postConstructor();
             return pokemon;
         }
         else {

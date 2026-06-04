@@ -11,7 +11,7 @@ const react_1 = require("react");
 const react_i18next_1 = require("react-i18next");
 const react_tabs_1 = require("react-tabs");
 const config_1 = require("../../../../../config");
-const effects_1 = require("../../../../../models/effects");
+const synergies_1 = require("../../../../../config/game/synergies");
 const precomputed_pokemon_data_1 = require("../../../../../models/precomputed/precomputed-pokemon-data");
 const precomputed_types_1 = require("../../../../../models/precomputed/precomputed-types");
 const Game_1 = require("../../../../../types/enum/Game");
@@ -39,7 +39,7 @@ function WikiType(props) {
     const { t } = (0, react_i18next_1.useTranslation)();
     const [preferences] = (0, preferences_1.usePreferences)();
     const [overlap, setOverlap] = (0, react_1.useState)(null);
-    const effects = effects_1.SynergyEffects[props.type];
+    const effects = synergies_1.SynergyEffects[props.type];
     const pokemons = (0, pokemon_filters_1.filterPokemonsAccordingToPreferences)(precomputed_types_1.PRECOMPUTED_POKEMONS_PER_TYPE[props.type], preferences)
         .map((p) => (0, precomputed_pokemon_data_1.getPokemonData)(p))
         .sort((a, b) => a.stars - b.stars);

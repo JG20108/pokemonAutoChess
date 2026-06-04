@@ -1,4 +1,4 @@
-import { IAfterGamePlayer } from "../../../types";
+import type { IAfterGamePlayer } from "../../../types";
 import { GameMode } from "../../../types/enum/Game";
 export interface IUserAfterState {
     players: IAfterGamePlayer[];

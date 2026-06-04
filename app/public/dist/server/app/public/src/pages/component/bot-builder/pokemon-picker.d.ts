@@ -1,6 +1,6 @@
 import React from "react";
-import { PkmWithCustom } from "../../../../../types";
-import { Item } from "../../../../../types/enum/Item";
+import { type PkmWithCustom } from "../../../../../types";
+import type { Item } from "../../../../../types/enum/Item";
 export default function PokemonPicker(props: {
     selected?: PkmWithCustom | Item;
     selectEntity?: React.Dispatch<React.SetStateAction<PkmWithCustom>>;

@@ -1,4 +1,4 @@
-import { TournamentPlayerSchema, TournamentSchema } from "../../../../../models/colyseus-models/tournament";
+import type { TournamentPlayerSchema, TournamentSchema } from "../../../../../models/colyseus-models/tournament";
 import "./tournament-item.css";
 export default function TournamentItem(props: {
     tournament: TournamentSchema;

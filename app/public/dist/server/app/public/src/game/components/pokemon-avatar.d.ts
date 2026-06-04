@@ -1,6 +1,7 @@
-import Phaser, { GameObjects } from "phaser";
-import { Emotion, IPokemonAvatar } from "../../../../types";
-import GameScene from "../scenes/game-scene";
+import type Phaser from "phaser";
+import { GameObjects } from "phaser";
+import { type Emotion, type IPokemonAvatar } from "../../../../types";
+import type GameScene from "../scenes/game-scene";
 import EmoteMenu from "./emote-menu";
 import PokemonSprite from "./pokemon";
 export default class PokemonAvatar extends PokemonSprite {

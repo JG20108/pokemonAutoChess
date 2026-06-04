@@ -1,9 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pounceWandEffect = exports.normalShieldEffect = exports.wildBerserkEffect = exports.overgrowEffect = exports.onFlowerMonDeath = exports.fightingTrainingEffect = exports.FightingKnockbackEffect = exports.FlyingProtectionEffect = exports.OnFieldDeathEffect = exports.humanHealEffect = exports.SoundCryEffect = exports.electricTripleAttackEffect = exports.FireHitEffect = exports.GroundHoleEffect = exports.MonsterKillEffect = void 0;
+exports.cloneBugs = exports.pounceWandEffect = exports.normalShieldEffect = exports.wildBerserkEffect = exports.overgrowEffect = exports.onFlowerMonDeath = exports.fightingTrainingEffect = exports.FightingKnockbackEffect = exports.FlyingProtectionEffect = exports.OnFieldDeathEffect = exports.humanHealEffect = exports.SoundCryEffect = exports.electricTripleAttackEffect = exports.FireHitEffect = exports.GroundHoleEffect = exports.MonsterKillEffect = void 0;
 exports.applyWandEffects = applyWandEffects;
 const config_1 = require("../../config");
-const effects_1 = require("../../models/effects");
+const synergies_1 = require("../../config/game/synergies");
+const pokemon_factory_1 = __importDefault(require("../../models/pokemon-factory"));
 const types_1 = require("../../types");
 const Ability_1 = require("../../types/enum/Ability");
 const Effect_1 = require("../../types/enum/Effect");
@@ -16,18 +20,19 @@ const array_1 = require("../../utils/array");
 const board_1 = require("../../utils/board");
 const distance_1 = require("../../utils/distance");
 const number_1 = require("../../utils/number");
-const orientation_1 = require("../../utils/orientation");
 const random_1 = require("../../utils/random");
 const schemas_1 = require("../../utils/schemas");
+const board_2 = require("../board");
 const flower_pots_1 = require("../flower-pots");
 const simulation_command_1 = require("../simulation-command");
+const unit_score_1 = require("../unit-score");
 const effect_1 = require("./effect");
 class MonsterKillEffect extends effect_1.OnKillEffect {
     constructor(effect) {
         super(undefined, effect);
         this.hpBoosted = 0;
         this.count = 0;
-        this.synergyLevel = effects_1.SynergyEffects[Synergy_1.Synergy.MONSTER].indexOf(effect);
+        this.synergyLevel = synergies_1.SynergyEffects[Synergy_1.Synergy.MONSTER].indexOf(effect);
     }
     apply({ attacker, target }) {
         var _a, _b, _c;
@@ -48,7 +53,7 @@ class MonsterKillEffect extends effect_1.OnKillEffect {
 exports.MonsterKillEffect = MonsterKillEffect;
 class GroundHoleEffect extends effect_1.OnSpawnEffect {
     constructor(effect) {
-        const synergyLevel = effects_1.SynergyEffects[Synergy_1.Synergy.GROUND].indexOf(effect) + 1;
+        const synergyLevel = synergies_1.SynergyEffects[Synergy_1.Synergy.GROUND].indexOf(effect) + 1;
         super((pokemon, player) => {
             var _a;
             const y = (player === null || player === void 0 ? void 0 : player.team) === Game_1.Team.RED_TEAM
@@ -82,7 +87,7 @@ class FireHitEffect extends effect_1.OnAttackEffect {
     constructor(effect) {
         super(undefined, effect);
         this.count = 0;
-        this.synergyLevel = effects_1.SynergyEffects[Synergy_1.Synergy.FIRE].indexOf(effect);
+        this.synergyLevel = synergies_1.SynergyEffects[Synergy_1.Synergy.FIRE].indexOf(effect);
     }
     apply({ pokemon }) {
         pokemon.addAttack(this.synergyLevel, pokemon, 0, false);
@@ -129,7 +134,7 @@ class SoundCryEffect extends effect_1.OnAbilityCastEffect {
         this.count = 0;
         this.synergyLevel = -1;
         if (effect) {
-            this.synergyLevel = effects_1.SynergyEffects[Synergy_1.Synergy.SOUND].indexOf(effect);
+            this.synergyLevel = synergies_1.SynergyEffects[Synergy_1.Synergy.SOUND].indexOf(effect);
         }
     }
     apply(pokemon, board) {
@@ -185,7 +190,7 @@ class OnFieldDeathEffect extends effect_1.OnDeathEffect {
     constructor(effect) {
         super(({ pokemon, board }) => {
             var _a, _b;
-            const effectsIndex = effects_1.SynergyEffects[Synergy_1.Synergy.FIELD].indexOf(effect);
+            const effectsIndex = synergies_1.SynergyEffects[Synergy_1.Synergy.FIELD].indexOf(effect);
             const heal = (_a = config_1.FIELD_HEAL_PER_SYNERGY_LEVEL[effectsIndex]) !== null && _a !== void 0 ? _a : 0;
             const speedBoost = (_b = config_1.FIELD_SPEED_BUFF_PER_SYNERGY_LEVEL[effectsIndex]) !== null && _b !== void 0 ? _b : 0;
             pokemon.simulation.room.clock.setTimeout(() => {
@@ -522,7 +527,7 @@ function applyWandEffects(pokemon, target, attackDamage, crit) {
             case Item_1.Item.WHIRLWIND_WAND: {
                 if ((0, random_1.chance)(0.05, pokemon)) {
                     pokemon.broadcastAbility({ skill: "WHIRLWIND_WAND" });
-                    (0, orientation_1.effectInLine)(board, pokemon, target, (cell) => {
+                    (0, board_2.effectInLine)(board, pokemon, target, (cell) => {
                         if (cell.value && cell.value.team !== pokemon.team) {
                             const freeCellInTheBack = board.getSafePlaceAwayFrom(cell.value.positionX, cell.value.positionY, cell.value.team, 3);
                             if (freeCellInTheBack) {
@@ -536,7 +541,7 @@ function applyWandEffects(pokemon, target, attackDamage, crit) {
             case Item_1.Item.TUNNEL_WAND: {
                 if ((0, random_1.chance)(0.05, pokemon)) {
                     pokemon.broadcastAbility({ skill: "FAIRY_TUNNEL" });
-                    (0, orientation_1.effectInLine)(board, pokemon, target, (cell) => {
+                    (0, board_2.effectInLine)(board, pokemon, target, (cell) => {
                         if (cell.value != null &&
                             cell.value.team !== pokemon.team &&
                             cell.value.id !== target.id) {
@@ -582,4 +587,55 @@ exports.pounceWandEffect = new effect_1.OnAttackReceivedEffect(({ pokemon, board
         }
     }
 });
+const cloneBugs = ({ board, teamIndex, player, effects, simulation }) => {
+    const bugTeam = new Array();
+    board.forEach((pkm) => {
+        if (pkm.types.has(Synergy_1.Synergy.BUG) && pkm.positionY != 0) {
+            bugTeam.push(pkm);
+        }
+    });
+    bugTeam.sort((a, b) => (0, unit_score_1.getUnitScore)(b) - (0, unit_score_1.getUnitScore)(a));
+    let numberOfClones = 1;
+    let numberOfBugsToClone = 0;
+    if (effects.has(Effect_1.EffectEnum.COCOON)) {
+        numberOfBugsToClone = 1;
+    }
+    if (effects.has(Effect_1.EffectEnum.INFESTATION)) {
+        numberOfBugsToClone = 2;
+    }
+    if (effects.has(Effect_1.EffectEnum.HORDE)) {
+        numberOfBugsToClone = 3;
+    }
+    if (effects.has(Effect_1.EffectEnum.HEART_OF_THE_SWARM)) {
+        numberOfBugsToClone = 5;
+    }
+    numberOfBugsToClone = Math.min(numberOfBugsToClone, bugTeam.length);
+    for (let i = 0; i < numberOfBugsToClone; i++) {
+        const pokemonCloned = bugTeam[i];
+        let clonePkm = pokemonCloned.name;
+        if (pokemonCloned.passive === Passive_1.Passive.VESPIQUEN) {
+            numberOfClones = 2;
+            clonePkm = Pokemon_1.Pkm.COMBEE;
+        }
+        for (let numberOfClone = 0; numberOfClone < numberOfClones; numberOfClone++) {
+            const clone = pokemon_factory_1.default.createPokemonFromName(clonePkm, player);
+            clone.stacks = pokemonCloned.stacks;
+            const coord = simulation.getClosestFreeCellToPokemon(pokemonCloned, teamIndex);
+            if (coord) {
+                const cloneEntity = simulation.addPokemon(clone, coord.x, coord.y, teamIndex, true);
+                if (pokemonCloned.items.has(Item_1.Item.SHED_SHELL)) {
+                    const team = teamIndex === Game_1.Team.BLUE_TEAM
+                        ? simulation.blueTeam
+                        : simulation.redTeam;
+                    const clonedEntity = (0, schemas_1.schemaValues)(team).find((p) => p.refToBoardPokemon.id === pokemonCloned.id);
+                    if (clonedEntity) {
+                        clonedEntity.addMaxHP(-0.5 * pokemonCloned.maxHP, clonedEntity, 0, false);
+                    }
+                    cloneEntity.addMaxHP(-0.5 * clone.maxHP, cloneEntity, 0, false);
+                }
+            }
+        }
+    }
+};
+exports.cloneBugs = cloneBugs;
 //# sourceMappingURL=synergies.js.map

@@ -1,4 +1,4 @@
-import { PatchInfo } from "../../../../../config/game/patches";
+import type { PatchInfo } from "../../../../../config/game/patches";
 import "./patch-summary.css";
 interface PatchSummaryProps {
     patch: PatchInfo;

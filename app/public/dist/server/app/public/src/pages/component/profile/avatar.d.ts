@@ -1,4 +1,4 @@
-import { Role, Title } from "../../../../../types";
+import type { Role, Title } from "../../../../../types";
 import "./avatar.css";
 export declare function Avatar(props: {
     name: string;

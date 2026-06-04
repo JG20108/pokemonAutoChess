@@ -1,4 +1,4 @@
-import { IGameRecord } from "../../../../../models/colyseus-models/game-record";
+import type { IGameRecord } from "../../../../../models/colyseus-models/game-record";
 import "./game-history.css";
 export default function GameHistory(props: {
     uid: string;

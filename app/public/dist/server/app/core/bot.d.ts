@@ -1,4 +1,4 @@
-import Player from "../models/colyseus-models/player";
+import type Player from "../models/colyseus-models/player";
 import type { IBot } from "../types/models/bot-v2";
 export default class Bot {
     player: Player;

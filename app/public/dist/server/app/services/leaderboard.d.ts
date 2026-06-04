@@ -1,4 +1,4 @@
-import { ILeaderboardBotInfo, ILeaderboardInfo } from "../types/interfaces/LeaderboardInfo";
+import type { ILeaderboardBotInfo, ILeaderboardInfo } from "../types/interfaces/LeaderboardInfo";
 export declare function fetchLeaderboards(): Promise<[ILeaderboardInfo[], ILeaderboardBotInfo[], ILeaderboardInfo[], ILeaderboardInfo[]]>;
 export declare function fetchUserLeaderboard(): Promise<ILeaderboardInfo[]>;
 export declare function fetchLevelLeaderboard(): Promise<ILeaderboardInfo[]>;

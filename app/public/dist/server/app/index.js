@@ -47,7 +47,6 @@ function main() {
         setInterval(() => (0, leaderboard_1.fetchLeaderboards)(), 1000 * 60 * 10);
         colyseus_1.logger.info("Fetching meta reports...");
         (0, meta_1.fetchMetaReports)();
-        setInterval(() => (0, meta_1.fetchMetaReports)(), 1000 * 60 * 60 * 24);
         colyseus_1.logger.info("Refreshing sprite gap scanner...");
         setInterval(() => (0, sprite_gap_scanner_1.refreshSpriteGapData)(), 1000 * 60 * 60 * 24);
         colyseus_1.logger.info("Fetching Twitch streams...");

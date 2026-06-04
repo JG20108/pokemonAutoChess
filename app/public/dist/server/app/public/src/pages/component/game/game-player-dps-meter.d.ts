@@ -1,4 +1,4 @@
-import { IDps } from "../../../../../types";
+import type { IDps } from "../../../../../types";
 type GamePlayerDpsMeterInput = {
     dpsMeter: IDps[];
 };

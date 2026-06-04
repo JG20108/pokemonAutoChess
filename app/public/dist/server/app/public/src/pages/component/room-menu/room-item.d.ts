@@ -1,5 +1,5 @@
-import { RoomAvailable } from "@colyseus/sdk";
-import { IPreparationMetadata } from "../../../../../types";
+import type { RoomAvailable } from "@colyseus/sdk";
+import { type IPreparationMetadata } from "../../../../../types";
 import "./room-item.css";
 export default function RoomItem(props: {
     room: RoomAvailable<IPreparationMetadata>;

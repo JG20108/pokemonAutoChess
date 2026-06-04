@@ -1,6 +1,6 @@
-import Player from "../models/colyseus-models/player";
-import { Pokemon } from "../models/colyseus-models/pokemon";
-import GameState from "../rooms/states/game-state";
+import type Player from "../models/colyseus-models/player";
+import type { Pokemon } from "../models/colyseus-models/pokemon";
+import type GameState from "../rooms/states/game-state";
 import { Pkm } from "../types/enum/Pokemon";
 import { Synergy } from "../types/enum/Synergy";
 type PseudoStats = {

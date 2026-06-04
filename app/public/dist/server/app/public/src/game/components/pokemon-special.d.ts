@@ -1,7 +1,7 @@
-import { Emotion } from "../../../../types";
+import type { Emotion } from "../../../../types";
 import { Orientation, PokemonActionState } from "../../../../types/enum/Game";
-import { Pkm } from "../../../../types/enum/Pokemon";
-import GameScene from "../scenes/game-scene";
+import type { Pkm } from "../../../../types/enum/Pokemon";
+import type GameScene from "../scenes/game-scene";
 import { GameDialog } from "./game-dialog";
 import PokemonSprite from "./pokemon";
 export default class PokemonSpecial extends PokemonSprite {

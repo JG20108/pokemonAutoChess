@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { type RefObject } from "react";
 interface Position {
     x: number;
     y: number;
@@ -11,7 +11,7 @@ interface UseDraggableOptions {
 interface UseDraggableReturn {
     position: Position;
     isDragging: boolean;
-    handleMouseDown: (e: React.MouseEvent, ignoreSelector?: string) => void;
+    handlePointerDown: (e: React.PointerEvent, ignoreSelector?: string) => void;
     containerRef: RefObject<HTMLDivElement | null>;
 }
 export declare function useDraggable(options?: UseDraggableOptions): UseDraggableReturn;

@@ -1,16 +1,17 @@
-import { Room } from "@colyseus/sdk";
-import { User } from "@firebase/auth-types";
-import AfterGameState from "../../rooms/states/after-game-state";
-import GameState from "../../rooms/states/game-state";
-import LobbyState from "../../rooms/states/lobby-state";
-import PreparationState from "../../rooms/states/preparation-state";
-import { Emotion, Role, Title } from "../../types";
+import { type Room } from "@colyseus/sdk";
+import type { User } from "@firebase/auth-types";
+import type AfterGameState from "../../rooms/states/after-game-state";
+import type GameState from "../../rooms/states/game-state";
+import type LobbyState from "../../rooms/states/lobby-state";
+import type PreparationState from "../../rooms/states/preparation-state";
+import { type Emotion, type Role, type Title } from "../../types";
 import type { Booster } from "../../types/Booster";
-import { EloRank } from "../../types/enum/EloRank.js";
-import { BotDifficulty } from "../../types/enum/Game.js";
-import { SpecialGameRule } from "../../types/enum/SpecialGameRule.js";
-import { IUserMetadataJSON } from "../../types/interfaces/UserMetadata";
-import { IBot } from "./models/bot-v2";
+import type { EloRank } from "../../types/enum/EloRank";
+import type { BotDifficulty } from "../../types/enum/Game";
+import type { MaintenanceOrder } from "../../types/enum/MaintenanceOrder";
+import type { SpecialGameRule } from "../../types/enum/SpecialGameRule";
+import type { IUserMetadataJSON } from "../../types/interfaces/UserMetadata";
+import type { IBot } from "./models/bot-v2";
 export declare const client: import("@colyseus/sdk").ColyseusSDK<import("colyseus").Server<{
     "after-game": import("colyseus").RegisteredHandler<import("../../rooms/after-game-room.js").default>;
     lobby: import("colyseus").RegisteredHandler<import("../../rooms/custom-lobby-room.js").default>;
@@ -253,7 +254,7 @@ export declare function giveBooster(params: {
     uid: string;
     numberOfBoosters: number;
 }): void;
-export declare function heapSnapshot(): void;
+export declare function sendMaintenanceOrder(order: MaintenanceOrder): void;
 export declare function deleteAccount(): void;
 export declare function giveRole(params: {
     uid: string;

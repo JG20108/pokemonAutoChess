@@ -11,6 +11,7 @@ const Game_1 = require("../types/enum/Game");
 const distance_1 = require("../utils/distance");
 const number_1 = require("../utils/number");
 const abilities_1 = require("./abilities/abilities");
+const cast_1 = require("./abilities/cast");
 const pokemon_state_1 = __importDefault(require("./pokemon-state"));
 const simulation_command_1 = require("./simulation-command");
 class AttackingState extends pokemon_state_1.default {
@@ -65,7 +66,7 @@ class AttackingState extends pokemon_state_1.default {
                 pokemon.targetEntityId = target.id;
                 pokemon.orientation = board.orientation(pokemon.positionX, pokemon.positionY, pokemon.targetX, pokemon.targetY, pokemon, target);
                 if (pokemon.pp >= pokemon.maxPP && pokemon.canCast) {
-                    (0, abilities_1.castAbility)(pokemon.skill, pokemon, board, target);
+                    (0, cast_1.castAbility)(abilities_1.AbilityStrategies[pokemon.skill], pokemon, board, target);
                 }
                 else {
                     pokemon.count.attackCount++;

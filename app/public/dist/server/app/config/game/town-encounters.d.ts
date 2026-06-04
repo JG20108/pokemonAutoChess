@@ -1,4 +1,4 @@
-import { TownEncounter } from "../../types/enum/TownEncounter";
+import type { TownEncounter } from "../../types/enum/TownEncounter";
 export declare const TownEncounterSellPrice: {
     [encounter in TownEncounter]?: number;
 };

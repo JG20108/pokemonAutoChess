@@ -1,7 +1,7 @@
 import { Dispatcher } from "@colyseus/command";
-import { Client, ClientArray, Delayed, Room } from "colyseus";
-import { UserRecord } from "firebase-admin/lib/auth/user-record";
-import { EloRank } from "../types/enum/EloRank";
+import { type Client, type ClientArray, type Delayed, Room } from "colyseus";
+import type { UserRecord } from "firebase-admin/lib/auth/user-record";
+import type { EloRank } from "../types/enum/EloRank";
 import { GameMode } from "../types/enum/Game";
 import PreparationState from "./states/preparation-state";
 export default class PreparationRoom extends Room<{

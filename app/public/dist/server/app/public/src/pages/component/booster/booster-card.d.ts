@@ -1,4 +1,4 @@
-import { BoosterCard } from "../../../../../types/Booster";
+import type { BoosterCard } from "../../../../../types/Booster";
 import "./booster-card.css";
 interface BoosterCardProps {
     card: BoosterCard;

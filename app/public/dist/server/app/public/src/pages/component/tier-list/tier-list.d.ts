@@ -1,4 +1,4 @@
-import { ITierList } from "../../../../../types/interfaces/TierList";
+import type { ITierList } from "../../../../../types/interfaces/TierList";
 import "./tier-list.css";
 export default function TierList(props: {
     tierList: ITierList;

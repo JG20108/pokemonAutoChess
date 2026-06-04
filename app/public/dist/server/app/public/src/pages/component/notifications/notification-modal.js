@@ -8,6 +8,7 @@ const gadgets_1 = require("../../../../../config/game/gadgets");
 const Strings_1 = require("../../../../../types/strings/Strings");
 const modal_1 = require("../modal/modal");
 require("./notification-modal.css");
+const jsx_1 = require("../../utils/jsx");
 function NotificationModal({ notifications, onClose }) {
     const { t } = (0, react_i18next_1.useTranslation)();
     const [currentIndex, setCurrentIndex] = (0, react_1.useState)(0);
@@ -55,8 +56,10 @@ function NotificationModal({ notifications, onClose }) {
                 }
                 return t("notification.tournament_finished_title");
             case "level_up":
-            default:
                 return t("notification.level_up_title");
+            case "info":
+            default:
+                return t("notification.info_title");
         }
     };
     const getNotificationMessage = (notification) => {
@@ -107,6 +110,7 @@ function NotificationModal({ notifications, onClose }) {
                 return t("notification.tournament_finished_message", {
                     place: (0, Strings_1.getRankLabel)(Number(notification.message))
                 });
+            case "info":
             default:
                 return notification.message;
         }
@@ -136,11 +140,14 @@ function NotificationModal({ notifications, onClose }) {
                 }
                 return `/assets/notifications/tournament_finish.svg`;
             case "level_up":
-            default:
                 return "/assets/ui/booster.png";
+            case "info":
+            default:
+                return null;
         }
     };
-    return ((0, jsx_runtime_1.jsx)(modal_1.Modal, { className: "notification-modal", show: true, onClose: handleClose, header: getNotificationTitle(currentNotification), body: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("img", { src: getIllustrationSrc(currentNotification), alt: "" }), (0, jsx_runtime_1.jsx)("p", { children: getNotificationMessage(currentNotification) })] }), footer: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("button", { className: "bubbly blue", onClick: handleClose, children: currentIndex < notifications.length - 1
+    const illustration = getIllustrationSrc(currentNotification);
+    return ((0, jsx_runtime_1.jsx)(modal_1.Modal, { className: (0, jsx_1.cc)("notification-modal", currentNotification.type), show: true, onClose: handleClose, header: getNotificationTitle(currentNotification), body: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [illustration != null && (0, jsx_runtime_1.jsx)("img", { src: illustration, alt: "" }), (0, jsx_runtime_1.jsx)("p", { children: getNotificationMessage(currentNotification) })] }), footer: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("button", { className: "bubbly blue", onClick: handleClose, children: currentIndex < notifications.length - 1
                         ? t("notification.next")
                         : t("notification.close") }), notifications.length > 2 &&
                     currentIndex < notifications.length - 1 && ((0, jsx_runtime_1.jsx)("button", { className: "bubbly red", onClick: closeAll, children: t("notification.dismiss_all") }))] }) }));

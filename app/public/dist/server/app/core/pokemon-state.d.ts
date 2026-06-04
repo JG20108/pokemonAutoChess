@@ -1,8 +1,8 @@
-import Player from "../models/colyseus-models/player";
-import { IPokemonEntity } from "../types";
+import type Player from "../models/colyseus-models/player";
+import { type IPokemonEntity } from "../types";
 import { AttackType, Team } from "../types/enum/Game";
 import type { Board, Cell } from "./board";
-import { PokemonEntity } from "./pokemon-entity";
+import type { PokemonEntity } from "./pokemon-entity";
 export default abstract class PokemonState {
     name: string;
     attack(pokemon: PokemonEntity, board: Board, target: PokemonEntity | null, isTripleAttack?: boolean): void;

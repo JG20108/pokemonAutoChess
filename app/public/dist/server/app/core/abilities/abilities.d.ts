@@ -1,6 +1,6 @@
 import { Ability } from "../../types/enum/Ability";
-import type { Board } from "../board";
-import { PokemonEntity } from "../pokemon-entity";
+import { type Board } from "../board";
+import type { PokemonEntity } from "../pokemon-entity";
 import { AbilityStrategy } from "./ability-strategy";
 export declare class BlueFlareStrategy extends AbilityStrategy {
     process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
@@ -154,9 +154,6 @@ export declare class UTurnStrategy extends AbilityStrategy {
     process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
 }
 export declare class PoisonJabStrategy extends AbilityStrategy {
-    process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
-}
-export declare class ExplosionStrategy extends AbilityStrategy {
     process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
 }
 export declare class ChloroblastStrategy extends AbilityStrategy {
@@ -322,9 +319,6 @@ export declare class HydroPumpStrategy extends AbilityStrategy {
 export declare class SolarBeamStrategy extends AbilityStrategy {
     process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
 }
-export declare class ThunderShockStrategy extends AbilityStrategy {
-    process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
-}
 export declare class ThunderStrategy extends AbilityStrategy {
     requiresTarget: boolean;
     process(pokemon: PokemonEntity, board: Board, target: null, crit: boolean): void;
@@ -344,10 +338,6 @@ export declare class LunarBlessingStrategy extends AbilityStrategy {
     process(pokemon: PokemonEntity, board: Board, target: null, crit: boolean): void;
 }
 export declare class NaturalGiftStrategy extends AbilityStrategy {
-    requiresTarget: boolean;
-    process(pokemon: PokemonEntity, board: Board, target: null, crit: boolean): void;
-}
-export declare class MeditateStrategy extends AbilityStrategy {
     requiresTarget: boolean;
     process(pokemon: PokemonEntity, board: Board, target: null, crit: boolean): void;
 }
@@ -663,7 +653,19 @@ export declare class GrowthStrategy extends AbilityStrategy {
     requiresTarget: boolean;
     process(pokemon: PokemonEntity, board: Board, target: null, crit: boolean): void;
 }
+export declare class AttackOrderStrategy extends AbilityStrategy {
+    requiresTarget: boolean;
+    process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
+}
 export declare class HealOrderStrategy extends AbilityStrategy {
+    requiresTarget: boolean;
+    process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
+}
+export declare class DefendOrderStrategy extends AbilityStrategy {
+    requiresTarget: boolean;
+    process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
+}
+export declare class BugBiteStrategy extends AbilityStrategy {
     process(pokemon: PokemonEntity, board: Board, target: PokemonEntity, crit: boolean): void;
 }
 export declare class ShellTrapStrategy extends AbilityStrategy {
@@ -1702,4 +1704,3 @@ export * from "./hidden-power";
 export declare const AbilityStrategies: {
     [key in Ability]: AbilityStrategy;
 };
-export declare function castAbility(ability: Ability, pokemon: PokemonEntity, board: Board, target: PokemonEntity | null, canCrit?: boolean, preventDefaultAnim?: boolean): void;

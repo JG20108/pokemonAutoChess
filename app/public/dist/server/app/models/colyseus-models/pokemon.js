@@ -5,9 +5,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Metagross = exports.Metang = exports.Beldum = exports.Gigalith = exports.Boldore = exports.Roggenrola = exports.Garchomp = exports.Gabite = exports.Gible = exports.Electivire = exports.Electabuzz = exports.Elekid = exports.Medicham = exports.Meditite = exports.MegaCamerupt = exports.Camerupt = exports.Numel = exports.MegaSteelix = exports.Steelix = exports.Onix = exports.MegaLopunny = exports.Lopunny = exports.Buneary = exports.Tsareena = exports.Steenee = exports.Bounsweet = exports.Kleavor = exports.Scizor = exports.Scyther = exports.MegaAltaria = exports.Altaria = exports.Swablu = exports.Thievul = exports.Nickit = exports.Ribombee = exports.Cutiefly = exports.Crabominable = exports.Crabrawler = exports.Lucario = exports.Riolu = exports.MegaBanette = exports.Banette = exports.Shuppet = exports.MegaManectric = exports.Manectric = exports.Electrike = exports.Egg = exports.Substitute = exports.Ditto = exports.Pokemon = void 0;
 exports.Grotle = exports.Turtwig = exports.Leavanny = exports.Swadloon = exports.Sewaddle = exports.PorygonZ = exports.Porygon2 = exports.Porygon = exports.Chandelure = exports.Lampent = exports.Litwick = exports.Alakazam = exports.Kadabra = exports.Abra = exports.Gengar = exports.Haunter = exports.Gastly = exports.KommoO = exports.HakamoO = exports.JangmoO = exports.Tyranitar = exports.Pupitar = exports.Larvitar = exports.HisuiSamurott = exports.Samurott = exports.Dewott = exports.Oshawott = exports.AegislashBlade = exports.Aegislash = exports.Doublade = exports.Honedge = exports.Slaking = exports.Vigoroth = exports.Slakoth = exports.Roserade = exports.Roselia = exports.Budew = exports.Skeledirge = exports.Crocalor = exports.Fuecoco = exports.Gallade = exports.Gardevoir = exports.Kirlia = exports.Ralts = exports.Salamence = exports.Shelgon = exports.Bagon = exports.Seismitoad = exports.Palpitoad = exports.Tympole = void 0;
@@ -22,7 +19,7 @@ exports.Hoothoot = exports.AlolanPersian = exports.AlolanMeowth = exports.Persia
 exports.Appletun = exports.Dipplin = exports.Applin = exports.Silvally = exports.TypeNull = exports.Granbull = exports.Snubull = exports.Tentacruel = exports.Tentacool = exports.Breloom = exports.Shroomish = exports.Drifblim = exports.Drifloon = exports.Bronzong = exports.Bronzor = exports.Mightyena = exports.Poochyena = exports.Lanturn = exports.Chinchou = exports.Toxicroak = exports.Croagunk = exports.Dewgong = exports.Seel = exports.Sneasler = exports.HisuiSneasel = exports.Weavile = exports.Sneasel = exports.Magcargo = exports.Slugma = exports.HisuiElectrode = exports.HisuiVoltorb = exports.Electrode = exports.Voltorb = exports.Venomoth = exports.Venonat = exports.Salazzle = exports.Salandit = exports.MrMime = exports.MimeJr = exports.Jynx = exports.Smoochum = exports.HisuiArcanine = exports.HisuiGrowlithe = exports.Arcanine = exports.Growlithe = exports.Naganadel = exports.Poipole = exports.Snorlax = exports.Munchlax = exports.Noctowl = void 0;
 exports.UnownG = exports.UnownF = exports.UnownE = exports.UnownD = exports.UnownC = exports.UnownB = exports.UnownA = exports.Forretress = exports.Pineco = exports.Swoobat = exports.Woobat = exports.Probopass = exports.Nosepass = exports.AlolanSandslash = exports.AlolanSandshrew = exports.Sandslash = exports.Sandshrew = exports.Gothitelle = exports.Gothorita = exports.Gothita = exports.Primarina = exports.Brionne = exports.Popplio = exports.AlolanGolem = exports.AlolanGraveler = exports.AlolanGeodude = exports.Cinderace = exports.Raboot = exports.Scorbunny = exports.Staraptor = exports.Staravia = exports.Starly = exports.Serperior = exports.Servine = exports.Snivy = exports.Dragapult = exports.Drakloak = exports.Dreepy = exports.Wailord = exports.Wailmer = exports.Frosmoth = exports.Snom = exports.AlolanNinetales = exports.AlolanVulpix = exports.Ninetales = exports.Vulpix = exports.Starmie = exports.Staryu = exports.Hydrapple = exports.Flapple = void 0;
 exports.Hitmonlee = exports.Hitmontop = exports.Tyrogue = exports.Chimecho = exports.Chingling = exports.Greninja = exports.Frogadier = exports.Froakie = exports.Sharpedo = exports.Carvanha = exports.Arbok = exports.Ekans = exports.AlolanMuk = exports.AlolanGrimer = exports.Muk = exports.Grimer = exports.HisuiZoroark = exports.HisuiZorua = exports.Zoroark = exports.Zorua = exports.Decidueye = exports.Dartix = exports.Rowlet = exports.AlolanDugtrio = exports.AlolanDiglett = exports.Wugtrio = exports.Wiglett = exports.Dugtrio = exports.Diglett = exports.UnownExclamation = exports.UnownQuestion = exports.UnownZ = exports.UnownY = exports.UnownX = exports.UnownW = exports.UnownV = exports.UnownU = exports.UnownT = exports.UnownS = exports.UnownR = exports.UnownQ = exports.UnownP = exports.UnownO = exports.UnownN = exports.UnownM = exports.UnownL = exports.UnownK = exports.UnownJ = exports.UnownI = exports.UnownH = void 0;
-exports.Pancham = exports.Liepard = exports.Purrloin = exports.Claydol = exports.Baltoy = exports.Spinda = exports.Bibarel = exports.Bidoof = exports.AlolanExeggutor = exports.Exeggutor = exports.Exeggcute = exports.Heliolisk = exports.Helioptile = exports.Yanmega = exports.Yanma = exports.Clawitzer = exports.Clauncher = exports.GalarianWeezing = exports.Weezing = exports.Koffing = exports.MegaSableye = exports.Sableye = exports.Carnivine = exports.Tropius = exports.Dhelmise = exports.Kartana = exports.Glastrier = exports.Spectrier = exports.Minun = exports.Plusle = exports.Maractus = exports.Tinkaton = exports.Tinkatuff = exports.Tinkatink = exports.Dustox = exports.Cascoon = exports.Beautifly = exports.Silcoon = exports.Wurmple = exports.Emboar = exports.Pignite = exports.Tepig = exports.Shuckle = exports.Vespiqueen = exports.Combee = exports.Sudowoodo = exports.Bonsley = exports.MimikyuBusted = exports.Mimikyu = exports.Hitmonchan = void 0;
+exports.Pancham = exports.Liepard = exports.Purrloin = exports.Claydol = exports.Baltoy = exports.Spinda = exports.Bibarel = exports.Bidoof = exports.AlolanExeggutor = exports.Exeggutor = exports.Exeggcute = exports.Heliolisk = exports.Helioptile = exports.Yanmega = exports.Yanma = exports.Clawitzer = exports.Clauncher = exports.GalarianWeezing = exports.Weezing = exports.Koffing = exports.MegaSableye = exports.Sableye = exports.Carnivine = exports.Tropius = exports.Dhelmise = exports.Kartana = exports.Glastrier = exports.Spectrier = exports.Minun = exports.Plusle = exports.Maractus = exports.Tinkaton = exports.Tinkatuff = exports.Tinkatink = exports.Dustox = exports.Cascoon = exports.Beautifly = exports.Silcoon = exports.Wurmple = exports.Emboar = exports.Pignite = exports.Tepig = exports.Shuckle = exports.Vespiquen = exports.Combee = exports.Sudowoodo = exports.Bonsley = exports.MimikyuBusted = exports.Mimikyu = exports.Hitmonchan = void 0;
 exports.MiniorKernelRed = exports.MiniorKernelBlue = exports.Minior = exports.MorpekoHangry = exports.Morpeko = exports.MausholdFour = exports.MausholdThree = exports.Tandemaus = exports.Nihilego = exports.Xurkitree = exports.Overqwil = exports.HisuianQwilfish = exports.Qwilfish = exports.Trevenant = exports.Phantump = exports.Obstagoon = exports.GalarianLinoone = exports.GalarianZigzagoon = exports.Linoone = exports.Zigzagoon = exports.Honchkrow = exports.Murkrow = exports.Pelipper = exports.Wingull = exports.Swanna = exports.Ducklett = exports.Hippodown = exports.Hippopotas = exports.Kricketune = exports.Kricketot = exports.Dodrio = exports.Doduo = exports.Mismagius = exports.Misdreavus = exports.CherrimSunlight = exports.Cherrim = exports.Cherubi = exports.UltraNecrozma = exports.Necrozma = exports.Volbeat = exports.Illumise = exports.Skuntank = exports.Stunky = exports.Lumineon = exports.Finneon = exports.Scrafty = exports.Scraggy = exports.Whiscash = exports.Barboach = exports.Pangoro = void 0;
 exports.SawsbuckWinter = exports.SawsbuckAutumn = exports.SawsbuckSummer = exports.SawsbuckSpring = exports.DeerlingWinter = exports.DeerlingAutumn = exports.DeerlingSummer = exports.DeerlingSpring = exports.Ambipom = exports.Aipom = exports.UrsalunaBloodmoon = exports.Ursaluna = exports.Ursaring = exports.Teddiursa = exports.Kangaskhan = exports.Lickilicky = exports.Lickitung = exports.Araquanid = exports.Dewpider = exports.Milotic = exports.Feebas = exports.Kingambit = exports.Bisharp = exports.Pawniard = exports.Cyclizar = exports.Toxtricity = exports.Toxel = exports.Smeargle = exports.Cursola = exports.GalarCorsola = exports.Corsola = exports.Bruxish = exports.Arctovish = exports.Arctozolt = exports.Dracozolt = exports.Dracovish = exports.Pheromosa = exports.Stoutland = exports.Herdier = exports.Lillipup = exports.Comfey = exports.Inteleon = exports.Drizzile = exports.Sobble = exports.Gholdengo = exports.Gimmighoul = exports.HoopaUnbound = exports.Hoopa = exports.MiniorKernelGreen = exports.MiniorKernelOrange = void 0;
 exports.Grubbin = exports.Garbodor = exports.Trubbish = exports.Golurk = exports.Golett = exports.Ferrothorn = exports.Ferroseed = exports.Polteageist = exports.Sinistea = exports.Grumpig = exports.Spoink = exports.Donphan = exports.Phanpy = exports.Tangrowth = exports.Tangela = exports.Clodsire = exports.PaldeaWooper = exports.Quagsire = exports.Wooper = exports.Mothim = exports.WormadamTrash = exports.WormadamSandy = exports.WormadamPlant = exports.BurmyTrash = exports.BurmySandy = exports.BurmyPlant = exports.burmyDivergentEvolutionRule = exports.Kilowattrel = exports.Wattrel = exports.Hypno = exports.Drowzee = exports.Grimmsnarl = exports.Morgrem = exports.Impidimp = exports.Magearna = exports.Lunala = exports.Solgaleo = exports.Cosmoem = exports.Cosmog = exports.Druddigon = exports.LycanrocDay = exports.LycanrocNight = exports.LycanrocDusk = exports.Rockruff = exports.Ariados = exports.Spinarak = exports.Swellow = exports.Taillow = exports.Watchog = exports.Patrat = void 0;
@@ -34,8 +31,9 @@ exports.VivillonFancy = exports.VivillonJungle = exports.VivillonOcean = exports
 exports.PokemonClasses = exports.SlitherWing = exports.Spidops = exports.Tarountula = exports.Komala = exports.Quaquaval = exports.Quaxwell = exports.Quaxly = exports.Greedent = exports.Skwovet = exports.Crustle = exports.Dwebble = exports.EiscueNoice = exports.Eiscue = exports.Escavalier = exports.Karrablast = exports.HisuiAvalugg = exports.Avalugg = exports.Bergmite = exports.Cetitan = exports.Cetoddle = exports.TatsugiriStretchy = exports.TatsugiriDroopy = exports.TatsugiriCurly = exports.Dondozo = exports.Toxapex = exports.Mareanie = exports.PalafinHero = exports.Palafin = exports.Finizen = exports.GreatTusk = exports.Boltund = exports.Yamper = exports.Dubwool = exports.Wooloo = exports.OinkologneFemale = exports.OinkologneMale = exports.Lechonk = exports.VivillonPokeball = void 0;
 const schema_1 = require("@colyseus/schema");
 const config_1 = require("../../config");
-const evolution_rules_1 = require("../../core/evolution-rules");
+const synergies_1 = require("../../config/game/synergies");
 const types_1 = require("../../types");
+const EvolutionRules_1 = require("../../types/EvolutionRules");
 const Ability_1 = require("../../types/enum/Ability");
 const Dungeon_1 = require("../../types/enum/Dungeon");
 const Effect_1 = require("../../types/enum/Effect");
@@ -43,7 +41,6 @@ const Game_1 = require("../../types/enum/Game");
 const Item_1 = require("../../types/enum/Item");
 const Passive_1 = require("../../types/enum/Passive");
 const Pokemon_1 = require("../../types/enum/Pokemon");
-const SpecialGameRule_1 = require("../../types/enum/SpecialGameRule");
 const Synergy_1 = require("../../types/enum/Synergy");
 const Weather_1 = require("../../types/enum/Weather");
 const array_1 = require("../../utils/array");
@@ -51,8 +48,7 @@ const board_1 = require("../../utils/board");
 const distance_1 = require("../../utils/distance");
 const number_1 = require("../../utils/number");
 const schemas_1 = require("../../utils/schemas");
-const effects_1 = require("../effects");
-const pokemon_factory_1 = __importDefault(require("../pokemon-factory"));
+const pokemon_customs_1 = require("./pokemon-customs");
 class Pokemon extends schema_1.Schema {
     constructor(name, shiny = false, emotion = types_1.Emotion.NORMAL) {
         super();
@@ -89,21 +85,31 @@ class Pokemon extends schema_1.Schema {
         this.deathCount = 0;
         this.killCount = 0;
         this.evolutions = [];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3
+        };
         this.additional = false;
         this.regional = false;
         this.canHoldItems = true;
         this.canBeBenched = true;
         this.canBeSold = true;
+        this.baseSkill = Ability_1.Ability.DEFAULT;
+        this.baseMaxPP = 100;
         this.id = crypto.randomUUID();
         this.name = name;
         this.index = Pokemon_1.PkmIndex[name];
         this.shiny = shiny;
         this.emotion = emotion;
     }
+    postConstructor() {
+        this.maxHP = this.hp;
+        this.baseMaxPP = this.maxPP;
+        this.baseSkill = this.skill;
+    }
     get final() {
         return (!this.hasEvolution ||
-            (this.evolutionRule instanceof evolution_rules_1.CountEvolutionRule === false &&
+            (this.evolutionRule.type !== EvolutionRules_1.EvolutionRuleType.COUNT &&
                 this.passive !== Passive_1.Passive.CORSOLA &&
                 this.passive !== Passive_1.Passive.AVALUGG));
     }
@@ -130,17 +136,6 @@ class Pokemon extends schema_1.Schema {
         return (this.passive !== Passive_1.Passive.INANIMATE &&
             this.items.has(Item_1.Item.GOLD_BOW) === false);
     }
-    onChangePosition(x, y, player, state, doNotRemoveItems = false) {
-        if (y === 0 && !doNotRemoveItems) {
-            const itemsToRemove = (0, schemas_1.schemaValues)(this.items).filter((item) => {
-                return ((0, array_1.isIn)(Item_1.RemovableItems, item) ||
-                    ((state === null || state === void 0 ? void 0 : state.specialGameRule) === SpecialGameRule_1.SpecialGameRule.SLAMINGO &&
-                        item !== Item_1.Item.RARE_CANDY));
-            });
-            player.items.push(...itemsToRemove);
-            this.removeItems(itemsToRemove, player);
-        }
-    }
     onItemGiven(item, player) {
     }
     onItemRemoved(item, player) {
@@ -148,8 +143,6 @@ class Pokemon extends schema_1.Schema {
     onAcquired(player) {
     }
     afterSell(player) {
-    }
-    afterEvolve(params) {
     }
     beforeSimulationStart(params) {
     }
@@ -452,7 +445,7 @@ class Egg extends Pokemon {
         this.range = 1;
         this.skill = Ability_1.Ability.DEFAULT;
         this.passive = Passive_1.Passive.EGG;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.canHoldItems = false;
     }
 }
@@ -929,14 +922,14 @@ class Buneary extends Pokemon {
     constructor() {
         super(...arguments);
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.NORMAL, Synergy_1.Synergy.FIGHTING]);
-        this.rarity = Game_1.Rarity.UNCOMMON;
+        this.rarity = Game_1.Rarity.RARE;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.LOPUNNY;
-        this.hp = 60;
-        this.atk = 6;
+        this.hp = 65;
+        this.atk = 7;
         this.speed = 59;
         this.def = 6;
-        this.speDef = 6;
+        this.speDef = 7;
         this.maxPP = 80;
         this.range = 1;
         this.skill = Ability_1.Ability.HIGH_JUMP_KICK;
@@ -948,13 +941,13 @@ class Lopunny extends Pokemon {
     constructor() {
         super(...arguments);
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.NORMAL, Synergy_1.Synergy.FIGHTING]);
-        this.rarity = Game_1.Rarity.UNCOMMON;
+        this.rarity = Game_1.Rarity.RARE;
         this.stars = 2;
-        this.hp = 120;
-        this.atk = 13;
+        this.hp = 125;
+        this.atk = 15;
         this.speed = 59;
         this.def = 8;
-        this.speDef = 8;
+        this.speDef = 10;
         this.maxPP = 80;
         this.range = 1;
         this.skill = Ability_1.Ability.HIGH_JUMP_KICK;
@@ -966,7 +959,7 @@ class MegaLopunny extends Pokemon {
     constructor() {
         super(...arguments);
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.NORMAL, Synergy_1.Synergy.FIGHTING]);
-        this.rarity = Game_1.Rarity.UNCOMMON;
+        this.rarity = Game_1.Rarity.RARE;
         this.stars = 3;
         this.hp = 250;
         this.atk = 26;
@@ -1394,7 +1387,7 @@ class Tympole extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.PALPITOAD;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 80;
         this.atk = 7;
         this.speed = 49;
@@ -1418,7 +1411,7 @@ class Palpitoad extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.SEISMITOAD;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 130;
         this.atk = 16;
         this.speed = 49;
@@ -1545,12 +1538,16 @@ class Kirlia extends Pokemon {
         this.rarity = Game_1.Rarity.EPIC;
         this.stars = 2;
         this.evolutions = [Pokemon_1.Pkm.GARDEVOIR, Pokemon_1.Pkm.GALLADE];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            var _a, _b;
-            const fairyCount = (_a = player.synergies.get(Synergy_1.Synergy.FAIRY)) !== null && _a !== void 0 ? _a : 0;
-            const fightingCount = (_b = player.synergies.get(Synergy_1.Synergy.FIGHTING)) !== null && _b !== void 0 ? _b : 0;
-            return fightingCount >= fairyCount ? Pokemon_1.Pkm.GALLADE : Pokemon_1.Pkm.GARDEVOIR;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                var _a, _b;
+                const fairyCount = (_a = player.synergies.get(Synergy_1.Synergy.FAIRY)) !== null && _a !== void 0 ? _a : 0;
+                const fightingCount = (_b = player.synergies.get(Synergy_1.Synergy.FIGHTING)) !== null && _b !== void 0 ? _b : 0;
+                return fightingCount >= fairyCount ? Pokemon_1.Pkm.GALLADE : Pokemon_1.Pkm.GARDEVOIR;
+            }
+        };
         this.hp = 130;
         this.atk = 15;
         this.speed = 51;
@@ -1890,12 +1887,16 @@ class Dewott extends Pokemon {
         this.rarity = Game_1.Rarity.EPIC;
         this.stars = 2;
         this.evolutions = [Pokemon_1.Pkm.SAMUROTT, Pokemon_1.Pkm.HISUI_SAMUROTT];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (player.regionalPokemons.includes(Pokemon_1.Pkm.HISUI_SAMUROTT))
-                return Pokemon_1.Pkm.HISUI_SAMUROTT;
-            else
-                return Pokemon_1.Pkm.SAMUROTT;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                if (player.regionalPokemons.includes(Pokemon_1.Pkm.HISUI_SAMUROTT))
+                    return Pokemon_1.Pkm.HISUI_SAMUROTT;
+                else
+                    return Pokemon_1.Pkm.SAMUROTT;
+            }
+        };
         this.hp = 170;
         this.atk = 15;
         this.speed = 47;
@@ -2512,16 +2513,20 @@ class Poliwhirl extends Pokemon {
         this.range = 2;
         this.skill = Ability_1.Ability.SOAK;
         this.passive = Passive_1.Passive.TADPOLE;
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (Math.max(...(0, schemas_1.schemaValues)(player.board)
-                .filter((pkm) => pkm.index === this.index)
-                .map((v) => v.positionY)) === 3) {
-                return Pokemon_1.Pkm.POLIWRATH;
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                if (Math.max(...(0, schemas_1.schemaValues)(player.board)
+                    .filter((pkm) => pkm.index === this.index)
+                    .map((v) => v.positionY)) === 3) {
+                    return Pokemon_1.Pkm.POLIWRATH;
+                }
+                else {
+                    return Pokemon_1.Pkm.POLITOED;
+                }
             }
-            else {
-                return Pokemon_1.Pkm.POLITOED;
-            }
-        });
+        };
     }
 }
 exports.Poliwhirl = Poliwhirl;
@@ -2745,12 +2750,16 @@ class Cubone extends Pokemon {
         this.rarity = Game_1.Rarity.EPIC;
         this.stars = 1;
         this.evolutions = [Pokemon_1.Pkm.MAROWAK, Pokemon_1.Pkm.ALOLAN_MAROWAK];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (player.regionalPokemons.includes(Pokemon_1.Pkm.ALOLAN_MAROWAK))
-                return Pokemon_1.Pkm.ALOLAN_MAROWAK;
-            else
-                return Pokemon_1.Pkm.MAROWAK;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                if (player.regionalPokemons.includes(Pokemon_1.Pkm.ALOLAN_MAROWAK))
+                    return Pokemon_1.Pkm.ALOLAN_MAROWAK;
+                else
+                    return Pokemon_1.Pkm.MAROWAK;
+            }
+        };
         this.hp = 110;
         this.atk = 11;
         this.speed = 36;
@@ -2811,7 +2820,7 @@ class Axew extends Pokemon {
         super(...arguments);
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.DRAGON]);
         this.rarity = Game_1.Rarity.HATCH;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.FRAXURE;
         this.hp = 80;
@@ -2831,7 +2840,7 @@ class Fraxure extends Pokemon {
         super(...arguments);
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.DRAGON]);
         this.rarity = Game_1.Rarity.HATCH;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.HAXORUS;
         this.hp = 130;
@@ -2939,12 +2948,16 @@ class Goomy extends Pokemon {
         this.rarity = Game_1.Rarity.COMMON;
         this.stars = 1;
         this.evolutions = [Pokemon_1.Pkm.SLIGOO, Pokemon_1.Pkm.HISUI_SLIGGOO];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (player.regionalPokemons.includes(Pokemon_1.Pkm.HISUI_SLIGGOO))
-                return Pokemon_1.Pkm.HISUI_SLIGGOO;
-            else
-                return Pokemon_1.Pkm.SLIGOO;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                if (player.regionalPokemons.includes(Pokemon_1.Pkm.HISUI_SLIGGOO))
+                    return Pokemon_1.Pkm.HISUI_SLIGGOO;
+                else
+                    return Pokemon_1.Pkm.SLIGOO;
+            }
+        };
         this.hp = 65;
         this.atk = 4;
         this.speed = 35;
@@ -3666,12 +3679,16 @@ class Pikachu extends Pokemon {
         this.rarity = Game_1.Rarity.COMMON;
         this.stars = 2;
         this.evolutions = [Pokemon_1.Pkm.RAICHU, Pokemon_1.Pkm.ALOLAN_RAICHU];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (player.regionalPokemons.includes(Pokemon_1.Pkm.ALOLAN_RAICHU))
-                return Pokemon_1.Pkm.ALOLAN_RAICHU;
-            else
-                return Pokemon_1.Pkm.RAICHU;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                if (player.regionalPokemons.includes(Pokemon_1.Pkm.ALOLAN_RAICHU))
+                    return Pokemon_1.Pkm.ALOLAN_RAICHU;
+                else
+                    return Pokemon_1.Pkm.RAICHU;
+            }
+        };
         this.hp = 120;
         this.atk = 8;
         this.speed = 54;
@@ -4015,17 +4032,21 @@ class Flabebe extends Pokemon {
             Pokemon_1.Pkm.FLOETTE_BLUE,
             Pokemon_1.Pkm.FLOETTE_WHITE
         ];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (pokemon.name === Pokemon_1.Pkm.FLABEBE_YELLOW)
-                return Pokemon_1.Pkm.FLOETTE_YELLOW;
-            if (pokemon.name === Pokemon_1.Pkm.FLABEBE_ORANGE)
-                return Pokemon_1.Pkm.FLOETTE_ORANGE;
-            if (pokemon.name === Pokemon_1.Pkm.FLABEBE_BLUE)
-                return Pokemon_1.Pkm.FLOETTE_BLUE;
-            if (pokemon.name === Pokemon_1.Pkm.FLABEBE_WHITE)
-                return Pokemon_1.Pkm.FLOETTE_WHITE;
-            return Pokemon_1.Pkm.FLOETTE;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                if (pokemon.name === Pokemon_1.Pkm.FLABEBE_YELLOW)
+                    return Pokemon_1.Pkm.FLOETTE_YELLOW;
+                if (pokemon.name === Pokemon_1.Pkm.FLABEBE_ORANGE)
+                    return Pokemon_1.Pkm.FLOETTE_ORANGE;
+                if (pokemon.name === Pokemon_1.Pkm.FLABEBE_BLUE)
+                    return Pokemon_1.Pkm.FLOETTE_BLUE;
+                if (pokemon.name === Pokemon_1.Pkm.FLABEBE_WHITE)
+                    return Pokemon_1.Pkm.FLOETTE_WHITE;
+                return Pokemon_1.Pkm.FLOETTE;
+            }
+        };
         this.hp = 60;
         this.atk = 6;
         this.speed = 49;
@@ -4051,17 +4072,21 @@ class Floette extends Pokemon {
             Pokemon_1.Pkm.FLORGES_BLUE,
             Pokemon_1.Pkm.FLORGES_WHITE
         ];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (pokemon.name === Pokemon_1.Pkm.FLOETTE_YELLOW)
-                return Pokemon_1.Pkm.FLORGES_YELLOW;
-            if (pokemon.name === Pokemon_1.Pkm.FLOETTE_ORANGE)
-                return Pokemon_1.Pkm.FLORGES_ORANGE;
-            if (pokemon.name === Pokemon_1.Pkm.FLOETTE_BLUE)
-                return Pokemon_1.Pkm.FLORGES_BLUE;
-            if (pokemon.name === Pokemon_1.Pkm.FLOETTE_WHITE)
-                return Pokemon_1.Pkm.FLORGES_WHITE;
-            return Pokemon_1.Pkm.FLORGES;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                if (pokemon.name === Pokemon_1.Pkm.FLOETTE_YELLOW)
+                    return Pokemon_1.Pkm.FLORGES_YELLOW;
+                if (pokemon.name === Pokemon_1.Pkm.FLOETTE_ORANGE)
+                    return Pokemon_1.Pkm.FLORGES_ORANGE;
+                if (pokemon.name === Pokemon_1.Pkm.FLOETTE_BLUE)
+                    return Pokemon_1.Pkm.FLORGES_BLUE;
+                if (pokemon.name === Pokemon_1.Pkm.FLOETTE_WHITE)
+                    return Pokemon_1.Pkm.FLORGES_WHITE;
+                return Pokemon_1.Pkm.FLORGES;
+            }
+        };
         this.hp = 120;
         this.atk = 10;
         this.speed = 49;
@@ -4784,12 +4809,16 @@ class Quilava extends Pokemon {
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 2;
         this.evolutions = [Pokemon_1.Pkm.TYPHLOSION, Pokemon_1.Pkm.HISUIAN_TYPHLOSION];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (player.regionalPokemons.includes(Pokemon_1.Pkm.HISUIAN_TYPHLOSION))
-                return Pokemon_1.Pkm.HISUIAN_TYPHLOSION;
-            else
-                return Pokemon_1.Pkm.TYPHLOSION;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                if (player.regionalPokemons.includes(Pokemon_1.Pkm.HISUIAN_TYPHLOSION))
+                    return Pokemon_1.Pkm.HISUIAN_TYPHLOSION;
+                else
+                    return Pokemon_1.Pkm.TYPHLOSION;
+            }
+        };
         this.hp = 120;
         this.atk = 12;
         this.speed = 51;
@@ -4849,12 +4878,16 @@ class Slowpoke extends Pokemon {
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 1;
         this.evolutions = [Pokemon_1.Pkm.SLOWBRO, Pokemon_1.Pkm.SLOWKING];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player, stageLevel) => {
-            var _a, _b;
-            const psychicCount = (_a = player.synergies.get(Synergy_1.Synergy.PSYCHIC)) !== null && _a !== void 0 ? _a : 0;
-            const waterCount = (_b = player.synergies.get(Synergy_1.Synergy.WATER)) !== null && _b !== void 0 ? _b : 0;
-            return psychicCount >= waterCount ? Pokemon_1.Pkm.SLOWKING : Pokemon_1.Pkm.SLOWBRO;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                var _a, _b;
+                const psychicCount = (_a = player.synergies.get(Synergy_1.Synergy.PSYCHIC)) !== null && _a !== void 0 ? _a : 0;
+                const waterCount = (_b = player.synergies.get(Synergy_1.Synergy.WATER)) !== null && _b !== void 0 ? _b : 0;
+                return psychicCount >= waterCount ? Pokemon_1.Pkm.SLOWKING : Pokemon_1.Pkm.SLOWBRO;
+            }
+        };
         this.hp = 80;
         this.atk = 7;
         this.speed = 35;
@@ -4911,14 +4944,18 @@ class GalarianSlowpoke extends Pokemon {
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 1;
         this.evolutions = [Pokemon_1.Pkm.GALARIAN_SLOWBRO, Pokemon_1.Pkm.GALARIAN_SLOWKING];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player, stageLevel) => {
-            var _a, _b;
-            const psychicCount = (_a = player.synergies.get(Synergy_1.Synergy.PSYCHIC)) !== null && _a !== void 0 ? _a : 0;
-            const waterCount = (_b = player.synergies.get(Synergy_1.Synergy.POISON)) !== null && _b !== void 0 ? _b : 0;
-            return psychicCount >= waterCount
-                ? Pokemon_1.Pkm.GALARIAN_SLOWKING
-                : Pokemon_1.Pkm.GALARIAN_SLOWBRO;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                var _a, _b;
+                const psychicCount = (_a = player.synergies.get(Synergy_1.Synergy.PSYCHIC)) !== null && _a !== void 0 ? _a : 0;
+                const waterCount = (_b = player.synergies.get(Synergy_1.Synergy.POISON)) !== null && _b !== void 0 ? _b : 0;
+                return psychicCount >= waterCount
+                    ? Pokemon_1.Pkm.GALARIAN_SLOWKING
+                    : Pokemon_1.Pkm.GALARIAN_SLOWBRO;
+            }
+        };
         this.hp = 80;
         this.atk = 7;
         this.speed = 35;
@@ -5930,7 +5967,10 @@ class Magikarp extends Pokemon {
         this.range = 1;
         this.skill = Ability_1.Ability.SPLASH;
         this.passive = Passive_1.Passive.MAGIKARP;
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(8);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 8
+        };
     }
 }
 exports.Magikarp = Magikarp;
@@ -6118,12 +6158,6 @@ class Meloetta extends Pokemon {
         this.skill = Ability_1.Ability.RELIC_SONG;
         this.passive = Passive_1.Passive.MELOETTA;
     }
-    onChangePosition(x, y, player, state) {
-        super.onChangePosition(x, y, player, state);
-        if (y === 3) {
-            player.transformPokemon(this, Pokemon_1.Pkm.PIROUETTE_MELOETTA);
-        }
-    }
 }
 exports.Meloetta = Meloetta;
 class PirouetteMeloetta extends Pokemon {
@@ -6146,12 +6180,6 @@ class PirouetteMeloetta extends Pokemon {
         this.skill = Ability_1.Ability.U_TURN;
         this.passive = Passive_1.Passive.MELOETTA;
     }
-    onChangePosition(x, y, player, state) {
-        super.onChangePosition(x, y, player, state);
-        if (y !== 3) {
-            player.transformPokemon(this, Pokemon_1.Pkm.MELOETTA);
-        }
-    }
 }
 exports.PirouetteMeloetta = PirouetteMeloetta;
 class Lugia extends Pokemon {
@@ -6163,7 +6191,6 @@ class Lugia extends Pokemon {
             Synergy_1.Synergy.PSYCHIC
         ]);
         this.rarity = Game_1.Rarity.LEGENDARY;
-        this.evolution = Pokemon_1.Pkm.SHADOW_LUGIA;
         this.stars = 3;
         this.hp = 300;
         this.atk = 26;
@@ -6317,9 +6344,13 @@ class Stantler extends Pokemon {
         this.skill = Ability_1.Ability.PSYSHIELD_BASH;
         this.passive = Passive_1.Passive.STANTLER;
         this.evolution = Pokemon_1.Pkm.WYRDEER;
-        this.evolutionRule = new evolution_rules_1.ConditionBasedEvolutionRule((pokemon, player, stageLevel) => {
-            return player.map !== this.originalMap && stageLevel >= 20;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.STATE,
+            condition(pokemon, player, state) {
+                return (player.map !== pokemon.originalMap &&
+                    state.stageLevel >= 20);
+            }
+        };
         this.originalMap = "town";
     }
     onAcquired(player) {
@@ -6884,7 +6915,10 @@ class Kyogre extends Pokemon {
         this.rarity = Game_1.Rarity.LEGENDARY;
         this.stars = 3;
         this.evolution = Pokemon_1.Pkm.PRIMAL_KYOGRE;
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([Item_1.Item.BLUE_ORB]);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [Item_1.Item.BLUE_ORB]
+        };
         this.hp = 300;
         this.atk = 18;
         this.speed = 54;
@@ -6904,7 +6938,10 @@ class Groudon extends Pokemon {
         this.rarity = Game_1.Rarity.LEGENDARY;
         this.stars = 3;
         this.evolution = Pokemon_1.Pkm.PRIMAL_GROUDON;
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([Item_1.Item.RED_ORB]);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [Item_1.Item.RED_ORB]
+        };
         this.hp = 300;
         this.atk = 20;
         this.speed = 54;
@@ -6924,7 +6961,10 @@ class Rayquaza extends Pokemon {
         this.rarity = Game_1.Rarity.LEGENDARY;
         this.stars = 3;
         this.evolution = Pokemon_1.Pkm.MEGA_RAYQUAZA;
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([Item_1.Item.GREEN_ORB]);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [Item_1.Item.GREEN_ORB]
+        };
         this.hp = 300;
         this.atk = 27;
         this.speed = 55;
@@ -6962,36 +7002,40 @@ class Eevee extends Pokemon {
             Pokemon_1.Pkm.SYLVEON,
             Pokemon_1.Pkm.GLACEON
         ];
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([
-            Item_1.Item.WATER_STONE,
-            Item_1.Item.FIRE_STONE,
-            Item_1.Item.THUNDER_STONE,
-            Item_1.Item.DUSK_STONE,
-            Item_1.Item.MOON_STONE,
-            Item_1.Item.LEAF_STONE,
-            Item_1.Item.DAWN_STONE,
-            Item_1.Item.ICE_STONE
-        ], (pokemon, player, item) => {
-            switch (item) {
-                case Item_1.Item.WATER_STONE:
-                    return Pokemon_1.Pkm.VAPOREON;
-                case Item_1.Item.FIRE_STONE:
-                    return Pokemon_1.Pkm.FLAREON;
-                case Item_1.Item.THUNDER_STONE:
-                    return Pokemon_1.Pkm.JOLTEON;
-                case Item_1.Item.DUSK_STONE:
-                    return Pokemon_1.Pkm.UMBREON;
-                case Item_1.Item.MOON_STONE:
-                    return Pokemon_1.Pkm.SYLVEON;
-                case Item_1.Item.LEAF_STONE:
-                    return Pokemon_1.Pkm.LEAFEON;
-                case Item_1.Item.DAWN_STONE:
-                    return Pokemon_1.Pkm.ESPEON;
-                case Item_1.Item.ICE_STONE:
-                default:
-                    return Pokemon_1.Pkm.GLACEON;
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [
+                Item_1.Item.WATER_STONE,
+                Item_1.Item.FIRE_STONE,
+                Item_1.Item.THUNDER_STONE,
+                Item_1.Item.DUSK_STONE,
+                Item_1.Item.MOON_STONE,
+                Item_1.Item.LEAF_STONE,
+                Item_1.Item.DAWN_STONE,
+                Item_1.Item.ICE_STONE
+            ],
+            divergentEvolution: (pokemon, player, item) => {
+                switch (item) {
+                    case Item_1.Item.WATER_STONE:
+                        return Pokemon_1.Pkm.VAPOREON;
+                    case Item_1.Item.FIRE_STONE:
+                        return Pokemon_1.Pkm.FLAREON;
+                    case Item_1.Item.THUNDER_STONE:
+                        return Pokemon_1.Pkm.JOLTEON;
+                    case Item_1.Item.DUSK_STONE:
+                        return Pokemon_1.Pkm.UMBREON;
+                    case Item_1.Item.MOON_STONE:
+                        return Pokemon_1.Pkm.SYLVEON;
+                    case Item_1.Item.LEAF_STONE:
+                        return Pokemon_1.Pkm.LEAFEON;
+                    case Item_1.Item.DAWN_STONE:
+                        return Pokemon_1.Pkm.ESPEON;
+                    case Item_1.Item.ICE_STONE:
+                    default:
+                        return Pokemon_1.Pkm.GLACEON;
+                }
             }
-        });
+        };
     }
 }
 exports.Eevee = Eevee;
@@ -8362,7 +8406,10 @@ class Shaymin extends Pokemon {
         this.rarity = Game_1.Rarity.LEGENDARY;
         this.stars = 3;
         this.evolution = Pokemon_1.Pkm.SHAYMIN_SKY;
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([Item_1.Item.GRACIDEA_FLOWER]);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [Item_1.Item.GRACIDEA_FLOWER]
+        };
         this.hp = 200;
         this.atk = 25;
         this.speed = 57;
@@ -8811,7 +8858,7 @@ class Primeape extends Pokemon {
         this.rarity = Game_1.Rarity.EPIC;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.ANNIHILAPE;
-        this.evolutionRule = new evolution_rules_1.StackBasedEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.STACK };
         this.stacksRequired = 10;
         this.hp = 240;
         this.atk = 20;
@@ -8985,12 +9032,12 @@ class Archen extends Pokemon {
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.ARCHEOPS;
         this.hp = 70;
-        this.atk = 4;
+        this.atk = 6;
         this.speed = 60;
-        this.def = 4;
-        this.speDef = 4;
+        this.def = 3;
+        this.speDef = 3;
         this.maxPP = 90;
-        this.range = 1;
+        this.range = 2;
         this.skill = Ability_1.Ability.ROCK_SMASH;
         this.additional = true;
     }
@@ -9003,10 +9050,10 @@ class Archeops extends Pokemon {
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 2;
         this.hp = 130;
-        this.atk = 10;
+        this.atk = 13;
         this.speed = 60;
-        this.def = 8;
-        this.speDef = 8;
+        this.def = 6;
+        this.speDef = 6;
         this.maxPP = 100;
         this.range = 2;
         this.skill = Ability_1.Ability.ROCK_SMASH;
@@ -9308,12 +9355,16 @@ class Clamperl extends Pokemon {
         this.passive = Passive_1.Passive.BIVALVE;
         this.additional = true;
         this.evolutions = [Pokemon_1.Pkm.HUNTAIL, Pokemon_1.Pkm.GOREBYSS];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            var _a, _b;
-            const psychicCount = (_a = player.synergies.get(Synergy_1.Synergy.PSYCHIC)) !== null && _a !== void 0 ? _a : 0;
-            const darkCount = (_b = player.synergies.get(Synergy_1.Synergy.DARK)) !== null && _b !== void 0 ? _b : 0;
-            return darkCount >= psychicCount ? Pokemon_1.Pkm.HUNTAIL : Pokemon_1.Pkm.GOREBYSS;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                var _a, _b;
+                const psychicCount = (_a = player.synergies.get(Synergy_1.Synergy.PSYCHIC)) !== null && _a !== void 0 ? _a : 0;
+                const darkCount = (_b = player.synergies.get(Synergy_1.Synergy.DARK)) !== null && _b !== void 0 ? _b : 0;
+                return darkCount >= psychicCount ? Pokemon_1.Pkm.HUNTAIL : Pokemon_1.Pkm.GOREBYSS;
+            }
+        };
     }
 }
 exports.Clamperl = Clamperl;
@@ -9677,9 +9728,14 @@ class Ninjask extends Pokemon {
         this.additional = true;
     }
     onAcquired(player) {
+        var _a, _b;
         const x = (0, board_1.getFirstAvailablePositionInBench)(player.board);
         if (x !== null) {
-            const pokemon = pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pkm.SHEDINJA, player);
+            const pkmWithCustom = (0, pokemon_customs_1.getPkmWithCustom)(Pokemon_1.PkmIndex[Pokemon_1.Pkm.SHEDINJA], player.pokemonCustoms);
+            const shiny = (_a = pkmWithCustom.shiny) !== null && _a !== void 0 ? _a : false;
+            const emotion = (_b = pkmWithCustom.emotion) !== null && _b !== void 0 ? _b : types_1.Emotion.NORMAL;
+            const pokemon = new Shedinja(Pokemon_1.Pkm.SHEDINJA, shiny, emotion);
+            pokemon.postConstructor();
             pokemon.positionX = x;
             pokemon.positionY = 0;
             player.board.set(pokemon.id, pokemon);
@@ -10660,7 +10716,7 @@ class Poipole extends Pokemon {
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.NAGANADEL;
-        this.evolutionRule = new evolution_rules_1.StackBasedEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.STACK };
         this.stacksRequired = 20;
         this.hp = 160;
         this.atk = 10;
@@ -11558,55 +11614,59 @@ class TypeNull extends Pokemon {
         this.rarity = Game_1.Rarity.LEGENDARY;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.SILVALLY;
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([...Item_1.SynergyItems], (pokemon, player, item) => {
-            switch (Item_1.SynergyGivenByItem[item]) {
-                case Synergy_1.Synergy.BUG:
-                    return Pokemon_1.Pkm.SILVALLY_BUG;
-                case Synergy_1.Synergy.DARK:
-                    return Pokemon_1.Pkm.SILVALLY_DARK;
-                case Synergy_1.Synergy.DRAGON:
-                case Synergy_1.Synergy.FOSSIL:
-                    return Pokemon_1.Pkm.SILVALLY_DRAGON;
-                case Synergy_1.Synergy.ELECTRIC:
-                    return Pokemon_1.Pkm.SILVALLY_ELECTRIC;
-                case Synergy_1.Synergy.FAIRY:
-                case Synergy_1.Synergy.AMORPHOUS:
-                    return Pokemon_1.Pkm.SILVALLY_FAIRY;
-                case Synergy_1.Synergy.FIGHTING:
-                case Synergy_1.Synergy.WILD:
-                    return Pokemon_1.Pkm.SILVALLY_FIGHTING;
-                case Synergy_1.Synergy.FIRE:
-                case Synergy_1.Synergy.GOURMET:
-                    return Pokemon_1.Pkm.SILVALLY_FIRE;
-                case Synergy_1.Synergy.FLYING:
-                    return Pokemon_1.Pkm.SILVALLY_FLYING;
-                case Synergy_1.Synergy.GHOST:
-                    return Pokemon_1.Pkm.SILVALLY_GHOST;
-                case Synergy_1.Synergy.GRASS:
-                case Synergy_1.Synergy.FLORA:
-                    return Pokemon_1.Pkm.SILVALLY_GRASS;
-                case Synergy_1.Synergy.GROUND:
-                    return Pokemon_1.Pkm.SILVALLY_GROUND;
-                case Synergy_1.Synergy.ICE:
-                    return Pokemon_1.Pkm.SILVALLY_ICE;
-                case Synergy_1.Synergy.POISON:
-                case Synergy_1.Synergy.MONSTER:
-                    return Pokemon_1.Pkm.SILVALLY_POISON;
-                case Synergy_1.Synergy.PSYCHIC:
-                    return Pokemon_1.Pkm.SILVALLY_PSYCHIC;
-                case Synergy_1.Synergy.ROCK:
-                    return Pokemon_1.Pkm.SILVALLY_ROCK;
-                case Synergy_1.Synergy.STEEL:
-                case Synergy_1.Synergy.ARTIFICIAL:
-                    return Pokemon_1.Pkm.SILVALLY_STEEL;
-                case Synergy_1.Synergy.WATER:
-                case Synergy_1.Synergy.AQUATIC:
-                    return Pokemon_1.Pkm.SILVALLY_WATER;
-                case Synergy_1.Synergy.FIELD:
-                default:
-                    return Pokemon_1.Pkm.SILVALLY;
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [...Item_1.SynergyItems],
+            divergentEvolution: (pokemon, player, item) => {
+                switch (Item_1.SynergyGivenByItem[item]) {
+                    case Synergy_1.Synergy.BUG:
+                        return Pokemon_1.Pkm.SILVALLY_BUG;
+                    case Synergy_1.Synergy.DARK:
+                        return Pokemon_1.Pkm.SILVALLY_DARK;
+                    case Synergy_1.Synergy.DRAGON:
+                    case Synergy_1.Synergy.FOSSIL:
+                        return Pokemon_1.Pkm.SILVALLY_DRAGON;
+                    case Synergy_1.Synergy.ELECTRIC:
+                        return Pokemon_1.Pkm.SILVALLY_ELECTRIC;
+                    case Synergy_1.Synergy.FAIRY:
+                    case Synergy_1.Synergy.AMORPHOUS:
+                        return Pokemon_1.Pkm.SILVALLY_FAIRY;
+                    case Synergy_1.Synergy.FIGHTING:
+                    case Synergy_1.Synergy.WILD:
+                        return Pokemon_1.Pkm.SILVALLY_FIGHTING;
+                    case Synergy_1.Synergy.FIRE:
+                    case Synergy_1.Synergy.GOURMET:
+                        return Pokemon_1.Pkm.SILVALLY_FIRE;
+                    case Synergy_1.Synergy.FLYING:
+                        return Pokemon_1.Pkm.SILVALLY_FLYING;
+                    case Synergy_1.Synergy.GHOST:
+                        return Pokemon_1.Pkm.SILVALLY_GHOST;
+                    case Synergy_1.Synergy.GRASS:
+                    case Synergy_1.Synergy.FLORA:
+                        return Pokemon_1.Pkm.SILVALLY_GRASS;
+                    case Synergy_1.Synergy.GROUND:
+                        return Pokemon_1.Pkm.SILVALLY_GROUND;
+                    case Synergy_1.Synergy.ICE:
+                        return Pokemon_1.Pkm.SILVALLY_ICE;
+                    case Synergy_1.Synergy.POISON:
+                    case Synergy_1.Synergy.MONSTER:
+                        return Pokemon_1.Pkm.SILVALLY_POISON;
+                    case Synergy_1.Synergy.PSYCHIC:
+                        return Pokemon_1.Pkm.SILVALLY_PSYCHIC;
+                    case Synergy_1.Synergy.ROCK:
+                        return Pokemon_1.Pkm.SILVALLY_ROCK;
+                    case Synergy_1.Synergy.STEEL:
+                    case Synergy_1.Synergy.ARTIFICIAL:
+                        return Pokemon_1.Pkm.SILVALLY_STEEL;
+                    case Synergy_1.Synergy.WATER:
+                    case Synergy_1.Synergy.AQUATIC:
+                        return Pokemon_1.Pkm.SILVALLY_WATER;
+                    case Synergy_1.Synergy.FIELD:
+                    default:
+                        return Pokemon_1.Pkm.SILVALLY;
+                }
             }
-        });
+        };
         this.hp = 260;
         this.atk = 20;
         this.speed = 55;
@@ -11635,19 +11695,6 @@ class Silvally extends Pokemon {
         this.skill = Ability_1.Ability.MULTI_ATTACK;
         this.passive = Passive_1.Passive.RKS_SYSTEM;
     }
-    onChangePosition(x, y, player, state) {
-        super.onChangePosition(x, y, player, state, true);
-        if (y === 0) {
-            const itemsToRemove = (0, schemas_1.schemaValues)(this.items).filter((item) => {
-                return ((0, array_1.isIn)(Item_1.RemovableItems, item) ||
-                    ((state === null || state === void 0 ? void 0 : state.specialGameRule) === SpecialGameRule_1.SpecialGameRule.SLAMINGO &&
-                        item !== Item_1.Item.RARE_CANDY) ||
-                    (0, array_1.isIn)(Item_1.SynergyItems, item));
-            });
-            player.items.push(...itemsToRemove);
-            this.removeItems(itemsToRemove, player);
-        }
-    }
 }
 exports.Silvally = Silvally;
 class Applin extends Pokemon {
@@ -11661,16 +11708,23 @@ class Applin extends Pokemon {
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 2;
         this.evolutions = [Pokemon_1.Pkm.APPLETUN, Pokemon_1.Pkm.FLAPPLE, Pokemon_1.Pkm.DIPPLIN];
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([Item_1.Item.SWEET_APPLE, Item_1.Item.TART_APPLE, Item_1.Item.SIRUPY_APPLE], (pokemon, player, item_) => {
-            const item = item_;
-            if (item === Item_1.Item.SWEET_APPLE) {
-                return Pokemon_1.Pkm.APPLETUN;
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [
+                Item_1.Item.SWEET_APPLE,
+                Item_1.Item.TART_APPLE,
+                Item_1.Item.SIRUPY_APPLE
+            ],
+            divergentEvolution: (pokemon, player, item) => {
+                if (item === Item_1.Item.SWEET_APPLE) {
+                    return Pokemon_1.Pkm.APPLETUN;
+                }
+                if (item === Item_1.Item.TART_APPLE) {
+                    return Pokemon_1.Pkm.FLAPPLE;
+                }
+                return Pokemon_1.Pkm.DIPPLIN;
             }
-            if (item === Item_1.Item.TART_APPLE) {
-                return Pokemon_1.Pkm.FLAPPLE;
-            }
-            return Pokemon_1.Pkm.DIPPLIN;
-        });
+        };
         this.hp = 160;
         this.atk = 12;
         this.speed = 31;
@@ -11693,7 +11747,10 @@ class Dipplin extends Pokemon {
         ]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.evolution = Pokemon_1.Pkm.HYDRAPPLE;
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([Item_1.Item.SIRUPY_APPLE]);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [Item_1.Item.SIRUPY_APPLE]
+        };
         this.stars = 3;
         this.hp = 180;
         this.atk = 14;
@@ -11994,7 +12051,7 @@ class Dreepy extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.DRAKLOAK;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 90;
         this.atk = 5;
         this.speed = 71;
@@ -12014,7 +12071,7 @@ class Drakloak extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.DRAGAPULT;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 140;
         this.atk = 12;
         this.speed = 71;
@@ -12051,7 +12108,7 @@ class Snivy extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.SERVINE;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 90;
         this.atk = 4;
         this.speed = 61;
@@ -12071,7 +12128,7 @@ class Servine extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.SERPERIOR;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 160;
         this.atk = 11;
         this.speed = 61;
@@ -12173,7 +12230,7 @@ class Scorbunny extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.RABOOT;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 75;
         this.atk = 5;
         this.speed = 63;
@@ -12193,7 +12250,7 @@ class Raboot extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.CINDERACE;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 130;
         this.atk = 10;
         this.speed = 63;
@@ -12301,7 +12358,7 @@ class Popplio extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.BRIONNE;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 65;
         this.atk = 5;
         this.speed = 44;
@@ -12321,7 +12378,7 @@ class Brionne extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.PRIMARINA;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 130;
         this.atk = 10;
         this.speed = 44;
@@ -12358,7 +12415,7 @@ class Gothita extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.GOTHORITA;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 70;
         this.atk = 5;
         this.speed = 46;
@@ -12378,7 +12435,7 @@ class Gothorita extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.GOTHITELLE;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 120;
         this.atk = 12;
         this.speed = 46;
@@ -13267,7 +13324,7 @@ class Rowlet extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.DARTIX;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 70;
         this.atk = 5;
         this.speed = 47;
@@ -13287,7 +13344,7 @@ class Dartix extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.DECIDUEYE;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 130;
         this.atk = 9;
         this.speed = 47;
@@ -13590,7 +13647,7 @@ class Froakie extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.FROGADIER;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 80;
         this.atk = 6;
         this.speed = 64;
@@ -13610,7 +13667,7 @@ class Frogadier extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.GRENINJA;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 140;
         this.atk = 12;
         this.speed = 64;
@@ -13647,7 +13704,7 @@ class Chingling extends Pokemon {
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.CHIMECHO;
-        this.evolutionRule = new evolution_rules_1.StackBasedEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.STACK };
         this.stacksRequired = 30;
         this.hp = 150;
         this.atk = 10;
@@ -13699,22 +13756,26 @@ class Tyrogue extends Pokemon {
         this.skill = Ability_1.Ability.MACH_PUNCH;
         this.passive = Passive_1.Passive.TYROGUE;
         this.evolutions = [Pokemon_1.Pkm.HITMONTOP, Pokemon_1.Pkm.HITMONLEE, Pokemon_1.Pkm.HITMONCHAN];
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([...Item_1.CraftableItems, ...Item_1.ItemComponents], (pokemon, player, item_) => {
-            const item = item_;
-            if (item === Item_1.Item.CHARCOAL ||
-                item === Item_1.Item.MAGNET ||
-                (item in Item_1.ItemRecipe && Item_1.ItemRecipe[item].includes(Item_1.Item.CHARCOAL)) ||
-                (item in Item_1.ItemRecipe && Item_1.ItemRecipe[item].includes(Item_1.Item.MAGNET))) {
-                return Pokemon_1.Pkm.HITMONLEE;
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [...Item_1.CraftableItems, ...Item_1.ItemComponents],
+            divergentEvolution: (pokemon, player, item_) => {
+                const item = item_;
+                if (item === Item_1.Item.CHARCOAL ||
+                    item === Item_1.Item.MAGNET ||
+                    (item in Item_1.ItemRecipe && Item_1.ItemRecipe[item].includes(Item_1.Item.CHARCOAL)) ||
+                    (item in Item_1.ItemRecipe && Item_1.ItemRecipe[item].includes(Item_1.Item.MAGNET))) {
+                    return Pokemon_1.Pkm.HITMONLEE;
+                }
+                if (item === Item_1.Item.HEART_SCALE ||
+                    item === Item_1.Item.NEVER_MELT_ICE ||
+                    (item in Item_1.ItemRecipe && Item_1.ItemRecipe[item].includes(Item_1.Item.HEART_SCALE)) ||
+                    (item in Item_1.ItemRecipe && Item_1.ItemRecipe[item].includes(Item_1.Item.NEVER_MELT_ICE))) {
+                    return Pokemon_1.Pkm.HITMONCHAN;
+                }
+                return Pokemon_1.Pkm.HITMONTOP;
             }
-            if (item === Item_1.Item.HEART_SCALE ||
-                item === Item_1.Item.NEVER_MELT_ICE ||
-                (item in Item_1.ItemRecipe && Item_1.ItemRecipe[item].includes(Item_1.Item.HEART_SCALE)) ||
-                (item in Item_1.ItemRecipe && Item_1.ItemRecipe[item].includes(Item_1.Item.NEVER_MELT_ICE))) {
-                return Pokemon_1.Pkm.HITMONCHAN;
-            }
-            return Pokemon_1.Pkm.HITMONTOP;
-        });
+        };
     }
 }
 exports.Tyrogue = Tyrogue;
@@ -13856,39 +13917,37 @@ class Combee extends Pokemon {
     constructor() {
         super(...arguments);
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.BUG, Synergy_1.Synergy.FLORA, Synergy_1.Synergy.GOURMET]);
-        this.rarity = Game_1.Rarity.EPIC;
+        this.rarity = Game_1.Rarity.SPECIAL;
         this.stars = 1;
-        this.evolution = Pokemon_1.Pkm.VESPIQUEEN;
-        this.hp = 80;
-        this.atk = 10;
-        this.speed = 38;
-        this.def = 5;
-        this.speDef = 5;
-        this.maxPP = 90;
+        this.hp = 75;
+        this.atk = 5;
+        this.speed = 50;
+        this.def = 3;
+        this.speDef = 3;
+        this.maxPP = 80;
         this.range = 1;
-        this.skill = Ability_1.Ability.HEAL_ORDER;
-        this.additional = true;
+        this.skill = Ability_1.Ability.BUG_BITE;
     }
 }
 exports.Combee = Combee;
-class Vespiqueen extends Pokemon {
+class Vespiquen extends Pokemon {
     constructor() {
         super(...arguments);
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.BUG, Synergy_1.Synergy.FLORA, Synergy_1.Synergy.GOURMET]);
-        this.rarity = Game_1.Rarity.EPIC;
-        this.stars = 2;
+        this.rarity = Game_1.Rarity.UNIQUE;
+        this.stars = 3;
         this.hp = 190;
-        this.atk = 20;
+        this.atk = 16;
         this.speed = 38;
         this.def = 8;
         this.speDef = 8;
         this.maxPP = 90;
-        this.range = 1;
+        this.range = 3;
         this.skill = Ability_1.Ability.HEAL_ORDER;
-        this.additional = true;
+        this.passive = Passive_1.Passive.VESPIQUEN;
     }
 }
-exports.Vespiqueen = Vespiqueen;
+exports.Vespiquen = Vespiquen;
 class Shuckle extends Pokemon {
     constructor() {
         super(...arguments);
@@ -13913,7 +13972,7 @@ class Tepig extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.PIGNITE;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 75;
         this.atk = 7;
         this.speed = 46;
@@ -13933,7 +13992,7 @@ class Pignite extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.EMBOAR;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 150;
         this.atk = 12;
         this.speed = 46;
@@ -13978,12 +14037,16 @@ class Wurmple extends Pokemon {
         this.range = 1;
         this.skill = Ability_1.Ability.ENTANGLING_THREAD;
         this.evolutions = [Pokemon_1.Pkm.SILCOON, Pokemon_1.Pkm.CASCOON];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (player.regionalPokemons.includes(Pokemon_1.Pkm.CASCOON))
-                return Pokemon_1.Pkm.CASCOON;
-            else
-                return Pokemon_1.Pkm.SILCOON;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                if (player.regionalPokemons.includes(Pokemon_1.Pkm.CASCOON))
+                    return Pokemon_1.Pkm.CASCOON;
+                else
+                    return Pokemon_1.Pkm.SILCOON;
+            }
+        };
     }
 }
 exports.Wurmple = Wurmple;
@@ -14298,7 +14361,10 @@ class Sableye extends Pokemon {
     constructor() {
         super(...arguments);
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.DARK, Synergy_1.Synergy.GHOST]);
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([Item_1.Item.RED_ORB]);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [Item_1.Item.RED_ORB]
+        };
         this.evolution = Pokemon_1.Pkm.MEGA_SABLEYE;
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
@@ -14343,12 +14409,16 @@ class Koffing extends Pokemon {
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 1;
         this.evolutions = [Pokemon_1.Pkm.WEEZING, Pokemon_1.Pkm.GALARIAN_WEEZING];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (player.regionalPokemons.includes(Pokemon_1.Pkm.GALARIAN_WEEZING))
-                return Pokemon_1.Pkm.GALARIAN_WEEZING;
-            else
-                return Pokemon_1.Pkm.WEEZING;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                if (player.regionalPokemons.includes(Pokemon_1.Pkm.GALARIAN_WEEZING))
+                    return Pokemon_1.Pkm.GALARIAN_WEEZING;
+                else
+                    return Pokemon_1.Pkm.WEEZING;
+            }
+        };
         this.hp = 65;
         this.atk = 5;
         this.speed = 44;
@@ -14543,12 +14613,16 @@ class Exeggcute extends Pokemon {
         this.rarity = Game_1.Rarity.EPIC;
         this.stars = 1;
         this.evolutions = [Pokemon_1.Pkm.EXEGGUTOR, Pokemon_1.Pkm.ALOLAN_EXEGGUTOR];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (player.regionalPokemons.includes(Pokemon_1.Pkm.ALOLAN_EXEGGUTOR))
-                return Pokemon_1.Pkm.ALOLAN_EXEGGUTOR;
-            else
-                return Pokemon_1.Pkm.EXEGGUTOR;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                if (player.regionalPokemons.includes(Pokemon_1.Pkm.ALOLAN_EXEGGUTOR))
+                    return Pokemon_1.Pkm.ALOLAN_EXEGGUTOR;
+                else
+                    return Pokemon_1.Pkm.EXEGGUTOR;
+            }
+        };
         this.hp = 110;
         this.atk = 9;
         this.speed = 38;
@@ -14985,20 +15059,10 @@ class Necrozma extends Pokemon {
         this.speed = 50;
         this.def = 10;
         this.speDef = 10;
-        this.maxPP = 110;
+        this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.PRISMATIC_LASER;
         this.passive = Passive_1.Passive.PRISM;
-    }
-    onChangePosition(x, y, player, state) {
-        var _a;
-        super.onChangePosition(x, y, player, state);
-        const hasLight = ((_a = player.synergies.get(Synergy_1.Synergy.LIGHT)) !== null && _a !== void 0 ? _a : 0) >=
-            config_1.SynergyTriggers[Synergy_1.Synergy.LIGHT][0];
-        if ((x === player.lightX && y === player.lightY && hasLight) ||
-            this.items.has(Item_1.Item.SHINY_STONE)) {
-            player.transformPokemon(this, Pokemon_1.Pkm.ULTRA_NECROZMA);
-        }
     }
     onItemGiven(item, player) {
         if (item === Item_1.Item.SHINY_STONE) {
@@ -15022,20 +15086,10 @@ class UltraNecrozma extends Pokemon {
         this.speed = 50;
         this.def = 10;
         this.speDef = 10;
-        this.maxPP = 110;
+        this.maxPP = 100;
         this.range = 3;
         this.skill = Ability_1.Ability.PRISMATIC_LASER;
         this.passive = Passive_1.Passive.PRISM;
-    }
-    onChangePosition(x, y, player, state) {
-        var _a;
-        super.onChangePosition(x, y, player, state);
-        const hasLight = ((_a = player.synergies.get(Synergy_1.Synergy.LIGHT)) !== null && _a !== void 0 ? _a : 0) >=
-            config_1.SynergyTriggers[Synergy_1.Synergy.LIGHT][0];
-        if ((x !== player.lightX || y !== player.lightY || !hasLight) &&
-            !this.items.has(Item_1.Item.SHINY_STONE)) {
-            player.transformPokemon(this, Pokemon_1.Pkm.NECROZMA);
-        }
     }
 }
 exports.UltraNecrozma = UltraNecrozma;
@@ -15050,17 +15104,21 @@ class Cherubi extends Pokemon {
         this.rarity = Game_1.Rarity.EPIC;
         this.stars = 1;
         this.evolutions = [Pokemon_1.Pkm.CHERRIM, Pokemon_1.Pkm.CHERRIM_SUNLIGHT];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            var _a;
-            const hasLight = ((_a = player.synergies.get(Synergy_1.Synergy.LIGHT)) !== null && _a !== void 0 ? _a : 0) >=
-                config_1.SynergyTriggers[Synergy_1.Synergy.LIGHT][0];
-            if (pokemon.positionX === player.lightX &&
-                pokemon.positionY === player.lightY &&
-                hasLight) {
-                return Pokemon_1.Pkm.CHERRIM_SUNLIGHT;
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                var _a;
+                const hasLight = ((_a = player.synergies.get(Synergy_1.Synergy.LIGHT)) !== null && _a !== void 0 ? _a : 0) >=
+                    config_1.SynergyTriggers[Synergy_1.Synergy.LIGHT][0];
+                if (pokemon.positionX === player.lightX &&
+                    pokemon.positionY === player.lightY &&
+                    hasLight) {
+                    return Pokemon_1.Pkm.CHERRIM_SUNLIGHT;
+                }
+                return Pokemon_1.Pkm.CHERRIM;
             }
-            return Pokemon_1.Pkm.CHERRIM;
-        });
+        };
         this.hp = 90;
         this.atk = 6;
         this.speed = 52;
@@ -15094,16 +15152,6 @@ class Cherrim extends Pokemon {
         this.passive = Passive_1.Passive.BLOSSOM;
         this.regional = true;
     }
-    onChangePosition(x, y, player, state) {
-        var _a;
-        super.onChangePosition(x, y, player, state);
-        const hasLight = ((_a = player.synergies.get(Synergy_1.Synergy.LIGHT)) !== null && _a !== void 0 ? _a : 0) >=
-            config_1.SynergyTriggers[Synergy_1.Synergy.LIGHT][0];
-        if ((x === player.lightX && y === player.lightY && hasLight) ||
-            this.items.has(Item_1.Item.SHINY_STONE)) {
-            player.transformPokemon(this, Pokemon_1.Pkm.CHERRIM_SUNLIGHT);
-        }
-    }
     onItemGiven(item, player) {
         if (item === Item_1.Item.SHINY_STONE) {
             player.transformPokemon(this, Pokemon_1.Pkm.CHERRIM_SUNLIGHT);
@@ -15122,7 +15170,7 @@ class CherrimSunlight extends Pokemon {
         this.rarity = Game_1.Rarity.EPIC;
         this.stars = 3;
         this.hp = 250;
-        this.atk = 30;
+        this.atk = 25;
         this.speed = 52;
         this.def = 6;
         this.speDef = 9;
@@ -15131,16 +15179,6 @@ class CherrimSunlight extends Pokemon {
         this.skill = Ability_1.Ability.NATURAL_GIFT;
         this.passive = Passive_1.Passive.BLOSSOM;
         this.regional = true;
-    }
-    onChangePosition(x, y, player, state) {
-        var _a;
-        super.onChangePosition(x, y, player, state);
-        const hasLight = ((_a = player.synergies.get(Synergy_1.Synergy.LIGHT)) !== null && _a !== void 0 ? _a : 0) >=
-            config_1.SynergyTriggers[Synergy_1.Synergy.LIGHT][0];
-        if ((x !== player.lightX || y !== player.lightY || !hasLight) &&
-            !this.items.has(Item_1.Item.SHINY_STONE)) {
-            player.transformPokemon(this, Pokemon_1.Pkm.CHERRIM);
-        }
     }
 }
 exports.CherrimSunlight = CherrimSunlight;
@@ -15596,7 +15634,7 @@ class HisuianQwilfish extends Pokemon {
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
         this.evolution = Pokemon_1.Pkm.OVERQWIL;
-        this.evolutionRule = new evolution_rules_1.StackBasedEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.STACK };
         this.stacksRequired = 20;
         this.hp = 175;
         this.atk = 13;
@@ -15702,7 +15740,10 @@ class Tandemaus extends Pokemon {
         this.range = 1;
         this.skill = Ability_1.Ability.POPULATION_BOMB;
         this.evolution = Pokemon_1.Pkm.MAUSHOLD_THREE;
-        this.evolutionRule = new evolution_rules_1.ConditionBasedEvolutionRule((pokemon, player, stageLevel) => stageLevel >= 14);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.STATE,
+            condition: (pokemon, player, state) => state && state.stageLevel >= 14
+        };
         this.passive = Passive_1.Passive.FAMILY;
     }
 }
@@ -15722,7 +15763,10 @@ class MausholdThree extends Pokemon {
         this.range = 1;
         this.skill = Ability_1.Ability.POPULATION_BOMB;
         this.evolution = Pokemon_1.Pkm.MAUSHOLD_FOUR;
-        this.evolutionRule = new evolution_rules_1.ConditionBasedEvolutionRule((pokemon, player, stageLevel) => stageLevel >= 20);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.STATE,
+            condition: (pokemon, player, state) => state && state.stageLevel >= 20
+        };
         this.passive = Passive_1.Passive.FAMILY;
     }
 }
@@ -15923,7 +15967,10 @@ class Gimmighoul extends Pokemon {
         this.range = 1;
         this.skill = Ability_1.Ability.GOLD_RUSH;
         this.evolution = Pokemon_1.Pkm.GHOLDENGO;
-        this.evolutionRule = new evolution_rules_1.ConditionBasedEvolutionRule((pokemon, player) => player.money >= 99);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.MONEY,
+            moneyRequired: 99
+        };
         this.passive = Passive_1.Passive.GIMMIGHOUL;
     }
 }
@@ -16204,7 +16251,10 @@ class Corsola extends Pokemon {
         this.skill = Ability_1.Ability.RECOVER;
         this.passive = Passive_1.Passive.CORSOLA;
         this.evolution = Pokemon_1.Pkm.GALAR_CORSOLA;
-        this.evolutionRule = new evolution_rules_1.ConditionBasedEvolutionRule((pokemon) => pokemon.deathCount > 0);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.STATE,
+            condition: (pokemon) => pokemon.deathCount > 0
+        };
         this.regional = true;
     }
 }
@@ -16410,7 +16460,10 @@ class Feebas extends Pokemon {
         this.range = 1;
         this.skill = Ability_1.Ability.SPLASH;
         this.passive = Passive_1.Passive.FEEBAS;
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(6);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 6
+        };
     }
 }
 exports.Feebas = Feebas;
@@ -17055,8 +17108,8 @@ class Cosmog extends Pokemon {
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.PSYCHIC, Synergy_1.Synergy.LIGHT]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.evolution = Pokemon_1.Pkm.COSMOEM;
-        this.evolutionRule = new evolution_rules_1.StackBasedEvolutionRule();
-        this.stacksRequired = 5;
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.STACK };
+        this.stacksRequired = 8;
         this.stars = 1;
         this.hp = 165;
         this.atk = 7;
@@ -17077,15 +17130,18 @@ class Cosmoem extends Pokemon {
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 2;
         this.evolutions = [Pokemon_1.Pkm.SOLGALEO, Pokemon_1.Pkm.LUNALA];
-        this.evolutionRule = new evolution_rules_1.StackBasedEvolutionRule((pokemon, player) => {
-            if (pokemon.positionX === player.lightX &&
-                pokemon.positionY === player.lightY &&
-                effects_1.SynergyEffects[Synergy_1.Synergy.LIGHT].some((e) => player.effects.has(e)))
-                return Pokemon_1.Pkm.SOLGALEO;
-            else
-                return Pokemon_1.Pkm.LUNALA;
-        });
-        this.stacksRequired = 5;
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.STACK,
+            divergentEvolution: (pokemon, player) => {
+                if (pokemon.positionX === player.lightX &&
+                    pokemon.positionY === player.lightY &&
+                    synergies_1.SynergyEffects[Synergy_1.Synergy.LIGHT].some((e) => player.effects.has(e)))
+                    return Pokemon_1.Pkm.SOLGALEO;
+                else
+                    return Pokemon_1.Pkm.LUNALA;
+            }
+        };
+        this.stacksRequired = 8;
         this.hp = 250;
         this.atk = 8;
         this.speed = 40;
@@ -17118,7 +17174,7 @@ class Solgaleo extends Pokemon {
         this.speed = 56;
         this.def = 12;
         this.speDef = 8;
-        this.maxPP = 110;
+        this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.SUNSTEEL_STRIKE;
     }
@@ -17332,18 +17388,23 @@ class Kilowattrel extends Pokemon {
     }
 }
 exports.Kilowattrel = Kilowattrel;
-const burmyDivergentEvolutionRule = (cloakType, wormadam) => new evolution_rules_1.ConditionBasedEvolutionRule((pokemon, player, stageLevel) => {
-    var _a;
-    const copies = (0, schemas_1.schemaValues)(player.board).filter((p) => p.index === pokemon.index && !p.items.has(Item_1.Item.EVIOLITE));
-    if (copies.length >= 3)
-        return true;
-    return (((_a = config_1.RegionDetails[player.map]) === null || _a === void 0 ? void 0 : _a.synergies.includes(cloakType)) === false &&
-        stageLevel >= 20);
-}, (pokemon, player) => {
-    const copies = (0, schemas_1.schemaValues)(player.board).filter((p) => p.index === pokemon.index && !p.items.has(Item_1.Item.EVIOLITE));
-    if (copies.length >= 3)
-        return wormadam;
-    return Pokemon_1.Pkm.MOTHIM;
+const burmyDivergentEvolutionRule = (cloakType, wormadam) => ({
+    type: EvolutionRules_1.EvolutionRuleType.STATE,
+    condition: (pokemon, player, state) => {
+        var _a;
+        const copies = (0, schemas_1.schemaValues)(player.board).filter((p) => p.index === pokemon.index && !p.items.has(Item_1.Item.EVIOLITE));
+        if (copies.length >= 3)
+            return true;
+        return (((_a = config_1.RegionDetails[player.map]) === null || _a === void 0 ? void 0 : _a.synergies.includes(cloakType)) === false &&
+            state &&
+            state.stageLevel >= 20);
+    },
+    divergentEvolution: (pokemon, player) => {
+        const copies = (0, schemas_1.schemaValues)(player.board).filter((p) => p.index === pokemon.index && !p.items.has(Item_1.Item.EVIOLITE));
+        if (copies.length >= 3)
+            return wormadam;
+        return Pokemon_1.Pkm.MOTHIM;
+    }
 });
 exports.burmyDivergentEvolutionRule = burmyDivergentEvolutionRule;
 class BurmyPlant extends Pokemon {
@@ -17353,7 +17414,11 @@ class BurmyPlant extends Pokemon {
         this.rarity = Game_1.Rarity.RARE;
         this.stars = 1;
         this.evolutions = [Pokemon_1.Pkm.WORMADAM_PLANT, Pokemon_1.Pkm.MOTHIM];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, () => Pokemon_1.Pkm.WORMADAM_PLANT);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: () => Pokemon_1.Pkm.WORMADAM_PLANT
+        };
         this.hp = 70;
         this.atk = 7;
         this.speed = 46;
@@ -17379,7 +17444,11 @@ class BurmySandy extends Pokemon {
         this.rarity = Game_1.Rarity.RARE;
         this.stars = 1;
         this.evolutions = [Pokemon_1.Pkm.WORMADAM_SANDY, Pokemon_1.Pkm.MOTHIM];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, () => Pokemon_1.Pkm.WORMADAM_SANDY);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: () => Pokemon_1.Pkm.WORMADAM_SANDY
+        };
         this.hp = 70;
         this.atk = 7;
         this.speed = 46;
@@ -17406,7 +17475,11 @@ class BurmyTrash extends Pokemon {
         this.rarity = Game_1.Rarity.RARE;
         this.stars = 1;
         this.evolutions = [Pokemon_1.Pkm.WORMADAM_TRASH, Pokemon_1.Pkm.MOTHIM];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, () => Pokemon_1.Pkm.WORMADAM_TRASH);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: () => Pokemon_1.Pkm.WORMADAM_TRASH
+        };
         this.hp = 70;
         this.atk = 7;
         this.speed = 46;
@@ -17904,7 +17977,7 @@ class Grubbin extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.CHARJABUG;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 75;
         this.atk = 5;
         this.speed = 39;
@@ -17924,7 +17997,7 @@ class Charjabug extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.VIKAVOLT;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 130;
         this.atk = 13;
         this.speed = 39;
@@ -18237,7 +18310,10 @@ class Wishiwashi extends Pokemon {
         this.range = 1;
         this.skill = Ability_1.Ability.AQUA_JET;
         this.passive = Passive_1.Passive.WISHIWASHI;
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3
+        };
     }
 }
 exports.Wishiwashi = Wishiwashi;
@@ -18419,12 +18495,16 @@ class Petilil extends Pokemon {
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.GRASS, Synergy_1.Synergy.FLORA, Synergy_1.Synergy.HUMAN]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.evolutions = [Pokemon_1.Pkm.LILIGANT, Pokemon_1.Pkm.HISUIAN_LILLIGANT];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player) => {
-            if (player.regionalPokemons.includes(Pokemon_1.Pkm.HISUIAN_LILLIGANT))
-                return Pokemon_1.Pkm.HISUIAN_LILLIGANT;
-            else
-                return Pokemon_1.Pkm.LILIGANT;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                if (player.regionalPokemons.includes(Pokemon_1.Pkm.HISUIAN_LILLIGANT))
+                    return Pokemon_1.Pkm.HISUIAN_LILLIGANT;
+                else
+                    return Pokemon_1.Pkm.LILIGANT;
+            }
+        };
         this.stars = 1;
         this.hp = 85;
         this.atk = 5;
@@ -18491,17 +18571,20 @@ class Mantyke extends Pokemon {
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.BABY, Synergy_1.Synergy.WATER, Synergy_1.Synergy.FLYING]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.evolution = Pokemon_1.Pkm.MANTINE;
-        this.evolutionRule = new evolution_rules_1.ConditionBasedEvolutionRule((pokemon, player) => {
-            for (const p of player.board.values()) {
-                if (p.name === Pokemon_1.Pkm.REMORAID &&
-                    !(0, board_1.isOnBench)(p) &&
-                    !(0, board_1.isOnBench)(pokemon) &&
-                    (0, distance_1.distanceC)(pokemon.positionX, pokemon.positionY, p.positionX, p.positionY) === 1) {
-                    return true;
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.PLACEMENT,
+            condition: (pokemon, player, board) => {
+                for (const p of board.values()) {
+                    if (p.name === Pokemon_1.Pkm.REMORAID &&
+                        !(0, board_1.isOnBench)(p) &&
+                        !(0, board_1.isOnBench)(pokemon) &&
+                        (0, distance_1.distanceC)(pokemon.positionX, pokemon.positionY, p.positionX, p.positionY) === 1) {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
-        });
+        };
         this.stars = 2;
         this.hp = 160;
         this.atk = 6;
@@ -18512,10 +18595,6 @@ class Mantyke extends Pokemon {
         this.range = 2;
         this.skill = Ability_1.Ability.BOUNCE;
         this.passive = Passive_1.Passive.MANTYKE;
-    }
-    onChangePosition(x, y, player, state) {
-        super.onChangePosition(x, y, player, state);
-        this.evolutionRule.tryEvolve(this, player, 0);
     }
 }
 exports.Mantyke = Mantyke;
@@ -18552,14 +18631,6 @@ class Remoraid extends Pokemon {
         this.maxPP = 80;
         this.range = 1;
         this.skill = Ability_1.Ability.AQUA_JET;
-    }
-    onChangePosition(x, y, player, state) {
-        super.onChangePosition(x, y, player, state);
-        for (const pokemon of player.board.values()) {
-            if (pokemon.name === Pokemon_1.Pkm.MANTYKE) {
-                pokemon.evolutionRule.tryEvolve(pokemon, player, 0);
-            }
-        }
     }
 }
 exports.Remoraid = Remoraid;
@@ -18665,7 +18736,7 @@ class Sandile extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.KROKOROK;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 80;
         this.atk = 6;
         this.speed = 54;
@@ -18689,7 +18760,7 @@ class Krokorok extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.KROOKODILE;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 150;
         this.atk = 12;
         this.speed = 54;
@@ -19675,14 +19746,7 @@ class Timburr extends Pokemon {
         this.skill = Ability_1.Ability.COLUMN_CRUSH;
         this.passive = Passive_1.Passive.PILLAR;
     }
-    onChangePosition(x, y, player, state) {
-        super.onChangePosition(x, y, player, state);
-        player.updatePillars();
-    }
     afterSell(player) {
-        player.updatePillars();
-    }
-    afterEvolve(player) {
         player.updatePillars();
     }
 }
@@ -19704,14 +19768,7 @@ class Gurdurr extends Pokemon {
         this.skill = Ability_1.Ability.COLUMN_CRUSH;
         this.passive = Passive_1.Passive.PILLAR;
     }
-    onChangePosition(x, y, player, state) {
-        super.onChangePosition(x, y, player, state);
-        player.updatePillars();
-    }
     afterSell(player) {
-        player.updatePillars();
-    }
-    afterEvolve(player) {
         player.updatePillars();
     }
 }
@@ -19731,10 +19788,6 @@ class Conkeldurr extends Pokemon {
         this.range = 1;
         this.skill = Ability_1.Ability.COLUMN_CRUSH;
         this.passive = Passive_1.Passive.PILLAR;
-    }
-    onChangePosition(x, y, player, state) {
-        super.onChangePosition(x, y, player, state);
-        player.updatePillars();
     }
     afterSell(player) {
         player.updatePillars();
@@ -20228,7 +20281,11 @@ class Milcery extends Pokemon {
             Pokemon_1.Pkm.ALCREMIE_CARAMEL_SWIRL,
             Pokemon_1.Pkm.ALCREMIE_RAINBOW_SWIRL
         ];
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([...Item_1.Flavors], (pokemon, player, item) => alcremieByFlavor[item]);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [...Item_1.Flavors],
+            divergentEvolution: (pokemon, player, item) => alcremieByFlavor[item]
+        };
         this.hp = 150;
         this.atk = 10;
         this.speed = 41;
@@ -20502,7 +20559,10 @@ class Duraludon extends Pokemon {
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 2;
         this.evolution = Pokemon_1.Pkm.ARCHALUDON;
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([...Item_1.Tools]);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [...Item_1.Tools]
+        };
         this.hp = 180;
         this.atk = 18;
         this.speed = 52;
@@ -20588,16 +20648,20 @@ class Charcadet extends Pokemon {
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 2;
         this.evolutions = [Pokemon_1.Pkm.ARMAROUGE, Pokemon_1.Pkm.CERULEDGE];
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([Item_1.Item.AUSPICIOUS_ARMOR, Item_1.Item.MALICIOUS_ARMOR], (pokemon, player, item_) => {
-            const item = item_;
-            if (item === Item_1.Item.AUSPICIOUS_ARMOR) {
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [Item_1.Item.AUSPICIOUS_ARMOR, Item_1.Item.MALICIOUS_ARMOR],
+            divergentEvolution: (pokemon, player, item_) => {
+                const item = item_;
+                if (item === Item_1.Item.AUSPICIOUS_ARMOR) {
+                    return Pokemon_1.Pkm.ARMAROUGE;
+                }
+                if (item === Item_1.Item.MALICIOUS_ARMOR) {
+                    return Pokemon_1.Pkm.CERULEDGE;
+                }
                 return Pokemon_1.Pkm.ARMAROUGE;
             }
-            if (item === Item_1.Item.MALICIOUS_ARMOR) {
-                return Pokemon_1.Pkm.CERULEDGE;
-            }
-            return Pokemon_1.Pkm.ARMAROUGE;
-        });
+        };
         this.hp = 150;
         this.atk = 15;
         this.speed = 33;
@@ -20793,7 +20857,10 @@ class Zacian extends Pokemon {
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.WILD, Synergy_1.Synergy.FAIRY]);
         this.rarity = Game_1.Rarity.LEGENDARY;
         this.evolution = Pokemon_1.Pkm.ZACIAN_CROWNED;
-        this.evolutionRule = new evolution_rules_1.ItemEvolutionRule([Item_1.Item.RUSTED_SWORD]);
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [Item_1.Item.RUSTED_SWORD]
+        };
         this.stars = 3;
         this.hp = 260;
         this.atk = 22;
@@ -20908,11 +20975,15 @@ class Kubfu extends Pokemon {
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 2;
         this.evolutions = [Pokemon_1.Pkm.URSHIFU_RAPID, Pokemon_1.Pkm.URSHIFU_SINGLE];
-        this.evolutionRule = Object.assign(new evolution_rules_1.ItemEvolutionRule([Item_1.Item.SCROLL_OF_WATERS, Item_1.Item.SCROLL_OF_DARKNESS], (pokemon, player, item) => {
-            return item === Item_1.Item.SCROLL_OF_WATERS
-                ? Pokemon_1.Pkm.URSHIFU_RAPID
-                : Pokemon_1.Pkm.URSHIFU_SINGLE;
-        }));
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.ITEM,
+            itemsTriggeringEvolution: [Item_1.Item.SCROLL_OF_WATERS, Item_1.Item.SCROLL_OF_DARKNESS],
+            divergentEvolution: (pokemon, player, item) => {
+                return item === Item_1.Item.SCROLL_OF_WATERS
+                    ? Pokemon_1.Pkm.URSHIFU_RAPID
+                    : Pokemon_1.Pkm.URSHIFU_SINGLE;
+            }
+        };
         this.stacksRequired = 10;
         this.hp = 150;
         this.atk = 15;
@@ -21232,14 +21303,18 @@ class Espurr extends Pokemon {
         this.types = new schema_1.SetSchema([Synergy_1.Synergy.WILD, Synergy_1.Synergy.PSYCHIC, Synergy_1.Synergy.FIELD]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.evolutions = [Pokemon_1.Pkm.MEOWSTIC_MALE, Pokemon_1.Pkm.MEOWSTIC_FEMALE];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (pokemon, player, stageLevel) => {
-            var _a, _b;
-            const psychicCount = (_a = player.synergies.get(Synergy_1.Synergy.PSYCHIC)) !== null && _a !== void 0 ? _a : 0;
-            const fieldCount = (_b = player.synergies.get(Synergy_1.Synergy.FIELD)) !== null && _b !== void 0 ? _b : 0;
-            return psychicCount >= fieldCount
-                ? Pokemon_1.Pkm.MEOWSTIC_MALE
-                : Pokemon_1.Pkm.MEOWSTIC_FEMALE;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (pokemon, player) => {
+                var _a, _b;
+                const psychicCount = (_a = player.synergies.get(Synergy_1.Synergy.PSYCHIC)) !== null && _a !== void 0 ? _a : 0;
+                const fieldCount = (_b = player.synergies.get(Synergy_1.Synergy.FIELD)) !== null && _b !== void 0 ? _b : 0;
+                return psychicCount >= fieldCount
+                    ? Pokemon_1.Pkm.MEOWSTIC_MALE
+                    : Pokemon_1.Pkm.MEOWSTIC_FEMALE;
+            }
+        };
         this.stars = 1;
         this.hp = 80;
         this.atk = 3;
@@ -21735,19 +21810,11 @@ exports.Sandaconda = Sandaconda;
 class Dunsparce extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([
-            Synergy_1.Synergy.NORMAL,
-            Synergy_1.Synergy.GROUND,
-            Synergy_1.Synergy.FLYING
-        ]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.NORMAL, Synergy_1.Synergy.GROUND, Synergy_1.Synergy.BUG]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.evolution = Pokemon_1.Pkm.DUDUNSPARCE;
-        this.evolutionRule = new evolution_rules_1.ConditionBasedEvolutionRule((pokemon, player) => {
-            const nbHoles = player.groundHoles.filter((hole) => hole === 5).length;
-            pokemon.stacks = nbHoles;
-            return nbHoles >= 10;
-        });
-        this.stacksRequired = 10;
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.STACK };
+        this.stacksRequired = 20;
         this.stars = 3;
         this.hp = 220;
         this.atk = 15;
@@ -21764,11 +21831,7 @@ exports.Dunsparce = Dunsparce;
 class Dudunsparse extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([
-            Synergy_1.Synergy.NORMAL,
-            Synergy_1.Synergy.GROUND,
-            Synergy_1.Synergy.FLYING
-        ]);
+        this.types = new schema_1.SetSchema([Synergy_1.Synergy.NORMAL, Synergy_1.Synergy.GROUND, Synergy_1.Synergy.BUG]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 4;
         this.hp = 260;
@@ -21949,7 +22012,7 @@ class Blipbug extends Pokemon {
         this.speed = 58;
         this.def = 4;
         this.speDef = 4;
-        this.maxPP = 100;
+        this.maxPP = 85;
         this.range = 1;
         this.skill = Ability_1.Ability.EXPANDING_FORCE;
         this.regional = true;
@@ -21968,7 +22031,7 @@ class Dottler extends Pokemon {
         this.speed = 58;
         this.def = 7;
         this.speDef = 7;
-        this.maxPP = 100;
+        this.maxPP = 85;
         this.range = 1;
         this.skill = Ability_1.Ability.EXPANDING_FORCE;
         this.regional = true;
@@ -21986,7 +22049,7 @@ class Orbeetle extends Pokemon {
         this.speed = 58;
         this.def = 10;
         this.speDef = 10;
-        this.maxPP = 100;
+        this.maxPP = 85;
         this.range = 1;
         this.skill = Ability_1.Ability.EXPANDING_FORCE;
         this.regional = true;
@@ -22365,11 +22428,14 @@ class BasculinWhite extends Pokemon {
         this.skill = Ability_1.Ability.GRUDGE_DIVE;
         this.passive = Passive_1.Passive.BASCULIN_WHITE;
         this.evolutions = [Pokemon_1.Pkm.BASCULEGION_MALE, Pokemon_1.Pkm.BASCULEGION_FEMALE];
-        this.evolutionRule = new evolution_rules_1.StackBasedEvolutionRule((pokemon) => {
-            return pokemon.deathCount >= 5
-                ? Pokemon_1.Pkm.BASCULEGION_FEMALE
-                : Pokemon_1.Pkm.BASCULEGION_MALE;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.STACK,
+            divergentEvolution: (pokemon) => {
+                return pokemon.deathCount >= 5
+                    ? Pokemon_1.Pkm.BASCULEGION_FEMALE
+                    : Pokemon_1.Pkm.BASCULEGION_MALE;
+            }
+        };
         this.stacksRequired = 5;
         this.onAcquired = basculinOnAcquired;
     }
@@ -22739,7 +22805,7 @@ class Scatterbug extends Pokemon {
         this.rarity = Game_1.Rarity.HATCH;
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.SPEWPA;
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule();
+        this.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.HATCH };
         this.hp = 70;
         this.atk = 4;
         this.speed = 52;
@@ -22780,9 +22846,12 @@ class Spewpa extends Pokemon {
             Pokemon_1.Pkm.VIVILLON_FANCY,
             Pokemon_1.Pkm.VIVILLON_POKE_BALL
         ];
-        this.evolutionRule = new evolution_rules_1.HatchEvolutionRule((pokemon, player) => {
-            return (0, config_1.getAltFormForPlayer)(Pokemon_1.Pkm.VIVILLON, player);
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.HATCH,
+            divergentEvolution: (pokemon, player) => {
+                return (0, config_1.getAltFormForPlayer)(Pokemon_1.Pkm.VIVILLON, player);
+            }
+        };
         this.hp = 125;
         this.atk = 11;
         this.speed = 52;
@@ -23587,11 +23656,15 @@ class Bergmite extends Pokemon {
         this.stars = 1;
         this.evolution = Pokemon_1.Pkm.AVALUGG;
         this.evolutions = [Pokemon_1.Pkm.AVALUGG, Pokemon_1.Pkm.HISUI_AVALUGG];
-        this.evolutionRule = new evolution_rules_1.CountEvolutionRule(3, (_pokemon, player) => {
-            return player.regionalPokemons.includes(Pokemon_1.Pkm.HISUI_AVALUGG)
-                ? Pokemon_1.Pkm.HISUI_AVALUGG
-                : Pokemon_1.Pkm.AVALUGG;
-        });
+        this.evolutionRule = {
+            type: EvolutionRules_1.EvolutionRuleType.COUNT,
+            numberRequired: 3,
+            divergentEvolution: (_pokemon, player) => {
+                return player.regionalPokemons.includes(Pokemon_1.Pkm.HISUI_AVALUGG)
+                    ? Pokemon_1.Pkm.HISUI_AVALUGG
+                    : Pokemon_1.Pkm.AVALUGG;
+            }
+        };
         this.hp = 90;
         this.atk = 5;
         this.speed = 28;
@@ -24538,7 +24611,7 @@ exports.PokemonClasses = {
     [Pokemon_1.Pkm.BONSLEY]: Bonsley,
     [Pokemon_1.Pkm.SUDOWOODO]: Sudowoodo,
     [Pokemon_1.Pkm.COMBEE]: Combee,
-    [Pokemon_1.Pkm.VESPIQUEEN]: Vespiqueen,
+    [Pokemon_1.Pkm.VESPIQUEN]: Vespiquen,
     [Pokemon_1.Pkm.SHUCKLE]: Shuckle,
     [Pokemon_1.Pkm.TEPIG]: Tepig,
     [Pokemon_1.Pkm.PIGNITE]: Pignite,

@@ -1,4 +1,4 @@
-import { RoomAvailable } from "@colyseus/sdk";
+import type { RoomAvailable } from "@colyseus/sdk";
 import { GameMode } from "../../../../../types/enum/Game";
 import "./room-menu.css";
 export default function RoomMenu(): import("react/jsx-runtime").JSX.Element;

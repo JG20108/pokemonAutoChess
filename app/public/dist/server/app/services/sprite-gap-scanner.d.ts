@@ -1,6 +1,6 @@
 interface SpriteGapEntry {
     index: string;
-    monsterName: string;
+    pkm: string;
     formName: string;
     displayName: string;
     formPath: string;

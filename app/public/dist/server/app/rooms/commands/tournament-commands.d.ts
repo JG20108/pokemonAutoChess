@@ -1,7 +1,7 @@
 import { Command } from "@colyseus/command";
-import { Client } from "colyseus";
-import { IPlayer } from "../../types";
-import CustomLobbyRoom from "../custom-lobby-room";
+import { type Client } from "colyseus";
+import { type IPlayer } from "../../types";
+import type CustomLobbyRoom from "../custom-lobby-room";
 export declare class OnCreateTournamentCommand extends Command<CustomLobbyRoom, {
     client: Client;
     name: string;

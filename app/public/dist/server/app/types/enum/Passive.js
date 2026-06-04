@@ -195,5 +195,6 @@ var Passive;
     Passive["EISCUE_NOICE"] = "EISCUE_NOICE";
     Passive["WALL_OF_STONE"] = "WALL_OF_STONE";
     Passive["COMATOSE"] = "COMATOSE";
+    Passive["VESPIQUEN"] = "VESPIQUEN";
 })(Passive || (exports.Passive = Passive = {}));
 //# sourceMappingURL=Passive.js.map

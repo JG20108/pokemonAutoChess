@@ -1,10 +1,10 @@
-import { EloRank } from "../../../../../types/enum/EloRank";
+import type { EloRank } from "../../../../../types/enum/EloRank";
 import { Rarity } from "../../../../../types/enum/Game";
-import { Pkm } from "../../../../../types/enum/Pokemon";
-import { Synergy } from "../../../../../types/enum/Synergy";
-import { IPokemonsStatisticV2 } from "../../../models/pokemons-statistic-v2";
+import { type Pkm } from "../../../../../types/enum/Pokemon";
+import type { Synergy } from "../../../../../types/enum/Synergy";
+import type { IPokemonsStatisticV2 } from "../../../models/pokemons-statistic-v2";
 import "./pokemon-history-panel.css";
-import { PoolType } from "../../../../../types/enum/PoolType";
+import type { PoolType } from "../../../../../types/enum/PoolType";
 interface PokemonHistoryPanelProps {
     metaPokemons: IPokemonsStatisticV2[];
     eloThreshold: EloRank;

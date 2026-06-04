@@ -1,5 +1,6 @@
-import Phaser, { type Scene } from "phaser";
-import { DungeonMusic } from "../../../../types/enum/Dungeon";
+import type Phaser from "phaser";
+import type { Scene } from "phaser";
+import type { DungeonMusic } from "../../../../types/enum/Dungeon";
 export declare const SOUNDS: {
     readonly BUTTON_CLICK: "buttonclick.ogg";
     readonly BUTTON_HOVER: "buttonhover.ogg";

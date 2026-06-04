@@ -1,22 +1,21 @@
 import { Schema, SetSchema } from "@colyseus/schema";
 import Count from "../models/colyseus-models/count";
 import Player from "../models/colyseus-models/player";
-import { Pokemon } from "../models/colyseus-models/pokemon";
 import Status from "../models/colyseus-models/status";
-import { Emotion, IPokemon, IPokemonEntity } from "../types";
+import { Emotion, type IPokemon, type IPokemonEntity } from "../types";
 import { Ability } from "../types/enum/Ability";
 import { EffectEnum } from "../types/enum/Effect";
-import { AttackType, Orientation, PokemonActionState, Rarity, Stat, Team } from "../types/enum/Game";
+import { AttackType, Orientation, PokemonActionState, type Rarity, Stat, Team } from "../types/enum/Game";
 import { Item } from "../types/enum/Item";
 import { Passive } from "../types/enum/Passive";
 import { Pkm } from "../types/enum/Pokemon";
 import { SpecialGameRule } from "../types/enum/SpecialGameRule";
 import { Synergy } from "../types/enum/Synergy";
 import type { Board } from "./board";
-import { Effect } from "./effects/effect";
-import PokemonState from "./pokemon-state";
-import Simulation from "./simulation";
-import { SimulationCommand } from "./simulation-command";
+import { type Effect } from "./effects/effect";
+import type PokemonState from "./pokemon-state";
+import type Simulation from "./simulation";
+import { type SimulationCommand } from "./simulation-command";
 export declare class PokemonEntity extends Schema implements IPokemonEntity {
     shiny: boolean;
     positionX: number;
@@ -202,7 +201,4 @@ export declare class PokemonEntity extends Schema implements IPokemonEntity {
     getEffects<T extends new (...args: any[]) => any>(effectClass: T): InstanceType<T>[];
     addStack(amount?: number): void;
 }
-export declare function getStrongestUnit<T extends Pokemon | IPokemonEntity>(pokemons: T[]): T;
-export declare function getUnitScore(pokemon: IPokemonEntity | IPokemon): number;
 export declare function canSell(pkm: Pkm, specialGameRule: SpecialGameRule | undefined | null): boolean;
-export declare function getMoveSpeed(pokemon: IPokemonEntity): number;

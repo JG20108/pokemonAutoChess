@@ -2,7 +2,7 @@ import { Emotion } from "../types";
 import { Stat } from "../types/enum/Game";
 import { Item } from "../types/enum/Item";
 import { Pkm } from "../types/enum/Pokemon";
-import Player from "./colyseus-models/player";
+import type Player from "./colyseus-models/player";
 export type PVEStagesNames = `pkm.${Pkm}` | "tower_duo" | "legendary_birds" | "legendary_beasts" | "super_ancients" | "legendary_giants";
 export type PVEStage = {
     name: PVEStagesNames;

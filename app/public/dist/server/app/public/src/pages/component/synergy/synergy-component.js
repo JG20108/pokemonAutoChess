@@ -71,8 +71,8 @@ function SynergyComponent(props) {
             removeHighlightSynergy(props.type);
         }, children: [props.tooltipPortal
                 ? react_dom_1.default.createPortal(tooltip, document.body)
-                : tooltip, (0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: props.type, size: "40px" }), (0, jsx_runtime_1.jsx)("span", { style: {
-                    fontSize: "32px",
+                : tooltip, (0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: props.type }), (0, jsx_runtime_1.jsx)("span", { style: {
+                    fontSize: "2em",
                     textShadow: "2px 2px 2px #000000c0",
                     textAlign: "center",
                     marginRight: "4px",

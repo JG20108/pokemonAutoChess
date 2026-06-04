@@ -1090,7 +1090,7 @@ var Pkm;
     Pkm["VENOMOTH"] = "VENOMOTH";
     Pkm["VENONAT"] = "VENONAT";
     Pkm["VENUSAUR"] = "VENUSAUR";
-    Pkm["VESPIQUEEN"] = "VESPIQUEEN";
+    Pkm["VESPIQUEN"] = "VESPIQUEN";
     Pkm["VIBRAVA"] = "VIBRAVA";
     Pkm["VICTINI"] = "VICTINI";
     Pkm["VICTREEBEL"] = "VICTREEBEL";
@@ -1684,7 +1684,7 @@ exports.PkmIndex = {
     [Pkm.WORMADAM_TRASH]: "0413-0002",
     [Pkm.MOTHIM]: "0414",
     [Pkm.COMBEE]: "0415",
-    [Pkm.VESPIQUEEN]: "0416",
+    [Pkm.VESPIQUEN]: "0416",
     [Pkm.PACHIRISU]: "0417",
     [Pkm.BUIZEL]: "0418",
     [Pkm.FLOATZEL]: "0419",
@@ -2977,7 +2977,7 @@ exports.PkmFamily = {
     [Pkm.SUDOWOODO]: Pkm.BONSLEY,
     [Pkm.PHIONE]: Pkm.PHIONE,
     [Pkm.COMBEE]: Pkm.COMBEE,
-    [Pkm.VESPIQUEEN]: Pkm.COMBEE,
+    [Pkm.VESPIQUEN]: Pkm.COMBEE,
     [Pkm.SHUCKLE]: Pkm.SHUCKLE,
     [Pkm.TEPIG]: Pkm.TEPIG,
     [Pkm.PIGNITE]: Pkm.TEPIG,

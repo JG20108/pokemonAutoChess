@@ -1,6 +1,6 @@
-import { DtefTileset, Mask, TerrainType, TilesetExchangeFile } from "../config";
-import { DungeonPMDO } from "../types/enum/Dungeon";
-import { TileMapping } from "./design";
+import { type DtefTileset, type Mask, type TerrainType, type TilesetExchangeFile } from "../config";
+import type { DungeonPMDO } from "../types/enum/Dungeon";
+import type { TileMapping } from "./design";
 export type TilesetTiled = {
     image: string;
     firstgid: number;

@@ -1,7 +1,7 @@
 import { ArraySchema, Schema } from "@colyseus/schema";
 import Message from "../../models/colyseus-models/message";
 import { TournamentSchema } from "../../models/colyseus-models/tournament";
-import { ITournament } from "../../types/interfaces/Tournament";
+import type { ITournament } from "../../types/interfaces/Tournament";
 export default class LobbyState extends Schema {
     messages: ArraySchema<Message>;
     tournaments: ArraySchema<TournamentSchema>;

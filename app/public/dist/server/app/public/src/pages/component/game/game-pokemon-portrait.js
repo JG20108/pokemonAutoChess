@@ -9,10 +9,11 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const react_tooltip_1 = require("react-tooltip");
 const config_1 = require("../../../../../config");
-const evolution_rules_1 = require("../../../../../core/evolution-rules");
+const evolution_manager_1 = require("../../../../../core/evolution-logic/evolution-manager");
 const pokemon_customs_1 = require("../../../../../models/colyseus-models/pokemon-customs");
 const pokemon_factory_1 = __importDefault(require("../../../../../models/pokemon-factory"));
 const shop_1 = require("../../../../../models/shop");
+const EvolutionRules_1 = require("../../../../../types/EvolutionRules");
 const Pokemon_1 = require("../../../../../types/enum/Pokemon");
 const avatar_1 = require("../../../../../utils/avatar");
 const schemas_1 = require("../../../../../utils/schemas");
@@ -77,20 +78,20 @@ function GamePokemonPortrait(props) {
     const pokemonCustom = (0, pokemon_customs_1.getPkmWithCustom)(pokemon.index, customs);
     const rarityColor = config_1.RarityColor[pokemon.rarity];
     const evolutionName = spectatedPlayer
-        ? pokemon.evolutionRule.getEvolution(pokemon, spectatedPlayer)
+        ? evolution_manager_1.EvolutionManager.getEvolution(pokemon, spectatedPlayer)
         : ((_b = pokemon.evolutions[0]) !== null && _b !== void 0 ? _b : pokemon.evolution);
     let pokemonEvolution = pokemon_factory_1.default.createPokemonFromName(evolutionName);
-    const willEvolve = pokemon.evolutionRule instanceof evolution_rules_1.CountEvolutionRule &&
+    const willEvolve = pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.COUNT &&
         count === pokemon.evolutionRule.numberRequired - 1;
-    const shouldShimmer = pokemon.evolutionRule instanceof evolution_rules_1.CountEvolutionRule &&
+    const shouldShimmer = pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.COUNT &&
         ((count > 0 && pokemon.hasEvolution) ||
             (countEvol > 0 && pokemonEvolution.hasEvolution));
-    if (pokemon.evolutionRule instanceof evolution_rules_1.CountEvolutionRule &&
+    if (pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.COUNT &&
         count === pokemon.evolutionRule.numberRequired - 1 &&
         countEvol === pokemon.evolutionRule.numberRequired - 1 &&
         pokemonEvolution.hasEvolution) {
         const evolutionName2 = spectatedPlayer
-            ? pokemonEvolution.evolutionRule.getEvolution(pokemonEvolution, spectatedPlayer, stageLevel)
+            ? evolution_manager_1.EvolutionManager.getEvolution(pokemonEvolution, spectatedPlayer, stageLevel)
             : ((_c = pokemonEvolution.evolutions[0]) !== null && _c !== void 0 ? _c : pokemonEvolution.evolution);
         pokemonEvolution = pokemon_factory_1.default.createPokemonFromName(evolutionName2);
     }

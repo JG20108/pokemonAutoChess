@@ -45,6 +45,7 @@ const package_json_1 = __importDefault(require("../../../../../package.json"));
 const config_1 = require("../../../../config");
 const flower_pots_1 = require("../../../../core/flower-pots");
 const precomputed_pokemon_data_1 = require("../../../../models/precomputed/precomputed-pokemon-data");
+const types_1 = require("../../../../types");
 const Animation_1 = require("../../../../types/Animation");
 const Ability_1 = require("../../../../types/enum/Ability");
 const Game_1 = require("../../../../types/enum/Game");
@@ -461,7 +462,7 @@ class PokemonSprite extends draggable_object_1.default {
     blossomAnimation() {
         var _a, _b, _c;
         const scene = this.scene;
-        const flowerPot = flower_pots_1.FlowerPots.find((pot) => flower_pots_1.FlowerMonByPot[pot].includes(Pokemon_1.PkmByIndex[this.pokemon.index]));
+        const flowerPot = types_1.FlowerPots.find((pot) => flower_pots_1.FlowerMonByPot[pot].includes(Pokemon_1.PkmByIndex[this.pokemon.index]));
         if (flowerPot) {
             (_b = (_a = scene.board) === null || _a === void 0 ? void 0 : _a.flowerPokemonsInPots.find((p) => p.pokemon.index === this.pokemon.index)) === null || _b === void 0 ? void 0 : _b.destroy();
             const positions = "team" in this.pokemon && this.pokemon.team === Game_1.Team.RED_TEAM
@@ -471,7 +472,7 @@ class PokemonSprite extends draggable_object_1.default {
                 : this.flip
                     ? flower_pots_1.FLOWER_POTS_POSITIONS_RED
                     : flower_pots_1.FLOWER_POTS_POSITIONS_BLUE;
-            const [startX, startY] = positions[flower_pots_1.FlowerPots.indexOf(flowerPot)];
+            const [startX, startY] = positions[types_1.FlowerPots.indexOf(flowerPot)];
             (0, abilities_animations_1.addAbilitySprite)(scene, Ability_1.Ability.PETAL_BLIZZARD, 0, [startX, startY - 24]);
             this.moveManager.setEnable(false);
             this.setPosition(startX, startY);

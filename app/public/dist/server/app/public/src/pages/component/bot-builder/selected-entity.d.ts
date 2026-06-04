@@ -1,4 +1,4 @@
-import { PkmWithCustom } from "../../../../../types";
+import type { PkmWithCustom } from "../../../../../types";
 import { Item } from "../../../../../types/enum/Item";
 export default function SelectedEntity(props: {
     entity: Item | PkmWithCustom;

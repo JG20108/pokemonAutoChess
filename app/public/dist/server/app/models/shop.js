@@ -1,13 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPoolSize = getPoolSize;
-exports.getRegularsTier1 = getRegularsTier1;
-exports.getAdditionalsTier1 = getAdditionalsTier1;
 exports.getSellPrice = getSellPrice;
 exports.getBuyPrice = getBuyPrice;
 const config_1 = require("../config");
 const scribbles_1 = require("../core/scribbles");
-const Ability_1 = require("../types/enum/Ability");
 const Effect_1 = require("../types/enum/Effect");
 const Game_1 = require("../types/enum/Game");
 const Item_1 = require("../types/enum/Item");
@@ -94,24 +91,6 @@ const PSEUDO_JOURNEY_SHOP_EXCLUDED_PKMS = new Set([
     Pokemon_1.Pkm.DRAKLOAK,
     Pokemon_1.Pkm.DRAGAPULT
 ]);
-function getRegularsTier1(pokemons) {
-    return pokemons.filter((p) => {
-        const pokemonData = (0, precomputed_pokemon_data_1.getPokemonData)(p);
-        return (pokemonData.stars === 1 &&
-            pokemonData.skill !== Ability_1.Ability.DEFAULT &&
-            !pokemonData.additional &&
-            !pokemonData.regional);
-    });
-}
-function getAdditionalsTier1(pokemons) {
-    return pokemons.filter((p) => {
-        const pokemonData = (0, precomputed_pokemon_data_1.getPokemonData)(p);
-        return (pokemonData.stars === 1 &&
-            pokemonData.skill !== Ability_1.Ability.DEFAULT &&
-            pokemonData.additional &&
-            !pokemonData.regional);
-    });
-}
 function getSellPrice(pokemon, specialGameRule, ignoreRareCandy = false) {
     var _a;
     const name = pokemon.name;
@@ -210,11 +189,11 @@ function getBuyPrice(name, specialGameRule) {
     }
     return price;
 }
-const CommonShop = getRegularsTier1(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.COMMON);
-const UncommonShop = getRegularsTier1(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.UNCOMMON);
-const RareShop = getRegularsTier1(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.RARE);
-const EpicShop = getRegularsTier1(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.EPIC);
-const UltraShop = getRegularsTier1(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.ULTRA);
+const CommonShop = (0, precomputed_pokemon_data_1.getRegularsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.COMMON);
+const UncommonShop = (0, precomputed_pokemon_data_1.getRegularsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.UNCOMMON);
+const RareShop = (0, precomputed_pokemon_data_1.getRegularsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.RARE);
+const EpicShop = (0, precomputed_pokemon_data_1.getRegularsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.EPIC);
+const UltraShop = (0, precomputed_pokemon_data_1.getRegularsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.ULTRA);
 class Shop {
     constructor() {
         this.commonPool = new Array();

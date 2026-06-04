@@ -1,6 +1,6 @@
-import Player from "../models/colyseus-models/player";
+import type Player from "../models/colyseus-models/player";
 import type { Board } from "./board";
-import { PokemonEntity } from "./pokemon-entity";
+import type { PokemonEntity } from "./pokemon-entity";
 import PokemonState from "./pokemon-state";
 export declare class IdleState extends PokemonState {
     name: string;

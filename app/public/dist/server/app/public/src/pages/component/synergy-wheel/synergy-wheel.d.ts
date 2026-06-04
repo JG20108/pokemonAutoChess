@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import "./synergy-wheel.css";
 export default function SynergyWheelModal(props: {
     show: boolean;

@@ -1,4 +1,5 @@
-import Phaser, { GameObjects } from "phaser";
+import type Phaser from "phaser";
+import type { GameObjects } from "phaser";
 import type Player from "../../../../models/colyseus-models/player";
 export default class LoadingManager {
     scene: Phaser.Scene;

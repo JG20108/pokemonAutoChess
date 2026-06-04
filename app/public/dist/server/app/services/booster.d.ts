@@ -1,6 +1,6 @@
-import { PkmWithCustom } from "../types";
+import { type PkmWithCustom } from "../types";
 import type { Booster } from "../types/Booster";
-import { IUserMetadataMongo } from "../types/interfaces/UserMetadata";
+import type { IUserMetadataMongo } from "../types/interfaces/UserMetadata";
 export type OpenBoosterResult = {
     userDoc: IUserMetadataMongo;
     boosterContent: Booster;

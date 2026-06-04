@@ -1,7 +1,7 @@
-import { DungeonPMDO } from "./Dungeon";
-import { Item } from "./Item";
-import { Pkm } from "./Pokemon";
-import { Synergy } from "./Synergy";
+import type { DungeonPMDO } from "./Dungeon";
+import type { Item } from "./Item";
+import type { Pkm } from "./Pokemon";
+import type { Synergy } from "./Synergy";
 export declare enum ExpeditionRank {
     E = "E",
     D = "D",

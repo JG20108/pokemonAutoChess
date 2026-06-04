@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const phaser_1 = __importStar(require("phaser"));
 const config_1 = require("../../../../config");
 const attacking_state_1 = require("../../../../core/attacking-state");
-const pokemon_entity_1 = require("../../../../core/pokemon-entity");
+const move_speed_1 = require("../../../../core/move-speed");
 const pokemon_1 = require("../../../../models/colyseus-models/pokemon");
 const precomputed_pokemon_data_1 = require("../../../../models/precomputed/precomputed-pokemon-data");
 const Ability_1 = require("../../../../types/enum/Ability");
@@ -531,7 +531,7 @@ class BattleManager {
                         }
                         else if (!pokemon.status.skydiving) {
                             const walkingSpeed = 2 *
-                                (0, pokemon_entity_1.getMoveSpeed)(pokemon) *
+                                (0, move_speed_1.getMoveSpeed)(pokemon) *
                                 Math.max(Math.abs(pkmSprite.x - coordinates[0]), Math.abs(pkmSprite.y - coordinates[1]));
                             pkmSprite.moveManager.setSpeed(walkingSpeed);
                             pkmSprite.moveManager.moveTo(coordinates[0], coordinates[1]);
@@ -1138,7 +1138,7 @@ class BattleManager {
             sprite.sprite.setAlpha(0.5);
             const coordinates = (0, utils_1.transformEntityCoordinates)(trooperChief.positionX, trooperChief.positionY, this.flip);
             const trooperInBattle = new pokemon_1.PokemonClasses[trooperName](trooperName, trooperChief.shiny, trooperChief.emotion);
-            trooperInBattle.maxHP = trooperInBattle.hp;
+            trooperInBattle.postConstructor();
             const { dx, dy } = (_b = (_a = TroopersDeltaPositions[trooperName]) === null || _a === void 0 ? void 0 : _a.call(TroopersDeltaPositions, i, trooperChief.orientation)) !== null && _b !== void 0 ? _b : {
                 dx: 0,
                 dy: 0

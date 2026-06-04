@@ -1,8 +1,9 @@
-import Phaser, { GameObjects } from "phaser";
-import { Item } from "../../../../types/enum/Item";
-import GameScene from "../scenes/game-scene";
+import type Phaser from "phaser";
+import { GameObjects } from "phaser";
+import type { Item } from "../../../../types/enum/Item";
+import type GameScene from "../scenes/game-scene";
 import ItemDetail from "./item-detail";
-import MinigameManager from "./minigame-manager";
+import type MinigameManager from "./minigame-manager";
 export declare class FloatingItemContainer extends GameObjects.Container {
     scene: GameScene;
     manager: MinigameManager;

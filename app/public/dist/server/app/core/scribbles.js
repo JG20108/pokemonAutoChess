@@ -13,7 +13,6 @@ const config_1 = require("../config");
 const pokemon_factory_1 = __importDefault(require("../models/pokemon-factory"));
 const precomputed_pokemon_data_1 = require("../models/precomputed/precomputed-pokemon-data");
 const precomputed_rarity_1 = require("../models/precomputed/precomputed-rarity");
-const shop_1 = require("../models/shop");
 const Game_1 = require("../types/enum/Game");
 const Pokemon_1 = require("../types/enum/Pokemon");
 const Synergy_1 = require("../types/enum/Synergy");
@@ -159,7 +158,7 @@ function spawnDIAYAvatar(player) {
 function pickFirstPartners(player, state) {
     const coinFlip = (0, random_1.simpleHashSeededCoinFlip)(state.preparationId);
     const rarityPartner = coinFlip ? Game_1.Rarity.COMMON : Game_1.Rarity.UNCOMMON;
-    return (0, shop_1.getRegularsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY[rarityPartner])
+    return (0, precomputed_pokemon_data_1.getRegularsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY[rarityPartner])
         .filter((p) => (0, precomputed_pokemon_data_1.getPokemonData)(p).stages === 3)
         .map((pkm) => {
         if (pkm in Pokemon_1.PkmRegionalVariants) {

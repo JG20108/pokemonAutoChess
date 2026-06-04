@@ -1,9 +1,13 @@
-import { SynergyEffect } from "../../models/effects";
+import type { MapSchema } from "@colyseus/schema";
+import { type SynergyEffect } from "../../config/game/synergies";
+import type Player from "../../models/colyseus-models/player";
+import { type IPokemon } from "../../types";
 import { EffectEnum } from "../../types/enum/Effect";
 import { Synergy } from "../../types/enum/Synergy";
-import { Board } from "../board";
-import { PokemonEntity } from "../pokemon-entity";
-import { OnAbilityCastEffect, OnAttackEffect, OnAttackReceivedEffect, OnBenchedDuringFightEffect, OnDamageDealtEffect, OnDamageReceivedEffect, OnDamageReceivedEffectArgs, OnDeathEffect, OnKillEffect, OnKillEffectArgs, OnSimulationStartEffect, OnSpawnEffect } from "./effect";
+import { type Board } from "../board";
+import type { PokemonEntity } from "../pokemon-entity";
+import type Simulation from "../simulation";
+import { OnAbilityCastEffect, OnAttackEffect, OnAttackReceivedEffect, OnBenchedDuringFightEffect, OnDamageDealtEffect, OnDamageReceivedEffect, type OnDamageReceivedEffectArgs, OnDeathEffect, OnKillEffect, type OnKillEffectArgs, OnSimulationStartEffect, OnSpawnEffect } from "./effect";
 export declare class MonsterKillEffect extends OnKillEffect {
     hpBoosted: number;
     count: number;
@@ -55,3 +59,10 @@ export declare function applyWandEffects(pokemon: PokemonEntity, target: Pokemon
     death: boolean;
 };
 export declare const pounceWandEffect: OnAttackReceivedEffect;
+export declare const cloneBugs: ({ board, teamIndex, player, effects, simulation }: {
+    board: MapSchema<IPokemon, string>;
+    teamIndex: number;
+    player: Player | undefined;
+    effects: Set<EffectEnum>;
+    simulation: Simulation;
+}) => void;

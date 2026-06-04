@@ -1,8 +1,8 @@
-import { IPokemonEntity } from "../types";
-import { BoardEffect, EffectEnum } from "../types/enum/Effect";
+import { type IPokemonEntity } from "../types";
+import { type BoardEffect, EffectEnum } from "../types/enum/Effect";
 import { Orientation, Team } from "../types/enum/Game";
-import { PokemonEntity } from "./pokemon-entity";
-import Simulation from "./simulation";
+import type { PokemonEntity } from "./pokemon-entity";
+import type Simulation from "./simulation";
 export type Cell = {
     x: number;
     y: number;
@@ -65,3 +65,5 @@ export declare class Board {
     getClosestAlly(positionX: number, positionY: number, allyTeam: Team, excludeId?: string): PokemonEntity | undefined;
     getClosestEnemies(positionX: number, positionY: number, enemyTeam: Team): PokemonEntity[];
 }
+export declare function effectInOrientation(board: Board, pokemon: PokemonEntity, target: PokemonEntity | Orientation, effect: (cell: Cell) => void, maxRange?: number): void;
+export declare function effectInLine(board: Board, pokemon: PokemonEntity, target: PokemonEntity, effect: (cell: Cell) => void): void;

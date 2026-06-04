@@ -1,9 +1,9 @@
 import { Dispatcher } from "@colyseus/command";
-import { Client, IRoomCache, Room } from "colyseus";
+import { type Client, type IRoomCache, Room } from "colyseus";
 import { CronJob } from "cron";
 import admin from "firebase-admin";
-import { ITournament } from "../types/interfaces/Tournament";
-import { IUserMetadataMongo } from "../types/interfaces/UserMetadata";
+import type { ITournament } from "../types/interfaces/Tournament";
+import type { IUserMetadataMongo } from "../types/interfaces/UserMetadata";
 import LobbyState from "./states/lobby-state";
 export default class CustomLobbyRoom extends Room {
     state: LobbyState;

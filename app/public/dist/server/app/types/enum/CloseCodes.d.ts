@@ -1,4 +1,4 @@
-import { ErrorMessage } from "../strings/ErrorMessage";
+import type { ErrorMessage } from "../strings/ErrorMessage";
 export declare enum CloseCodes {
     NORMAL_CLOSURE = 1000,
     NO_STATUS_RECEIVED = 1005,

@@ -45,9 +45,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const schema_1 = require("@colyseus/schema");
 const config_1 = require("../../config");
 const collection_1 = require("../../core/collection");
-const evolution_rules_1 = require("../../core/evolution-rules");
+const effect_1 = require("../../core/effects/effect");
+const passives_1 = require("../../core/effects/passives");
+const evolution_handler_1 = require("../../core/evolution-logic/evolution-handler");
+const evolution_manager_1 = require("../../core/evolution-logic/evolution-manager");
 const flower_pots_1 = require("../../core/flower-pots");
 const types_1 = require("../../types");
+const EvolutionRules_1 = require("../../types/EvolutionRules");
 const Ability_1 = require("../../types/enum/Ability");
 const Game_1 = require("../../types/enum/Game");
 const Item_1 = require("../../types/enum/Item");
@@ -134,7 +138,7 @@ class Player extends schema_1.Schema {
         this.weatherRocks = [];
         this.randomComponentsGiven = [];
         this.randomEggsGiven = [];
-        this.flowerPotsSpawnOrder = (0, random_1.shuffleArray)([...flower_pots_1.FlowerPots]);
+        this.flowerPotsSpawnOrder = (0, random_1.shuffleArray)([...types_1.FlowerPots]);
         this.ghost = false;
         this.gymBadgeThreshold = 0;
         this.hasLeftGame = false;
@@ -202,8 +206,8 @@ class Player extends schema_1.Schema {
         if (countTotalEarned && value > 0)
             this.gameStats.totalMoneyEarned += value;
         this.board.forEach((pokemon) => {
-            if (pokemon.evolutionRule instanceof evolution_rules_1.ConditionBasedEvolutionRule) {
-                pokemon.evolutionRule.tryEvolve(pokemon, this, 0);
+            if (pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.MONEY) {
+                evolution_manager_1.EvolutionManager.tryEvolve(pokemon, this, this.money);
             }
         });
         if (this.gameStats.totalMoneyEarned >= 200 &&
@@ -219,7 +223,7 @@ class Player extends schema_1.Schema {
     }
     transformPokemon(pokemon, newEntry) {
         const newPokemon = pokemon_factory_1.default.createPokemonFromName(newEntry, this);
-        (0, evolution_rules_1.carryOverPermanentStats)(newPokemon, [pokemon]);
+        (0, evolution_handler_1.carryOverPermanentStats)(newPokemon, [pokemon]);
         pokemon.items.forEach((item) => {
             newPokemon.items.add(item);
             if (item === Item_1.Item.SHINY_CHARM) {
@@ -249,11 +253,11 @@ class Player extends schema_1.Schema {
         const previousLight = (_a = previousSynergies.get(Synergy_1.Synergy.LIGHT)) !== null && _a !== void 0 ? _a : 0;
         const newLight = (_b = updatedSynergies.get(Synergy_1.Synergy.LIGHT)) !== null && _b !== void 0 ? _b : 0;
         const minimumToGetLight = config_1.SynergyTriggers[Synergy_1.Synergy.LIGHT][0];
-        const lightChanged = (previousLight >= minimumToGetLight && newLight < minimumToGetLight) ||
-            (previousLight < minimumToGetLight && newLight >= minimumToGetLight);
+        const lightGained = previousLight < minimumToGetLight && newLight >= minimumToGetLight;
+        const lightLost = previousLight >= minimumToGetLight && newLight < minimumToGetLight;
         updatedSynergies.forEach((value, synergy) => this.synergies.set(synergy, value));
-        if (lightChanged)
-            this.onLightChange();
+        if (lightGained || lightLost)
+            this.onLightChange(lightGained);
         if (previousSynergies.get(Synergy_1.Synergy.WATER) !==
             updatedSynergies.get(Synergy_1.Synergy.WATER)) {
             this.updateFishingRods();
@@ -304,11 +308,11 @@ class Player extends schema_1.Schema {
         }
         this.effects.update(this.synergies, this.board);
         if (this.items.includes(Item_1.Item.MISSION_ORDER_GREEN) &&
-            this.synergies.countActiveSynergies() >= 9) {
+            this.synergies.countActiveSynergies() >= 8) {
             this.completeMissionOrder(Item_1.Item.MISSION_ORDER_GREEN);
         }
         if (this.items.includes(Item_1.Item.MISSION_ORDER_PINK) &&
-            (0, schemas_1.schemaValues)(this.board).filter((p) => p.stars >= 3).length >= 5) {
+            (0, schemas_1.schemaValues)(this.board).filter((p) => p.stars >= 3).length >= 4) {
             this.completeMissionOrder(Item_1.Item.MISSION_ORDER_PINK);
         }
     }
@@ -568,8 +572,7 @@ class Player extends schema_1.Schema {
                 if (cloakTypes.some((type) => { var _a; return ((_a = config_1.RegionDetails[this.map]) === null || _a === void 0 ? void 0 : _a.synergies.includes(type)) === false; })) {
                     const burmyEvolving = burmys[0];
                     burmyEvolving.evolutionRule.divergentEvolution = () => Pokemon_1.Pkm.MOTHIM;
-                    const mothim = burmyEvolving.evolutionRule.evolve(burmyEvolving, this, state.stageLevel);
-                    burmyEvolving.evolutionRule.afterEvolve(mothim, this, state.stageLevel);
+                    evolution_manager_1.EvolutionManager.evolve(burmyEvolving, this);
                 }
             }
         }
@@ -601,17 +604,18 @@ class Player extends schema_1.Schema {
                     (evolution && (0, precomputed_pokemon_data_1.getPokemonData)(evolution).evolution === p)));
         }));
     }
-    onLightChange() {
-        const pokemonsReactingToLight = [
-            Pokemon_1.Pkm.NECROZMA,
-            Pokemon_1.Pkm.ULTRA_NECROZMA,
-            Pokemon_1.Pkm.CHERRIM_SUNLIGHT,
-            Pokemon_1.Pkm.CHERRIM
-        ];
+    onLightChange(hasLightActive) {
         this.board.forEach((pokemon) => {
-            if (pokemonsReactingToLight.includes(pokemon.name)) {
-                pokemon.onChangePosition(pokemon.positionX, pokemon.positionY, this);
-            }
+            var _a;
+            const inSpotlight = hasLightActive &&
+                ((pokemon.positionX === this.lightX &&
+                    pokemon.positionY === this.lightY) ||
+                    pokemon.items.has(Item_1.Item.SHINY_STONE));
+            (_a = passives_1.PassiveEffects[pokemon.passive]) === null || _a === void 0 ? void 0 : _a.forEach((effect) => {
+                if (effect instanceof effect_1.OnSpotlightChangeEffect) {
+                    effect.apply({ pokemon, player: this, inSpotlight });
+                }
+            });
         });
     }
     registerPlayedPokemons() {

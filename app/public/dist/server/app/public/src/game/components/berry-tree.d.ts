@@ -1,7 +1,7 @@
 import Phaser, { GameObjects } from "phaser";
-import Player from "../../../../models/colyseus-models/player";
+import type Player from "../../../../models/colyseus-models/player";
 import type GameScene from "../scenes/game-scene";
-import BoardManager from "./board-manager";
+import type BoardManager from "./board-manager";
 import ItemDetail from "./item-detail";
 export declare class BerryTree extends GameObjects.Container {
     scene: GameScene;

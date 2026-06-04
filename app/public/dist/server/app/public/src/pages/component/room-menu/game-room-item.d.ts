@@ -1,5 +1,5 @@
-import { RoomAvailable } from "@colyseus/sdk";
-import { IGameMetadata } from "../../../../../types";
+import type { RoomAvailable } from "@colyseus/sdk";
+import { type IGameMetadata } from "../../../../../types";
 import "./room-item.css";
 export default function GameRoomItem(props: {
     room: RoomAvailable<IGameMetadata>;

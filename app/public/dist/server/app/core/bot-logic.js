@@ -172,7 +172,7 @@ function getNbComponentsOnBoard(board) {
             nbComponents = item === Item_1.Item.NULLIFY_BANDANNA ? 0 : 1;
         else if (Item_1.CraftableItems.includes(item))
             nbComponents = 2;
-        else if (Item_1.ItemComponents.includes(item))
+        else if (Item_1.ItemComponentsNoScarf.includes(item))
             nbComponents = 1;
         return total + nbComponents;
     }, 0);

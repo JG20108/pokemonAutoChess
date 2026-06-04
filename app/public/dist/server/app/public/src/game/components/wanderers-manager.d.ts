@@ -1,6 +1,6 @@
-import Phaser from "phaser";
-import { Wanderer } from "../../../../models/colyseus-models/wanderer";
-import GameScene from "../scenes/game-scene";
+import type Phaser from "phaser";
+import type { Wanderer } from "../../../../models/colyseus-models/wanderer";
+import type GameScene from "../scenes/game-scene";
 import PokemonSprite from "./pokemon";
 export default class WanderersManager {
     scene: GameScene;

@@ -51,7 +51,7 @@ const firebase_admin_1 = __importDefault(require("firebase-admin"));
 const config_1 = require("../config");
 const gadgets_1 = require("../config/game/gadgets");
 const elo_1 = require("../core/elo");
-const evolution_rules_1 = require("../core/evolution-rules");
+const evolution_manager_1 = require("../core/evolution-logic/evolution-manager");
 const mini_game_1 = require("../core/mini-game");
 const pending_game_manager_1 = require("../core/pending-game-manager");
 const player_choice_1 = require("../models/colyseus-models/player-choice");
@@ -68,6 +68,7 @@ const titles_1 = require("../models/titles");
 const leaderboard_1 = require("../services/leaderboard");
 const notifications_1 = require("../services/notifications");
 const types_1 = require("../types");
+const EvolutionRules_1 = require("../types/EvolutionRules");
 const CloseCodes_1 = require("../types/enum/CloseCodes");
 const Game_1 = require("../types/enum/Game");
 const Item_1 = require("../types/enum/Item");
@@ -121,9 +122,9 @@ class GameRoom extends colyseus_1.Room {
             });
             this.state = new game_state_1.default(preparationId, name, noElo, gameMode, minRank, maxRank, specialGameRule);
             this.miniGame.create(this.state.avatars, this.state.floatingItems, this.state.portals, this.state.symbols);
-            this.additionalUncommonPool = (0, shop_1.getAdditionalsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.UNCOMMON);
-            this.additionalRarePool = (0, shop_1.getAdditionalsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.RARE);
-            this.additionalEpicPool = (0, shop_1.getAdditionalsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.EPIC);
+            this.additionalUncommonPool = (0, precomputed_pokemon_data_1.getAdditionalsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.UNCOMMON);
+            this.additionalRarePool = (0, precomputed_pokemon_data_1.getAdditionalsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.RARE);
+            this.additionalEpicPool = (0, precomputed_pokemon_data_1.getAdditionalsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.EPIC);
             if (this.state.specialGameRule !== SpecialGameRule_1.SpecialGameRule.EVERYONE_IS_HERE) {
                 const now = new Date();
                 const year = now.getFullYear();
@@ -840,8 +841,8 @@ class GameRoom extends colyseus_1.Room {
         let hasEvolved = false;
         player.board.forEach((pokemon) => {
             if (pokemon.hasEvolution &&
-                pokemon.evolutionRule instanceof evolution_rules_1.CountEvolutionRule) {
-                const pokemonEvolved = pokemon.evolutionRule.tryEvolve(pokemon, player, this.state.stageLevel);
+                pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.COUNT) {
+                const pokemonEvolved = evolution_manager_1.EvolutionManager.tryEvolve(pokemon, player);
                 if (pokemonEvolved) {
                     hasEvolved = true;
                 }
@@ -853,13 +854,13 @@ class GameRoom extends colyseus_1.Room {
         player.boardSize = this.getTeamSize(player.board);
         return hasEvolved;
     }
-    checkEvolutionsAfterItemAcquired(playerId, pokemon) {
+    checkEvolutionsAfterItemAcquired(playerId, pokemon, itemAcquired) {
         const player = this.state.players.get(playerId);
         if (!player)
             return;
         if (pokemon.evolutionRule &&
-            pokemon.evolutionRule instanceof evolution_rules_1.ItemEvolutionRule) {
-            const pokemonEvolved = pokemon.evolutionRule.tryEvolve(pokemon, player, this.state.stageLevel);
+            pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.ITEM) {
+            const pokemonEvolved = evolution_manager_1.EvolutionManager.tryEvolve(pokemon, player, itemAcquired);
             return pokemonEvolved;
         }
     }
@@ -919,8 +920,8 @@ class GameRoom extends colyseus_1.Room {
             let pokemonsObtained = (pkm in Pokemon_1.PkmDuos ? Pokemon_1.PkmDuos[pkm] : [pkm]).map((p) => pokemon_factory_1.default.createPokemonFromName(p, player));
             const pokemon = pokemonsObtained[0];
             const isEvolution = pokemon.evolutionRule &&
-                pokemon.evolutionRule instanceof evolution_rules_1.CountEvolutionRule &&
-                pokemon.evolutionRule.canEvolveIfGettingOne(pokemon, player);
+                pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.COUNT &&
+                evolution_manager_1.EvolutionManager.canEvolveIfGettingOne(pokemon, player);
             const freeSpace = (0, board_1.getFreeSpaceOnBench)(player.board);
             if (freeSpace < pokemonsObtained.length &&
                 !bypassLackOfSpace &&
@@ -939,7 +940,7 @@ class GameRoom extends colyseus_1.Room {
                     pokemonsObtained = pokemonsObtained.map((pkm) => {
                         var _a, _b, _c;
                         const evolution = pkm.hasEvolution
-                            ? pkm.evolutionRule.getEvolution(pkm, player, this.state.stageLevel)
+                            ? evolution_manager_1.EvolutionManager.getEvolution(pkm, player, this.state.stageLevel)
                             : pkm.name;
                         const rank = [Game_1.Rarity.UNCOMMON, Game_1.Rarity.RARE, Game_1.Rarity.EPIC].indexOf(pkm.rarity);
                         const replacement = pokemon_factory_1.default.createPokemonFromName(evolution, player);

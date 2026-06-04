@@ -27,6 +27,7 @@ const Game_1 = require("../types/enum/Game");
 const events_1 = require("../types/events");
 const logger_1 = require("../utils/logger");
 const number_1 = require("../utils/number");
+const meta_1 = require("./meta");
 const notifications_1 = require("./notifications");
 const sprite_gap_scanner_1 = require("./sprite-gap-scanner");
 function initCronJobs() {
@@ -65,6 +66,14 @@ function initCronJobs() {
         cronTime: "0 9 * * *",
         timeZone: "UTC",
         onTick: () => (0, sprite_gap_scanner_1.refreshSpriteGapData)(),
+        start: true
+    });
+    cron_1.CronJob.from({
+        cronTime: "0 2 * * *",
+        timeZone: "UTC",
+        onTick: () => {
+            (0, meta_1.fetchMetaReports)();
+        },
         start: true
     });
 }

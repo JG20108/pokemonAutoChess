@@ -1,7 +1,7 @@
-import { HydratedDocument } from "mongoose";
-import { Emotion, PkmWithCustom } from "../types";
-import { Booster, BoosterCard } from "../types/Booster";
-import { IPokemonCollectionItemClient, IPokemonCollectionItemMongo, IPokemonCollectionItemUnpacked, IUserMetadataMongo } from "../types/interfaces/UserMetadata";
+import type { HydratedDocument } from "mongoose";
+import { Emotion, type PkmWithCustom } from "../types";
+import type { Booster, BoosterCard } from "../types/Booster";
+import type { IPokemonCollectionItemClient, IPokemonCollectionItemMongo, IPokemonCollectionItemUnpacked, IUserMetadataMongo } from "../types/interfaces/UserMetadata";
 export declare function createBooster(user: IUserMetadataMongo): Booster;
 export declare function pickRandomPokemonBooster(user: IUserMetadataMongo, guaranteedUnique: boolean, godPack: boolean): BoosterCard;
 export declare class CollectionUtils {

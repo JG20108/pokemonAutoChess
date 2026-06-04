@@ -87,6 +87,6 @@ const bot = new mongoose_1.Schema({
         }
     }
 });
-const BotV2 = (0, mongoose_1.model)("botV2", bot);
+const BotV2 = (0, mongoose_1.model)("botv2", bot);
 exports.BotV2 = BotV2;
 //# sourceMappingURL=bot-v2.js.map

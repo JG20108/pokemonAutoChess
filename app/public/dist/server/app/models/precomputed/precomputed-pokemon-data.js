@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PRECOMPUTED_REGIONAL_MONS = exports.PRECOMPUTED_POKEMONS_DATA = void 0;
 exports.getPokemonData = getPokemonData;
+exports.getRegularsTier1 = getRegularsTier1;
+exports.getAdditionalsTier1 = getAdditionalsTier1;
 const Ability_1 = require("../../types/enum/Ability");
 const Game_1 = require("../../types/enum/Game");
 const Passive_1 = require("../../types/enum/Passive");
@@ -59,5 +61,23 @@ function getPokemonData(name) {
         evolution: null,
         evolutions: []
     };
+}
+function getRegularsTier1(pokemons) {
+    return pokemons.filter((p) => {
+        const pokemonData = getPokemonData(p);
+        return (pokemonData.stars === 1 &&
+            pokemonData.skill !== Ability_1.Ability.DEFAULT &&
+            !pokemonData.additional &&
+            !pokemonData.regional);
+    });
+}
+function getAdditionalsTier1(pokemons) {
+    return pokemons.filter((p) => {
+        const pokemonData = getPokemonData(p);
+        return (pokemonData.stars === 1 &&
+            pokemonData.skill !== Ability_1.Ability.DEFAULT &&
+            pokemonData.additional &&
+            !pokemonData.regional);
+    });
 }
 //# sourceMappingURL=precomputed-pokemon-data.js.map

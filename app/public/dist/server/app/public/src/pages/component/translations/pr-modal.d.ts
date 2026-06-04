@@ -1,4 +1,4 @@
-import { Language } from "../../../../../types/enum/Language";
+import type { Language } from "../../../../../types/enum/Language";
 import "./pr-modal.css";
 export declare function submitTranslationPR(token: string, lang: Language, langName: string, content: string, onProgress: (msg: string) => void): Promise<string>;
 export interface PRModalProps {

@@ -1,6 +1,6 @@
 import { Rarity } from "../../../../../types/enum/Game";
-import { Synergy } from "../../../../../types/enum/Synergy";
-import { IPokemonStatV2 } from "../../../models/pokemons-statistic-v2";
+import type { Synergy } from "../../../../../types/enum/Synergy";
+import type { IPokemonStatV2 } from "../../../models/pokemons-statistic-v2";
 import "./pokemon-statistic.css";
 export default function PokemonStatistic(props: {
     pokemons: IPokemonStatV2[];

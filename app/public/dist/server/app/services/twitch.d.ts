@@ -1,4 +1,4 @@
-import { ITwitchBlacklistedStreamer } from "../models/mongo-models/twitch-blacklisted-streamer";
+import { type ITwitchBlacklistedStreamer } from "../models/mongo-models/twitch-blacklisted-streamer";
 export type TwitchVerificationStartPayload = {
     authorizeUrl: string;
     expiresAt: string;

@@ -1,5 +1,5 @@
 import { MapSchema } from "@colyseus/schema";
-import { IPlayer, IPokemon } from "../../types";
+import type { IPlayer, IPokemon } from "../../types";
 import { SpecialGameRule } from "../../types/enum/SpecialGameRule";
 import { Synergy } from "../../types/enum/Synergy";
 export default class Synergies extends MapSchema<number, Synergy> {

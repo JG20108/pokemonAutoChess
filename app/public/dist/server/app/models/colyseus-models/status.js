@@ -595,7 +595,7 @@ class Status extends schema_1.Schema {
             !pkm.effects.has(Effect_1.EffectEnum.IMMUNITY_FREEZE) &&
             this.ccCooldown <= 0) {
             if (pkm.simulation.weather === Weather_1.Weather.SNOW) {
-                duration *= 1.3;
+                duration *= 1.2;
                 const nbIcyRocks = pkm.player
                     ? (0, array_1.count)(pkm.player.items, Item_1.Item.ICY_ROCK)
                     : 0;

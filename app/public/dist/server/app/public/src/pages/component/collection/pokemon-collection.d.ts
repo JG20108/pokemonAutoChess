@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import { Pkm } from "../../../../../types/enum/Pokemon";
 import { Synergy } from "../../../../../types/enum/Synergy";
 import "./pokemon-collection.css";

@@ -1,6 +1,6 @@
-import { Mask, TerrainType } from "../config";
-import { DungeonPMDO } from "../types/enum/Dungeon";
-import Tileset, { TilesetTiled } from "./tileset";
+import { type Mask, TerrainType } from "../config";
+import type { DungeonPMDO } from "../types/enum/Dungeon";
+import Tileset, { type TilesetTiled } from "./tileset";
 export type LayerTiled = {
     data: number[];
     height: number;

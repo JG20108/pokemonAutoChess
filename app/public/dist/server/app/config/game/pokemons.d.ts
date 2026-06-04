@@ -1,4 +1,4 @@
-import { IPlayer } from "../../types";
+import { type IPlayer } from "../../types";
 import { Pkm } from "../../types/enum/Pokemon";
 export declare const EvolutionTime: {
     EGG_HATCH: number;

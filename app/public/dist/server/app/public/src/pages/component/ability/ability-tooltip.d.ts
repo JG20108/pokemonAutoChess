@@ -1,4 +1,4 @@
-import { Ability } from "../../../../../types/enum/Ability";
+import type { Ability } from "../../../../../types/enum/Ability";
 import "./ability-tooltip.css";
 export declare function AbilityTooltip(props: {
     ability: Ability;

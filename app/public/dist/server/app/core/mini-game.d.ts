@@ -1,11 +1,11 @@
-import { MapSchema } from "@colyseus/schema";
+import type { MapSchema } from "@colyseus/schema";
 import { Body, Engine } from "matter-js";
 import { FloatingItem } from "../models/colyseus-models/floating-item";
-import Player from "../models/colyseus-models/player";
+import type Player from "../models/colyseus-models/player";
 import { PokemonAvatarModel } from "../models/colyseus-models/pokemon-avatar";
 import { Portal, SynergySymbol } from "../models/colyseus-models/portal";
-import GameRoom from "../rooms/game-room";
-import GameState from "../rooms/states/game-state";
+import type GameRoom from "../rooms/game-room";
+import type GameState from "../rooms/states/game-state";
 import { Item } from "../types/enum/Item";
 export declare class MiniGame {
     avatars: MapSchema<PokemonAvatarModel> | undefined;

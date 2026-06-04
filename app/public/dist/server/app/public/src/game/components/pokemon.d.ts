@@ -1,7 +1,7 @@
 import Phaser, { GameObjects } from "phaser";
 import type MoveTo from "phaser4-rex-plugins/plugins/moveto";
 import { type IPokemon, type IPokemonEntity } from "../../../../types";
-import { AbilityAnimationArgs, AttackSprite } from "../../../../types/Animation";
+import { type AbilityAnimationArgs, AttackSprite } from "../../../../types/Animation";
 import { Orientation, PokemonActionState, PokemonTint, Stat } from "../../../../types/enum/Game";
 import { Item } from "../../../../types/enum/Item";
 import { Pkm } from "../../../../types/enum/Pokemon";
@@ -9,7 +9,7 @@ import { GamePokemonDetailDOMWrapper } from "../../pages/component/game/game-pok
 import type { DebugScene } from "../scenes/debug-scene";
 import type GameScene from "../scenes/game-scene";
 import DraggableObject from "./draggable-object";
-import { GameDialog } from "./game-dialog";
+import type { GameDialog } from "./game-dialog";
 import ItemsContainer from "./items-container";
 import Lifebar from "./life-bar";
 export declare function resetSpriteCounts(): void;

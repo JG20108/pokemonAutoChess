@@ -4202,7 +4202,7 @@ exports.PokemonAnimations = {
         attackSprite: Animation_1.AttackSprite.BUG_MELEE,
         hitSprite: Animation_1.HitSprite.BUG_HIT
     },
-    [Pokemon_1.Pkm.VESPIQUEEN]: {
+    [Pokemon_1.Pkm.VESPIQUEN]: {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.SpAttack,
         emote: Animation_1.AnimationType.Shoot,
@@ -7815,8 +7815,7 @@ exports.PokemonAnimations = {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Shoot,
         emote: Animation_1.AnimationType.RearUp,
-        attackSprite: Animation_1.AttackSprite.WATER_MELEE,
-        shinyUnavailable: true
+        attackSprite: Animation_1.AttackSprite.WATER_MELEE
     },
     [Pokemon_1.Pkm.TATSUGIRI_CURLY]: {
         attack: Animation_1.AnimationType.Attack,

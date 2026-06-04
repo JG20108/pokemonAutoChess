@@ -1,6 +1,7 @@
-import Phaser, { GameObjects } from "phaser";
-import GameScene from "../scenes/game-scene";
-import PokemonSprite from "./pokemon";
+import type Phaser from "phaser";
+import { GameObjects } from "phaser";
+import type GameScene from "../scenes/game-scene";
+import type PokemonSprite from "./pokemon";
 export declare class SellZone extends GameObjects.Container {
     scene: GameScene;
     rectangle: Phaser.GameObjects.Rectangle;

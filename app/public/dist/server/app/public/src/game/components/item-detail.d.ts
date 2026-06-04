@@ -1,4 +1,5 @@
-import Phaser, { GameObjects } from "phaser";
+import type Phaser from "phaser";
+import { GameObjects } from "phaser";
 import { Item } from "../../../../types/enum/Item";
 import "./item-detail.css";
 export declare function ItemDetailTooltipContent({ item, showItemCombinationsTooltip }: {

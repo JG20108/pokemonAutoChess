@@ -1,4 +1,4 @@
-import { ISuggestionUser } from "../../../../../types";
+import type { ISuggestionUser } from "../../../../../types";
 export default function SearchResults(props: {
     suggestions: ISuggestionUser[];
     onSelect: (user: ISuggestionUser) => void;

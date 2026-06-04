@@ -1,4 +1,4 @@
-import { INotification } from "../../../../../types/notifications";
+import type { INotification } from "../../../../../types/notifications";
 import "./notification-modal.css";
 interface NotificationModalProps {
     notifications: INotification[];

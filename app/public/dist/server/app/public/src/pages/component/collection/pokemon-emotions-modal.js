@@ -110,7 +110,9 @@ function PokemonEmotionsModal(props) {
                                     emotion: (_a = item.selectedEmotion) !== null && _a !== void 0 ? _a : types_1.Emotion.NORMAL,
                                     shiny: item.selectedShiny
                                 }));
-                            }, children: [isCurrentAvatar ? t("collection.chosen_as_avatar") : t("collection.choose_as_avatar"), "\u00A0", (0, jsx_runtime_1.jsx)(pokemon_portrait_1.default, { portrait: {
+                            }, children: [isCurrentAvatar
+                                    ? t("collection.chosen_as_avatar")
+                                    : t("collection.choose_as_avatar"), "\u00A0", (0, jsx_runtime_1.jsx)(pokemon_portrait_1.default, { portrait: {
                                         index,
                                         shiny: item.selectedShiny,
                                         emotion: (_e = item.selectedEmotion) !== null && _e !== void 0 ? _e : types_1.Emotion.NORMAL
@@ -122,6 +124,8 @@ function PokemonEmotionsModal(props) {
                                         index,
                                         shiny: false,
                                         emotion: types_1.Emotion.NORMAL
-                                    }, alt: "avatar" })] })), (0, jsx_runtime_1.jsxs)("button", { className: (0, jsx_1.cc)("bubbly", isFavorite ? "red" : "green"), onClick: toggleFavorite, children: ["\u2764\uFE0F\u00A0", isFavorite ? t("collection.remove_from_favorites") : t("collection.add_to_favorites")] })] }) }), (0, jsx_runtime_1.jsx)(modal_1.Modal, { show: requestError != null, onClose: () => setRequestError(null), className: "is-dark basic-modal-body", header: t("errors.title"), body: (0, jsx_runtime_1.jsx)("p", { style: { padding: "1em" }, children: requestError }) })] }));
+                                    }, alt: "avatar" })] })), (0, jsx_runtime_1.jsxs)("button", { className: (0, jsx_1.cc)("bubbly", isFavorite ? "red" : "green"), onClick: toggleFavorite, children: ["\u2764\uFE0F\u00A0", isFavorite
+                                    ? t("collection.remove_from_favorites")
+                                    : t("collection.add_to_favorites")] })] }) }), (0, jsx_runtime_1.jsx)(modal_1.Modal, { show: requestError != null, onClose: () => setRequestError(null), className: "is-dark basic-modal-body", header: t("errors.title"), body: (0, jsx_runtime_1.jsx)("p", { style: { padding: "1em" }, children: requestError }) })] }));
 }
 //# sourceMappingURL=pokemon-emotions-modal.js.map

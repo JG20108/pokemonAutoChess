@@ -1,8 +1,8 @@
-import { ArraySchema, SetSchema } from "@colyseus/schema";
+import type { ArraySchema, SetSchema } from "@colyseus/schema";
 import { GameObjects } from "phaser";
-import Player from "../../../../models/colyseus-models/player";
-import { Item } from "../../../../types/enum/Item";
-import GameScene from "../scenes/game-scene";
+import type Player from "../../../../models/colyseus-models/player";
+import { type Item } from "../../../../types/enum/Item";
+import type GameScene from "../scenes/game-scene";
 export default class ItemsContainer extends GameObjects.Container {
     scene: GameScene;
     pokemonId: string | null;

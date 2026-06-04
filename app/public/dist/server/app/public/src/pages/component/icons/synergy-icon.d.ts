@@ -1,4 +1,4 @@
-import { Synergy } from "../../../../../types/enum/Synergy";
+import type { Synergy } from "../../../../../types/enum/Synergy";
 import "./synergy-icon.css";
 export default function SynergyIcon(props: {
     type: Synergy;

@@ -1,5 +1,5 @@
-import React from "react";
-import { Emotion } from "../../../../types";
+import type React from "react";
+import type { Emotion } from "../../../../types";
 export interface PortraitOptions {
     index: string;
     shiny?: boolean;

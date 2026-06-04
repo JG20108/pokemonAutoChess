@@ -1,4 +1,4 @@
-import { IRegionStatistic } from "../../../models/regions-statistic";
+import type { IRegionStatistic } from "../../../models/regions-statistic";
 export default function RegionStatistic(props: {
     region: IRegionStatistic;
     rank: number;

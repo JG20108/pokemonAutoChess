@@ -46,9 +46,8 @@ const getNeighbors = (node, grid) => {
     return neighbors;
 };
 exports.getNeighbors = getNeighbors;
-const findPath = (board, start, goal) => {
+const findPath = (pokemonCoordinates, start, goal) => {
     const gridCopy = defaultGrid.map((row) => row.slice());
-    const pokemonCoordinates = board.getAllPokemonCoordinates();
     pokemonCoordinates.forEach(({ x, y }) => {
         if (gridCopy[y] &&
             gridCopy[y][x] !== undefined &&

@@ -1,4 +1,4 @@
-import { TypedUseSelectorHook } from "react-redux";
+import { type TypedUseSelectorHook } from "react-redux";
 import type { RootState } from "./stores";
 export declare const useAppDispatch: () => import("redux-thunk").ThunkDispatch<{
     lobby: import("./stores/LobbyStore").IUserLobbyState;

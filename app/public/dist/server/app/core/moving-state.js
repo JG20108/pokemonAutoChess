@@ -10,9 +10,10 @@ const Synergy_1 = require("../types/enum/Synergy");
 const distance_1 = require("../utils/distance");
 const pathfind_1 = require("../utils/pathfind");
 const abilities_1 = require("./abilities/abilities");
+const cast_1 = require("./abilities/cast");
 const effect_1 = require("./effects/effect");
 const passives_1 = require("./effects/passives");
-const pokemon_entity_1 = require("./pokemon-entity");
+const move_speed_1 = require("./move-speed");
 const pokemon_state_1 = __importDefault(require("./pokemon-state"));
 class MovingState extends pokemon_state_1.default {
     constructor() {
@@ -23,7 +24,7 @@ class MovingState extends pokemon_state_1.default {
         var _a;
         super.update(pokemon, dt, board, player);
         if (pokemon.cooldown <= 0) {
-            pokemon.cooldown = Math.round(500 / (0, pokemon_entity_1.getMoveSpeed)(pokemon));
+            pokemon.cooldown = Math.round(500 / (0, move_speed_1.getMoveSpeed)(pokemon));
             const targetAtRange = this.getNearestTargetAtRange(pokemon, board);
             if (pokemon.status.charm && pokemon.canMove) {
                 if (pokemon.status.charmOrigin &&
@@ -37,7 +38,7 @@ class MovingState extends pokemon_state_1.default {
             else if (pokemon.pp >= pokemon.maxPP &&
                 pokemon.canCast &&
                 ((_a = abilities_1.AbilityStrategies[pokemon.skill]) === null || _a === void 0 ? void 0 : _a.requiresTarget) === false) {
-                (0, abilities_1.castAbility)(pokemon.skill, pokemon, board, null);
+                (0, cast_1.castAbility)(abilities_1.AbilityStrategies[pokemon.skill], pokemon, board, null);
             }
             else if (targetAtRange) {
                 pokemon.toAttackingState();
@@ -92,7 +93,7 @@ class MovingState extends pokemon_state_1.default {
             let distance = 999;
             cells.forEach((cell) => {
                 if (cell.value === undefined) {
-                    const candidateDistance = (0, pathfind_1.findPath)(board, [pokemon.positionX, pokemon.positionY], [cell.x, cell.y]);
+                    const candidateDistance = (0, pathfind_1.findPath)(board.getAllPokemonCoordinates(), [pokemon.positionX, pokemon.positionY], [cell.x, cell.y]);
                     if (candidateDistance.length < distance &&
                         candidateDistance.length !== 0) {
                         distance = candidateDistance.length;

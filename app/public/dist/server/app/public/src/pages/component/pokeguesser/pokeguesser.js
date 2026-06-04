@@ -13,6 +13,7 @@ const config_1 = require("../../../../../config");
 const precomputed_pokemons_1 = require("../../../../../models/precomputed/precomputed-pokemons");
 const Game_1 = require("../../../../../types/enum/Game");
 const Pokemon_1 = require("../../../../../types/enum/Pokemon");
+const array_1 = require("../../../../../utils/array");
 const avatar_1 = require("../../../../../utils/avatar");
 const number_1 = require("../../../../../utils/number");
 const random_1 = require("../../../../../utils/random");
@@ -23,7 +24,8 @@ const modal_1 = require("../modal/modal");
 const pokemon_portrait_1 = __importDefault(require("../pokemon-portrait"));
 require("./pokeguesser.css");
 const listPokemonsToGuess = precomputed_pokemons_1.precomputedPokemonsImplemented
-    .filter((p) => !(Pokemon_1.PkmFamily[p.name] === Pokemon_1.Pkm.UNOWN_A && p.name !== Pokemon_1.Pkm.UNOWN_A))
+    .filter((p) => !(Pokemon_1.PkmFamily[p.name] === Pokemon_1.Pkm.UNOWN_A && p.name !== Pokemon_1.Pkm.UNOWN_A) &&
+    !(0, array_1.isIn)(Pokemon_1.NonPkm, p.name))
     .sort((a, b) => parseInt(a.index.split("-")[0]) - parseInt(b.index.split("-")[0]));
 function Pokeguesser(props) {
     const { t } = (0, react_i18next_1.useTranslation)();

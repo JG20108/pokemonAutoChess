@@ -3,16 +3,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PassiveEffects = exports.BergmiteOnBackEffect = exports.FalinksFormationEffect = exports.AccelerationEffect = exports.WaterSpringEffect = void 0;
+exports.PassiveEffects = exports.WaterSpringEffect = void 0;
 exports.drumBeat = drumBeat;
 exports.stenchJump = stenchJump;
 exports.partingShot = partingShot;
 exports.transformToIceFace = transformToIceFace;
 exports.transformToNoice = transformToNoice;
 const config_1 = require("../../config");
+const synergies_1 = require("../../config/game/synergies");
 const pokemon_1 = require("../../models/colyseus-models/pokemon");
-const synergies_1 = require("../../models/colyseus-models/synergies");
-const effects_1 = require("../../models/effects");
+const synergies_2 = require("../../models/colyseus-models/synergies");
 const pokemon_factory_1 = __importDefault(require("../../models/pokemon-factory"));
 const types_1 = require("../../types");
 const Ability_1 = require("../../types/enum/Ability");
@@ -21,6 +21,7 @@ const Game_1 = require("../../types/enum/Game");
 const Item_1 = require("../../types/enum/Item");
 const Passive_1 = require("../../types/enum/Passive");
 const Pokemon_1 = require("../../types/enum/Pokemon");
+const SpecialGameRule_1 = require("../../types/enum/SpecialGameRule");
 const Synergy_1 = require("../../types/enum/Synergy");
 const Weather_1 = require("../../types/enum/Weather");
 const array_1 = require("../../utils/array");
@@ -30,9 +31,13 @@ const number_1 = require("../../utils/number");
 const random_1 = require("../../utils/random");
 const schemas_1 = require("../../utils/schemas");
 const abilities_1 = require("../abilities/abilities");
-const pokemon_entity_1 = require("../pokemon-entity");
+const cast_1 = require("../abilities/cast");
 const simulation_command_1 = require("../simulation-command");
+const unit_score_1 = require("../unit-score");
 const effect_1 = require("./effect");
+const acceleration_1 = require("./passives/acceleration");
+const bergmite_on_back_1 = require("./passives/bergmite-on-back");
+const falinks_formation_1 = require("./passives/falinks-formation");
 function drumBeat(pokemon, board) {
     var _a, _b;
     const speed = pokemon.status.paralysis ? pokemon.speed / 2 : pokemon.speed;
@@ -40,7 +45,7 @@ function drumBeat(pokemon, board) {
     if (pokemon.pp >= pokemon.maxPP && pokemon.canCast) {
         const target = (_a = pokemon.state.getNearestTargetAtSight(pokemon, board)) === null || _a === void 0 ? void 0 : _a.target;
         if (target) {
-            (0, abilities_1.castAbility)(pokemon.skill, pokemon, board, target);
+            (0, cast_1.castAbility)(abilities_1.AbilityStrategies[pokemon.skill], pokemon, board, target);
         }
         return;
     }
@@ -183,22 +188,24 @@ const KubfuOnKillEffect = new effect_1.OnKillEffect(({ attacker: pokemon, attack
         if (nbBuffsSpeed < MAX_BUFFS) {
             pokemon.addSpeed(SPEED_BUFF_PER_KILL, pokemon, 0, false, true);
             nbBuffsSpeed++;
-            if (nbBuffsSpeed === MAX_BUFFS &&
-                pokemon.player &&
-                pokemon.player.items.includes(Item_1.Item.SCROLL_OF_WATERS) === false) {
-                pokemon.player.items.push(Item_1.Item.SCROLL_OF_WATERS);
-            }
+        }
+        if (nbBuffsSpeed >= MAX_BUFFS &&
+            pokemon.name === Pokemon_1.Pkm.KUBFU &&
+            pokemon.player &&
+            pokemon.player.items.includes(Item_1.Item.SCROLL_OF_WATERS) === false) {
+            pokemon.player.items.push(Item_1.Item.SCROLL_OF_WATERS);
         }
     }
     else {
         if (nbBuffsAP < MAX_BUFFS) {
             pokemon.addAbilityPower(AP_BUFF_PER_KILL, pokemon, 0, false, true);
             nbBuffsAP++;
-            if (nbBuffsAP === MAX_BUFFS &&
-                pokemon.player &&
-                pokemon.player.items.includes(Item_1.Item.SCROLL_OF_DARKNESS) === false) {
-                pokemon.player.items.push(Item_1.Item.SCROLL_OF_DARKNESS);
-            }
+        }
+        if (nbBuffsAP >= MAX_BUFFS &&
+            pokemon.name === Pokemon_1.Pkm.KUBFU &&
+            pokemon.player &&
+            pokemon.player.items.includes(Item_1.Item.SCROLL_OF_DARKNESS) === false) {
+            pokemon.player.items.push(Item_1.Item.SCROLL_OF_DARKNESS);
         }
     }
     pokemon.refToBoardPokemon.stacks = (0, number_1.max)(MAX_BUFFS)(Math.max(nbBuffsAP, nbBuffsSpeed));
@@ -231,16 +238,6 @@ exports.WaterSpringEffect = new effect_1.OnAbilityCastEffect((pokemon, board) =>
         }
     });
 }, Passive_1.Passive.WATER_SPRING);
-class AccelerationEffect extends effect_1.OnMoveEffect {
-    constructor() {
-        super((pkm) => {
-            pkm.addSpeed(15, pkm, 0, false);
-            this.accelerationStacks += 1;
-        }, Passive_1.Passive.ACCELERATION);
-        this.accelerationStacks = 0;
-    }
-}
-exports.AccelerationEffect = AccelerationEffect;
 const MimikuBustedTransformEffect = new effect_1.OnDamageReceivedEffect(({ pokemon }) => {
     if (pokemon.hp / pokemon.maxHP < 0.5) {
         pokemon.index = Pokemon_1.PkmIndex[Pokemon_1.Pkm.MIMIKYU_BUSTED];
@@ -320,7 +317,7 @@ const GalarianDarmanitanBurnEffect = new effect_1.PeriodicEffect((pokemon, board
 const PikachuSurferBuffEffect = new effect_1.OnSpawnEffect((pkm) => {
     if (!pkm.player)
         return;
-    const aquaticStepReached = (0, synergies_1.getSynergyStep)(pkm.player.synergies, Synergy_1.Synergy.AQUATIC);
+    const aquaticStepReached = (0, synergies_2.getSynergyStep)(pkm.player.synergies, Synergy_1.Synergy.AQUATIC);
     pkm.addShield(50 * aquaticStepReached, pkm, 0, false);
     pkm.addAttack(3 * aquaticStepReached, pkm, 0, false);
 }, Passive_1.Passive.PIKACHU_SURFER);
@@ -510,38 +507,6 @@ class SynchroEffect extends effect_1.PeriodicEffect {
         }, Passive_1.Passive.SYNCHRO, 3000);
     }
 }
-class FalinksFormationEffect extends effect_1.OnSpawnEffect {
-    constructor() {
-        super((pkm) => {
-            if (!pkm.player)
-                return;
-            const troopers = (0, schemas_1.schemaValues)(pkm.player.board).filter((p) => p.name === Pokemon_1.Pkm.FALINKS_TROOPER && p.positionY === 0 && p.id !== pkm.id);
-            this.stacks = troopers.length;
-            if (this.stacks > 0) {
-                pkm.addAttack(this.stacks * 1, pkm, 0, false);
-                pkm.addDefense(this.stacks * 1, pkm, 0, false);
-                pkm.addShield(this.stacks * 30, pkm, 0, false);
-            }
-            if (this.stacks >= 8 && pkm.player) {
-                pkm.player.titles.add(types_1.Title.LEGIONNAIRE);
-            }
-        }, Passive_1.Passive.FALINKS);
-        this.stacks = 0;
-    }
-}
-exports.FalinksFormationEffect = FalinksFormationEffect;
-class BergmiteOnBackEffect extends effect_1.OnSpawnEffect {
-    constructor() {
-        super((pkm) => {
-            if (!pkm.player)
-                return;
-            const bergmites = (0, schemas_1.schemaValues)(pkm.player.board).filter((p) => p.name === Pokemon_1.Pkm.BERGMITE && p.positionY === 0 && p.id !== pkm.id);
-            this.stacks = bergmites.length;
-        }, Passive_1.Passive.AVALUGG);
-        this.stacks = 0;
-    }
-}
-exports.BergmiteOnBackEffect = BergmiteOnBackEffect;
 const ogerponMaskDropEffect = (mask, from, to) => new effect_1.OnShieldDepletedEffect(({ pokemon }) => {
     if (pokemon.name === from && pokemon.items.has(mask)) {
         pokemon.index = Pokemon_1.PkmIndex[to];
@@ -569,7 +534,7 @@ const comfeyEquipOnSimulationStartEffect = new effect_1.OnSimulationStartEffect(
     if (alliesWithFreeSlots.length > 0) {
         const minDistance = Math.min(...alliesWithFreeSlots.map((a) => (0, distance_1.distanceC)(a.positionX, a.positionY, entity.positionX, entity.positionY)));
         const nearestAllies = alliesWithFreeSlots.filter((a) => (0, distance_1.distanceC)(a.positionX, a.positionY, entity.positionX, entity.positionY) === minDistance);
-        const holder = (0, pokemon_entity_1.getStrongestUnit)(nearestAllies);
+        const holder = (0, unit_score_1.getStrongestUnit)(nearestAllies);
         team.delete(entity.id);
         simulation.board.setEntityOnCell(entity.positionX, entity.positionY, undefined);
         if (simulation.blueDpsMeter.has(entity.id)) {
@@ -611,6 +576,8 @@ const commanderPassive = new effect_1.OnSimulationStartEffect(({ simulation, tea
 }, Passive_1.Passive.COMMANDER);
 const conversionEffect = new effect_1.OnSimulationStartEffect(({ simulation, player, entity }) => {
     var _a;
+    if (!player || entity.isSpawn)
+        return;
     const opponent = simulation.bluePlayerId === player.id
         ? simulation.redPlayer
         : simulation.bluePlayer;
@@ -620,7 +587,7 @@ const conversionEffect = new effect_1.OnSimulationStartEffect(({ simulation, pla
     if (entity.types.has(synergyCopied))
         return;
     entity.types.add(synergyCopied);
-    const effect = (_a = effects_1.SynergyEffects[synergyCopied].find((effect) => opponent.effects.has(effect))) !== null && _a !== void 0 ? _a : effects_1.SynergyEffects[synergyCopied][0];
+    const effect = (_a = synergies_1.SynergyEffects[synergyCopied].find((effect) => opponent.effects.has(effect))) !== null && _a !== void 0 ? _a : synergies_1.SynergyEffects[synergyCopied][0];
     simulation.applyEffect(entity, effect);
     if (synergyCopied === Synergy_1.Synergy.BUG) {
         const coord = simulation.getClosestFreeCellToPokemonEntity(entity, entity.team);
@@ -651,7 +618,7 @@ const conversionEffect = new effect_1.OnSimulationStartEffect(({ simulation, pla
         player.groundHoles[entity.positionY * config_1.BOARD_WIDTH + entity.positionX] = 5;
     }
     if (synergyCopied === Synergy_1.Synergy.FLORA) {
-        const floraLevel = (0, synergies_1.getSynergyStep)(opponent.synergies, Synergy_1.Synergy.FLORA);
+        const floraLevel = (0, synergies_2.getSynergyStep)(opponent.synergies, Synergy_1.Synergy.FLORA);
         entity.effectsSet.add(new effect_1.OnDeathEffect(({ pokemon }) => {
             let flowerToSpawn = null;
             if (floraLevel === 1)
@@ -681,7 +648,9 @@ const spawnPhioneFromAquaEggOnSimulationStartEffect = new effect_1.OnSimulationS
         const coord = simulation.getClosestFreeCellToPokemonEntity(entity, entity.team);
         if (coord) {
             const phione = pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pkm.PHIONE, player);
-            player.pokemonsPlayed.add(Pokemon_1.Pkm.PHIONE);
+            if (player) {
+                player.pokemonsPlayed.add(Pokemon_1.Pkm.PHIONE);
+            }
             simulation.addPokemon(phione, coord.x, coord.y, entity.team, true);
         }
     }
@@ -691,7 +660,7 @@ const stonjournerPowerSpotOnSimulationStartEffect = new effect_1.OnSimulationSta
         .getAdjacentCells(entity.positionX, entity.positionY)
         .forEach((cell) => {
         if (cell.value && cell.value.team === entity.team) {
-            cell.value.addAbilityPower(50, cell.value, 0, false);
+            cell.value.addAbilityPower(entity.inSpotlight ? 100 : 50, cell.value, 0, false);
         }
     });
 }, Passive_1.Passive.STONJOURNER);
@@ -895,7 +864,7 @@ exports.PassiveEffects = {
     ],
     [Passive_1.Passive.PIKACHU_SURFER]: [PikachuSurferBuffEffect],
     [Passive_1.Passive.ACCELERATION]: [
-        () => new AccelerationEffect()
+        () => new acceleration_1.AccelerationEffect()
     ],
     [Passive_1.Passive.MIMIKYU]: [MimikuBustedTransformEffect],
     [Passive_1.Passive.DARMANITAN]: [DarmanitanZenTransformEffect],
@@ -915,10 +884,10 @@ exports.PassiveEffects = {
         () => new ZygardeCellsEffect()
     ],
     [Passive_1.Passive.FALINKS]: [
-        () => new FalinksFormationEffect()
+        () => new falinks_formation_1.FalinksFormationEffect()
     ],
     [Passive_1.Passive.AVALUGG]: [
-        () => new BergmiteOnBackEffect()
+        () => new bergmite_on_back_1.BergmiteOnBackEffect()
     ],
     [Passive_1.Passive.OGERPON_CORNERSTONE]: [
         ogerponMaskDropEffect(Item_1.Item.CORNERSTONE_MASK, Pokemon_1.Pkm.OGERPON_CORNERSTONE_MASK, Pokemon_1.Pkm.OGERPON_CORNERSTONE)
@@ -1210,6 +1179,94 @@ exports.PassiveEffects = {
                     }));
                 }
             });
+        })
+    ],
+    [Passive_1.Passive.MELOETTA]: [
+        new effect_1.OnChangePositionEffect(({ newY, pokemon, player }) => {
+            if (newY === 3 && pokemon.name === Pokemon_1.Pkm.MELOETTA) {
+                player.transformPokemon(pokemon, Pokemon_1.Pkm.PIROUETTE_MELOETTA);
+            }
+            if (newY !== 3 && pokemon.name === Pokemon_1.Pkm.PIROUETTE_MELOETTA) {
+                player.transformPokemon(pokemon, Pokemon_1.Pkm.MELOETTA);
+            }
+        })
+    ],
+    [Passive_1.Passive.RKS_SYSTEM]: [
+        new effect_1.OnChangePositionEffect(({ newY, pokemon, player, state }) => {
+            if (newY === 0) {
+                const itemsToRemove = (0, schemas_1.schemaValues)(pokemon.items).filter((item) => {
+                    return ((0, array_1.isIn)(types_1.RemovableItems, item) ||
+                        ((state === null || state === void 0 ? void 0 : state.specialGameRule) === SpecialGameRule_1.SpecialGameRule.SLAMINGO &&
+                            item !== Item_1.Item.RARE_CANDY) ||
+                        (0, array_1.isIn)(Item_1.SynergyItems, item));
+                });
+                player.items.push(...itemsToRemove);
+                pokemon.removeItems(itemsToRemove, player);
+            }
+        })
+    ],
+    [Passive_1.Passive.PRISM]: [
+        new effect_1.OnSpotlightChangeEffect(({ pokemon, player, inSpotlight }) => {
+            if (pokemon.name === Pokemon_1.Pkm.NECROZMA && inSpotlight) {
+                player.transformPokemon(pokemon, Pokemon_1.Pkm.ULTRA_NECROZMA);
+            }
+            else if (pokemon.name === Pokemon_1.Pkm.ULTRA_NECROZMA && !inSpotlight) {
+                player.transformPokemon(pokemon, Pokemon_1.Pkm.NECROZMA);
+            }
+        })
+    ],
+    [Passive_1.Passive.BLOSSOM]: [
+        new effect_1.OnSpotlightChangeEffect(({ pokemon, player, inSpotlight }) => {
+            if (pokemon.name === Pokemon_1.Pkm.CHERRIM && inSpotlight) {
+                player.transformPokemon(pokemon, Pokemon_1.Pkm.CHERRIM_SUNLIGHT);
+            }
+            else if (pokemon.name === Pokemon_1.Pkm.CHERRIM_SUNLIGHT && !inSpotlight) {
+                player.transformPokemon(pokemon, Pokemon_1.Pkm.CHERRIM);
+            }
+        })
+    ],
+    [Passive_1.Passive.PILLAR]: [
+        new effect_1.OnChangePositionEffect(({ player }) => {
+            player.updatePillars();
+        }),
+        new effect_1.OnEvolutionEffect(({ player }) => {
+            player.updatePillars();
+        })
+    ],
+    [Passive_1.Passive.VESPIQUEN]: [
+        new effect_1.OnChangePositionEffect(({ newY, pokemon }) => {
+            if (newY === 1) {
+                pokemon.range = 3;
+                pokemon.skill = Ability_1.Ability.ATTACK_ORDER;
+            }
+            else if (newY === 2) {
+                pokemon.range = 2;
+                pokemon.skill = Ability_1.Ability.HEAL_ORDER;
+            }
+            else if (newY === 3) {
+                pokemon.range = 1;
+                pokemon.skill = Ability_1.Ability.DEFEND_ORDER;
+            }
+        })
+    ],
+    [Passive_1.Passive.DUNSPARCE]: [
+        new effect_1.OnAbilityCastEffect((pokemon, board) => {
+            const familyMembers = board.cells.filter((entity) => entity != null &&
+                entity.team === pokemon.team &&
+                Pokemon_1.PkmFamily[entity.name] === Pokemon_1.PkmFamily[pokemon.name]);
+            familyMembers.forEach((entity) => {
+                if (!pokemon.player)
+                    return;
+                entity.addStack();
+            });
+        }),
+        new effect_1.OnGroundDiggingEffect(({ pokemon }) => {
+            pokemon.stacks += 1;
+        })
+    ],
+    [Passive_1.Passive.ORTHWORM]: [
+        new effect_1.OnGroundDiggingEffect(({ pokemon }) => {
+            pokemon.addMaxHP(5);
         })
     ]
 };
