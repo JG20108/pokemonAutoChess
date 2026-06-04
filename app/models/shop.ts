@@ -45,13 +45,13 @@ import {
   pickFirstPartners,
   pickPseudoLegendaries
 } from "../core/scribbles"
-import GameState from "../rooms/states/game-state"
-import { IPokemon, IPokemonEntity } from "../types"
+import type GameState from "../rooms/states/game-state"
+import type { IPokemon, IPokemonEntity } from "../types"
 import { Ability } from "../types/enum/Ability"
 import { EffectEnum } from "../types/enum/Effect"
 import { Rarity } from "../types/enum/Game"
 import {
-  FishingRod,
+  type FishingRod,
   Item,
   ItemComponentsNoFossilOrScarf
 } from "../types/enum/Item"
@@ -60,7 +60,7 @@ import {
   Pkm,
   PkmDuos,
   PkmFamily,
-  PkmProposition,
+  type PkmProposition,
   PkmRegionalVariants,
   Unowns
 } from "../types/enum/Pokemon"
@@ -77,12 +77,18 @@ import {
   shuffleArray
 } from "../utils/random"
 import { schemaValues } from "../utils/schemas"
-import Player from "./colyseus-models/player"
-import { PlayerChoice, PlayerChoiceType } from "./colyseus-models/player-choice"
-import { Pokemon, PokemonClasses } from "./colyseus-models/pokemon"
+import type Player from "./colyseus-models/player"
+import {
+  PlayerChoice,
+  type PlayerChoiceType
+} from "./colyseus-models/player-choice"
+import { type Pokemon, PokemonClasses } from "./colyseus-models/pokemon"
 import { getWildChance } from "./colyseus-models/synergies"
 import { getPokemonBaseline } from "./pokemon-factory"
-import { getPokemonData } from "./precomputed/precomputed-pokemon-data"
+import {
+  getPokemonData,
+  getRegularsTier1
+} from "./precomputed/precomputed-pokemon-data"
 import { PRECOMPUTED_POKEMONS_PER_RARITY } from "./precomputed/precomputed-rarity"
 
 /** Families where CHOSEN_ONE should offer only the base species, not cosmetic / form variants. */
@@ -209,6 +215,7 @@ export function getAdditionalsTier1(pokemons: Pkm[]) {
     )
   })
 }
+
 
 export function getSellPrice(
   pokemon: IPokemon | IPokemonEntity,
