@@ -92,6 +92,7 @@ import { shuffleArray } from "../utils/random"
 import { schemaValues } from "../utils/schemas"
 import {
   OnBuyPokemonCommand,
+  OnDevCommand,
   OnDragDropCombineCommand,
   OnDragDropItemCommand,
   OnDragDropPokemonCommand,
@@ -609,6 +610,16 @@ export default class GameRoom extends Room<{ state: GameState }> {
         }
       }
     )
+
+    this.onMessage(Transfer.DEV, (client, message) => {
+      if (process.env.MODE === "dev") {
+        try {
+          this.dispatcher.dispatch(new OnDevCommand(), message)
+        } catch (error) {
+          logger.error("dev command error", message)
+        }
+      }
+    })
   }
 
   startGame() {
@@ -1340,9 +1351,11 @@ export default class GameRoom extends Room<{ state: GameState }> {
 
     if (choice.items.length > 0) {
       const item = choice.items[choiceIndex]
-      player.items.push(item)
       if (isIn(Wands, item)) {
         player.fairyWands.push(item)
+        player.updateFairyWands()
+      } else {
+        player.items.push(item)
       }
     }
 

@@ -191,6 +191,8 @@ const MiniorKernelOnAttackEffect = new OnAttackEffect(
         .filter((cell) => cell.value && pokemon.team != cell.value.team)
         .map((cell) => cell.value!)
         .concat(target)
+      const multiplier = [1, 1, 1, 2][pokemon.stars - 1] ?? 2
+
       targets.forEach((t) => {
         pokemon.broadcastAbility({
           skill: Ability.SHIELDS_DOWN,
@@ -199,7 +201,9 @@ const MiniorKernelOnAttackEffect = new OnAttackEffect(
         })
         if (pokemon.name === Pkm.MINIOR_KERNEL_BLUE) {
           t.handleDamage({
-            damage: Math.ceil(physicalDamage * (1 + pokemon.ap / 100)),
+            damage: Math.ceil(
+              physicalDamage * (1 + pokemon.ap / 100) * multiplier
+            ),
             board,
             attackType: AttackType.SPECIAL,
             attacker: pokemon,
@@ -208,7 +212,9 @@ const MiniorKernelOnAttackEffect = new OnAttackEffect(
         }
         if (pokemon.name === Pkm.MINIOR_KERNEL_RED) {
           t.handleDamage({
-            damage: Math.ceil(physicalDamage * 1.5 * (1 + pokemon.ap / 100)),
+            damage: Math.ceil(
+              physicalDamage * 1.5 * (1 + pokemon.ap / 100) * multiplier
+            ),
             board,
             attackType: AttackType.PHYSICAL,
             attacker: pokemon,
@@ -217,7 +223,9 @@ const MiniorKernelOnAttackEffect = new OnAttackEffect(
         }
         if (pokemon.name === Pkm.MINIOR_KERNEL_ORANGE) {
           t.handleDamage({
-            damage: Math.ceil(physicalDamage * 0.5 * (1 + pokemon.ap / 100)),
+            damage: Math.ceil(
+              physicalDamage * 0.5 * (1 + pokemon.ap / 100) * multiplier
+            ),
             board,
             attackType: AttackType.TRUE,
             attacker: pokemon,
@@ -228,7 +236,7 @@ const MiniorKernelOnAttackEffect = new OnAttackEffect(
       if (pokemon.name === Pkm.MINIOR_KERNEL_GREEN) {
         cells.forEach((v) => {
           if (v.value && v.value.team === pokemon.team) {
-            v.value.handleHeal(physicalDamage, pokemon, 1, false)
+            v.value.handleHeal(physicalDamage * multiplier, pokemon, 1, false)
           }
         })
       }
@@ -1121,6 +1129,19 @@ const PoipoleOnKillEffect = new OnKillEffect(({ attacker, board }) => {
       entity.addAttack(1, entity, 0, false, true)
     }
   })
+
+  if (!attacker.player) return
+  if (familyMembers.every((p) => p.isSpawn)) {
+    const originalPoipole = schemaValues(attacker.player.board).find(
+      (p) => PkmFamily[p.name] === Pkm.POIPOLE
+    )
+    if (originalPoipole) {
+      originalPoipole.stacks++
+      if (originalPoipole.stacks % 2 === 0) {
+        originalPoipole.addAttack(1)
+      }
+    }
+  }
 }, Passive.POIPOLE)
 
 const addPrimeapeStack = ({ pokemon }: OnDeathEffectArgs) => {
@@ -1222,12 +1243,19 @@ export const PassiveEffects: Partial<
     })
   ],
   [Passive.VIGOROTH]: [
-    new OnSpawnEffect((pkm) => pkm.effects.add(EffectEnum.IMMUNITY_SLEEP))
+    new OnSpawnEffect((pkm) => {
+      pkm.status.sleep = false
+      pkm.effects.add(EffectEnum.IMMUNITY_SLEEP)
+    })
   ],
   [Passive.COMATOSE]: [
     new OnSpawnEffect((pkm) => {
       pkm.status.sleep = true
-      pkm.status.sleepCooldown = 1000
+      pkm.status.sleepCooldown = 1000      
+      pkm.status.burn = false
+      pkm.status.poisonStacks = 0
+      pkm.status.freeze = false
+      pkm.status.paralysis = false
       pkm.effects.add(EffectEnum.IMMUNITY_BURN)
       pkm.effects.add(EffectEnum.IMMUNITY_POISON)
       pkm.effects.add(EffectEnum.IMMUNITY_FREEZE)
@@ -1332,6 +1360,7 @@ export const PassiveEffects: Partial<
           : false
         attacker.addAbilityPower(isDoubled ? 10 : 5, attacker, 0, false, true)
         attacker.addMaxHP(isDoubled ? 20 : 10, attacker, 0, false, true)
+        attacker.addStack(isDoubled ? 2 :1)
       }
     })
   ],
@@ -1371,6 +1400,7 @@ export const PassiveEffects: Partial<
   [Passive.DRY_SKIN]: [drySkinOnSpawnEffect],
   [Passive.SPOT_PANDA]: [
     new OnSpawnEffect((entity) => {
+      entity.status.confusion = false
       entity.effects.add(EffectEnum.IMMUNITY_CONFUSION)
     })
   ],
@@ -1691,16 +1721,25 @@ export const PassiveEffects: Partial<
 
   [Passive.DUNSPARCE]: [
     new OnAbilityCastEffect((pokemon, board) => {
-      const familyMembers: PokemonEntity[] = board.cells.filter<PokemonEntity>(
-        (entity): entity is PokemonEntity =>
-          entity != null &&
-          entity.team === pokemon.team &&
-          PkmFamily[entity.name] === PkmFamily[pokemon.name]
-      )
-      familyMembers.forEach((entity) => {
-        if (!pokemon.player) return
+      if (!pokemon.player) return
+
+      const dunsparcesAlive: PokemonEntity[] =
+        board.cells.filter<PokemonEntity>(
+          (entity): entity is PokemonEntity =>
+            entity != null &&
+            entity.team === pokemon.team &&
+            PkmFamily[entity.name] === PkmFamily[pokemon.name]
+        )
+      dunsparcesAlive.forEach((entity) => {
         entity.addStack()
       })
+
+      if (dunsparcesAlive.every((p) => p.isSpawn)) {
+        const originalDunsparce = schemaValues(pokemon.player.board).find(
+          (p) => p.name === Pkm.DUNSPARCE
+        )
+        if (originalDunsparce) originalDunsparce.stacks++
+      }
     }),
     new OnGroundDiggingEffect(({ pokemon }) => {
       pokemon.stacks += 1

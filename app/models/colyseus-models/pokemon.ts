@@ -405,7 +405,7 @@ export class Ditto extends Pokemon {
   speed = 40
   def = 2
   speDef = 2
-  maxPP = 50
+  maxPP = 10
   range = 1
   skill = Ability.TRANSFORM
   passive = Passive.DITTO
@@ -5598,7 +5598,7 @@ export class Yveltal extends Pokemon {
   speDef = 12
   maxPP = 100
   range = 1
-  skill = Ability.DEATH_WING
+  skill = Ability.OBLIVION_WING
 }
 
 export class Moltres extends Pokemon {
@@ -7543,7 +7543,7 @@ export class PrimalKyogre extends Pokemon {
   speed = 54
   def = 6
   speDef = 6
-  maxPP = 90
+  maxPP = 100
   range = 3
   skill = Ability.ORIGIN_PULSE
   passive = Passive.RAIN_OR_STORM
@@ -8433,7 +8433,7 @@ export class Regidrago extends Pokemon {
   speDef = 10
   maxPP = 100
   range = 1
-  skill = Ability.DRACO_ENERGY
+  skill = Ability.DRAGON_ENERGY
 }
 export class Guzzlord extends Pokemon {
   types = new SetSchema<Synergy>([
@@ -12122,7 +12122,7 @@ export class Vespiquen extends Pokemon {
   speDef = 8
   maxPP = 90
   range = 3
-  skill = Ability.HEAL_ORDER
+  skill = Ability.VESPIQUEN_ORDERS
   passive = Passive.VESPIQUEN
 }
 
@@ -17284,7 +17284,7 @@ export class Litten extends Pokemon {
   speDef = 8
   maxPP = 100
   range = 1
-  skill = Ability.DARK_LARIAT
+  skill = Ability.DARKEST_LARIAT
 }
 
 export class Torracat extends Pokemon {
@@ -17299,7 +17299,7 @@ export class Torracat extends Pokemon {
   speDef = 12
   maxPP = 100
   range = 1
-  skill = Ability.DARK_LARIAT
+  skill = Ability.DARKEST_LARIAT
 }
 
 export class Incineroar extends Pokemon {
@@ -17313,7 +17313,7 @@ export class Incineroar extends Pokemon {
   speDef = 16
   maxPP = 100
   range = 1
-  skill = Ability.DARK_LARIAT
+  skill = Ability.DARKEST_LARIAT
 }
 
 export class Skrelp extends Pokemon {
@@ -20551,7 +20551,11 @@ export class HisuiAvalugg extends Pokemon {
   passive = Passive.AVALUGG
   additional = true
   regional: boolean = true
-  isInRegion(map: DungeonPMDO | "town"): boolean {
+  isInRegion(map: DungeonPMDO | "town", state?: GameState): boolean {
+    if (state && state.additionalPokemons.includes(Pkm.BERGMITE) === false) {
+      return false
+    }
+
     const regionSynergies = RegionDetails[map]?.synergies
     return regionSynergies.includes(Synergy.ROCK)
   }

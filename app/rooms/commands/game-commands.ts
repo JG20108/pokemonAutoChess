@@ -1476,7 +1476,7 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
                 if (effect instanceof OnGroundDiggingEffect) {
                   effect.apply({ pokemon, player })
                 }
-              })              
+              })
               player.board.forEach((pokemon) => {
                 // Condition based evolutions on ground hole dig
                 if (pokemon.evolutionRule.type === EvolutionRuleType.STATE) {
@@ -1484,7 +1484,7 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
                 } else if (
                   pokemon.evolutionRule.type === EvolutionRuleType.STACK
                 ) {
-                  EvolutionManager.tryEvolve(pokemon, player, pokemon.stacks)
+                  EvolutionManager.tryEvolve(pokemon, player)
                 }
               })
             }, 1000)
@@ -1614,7 +1614,10 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
       )
 
       // Condition based evolutions on stage start
-      if (pokemon.evolutionRule.type === EvolutionRuleType.STATE) {
+      if (
+        pokemon.evolutionRule.type === EvolutionRuleType.STATE ||
+        pokemon.evolutionRule.type === EvolutionRuleType.STACK
+      ) {
         EvolutionManager.tryEvolve(pokemon, player, this.state)
       }
     })
@@ -1774,6 +1777,7 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
             } else {
               this.state.shop.refillShop(player, this.state)
               player.shopLocked = false
+              player.unownReminiscences = 0
             }
           }
         }
@@ -2179,6 +2183,14 @@ export class OnOverwriteBoardCommand extends Command<GameRoom> {
   }
 }
 
+export class OnDevCommand extends Command<GameRoom> {
+  execute(msg: { action: string }) {
+    if (msg.action === "skipStage") {
+      this.room.state.time = 0
+    }
+  }
+}
+
 export function onPokemonChangePosition({
   pokemon,
   newX,
@@ -2199,6 +2211,25 @@ export function onPokemonChangePosition({
   doNotRemoveItems?: boolean
 }) {
   // called after manually changing position of the pokemon on board
+
+  if (newY === 0 && !doNotRemoveItems) {
+    const itemsToRemove = schemaValues(pokemon.items).filter((item) => {
+      return (
+        isIn(RemovableItems, item) ||
+        (state?.specialGameRule === SpecialGameRule.SLAMINGO &&
+          item !== Item.RARE_CANDY)
+      )
+    })
+    player.items.push(...itemsToRemove)
+    pokemon.removeItems(itemsToRemove, player)
+
+    if (pokemon.tm && TMPerAbility.has(pokemon.tm)) {
+      player.items.push(TMPerAbility.get(pokemon.tm)!)
+      pokemon.tm = Ability.DEFAULT
+      pokemon.skill = pokemon.baseSkill
+      pokemon.maxPP = pokemon.baseMaxPP
+    }
+  }
 
   if (pokemon.passive !== Passive.NONE) {
     const hasLight =
@@ -2238,25 +2269,6 @@ export function onPokemonChangePosition({
       if (pokemon.name === Pkm.MANTYKE) {
         EvolutionManager.tryEvolve(pokemon, player, player.board)
       }
-    }
-  }
-
-  if (newY === 0 && !doNotRemoveItems) {
-    const itemsToRemove = schemaValues(pokemon.items).filter((item) => {
-      return (
-        isIn(RemovableItems, item) ||
-        (state?.specialGameRule === SpecialGameRule.SLAMINGO &&
-          item !== Item.RARE_CANDY)
-      )
-    })
-    player.items.push(...itemsToRemove)
-    pokemon.removeItems(itemsToRemove, player)
-
-    if (pokemon.tm && TMPerAbility.has(pokemon.tm)) {
-      player.items.push(TMPerAbility.get(pokemon.tm)!)
-      pokemon.tm = Ability.DEFAULT
-      pokemon.skill = pokemon.baseSkill
-      pokemon.maxPP = pokemon.baseMaxPP
     }
   }
 }
