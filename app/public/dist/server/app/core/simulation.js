@@ -581,22 +581,22 @@ class Simulation extends schema_1.Schema {
         switch (effect) {
             case Effect_1.EffectEnum.HONE_CLAWS:
                 if (types.has(Synergy_1.Synergy.DARK)) {
-                    pokemon.addCritChance(30, pokemon, 0, false);
-                    pokemon.addCritPower(30, pokemon, 0, false);
+                    pokemon.addCritChance(25, pokemon, 0, false);
+                    pokemon.addCritPower(25, pokemon, 0, false);
                     pokemon.effects.add(Effect_1.EffectEnum.HONE_CLAWS);
                 }
                 break;
             case Effect_1.EffectEnum.ASSURANCE:
                 if (types.has(Synergy_1.Synergy.DARK)) {
-                    pokemon.addCritChance(40, pokemon, 0, false);
-                    pokemon.addCritPower(50, pokemon, 0, false);
+                    pokemon.addCritChance(35, pokemon, 0, false);
+                    pokemon.addCritPower(40, pokemon, 0, false);
                     pokemon.effects.add(Effect_1.EffectEnum.ASSURANCE);
                 }
                 break;
             case Effect_1.EffectEnum.BEAT_UP:
                 if (types.has(Synergy_1.Synergy.DARK)) {
-                    pokemon.addCritChance(50, pokemon, 0, false);
-                    pokemon.addCritPower(80, pokemon, 0, false);
+                    pokemon.addCritChance(40, pokemon, 0, false);
+                    pokemon.addCritPower(65, pokemon, 0, false);
                     pokemon.effects.add(Effect_1.EffectEnum.BEAT_UP);
                 }
                 break;

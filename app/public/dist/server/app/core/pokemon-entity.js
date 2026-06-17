@@ -124,7 +124,7 @@ class PokemonEntity extends schema_1.Schema {
         this.healDone = 0;
         this.shieldDone = 0;
         if (this.types.has(Synergy_1.Synergy.DARK) && this.range === 1) {
-            this.cooldown = 300;
+            this.cooldown = 400;
         }
         else {
             this.resetCooldown(500);

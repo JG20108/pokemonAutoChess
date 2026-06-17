@@ -805,24 +805,24 @@ export default class Simulation extends Schema implements ISimulation {
     switch (effect) {
       case EffectEnum.HONE_CLAWS:
         if (types.has(Synergy.DARK)) {
-          pokemon.addCritChance(30, pokemon, 0, false)
-          pokemon.addCritPower(30, pokemon, 0, false)
+          pokemon.addCritChance(25, pokemon, 0, false)
+          pokemon.addCritPower(25, pokemon, 0, false)
           pokemon.effects.add(EffectEnum.HONE_CLAWS)
         }
         break
 
       case EffectEnum.ASSURANCE:
         if (types.has(Synergy.DARK)) {
-          pokemon.addCritChance(40, pokemon, 0, false)
-          pokemon.addCritPower(50, pokemon, 0, false)
+          pokemon.addCritChance(35, pokemon, 0, false)
+          pokemon.addCritPower(40, pokemon, 0, false)
           pokemon.effects.add(EffectEnum.ASSURANCE)
         }
         break
 
       case EffectEnum.BEAT_UP:
         if (types.has(Synergy.DARK)) {
-          pokemon.addCritChance(50, pokemon, 0, false)
-          pokemon.addCritPower(80, pokemon, 0, false)
+          pokemon.addCritChance(40, pokemon, 0, false)
+          pokemon.addCritPower(65, pokemon, 0, false)
           pokemon.effects.add(EffectEnum.BEAT_UP)
         }
         break
