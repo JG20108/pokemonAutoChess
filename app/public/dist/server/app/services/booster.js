@@ -21,6 +21,7 @@ const user_metadata_1 = __importDefault(require("../models/mongo-models/user-met
 const precomputed_pokemon_data_1 = require("../models/precomputed/precomputed-pokemon-data");
 const types_1 = require("../types");
 const Pokemon_1 = require("../types/enum/Pokemon");
+const collection_2 = require("./collection");
 function buyBoosterForUser(uid, index) {
     return __awaiter(this, void 0, void 0, function* () {
         const pkm = Pokemon_1.PkmByIndex[index];
@@ -54,7 +55,7 @@ function openBoosterForUser(uid) {
         if (!userDoc)
             return null;
         const updateOperations = {};
-        const boosterContent = (0, collection_1.createBooster)(userDoc);
+        const boosterContent = (0, collection_2.createBooster)(userDoc);
         for (const card of boosterContent) {
             const index = Pokemon_1.PkmIndex[card.name];
             const existingItem = userDoc.pokemonCollection.get(index);

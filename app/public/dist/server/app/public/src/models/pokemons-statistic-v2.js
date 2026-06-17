@@ -17,14 +17,14 @@ exports.fetchMetaTypes = fetchMetaTypes;
 const app_1 = __importDefault(require("firebase/compat/app"));
 function fetchMetaPokemons() {
     return __awaiter(this, void 0, void 0, function* () {
-        return fetch("/meta/pokemons").then((res) => res.json());
+        return fetch(`/meta/pokemons?t=${new Date().getUTCDate()}`).then((res) => res.json());
     });
 }
 function fetchMetaTypes() {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         const token = yield ((_a = app_1.default.auth().currentUser) === null || _a === void 0 ? void 0 : _a.getIdToken());
-        return fetch("/meta/types", {
+        return fetch(`/meta/types?t=${new Date().getUTCDate()}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

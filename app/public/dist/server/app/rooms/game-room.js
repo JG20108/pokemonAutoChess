@@ -446,6 +446,16 @@ class GameRoom extends colyseus_1.Room {
                     }
                 }
             });
+            this.onMessage(types_1.Transfer.DEV, (client, message) => {
+                if (process.env.MODE === "dev") {
+                    try {
+                        this.dispatcher.dispatch(new game_commands_1.OnDevCommand(), message);
+                    }
+                    catch (error) {
+                        logger_1.logger.error("dev command error", message);
+                    }
+                }
+            });
         });
     }
     startGame() {
@@ -987,9 +997,12 @@ class GameRoom extends colyseus_1.Room {
         }
         if (choice.items.length > 0) {
             const item = choice.items[choiceIndex];
-            player.items.push(item);
             if ((0, array_1.isIn)(Item_1.Wands, item)) {
                 player.fairyWands.push(item);
+                player.updateFairyWands();
+            }
+            else {
+                player.items.push(item);
             }
         }
         (0, array_1.removeInArray)(player.choices, choice);

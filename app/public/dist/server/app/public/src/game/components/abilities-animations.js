@@ -732,9 +732,9 @@ exports.AbilitiesAnimations = {
     [Ability_1.Ability.CROSS_POISON]: onTargetScale3,
     [Ability_1.Ability.FIERY_DANCE]: onTarget({ ability: Ability_1.Ability.FIRE_BLAST, scale: 2 }),
     [Ability_1.Ability.FIRE_SPIN]: onTarget({ ability: Ability_1.Ability.MAGMA_STORM, scale: 2 }),
-    [Ability_1.Ability.DRACO_ENERGY]: onTarget({ depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON }),
+    [Ability_1.Ability.DRAGON_ENERGY]: onTarget({ depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON }),
     [Ability_1.Ability.GRUDGE_DIVE]: projectile({
-        ability: Ability_1.Ability.DRACO_ENERGY,
+        ability: Ability_1.Ability.DRAGON_ENERGY,
         tint: 0xcbc3e3
     }),
     [Ability_1.Ability.ROCK_WRECKER]: onSprite((_a) => {
@@ -1048,7 +1048,7 @@ exports.AbilitiesAnimations = {
         positionOffset: [0, -20]
     }),
     [Ability_1.Ability.ATTRACT]: onCaster({ positionOffset: [0, -70] }),
-    [Ability_1.Ability.MAGNET_RISE]: onCaster({ ability: Ability_1.Ability.ELECTRO_BOOST }),
+    [Ability_1.Ability.MAGNET_RISE]: onCasterScale2,
     [Ability_1.Ability.FORCE_PALM]: onTarget({ ability: Ability_1.Ability.ANCHOR_SHOT }),
     [Ability_1.Ability.WATERFALL]: onCaster({
         depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON,
@@ -1186,7 +1186,7 @@ exports.AbilitiesAnimations = {
     }),
     [Ability_1.Ability.WONDER_GUARD]: onCaster({ depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON }),
     [Ability_1.Ability.X_SCISSOR]: onTargetScale2,
-    [Ability_1.Ability.DEATH_WING]: onTargetScale2,
+    [Ability_1.Ability.OBLIVION_WING]: onTargetScale2,
     [Ability_1.Ability.GEOMANCY]: onCaster({
         positionOffset: [0, -50],
         depth: depths_1.DEPTH.ABILITY_GROUND_LEVEL
@@ -1917,7 +1917,7 @@ exports.AbilitiesAnimations = {
         duration: 250,
         depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON
     }),
-    [Ability_1.Ability.DARK_LARIAT]: projectile({ depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON }),
+    [Ability_1.Ability.DARKEST_LARIAT]: projectile({ depth: depths_1.DEPTH.ABILITY_BELOW_POKEMON }),
     [Ability_1.Ability.FIRESTARTER]: projectile({
         duration: 800,
         startCoords: "target",

@@ -55,5 +55,5 @@ export declare const SHINY_UNOWN_ENCOUNTER_CHANCE = 0.05;
 export declare const SHARDS_PER_UNOWN_WANDERER = 50;
 export declare const SHARDS_PER_SHINY_UNOWN_WANDERER = 250;
 export declare const GOLDEN_BERRY_TREE_TYPES: Item[];
-export declare const GoldenEggItems: (Item.DYNAMAX_BAND | Item.SHINY_STONE | Item.RARE_CANDY | Item.EVIOLITE | Item.WHITE_FLUTE | Item.GOLD_BOTTLE_CAP | Item.ABSORB_BULB | Item.SACRED_ASH | Item.COMET_SHARD | Item.REPEAT_BALL | Item.GOLD_BOW)[];
+export declare const GoldenEggItems: (Item.DYNAMAX_BAND | Item.SHINY_STONE | Item.RARE_CANDY | Item.EVIOLITE | Item.GOLD_MASK | Item.GOLD_BOTTLE_CAP | Item.ABSORB_BULB | Item.SACRED_ASH | Item.STAR_PIECE | Item.REPEAT_BALL | Item.GOLD_BOW)[];
 export declare const SYNERGY_COLORS: Record<Synergy, `#${string}`>;

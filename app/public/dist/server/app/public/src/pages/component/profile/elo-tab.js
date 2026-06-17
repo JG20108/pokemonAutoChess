@@ -45,7 +45,6 @@ function EloTab() {
             const data = yield response.json();
             if ((user === null || user === void 0 ? void 0 : user.uid) !== uid)
                 return;
-            console.log("Loaded game history page", page, data);
             setGameHistory(data);
         }
         catch (error) {

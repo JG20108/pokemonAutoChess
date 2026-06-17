@@ -174,7 +174,7 @@ class PokemonEntity extends schema_1.Schema {
                 (targetEnemies && this.team !== attacker.team) ||
                 (attacker.effects.has(Effect_1.EffectEnum.MERCILESS) &&
                     attacker.id !== this.id &&
-                    this.hp <= 0.1 * this.maxHP)));
+                    this.hp <= 10)));
     }
     get player() {
         const player = this.baseTeam === Game_1.Team.BLUE_TEAM
@@ -234,7 +234,7 @@ class PokemonEntity extends schema_1.Schema {
                     const bounceCrit = crit ||
                         (this.effects.has(Effect_1.EffectEnum.ABILITY_CRIT) &&
                             (0, random_1.chance)(this.critChance / 100, this));
-                    const bounceDamage = Math.round(((_a = [0.5, 1][this.stars - 1]) !== null && _a !== void 0 ? _a : 1) *
+                    const bounceDamage = Math.round(((_a = [0.5, 1, 2, 4][this.stars - 1]) !== null && _a !== void 0 ? _a : 4) *
                         damage *
                         (1 + this.ap / 100) *
                         (bounceCrit ? this.critPower : 1));
@@ -269,7 +269,11 @@ class PokemonEntity extends schema_1.Schema {
                 specialDamage *= 1.2;
             }
             if (crit && attacker && this.items.has(Item_1.Item.ROCKY_HELMET) === false) {
-                specialDamage *= attacker.critPower;
+                const nbBlackAugurite = this.player
+                    ? (0, array_1.count)(this.player.items, Item_1.Item.BLACK_AUGURITE)
+                    : 0;
+                const reductionFactor = 1 - 0.1 * nbBlackAugurite;
+                specialDamage *= attacker.critPower * reductionFactor;
             }
             if (attacker &&
                 attacker.items.has(Item_1.Item.POKEMONOMICON) &&
@@ -379,7 +383,12 @@ class PokemonEntity extends schema_1.Schema {
         value = applyTwistBandBuff(this, value, caster);
         this.maxHP = (0, number_1.min)(1)(this.maxHP + value);
         if (this.hp > 0) {
-            this.hp = (0, number_1.clamp)(this.hp + value, 1, this.maxHP);
+            if (value > 0) {
+                this.hp = (0, number_1.clamp)(this.hp + value, 1, this.maxHP);
+            }
+            else {
+                this.hp = (0, number_1.max)(this.maxHP)(this.hp);
+            }
         }
         if (permanent && !this.isGhostOpponent) {
             const boardPokemon = this.refToBoardPokemon;
@@ -389,9 +398,9 @@ class PokemonEntity extends schema_1.Schema {
     addDodgeChance(value, caster, apBoost, crit) {
         value =
             value * (1 + (apBoost * caster.ap) / 100) * (crit ? caster.critPower : 1);
-        value = applyBigEaterBeltStatBuff(this, value, caster);
+        value = applyBigEaterBeltStatBuff(this, value, caster, 3);
         value = applyTwistBandBuff(this, value, caster);
-        this.dodge = (0, number_1.clamp)(this.dodge + value, 0, 0.9);
+        this.dodge = (0, number_1.max)(0.9)(this.dodge + value);
     }
     addAbilityPower(value, caster, apBoost, crit, permanent = false) {
         value = Math.round(value * (1 + (apBoost * caster.ap) / 100) * (crit ? caster.critPower : 1));
@@ -1245,7 +1254,7 @@ class PokemonEntity extends schema_1.Schema {
         if (this.refToBoardPokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.STACK &&
             this.stacksRequired > 0 &&
             this.stacks === this.stacksRequired) {
-            const pokemonEvolved = evolution_manager_1.EvolutionManager.tryEvolve(this.refToBoardPokemon, this.player, this.stacks);
+            const pokemonEvolved = evolution_manager_1.EvolutionManager.tryEvolve(this.refToBoardPokemon, this.player);
             if (pokemonEvolved) {
                 this.index = pokemonEvolved.index;
                 this.name = pokemonEvolved.name;

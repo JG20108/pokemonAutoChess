@@ -32,9 +32,11 @@ export declare const DEPTH: {
     TEXT: number;
     TEXT_MAJOR: number;
     INDICATOR: number;
-    HUD: number;
     DPS_METER: number;
+    SYNERGIES_CONTAINER: number;
     PLAYER_ICON: number;
+    GAME_SHOP: number;
+    SPECTATE_PLAYER_INFO: number;
     PHASER_DOM_CONTAINER: number;
     MODAL: number;
     SELL_ZONE: number;

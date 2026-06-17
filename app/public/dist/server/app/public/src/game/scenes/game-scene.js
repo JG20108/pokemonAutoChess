@@ -104,6 +104,7 @@ class GameScene extends phaser_1.Scene {
         this.spectate = data.spectate;
         this.uid = (_a = app_1.default.auth().currentUser) === null || _a === void 0 ? void 0 : _a.uid;
         this.started = false;
+        globalThis.devcommand = (action, ...params) => { var _a; return (_a = this.room) === null || _a === void 0 ? void 0 : _a.send(types_1.Transfer.DEV, Object.assign({ action }, params)); };
     }
     preload() {
         (0, pokemon_2.resetSpriteCounts)();
@@ -152,6 +153,13 @@ class GameScene extends phaser_1.Scene {
             }
             (0, window_1.clearTitleNotificationIcon)();
         }
+    }
+    toggleTilesetAnimation(paused) {
+        if (!this.map)
+            return;
+        this.map.layers.forEach((layer) => {
+            layer.tilemapLayer.setTimerPaused(paused);
+        });
     }
     update(time, delta) {
         var _a, _b;
@@ -308,10 +316,6 @@ class GameScene extends phaser_1.Scene {
                 (_b = this.map.createLayer("layer0", tileset, 0, 0)) === null || _b === void 0 ? void 0 : _b.setScale(2, 2);
                 (_c = this.map.createLayer("layer1", tileset, 0, 0)) === null || _c === void 0 ? void 0 : _c.setScale(2, 2);
                 (_d = this.map.createLayer("layer2", tileset, 0, 0)) === null || _d === void 0 ? void 0 : _d.setScale(2, 2);
-                const sys = this.sys;
-                if (sys.animatedTiles) {
-                    sys.animatedTiles.pause();
-                }
                 return;
             }
             const tilemap = this.tilemaps.get(mapName);
@@ -327,13 +331,7 @@ class GameScene extends phaser_1.Scene {
                 (_a = tileset.image) === null || _a === void 0 ? void 0 : _a.setFilter(phaser_1.default.Textures.FilterMode.NEAREST);
                 (_b = map.createLayer(layer.name, tileset, 0, 0)) === null || _b === void 0 ? void 0 : _b.setScale(2, 2);
             });
-            const sys = this.sys;
-            if (sys.animatedTiles) {
-                sys.animatedTiles.init(map);
-                if ((0, preferences_1.preference)("disableAnimatedTilemap")) {
-                    sys.animatedTiles.pause();
-                }
-            }
+            this.toggleTilesetAnimation((0, preferences_1.preference)("disableAnimatedTilemap"));
             (_e = this.board) === null || _e === void 0 ? void 0 : _e.pokemons.forEach((p) => {
                 p.sprite.setTint((0, config_1.getRegionTint)(this.mapName, (0, preferences_1.preference)("colorblindMode")));
             });

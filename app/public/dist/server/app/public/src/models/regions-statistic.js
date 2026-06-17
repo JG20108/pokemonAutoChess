@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchMetaRegions = fetchMetaRegions;
 function fetchMetaRegions() {
     return __awaiter(this, void 0, void 0, function* () {
-        return fetch("/meta/regions").then((res) => res.json());
+        return fetch(`/meta/regions?t=${new Date().getUTCDate()}`).then((res) => res.json());
     });
 }
 //# sourceMappingURL=regions-statistic.js.map

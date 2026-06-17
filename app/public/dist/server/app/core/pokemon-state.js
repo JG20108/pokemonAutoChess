@@ -22,7 +22,7 @@ class PokemonState {
         this.name = "";
     }
     attack(pokemon, board, target, isTripleAttack = false) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d, _e, _f, _g;
         if (target && target.hp > 0) {
             let damage = pokemon.atk;
             let physicalDamage = 0;
@@ -39,6 +39,9 @@ class PokemonState {
                 critChance += 0.01 * distance;
             }
             const crit = (0, random_1.chance)(critChance, pokemon);
+            const nbBlackAugurite = target.player
+                ? (0, array_1.count)(target.player.items, Item_1.Item.BLACK_AUGURITE)
+                : 0;
             if (crit) {
                 if (target.items.has(Item_1.Item.ROCKY_HELMET) === false) {
                     let reductionFactor = 1.0;
@@ -51,9 +54,6 @@ class PokemonState {
                     else if (target.effects.has(Effect_1.EffectEnum.DIAMOND_STORM)) {
                         reductionFactor -= 0.7;
                     }
-                    const nbBlackAugurite = target.player
-                        ? (0, array_1.count)(target.player.items, Item_1.Item.BLACK_AUGURITE)
-                        : 0;
                     reductionFactor -= 0.1 * nbBlackAugurite;
                     const damageWithoutCrit = damage;
                     const damageAfterCrit = damage * pokemon.critPower;
@@ -61,6 +61,10 @@ class PokemonState {
                     damage = (0, number_1.min)(0)(Math.round(damageWithoutCrit + critPartOfTheDamage * reductionFactor));
                     target.count.crit++;
                 }
+            }
+            let reductionFactor = 1 - 0.1 * nbBlackAugurite;
+            if (target.items.has(Item_1.Item.ROCKY_HELMET) === true) {
+                reductionFactor = 0;
             }
             if (target.effects.has(Effect_1.EffectEnum.WONDER_ROOM)) {
                 attackType = Game_1.AttackType.SPECIAL;
@@ -89,14 +93,15 @@ class PokemonState {
                 isAttackSuccessful = false;
                 damage = 0;
             }
-            if (pokemon.types.has(Synergy_1.Synergy.FAIRY)) {
+            if (isAttackSuccessful && pokemon.types.has(Synergy_1.Synergy.FAIRY)) {
                 const { takenDamage, death } = (0, synergies_2.applyWandEffects)(pokemon, target, damage, crit);
                 totalTakenDamage += takenDamage;
                 if (death)
                     hasAttackKilled = true;
             }
             if (pokemon.effects.has(Effect_1.EffectEnum.CHARGE)) {
-                const chargeDamage = damage * pokemon.count.ult * (1 + pokemon.ap / 100);
+                const tierFactor = (_b = [1, 1, 1, 2][pokemon.stars - 1]) !== null && _b !== void 0 ? _b : 2;
+                const chargeDamage = damage * tierFactor * pokemon.count.ult * (1 + pokemon.ap / 100);
                 specialDamage += Math.ceil(chargeDamage);
             }
             if (pokemon.items.has(Item_1.Item.NULLIFY_BANDANNA)) {
@@ -123,21 +128,22 @@ class PokemonState {
                 trueDamagePart += 0.25;
             }
             if (pokemon.effects.has(Effect_1.EffectEnum.LOCK_ON)) {
-                trueDamagePart += 2.0 * (1 + pokemon.ap / 100);
+                trueDamagePart +=
+                    ((_c = [2, 2, 2, 5][pokemon.stars - 1]) !== null && _c !== void 0 ? _c : 5) * (1 + pokemon.ap / 100);
                 pokemon.effects.delete(Effect_1.EffectEnum.LOCK_ON);
             }
             if (pokemon.effects.has(Effect_1.EffectEnum.TELEPORT_NEXT_ATTACK)) {
                 const abilityCrit = pokemon.effects.has(Effect_1.EffectEnum.ABILITY_CRIT) && crit;
                 specialDamage += Math.ceil([15, 30, 60, 120][pokemon.stars - 1] *
                     (1 + pokemon.ap / 100) *
-                    (abilityCrit ? pokemon.critPower : 1));
+                    (abilityCrit ? (0, number_1.min)(1)(pokemon.critPower * reductionFactor) : 1));
                 pokemon.effects.delete(Effect_1.EffectEnum.TELEPORT_NEXT_ATTACK);
             }
             if (pokemon.effects.has(Effect_1.EffectEnum.SHADOW_PUNCH_NEXT_ATTACK)) {
                 const abilityCrit = pokemon.effects.has(Effect_1.EffectEnum.ABILITY_CRIT) && crit;
-                specialDamage += Math.ceil([30, 60, 120][pokemon.stars - 1] *
+                specialDamage += Math.ceil(((_d = [30, 60, 120, 240][pokemon.stars - 1]) !== null && _d !== void 0 ? _d : 240) *
                     (1 + pokemon.ap / 100) *
-                    (abilityCrit ? pokemon.critPower : 1));
+                    (abilityCrit ? (0, number_1.min)(1)(pokemon.critPower * reductionFactor) : 1));
                 pokemon.effects.delete(Effect_1.EffectEnum.SHADOW_PUNCH_NEXT_ATTACK);
             }
             if (pokemon.effects.has(Effect_1.EffectEnum.ATTACK_ORDER_NEXT_ATTACK)) {
@@ -148,10 +154,10 @@ class PokemonState {
                     }
                     return count;
                 }, 0);
-                specialDamage += Math.ceil((((_b = [20, 40, 60][pokemon.stars - 1]) !== null && _b !== void 0 ? _b : 60) +
-                    nbComfeeAllies * ((_c = [10, 20, 30][pokemon.stars - 1]) !== null && _c !== void 0 ? _c : 60)) *
+                specialDamage += Math.ceil((((_e = [20, 40, 60, 120][pokemon.stars - 1]) !== null && _e !== void 0 ? _e : 120) +
+                    nbComfeeAllies * ((_f = [10, 20, 30, 60][pokemon.stars - 1]) !== null && _f !== void 0 ? _f : 60)) *
                     (1 + pokemon.ap / 100) *
-                    (abilityCrit ? pokemon.critPower : 1));
+                    (abilityCrit ? (0, number_1.min)(1)(pokemon.critPower * reductionFactor) : 1));
                 pokemon.effects.delete(Effect_1.EffectEnum.ATTACK_ORDER_NEXT_ATTACK);
             }
             if (trueDamagePart > 0) {
@@ -165,7 +171,8 @@ class PokemonState {
                 physicalDamage = damage;
             }
             if (pokemon.effects.has(Effect_1.EffectEnum.STONE_EDGE)) {
-                physicalDamage += Math.round(pokemon.def * (1 + pokemon.ap / 100));
+                const stoneEdgeMult = (_g = [1, 1, 2, 4][pokemon.stars - 1]) !== null && _g !== void 0 ? _g : 4;
+                physicalDamage += Math.round(pokemon.def * (stoneEdgeMult + pokemon.ap / 100));
             }
             const totalDamage = physicalDamage + specialDamage + trueDamage;
             pokemon.getEffects(effect_1.BeforeAttackEffect).forEach((effect) => {
@@ -616,12 +623,7 @@ class PokemonState {
         return { death, takenDamage };
     }
     triggerDeath(pokemon, attacker, board, attackType) {
-        const originalTeam = pokemon.status.possessed
-            ? pokemon.team === Game_1.Team.BLUE_TEAM
-                ? Game_1.Team.RED_TEAM
-                : Game_1.Team.BLUE_TEAM
-            : pokemon.team;
-        pokemon.team = originalTeam;
+        pokemon.team = pokemon.baseTeam;
         pokemon.onDeath({ board, attacker });
         board.setEntityOnCell(pokemon.positionX, pokemon.positionY, undefined);
         if (attacker && pokemon !== attacker) {
@@ -660,7 +662,7 @@ class PokemonState {
             });
             effectsRemovedList.push(Effect_1.EffectEnum.MISTY_TERRAIN);
         }
-        if (originalTeam == Game_1.Team.BLUE_TEAM) {
+        if (pokemon.baseTeam == Game_1.Team.BLUE_TEAM) {
             effectsRemovedList.forEach((x) => pokemon.simulation.blueEffects.delete(x));
         }
         else {

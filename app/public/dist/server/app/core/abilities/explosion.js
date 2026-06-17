@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.explosionStrategy = void 0;
+exports.explosionStrategy = exports.ExplosionStrategy = void 0;
 const Game_1 = require("../../types/enum/Game");
 const Item_1 = require("../../types/enum/Item");
 const ability_strategy_1 = require("./ability-strategy");
@@ -8,7 +8,7 @@ class ExplosionStrategy extends ability_strategy_1.AbilityStrategy {
     process(pokemon, board, target, crit) {
         var _a;
         super.process(pokemon, board, target, crit);
-        const damage = (_a = [50, 100, 200][pokemon.stars - 1]) !== null && _a !== void 0 ? _a : 200;
+        const damage = (_a = [50, 100, 200, 400][pokemon.stars - 1]) !== null && _a !== void 0 ? _a : 400;
         const cells = board.getAdjacentCells(pokemon.positionX, pokemon.positionY);
         cells.forEach((cell) => {
             if (cell.value && pokemon.team != cell.value.team) {
@@ -20,5 +20,6 @@ class ExplosionStrategy extends ability_strategy_1.AbilityStrategy {
         }
     }
 }
+exports.ExplosionStrategy = ExplosionStrategy;
 exports.explosionStrategy = new ExplosionStrategy();
 //# sourceMappingURL=explosion.js.map

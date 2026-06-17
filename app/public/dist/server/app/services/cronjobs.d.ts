@@ -1,1 +1,1 @@
-export declare function initCronJobs(): void;
+export declare function initCronJobs(isMainThread: boolean): void;

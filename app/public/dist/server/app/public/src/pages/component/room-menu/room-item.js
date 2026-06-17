@@ -57,8 +57,7 @@ function RoomItem(props) {
         disabledReason = t("room_menu.max_rank_not_reached");
     }
     else if (((_k = props.room.metadata) === null || _k === void 0 ? void 0 : _k.gameMode) === Game_1.GameMode.RANKED &&
-        (user === null || user === void 0 ? void 0 : user.level) != null &&
-        user.level < gadgets_1.GADGETS.certificate.levelRequired) {
+        (!user || user.level < gadgets_1.GADGETS.certificate.levelRequired)) {
         canJoin = false;
         disabledReason = t("room_menu.ranked_mode_locked", {
             requiredLevel: gadgets_1.GADGETS.certificate.levelRequired

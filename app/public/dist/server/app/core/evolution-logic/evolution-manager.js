@@ -38,7 +38,7 @@ exports.EvolutionManager = {
     tryEvolve(pokemon, player, ...additionalArgs) {
         const handler = this.getHandler(pokemon.evolutionRule);
         if (handler.canEvolve(pokemon, player, ...additionalArgs)) {
-            const pokemonEvolved = handler.evolve(pokemon, player, ...additionalArgs);
+            const pokemonEvolved = this.evolve(pokemon, player, ...additionalArgs);
             return pokemonEvolved;
         }
     },
@@ -66,7 +66,7 @@ exports.EvolutionManager = {
                 pokemonEvolved.passive !== Passive_1.Passive.COSMOEM) {
                 pokemon.addMaxHP(15);
                 pokemon.stacks++;
-                this.tryEvolve(pokemon, player, ...additionalArgs);
+                this.tryEvolve(pokemon, player);
             }
         });
         this.tryEvolve(pokemonEvolved, player, ...additionalArgs);

@@ -3,8 +3,7 @@ import type { PokemonEntity } from "../pokemon-entity";
 import { AbilityStrategy } from "./ability-strategy";
 export declare class HiddenPowerStrategy extends AbilityStrategy {
     requiresTarget: boolean;
-    copyable: boolean;
-    process(unown: PokemonEntity, board: Board, target: null, crit: boolean): void;
+    process(pokemon: PokemonEntity, board: Board, target: null, crit: boolean): void;
 }
 export declare class HiddenPowerAStrategy extends HiddenPowerStrategy {
     process(unown: PokemonEntity, board: Board, target: null, crit: boolean): void;

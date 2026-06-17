@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchPlayerRankDistribution = fetchPlayerRankDistribution;
 function fetchPlayerRankDistribution() {
     return __awaiter(this, void 0, void 0, function* () {
-        const response = yield fetch("/meta/player-rank-distribution");
+        const response = yield fetch(`/meta/player-rank-distribution?t=${new Date().getUTCDate()}`);
         if (!response.ok) {
             throw new Error(`Failed to fetch player rank distribution: ${response.status}`);
         }

@@ -49,18 +49,13 @@ const command_1 = require("@colyseus/command");
 const colyseus_1 = require("colyseus");
 const cron_1 = require("cron");
 const firebase_admin_1 = __importDefault(require("firebase-admin"));
-const v8_1 = require("v8");
 const config_1 = require("../config");
 const message_1 = __importDefault(require("../models/colyseus-models/message"));
 const tournament_1 = require("../models/colyseus-models/tournament");
 const chat_v2_1 = __importDefault(require("../models/mongo-models/chat-v2"));
 const tournament_2 = __importDefault(require("../models/mongo-models/tournament"));
 const user_metadata_1 = __importStar(require("../models/mongo-models/user-metadata"));
-const leaderboard_1 = require("../services/leaderboard");
-const meta_1 = require("../services/meta");
 const notifications_1 = require("../services/notifications");
-const sprite_gap_scanner_1 = require("../services/sprite-gap-scanner");
-const twitch_1 = require("../services/twitch");
 const types_1 = require("../types");
 const CloseCodes_1 = require("../types/enum/CloseCodes");
 const MaintenanceOrder_1 = require("../types/enum/MaintenanceOrder");
@@ -292,28 +287,21 @@ class CustomLobbyRoom extends colyseus_1.Room {
                 const client = this.clients.find((c) => c.auth && c.auth.uid === userId);
                 const notify = (msg) => notifications_1.notificationsService.addNotification(userId, "info", msg, client);
                 if (order === MaintenanceOrder_1.MaintenanceOrder.HEAP_SNAPSHOT) {
-                    logger_1.logger.info("writing heap snapshot");
-                    (0, v8_1.writeHeapSnapshot)();
                     notify("Heap snapshot written");
                 }
                 else if (order === MaintenanceOrder_1.MaintenanceOrder.FETCH_LEADERBOARDS) {
-                    (0, leaderboard_1.fetchLeaderboards)();
                     notify("Leaderboards refreshed");
                 }
                 else if (order === MaintenanceOrder_1.MaintenanceOrder.FETCH_META_REPORTS) {
-                    (0, meta_1.fetchMetaReports)();
                     notify("Meta reports refreshed");
                 }
                 else if (order === MaintenanceOrder_1.MaintenanceOrder.REFRESH_SPRITE_GAP_DATA) {
-                    (0, sprite_gap_scanner_1.refreshSpriteGapData)();
                     notify("Sprite gap data refreshed");
                 }
                 else if (order === MaintenanceOrder_1.MaintenanceOrder.REFRESH_TWITCH_STREAMS) {
-                    (0, twitch_1.refreshTwitchStreams)();
                     notify("Twitch streams refreshed");
                 }
                 else if (order === MaintenanceOrder_1.MaintenanceOrder.REFRESH_TWITCH_BLACKLIST) {
-                    (0, twitch_1.refreshTwitchBlacklist)();
                     notify("Twitch streams blacklist refreshed");
                 }
             });

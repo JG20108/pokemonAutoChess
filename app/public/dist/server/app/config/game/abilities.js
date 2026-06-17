@@ -1,0 +1,45 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.InimitableAbilities = void 0;
+const Ability_1 = require("../../types/enum/Ability");
+exports.InimitableAbilities = [
+    Ability_1.Ability.ASSIST,
+    Ability_1.Ability.AURA_WHEEL,
+    Ability_1.Ability.ENCORE,
+    Ability_1.Ability.HIDDEN_POWER_A,
+    Ability_1.Ability.HIDDEN_POWER_B,
+    Ability_1.Ability.HIDDEN_POWER_C,
+    Ability_1.Ability.HIDDEN_POWER_D,
+    Ability_1.Ability.HIDDEN_POWER_E,
+    Ability_1.Ability.HIDDEN_POWER_EM,
+    Ability_1.Ability.HIDDEN_POWER_F,
+    Ability_1.Ability.HIDDEN_POWER_G,
+    Ability_1.Ability.HIDDEN_POWER_H,
+    Ability_1.Ability.HIDDEN_POWER_I,
+    Ability_1.Ability.HIDDEN_POWER_J,
+    Ability_1.Ability.HIDDEN_POWER_K,
+    Ability_1.Ability.HIDDEN_POWER_L,
+    Ability_1.Ability.HIDDEN_POWER_M,
+    Ability_1.Ability.HIDDEN_POWER_N,
+    Ability_1.Ability.HIDDEN_POWER_O,
+    Ability_1.Ability.HIDDEN_POWER_P,
+    Ability_1.Ability.HIDDEN_POWER_Q,
+    Ability_1.Ability.HIDDEN_POWER_QM,
+    Ability_1.Ability.HIDDEN_POWER_R,
+    Ability_1.Ability.HIDDEN_POWER_S,
+    Ability_1.Ability.HIDDEN_POWER_T,
+    Ability_1.Ability.HIDDEN_POWER_U,
+    Ability_1.Ability.HIDDEN_POWER_V,
+    Ability_1.Ability.HIDDEN_POWER_W,
+    Ability_1.Ability.HIDDEN_POWER_X,
+    Ability_1.Ability.HIDDEN_POWER_Y,
+    Ability_1.Ability.HIDDEN_POWER_Z,
+    Ability_1.Ability.KNOWLEDGE_THIEF,
+    Ability_1.Ability.MAGNET_PULL,
+    Ability_1.Ability.METRONOME,
+    Ability_1.Ability.MIMIC,
+    Ability_1.Ability.SHADOW_FORCE,
+    Ability_1.Ability.SKETCH,
+    Ability_1.Ability.SKILL_SWAP
+];
+//# sourceMappingURL=abilities.js.map

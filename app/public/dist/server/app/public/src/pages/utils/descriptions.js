@@ -36,50 +36,50 @@ exports.iconRegExp = new RegExp(`(?<=\\W|^)(?:${[
     "GOLD",
     "STAR"
 ].join("|")}|\\[[^\\]]+\\])(?=\\W|$)`, "g");
-function addIconsToDescription(description, stats) {
+function addIconsToDescription(description, params) {
     const matchIcon = description.match(exports.iconRegExp);
     if (matchIcon === null)
         return description;
     const descriptionParts = description.split(exports.iconRegExp);
-    return descriptionParts.map((f, i) => {
+    return descriptionParts.map((part, i) => {
         var _a, _b, _c, _d, _e, _f;
         const token = matchIcon[i - 1];
-        let d = null;
+        let icon = null;
         const isAtStartOfSentence = i === 0 || descriptionParts[i - 1].trim().endsWith(".");
         const capitalize = (s) => isAtStartOfSentence ? s.charAt(0).toUpperCase() + s.slice(1) : s;
         if (token) {
             if (token === "GOLD") {
-                d = ((0, jsx_runtime_1.jsx)("img", { className: "description-icon icon-money", src: "/assets/icons/money.svg", alt: "$" }));
+                icon = ((0, jsx_runtime_1.jsx)("img", { className: "description-icon icon-money", src: "/assets/icons/money.svg", alt: "$" }));
             }
             else if (token === "STAR") {
-                d = ((0, jsx_runtime_1.jsx)("img", { className: "description-icon icon-star", src: "/assets/ui/star.svg", alt: "\u2B50" }));
+                icon = ((0, jsx_runtime_1.jsx)("img", { className: "description-icon icon-star", src: "/assets/ui/star.svg", alt: "\u2B50" }));
             }
             else if ((0, array_1.isIn)(DamageTypes, token)) {
-                d = ((0, jsx_runtime_1.jsx)("span", { className: token === Game_1.Damage.PHYSICAL
+                icon = ((0, jsx_runtime_1.jsx)("span", { className: token === Game_1.Damage.PHYSICAL
                         ? "damage-physical"
                         : token === Game_1.Damage.SPECIAL
                             ? "damage-special"
                             : "damage-true", children: (0, i18next_1.t)(`damage.${token}`) }));
             }
             else if ((0, array_1.isIn)(Stats, token)) {
-                d = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon stat", children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/icons/${token}.png` }), (0, jsx_runtime_1.jsx)("span", { className: "stat-label", children: (0, i18next_1.t)(`stat.${token}`) })] }));
+                icon = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon stat", children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/icons/${token}.png` }), (0, jsx_runtime_1.jsx)("span", { className: "stat-label", children: (0, i18next_1.t)(`stat.${token}`) })] }));
             }
             else if ((0, array_1.isIn)(Status_1.DocumentedStatuses, token)) {
-                d = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon status", title: (0, i18next_1.t)(`status_description.${token}`), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/icons/${token}.svg` }), (0, jsx_runtime_1.jsx)("span", { className: (0, jsx_1.cc)("status-label", {
+                icon = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon status", title: (0, i18next_1.t)(`status_description.${token}`), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/icons/${token}.svg` }), (0, jsx_runtime_1.jsx)("span", { className: (0, jsx_1.cc)("status-label", {
                                 positive: Status_1.PositiveStatuses.includes(token)
                             }), children: (0, i18next_1.t)(`status.${token}`) })] }));
             }
             else if ((0, array_1.isIn)(Weathers, token)) {
-                d = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon weather", title: (0, i18next_1.t)(`weather_description.${token}`), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/icons/weather/${token.toLowerCase()}.svg` }), (0, jsx_runtime_1.jsx)("span", { className: "weather-label", children: (0, i18next_1.t)(`weather.${token}`) })] }));
+                icon = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon weather", title: (0, i18next_1.t)(`weather_description.${token}`), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/icons/weather/${token.toLowerCase()}.svg` }), (0, jsx_runtime_1.jsx)("span", { className: "weather-label", children: (0, i18next_1.t)(`weather.${token}`) })] }));
             }
             else if ((0, array_1.isIn)(Items, token)) {
-                d = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon item", title: (0, i18next_1.t)(`item_description.${token}`), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/item/${token}.png` }), (0, jsx_runtime_1.jsx)("span", { className: "item-label", children: (0, i18next_1.t)(`item.${token}`) })] }));
+                icon = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon item", title: (0, i18next_1.t)(`item_description.${token}`), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/item/${token}.png` }), (0, jsx_runtime_1.jsx)("span", { className: "item-label", children: (0, i18next_1.t)(`item.${token}`) })] }));
             }
             else if ((0, array_1.isIn)(Synergies, token)) {
-                d = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon synergy", children: [(0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: token, size: "1.5em" }), (0, jsx_runtime_1.jsx)("span", { className: "synergy-label", children: (0, i18next_1.t)(`synergy.${token}`) })] }));
+                icon = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon synergy", children: [(0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: token, size: "1.5em" }), (0, jsx_runtime_1.jsx)("span", { className: "synergy-label", children: (0, i18next_1.t)(`synergy.${token}`) })] }));
             }
             else if ((0, array_1.isIn)(TechnicalTerm_1.TechnicalTerms, token)) {
-                d = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon technical-term", title: (0, i18next_1.t)(`technical_terms_definitions.${token}`), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/ui/${token.toLowerCase()}.svg` }), (0, jsx_runtime_1.jsx)("i", { className: "technical-term-label", children: capitalize((0, i18next_1.t)(`technical_terms.${token}`)) })] }));
+                icon = ((0, jsx_runtime_1.jsxs)("span", { className: "description-icon technical-term", title: (0, i18next_1.t)(`technical_terms_definitions.${token}`), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/ui/${token.toLowerCase()}.svg` }), (0, jsx_runtime_1.jsx)("i", { className: "technical-term-label", children: capitalize((0, i18next_1.t)(`technical_terms.${token}`)) })] }));
             }
             else if (/\[[^\]]+\]/.test(token)) {
                 const array = token.slice(1, -1).split(",");
@@ -97,33 +97,41 @@ function addIconsToDescription(description, stats) {
                     scaleType = "LUCK";
                     scaleFactor = Number((_f = array.pop()) === null || _f === void 0 ? void 0 : _f.replace("LK=", "")) || 1;
                 }
-                d = ((0, jsx_runtime_1.jsxs)("span", { className: (0, jsx_1.cc)("description-icon", {
+                const tier = params === null || params === void 0 ? void 0 : params.stars;
+                const maxTier = (params === null || params === void 0 ? void 0 : params.stages) ? params.stages + 1 : 5;
+                const tierValues = (params === null || params === void 0 ? void 0 : params.stars) && !(params === null || params === void 0 ? void 0 : params.showAbilityTiers)
+                    ? [array[params.stars - 1]]
+                    : array.slice(0, maxTier);
+                icon = ((0, jsx_runtime_1.jsxs)("span", { className: (0, jsx_1.cc)("description-icon", {
                         "scales-ap": scaleType === "AP",
                         "scales-luck": scaleType === "LUCK"
-                    }), children: [scaleType === "AP" && ((0, jsx_runtime_1.jsx)("img", { src: "assets/icons/AP.png", alt: "Ability Power", title: "Scales with Ability Power" })), scaleType === "LUCK" && ((0, jsx_runtime_1.jsx)("img", { src: "assets/icons/LUCK.png", alt: "Luck", title: "Scales with Luck" })), array.slice(0, stats === null || stats === void 0 ? void 0 : stats.stages).map((v, j) => {
-                            var _a, _b, _c;
-                            const separator = j < Math.min((_a = stats === null || stats === void 0 ? void 0 : stats.stages) !== null && _a !== void 0 ? _a : 4, array.length) - 1 ? "/" : "";
+                    }), children: [scaleType === "AP" && ((0, jsx_runtime_1.jsx)("img", { src: "assets/icons/AP.png", alt: "Ability Power", title: "Scales with Ability Power" })), scaleType === "LUCK" && ((0, jsx_runtime_1.jsx)("img", { src: "assets/icons/LUCK.png", alt: "Luck", title: "Scales with Luck" })), tierValues.map((v, j) => {
+                            var _a, _b;
+                            const separator = j < tierValues.length - 1 ? "/" : "";
                             let value = (0, number_1.roundToNDigits)(Number(v), nbDigits);
                             if (Number.isNaN(value)) {
                                 value = v;
                             }
                             else if (scaleType === "AP") {
-                                value = (0, number_1.roundToNDigits)(Number(v) * (1 + (((_b = stats === null || stats === void 0 ? void 0 : stats.ap) !== null && _b !== void 0 ? _b : 0) * scaleFactor) / 100), nbDigits);
+                                value = (0, number_1.roundToNDigits)(Number(v) * (1 + (((_a = params === null || params === void 0 ? void 0 : params.ap) !== null && _a !== void 0 ? _a : 0) * scaleFactor) / 100), nbDigits);
                             }
                             else if (scaleType === "LUCK") {
-                                value = (0, number_1.roundToNDigits)((0, number_1.max)(100)(Math.pow(Number(v) / 100, 1 - ((_c = stats === null || stats === void 0 ? void 0 : stats.luck) !== null && _c !== void 0 ? _c : 0) / 100) *
+                                value = (0, number_1.roundToNDigits)((0, number_1.max)(100)(Math.pow(Number(v) / 100, 1 - ((_b = params === null || params === void 0 ? void 0 : params.luck) !== null && _b !== void 0 ? _b : 0) / 100) *
                                     100), nbDigits);
                             }
-                            const tier = stats === null || stats === void 0 ? void 0 : stats.stars;
                             const active = tier === undefined ||
                                 array.length === 1 ||
                                 j === tier - 1 ||
-                                (tier > array.length && j === array.length - 1);
+                                (tier > tierValues.length && j === tierValues.length - 1);
                             return ((0, jsx_runtime_1.jsxs)("span", { className: "ability-value", children: [(0, jsx_runtime_1.jsx)("span", { className: (0, jsx_1.cc)({ active }), children: value }), separator] }, j));
                         })] }));
             }
         }
-        return ((0, jsx_runtime_1.jsxs)(react_1.default.Fragment, { children: [d, f] }, i));
+        const boldParts = part.split(/\*\*(.+?)\*\*/g);
+        const content = boldParts.length > 1
+            ? boldParts.map((part, j) => j % 2 === 1 ? ((0, jsx_runtime_1.jsx)("strong", { className: "description-important", children: part }, j)) : (part))
+            : part;
+        return ((0, jsx_runtime_1.jsxs)(react_1.default.Fragment, { children: [icon, content] }, i));
     });
 }
 function addIconsToHtml(htmlString, stats) {

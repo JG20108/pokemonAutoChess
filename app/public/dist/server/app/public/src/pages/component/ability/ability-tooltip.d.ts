@@ -7,5 +7,6 @@ export declare function AbilityTooltip(props: {
         stages: number;
         ap: number;
         luck: number;
+        showAbilityTiers?: boolean;
     };
 }): import("react/jsx-runtime").JSX.Element;

@@ -48,9 +48,9 @@ const config_1 = require("../../../../config");
 const Game_1 = require("../../../../types/enum/Game");
 const Item_1 = require("../../../../types/enum/Item");
 const array_1 = require("../../../../utils/array");
+const object_1 = require("../../../../utils/object");
 const descriptions_1 = require("../../pages/utils/descriptions");
 require("./item-detail.css");
-const object_1 = require("../../../../utils/object");
 function ItemDetailTooltipContent({ item, showItemCombinationsTooltip = true }) {
     var _a, _b;
     const { t } = (0, react_i18next_1.useTranslation)();
@@ -85,7 +85,7 @@ function ItemDetailTooltipContent({ item, showItemCombinationsTooltip = true }) 
     return ((0, jsx_runtime_1.jsxs)("div", { className: "game-item-detail", children: [(0, jsx_runtime_1.jsx)("img", { className: "game-item-detail-icon", src: `assets/item/${item}.png`, alt: t(`item.${item}`) }), (0, jsx_runtime_1.jsxs)("div", { className: "game-item-detail-name", children: [Item_1.ItemRecipe[item] && ((0, jsx_runtime_1.jsx)("div", { className: "game-item-recipe", children: (_a = Item_1.ItemRecipe[item]) === null || _a === void 0 ? void 0 : _a.map((item, i) => ((0, jsx_runtime_1.jsxs)(react_1.default.Fragment, { children: [(0, jsx_runtime_1.jsx)("img", { className: "game-item-detail-icon", src: `assets/item/${item}.png`, alt: t(`item.${item}`) }, item), i === 0 && " + "] }, `component_${i}_${item}`))) })), t(`item.${item}`)] }), (0, jsx_runtime_1.jsxs)("div", { className: "game-item-detail-stats", children: [itemCategoryLabel && (0, jsx_runtime_1.jsx)("i", { children: itemCategoryLabel }), (0, object_1.entries)((_b = config_1.ItemStats[item]) !== null && _b !== void 0 ? _b : {}).map(([stat, value]) => ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/icons/${stat}.png`, alt: stat, title: t(`stat.${stat}`) }), (0, jsx_runtime_1.jsx)("span", { children: formatStat(stat, value !== null && value !== void 0 ? value : 0) })] }, stat)))] }), (0, jsx_runtime_1.jsx)("p", { className: "game-item-detail-description", children: (0, descriptions_1.addIconsToDescription)(t(`item_description.${item}`)) }), recipes.length > 0 && showItemCombinationsTooltip && ((0, jsx_runtime_1.jsx)("div", { className: "game-item-detail-combinations", children: recipes.map(([result, recipe]) => {
                     const otherComponent = recipe[0] === item ? recipe[1] : recipe[0];
                     return ((0, jsx_runtime_1.jsxs)("div", { className: "game-item-detail-combination", children: [(0, jsx_runtime_1.jsx)("p", { children: "+" }), (0, jsx_runtime_1.jsx)("img", { src: `assets/item/${otherComponent}.png`, alt: t(`item.${otherComponent}`), "data-tooltip-id": "item-detail-recipes-tooltip", "data-tooltip-content": otherComponent, "data-tooltip-place": "right" }), (0, jsx_runtime_1.jsx)("p", { children: "=" }), (0, jsx_runtime_1.jsx)("img", { src: `assets/item/${result}.png`, alt: t(`item.${result}`), "data-tooltip-id": "item-detail-recipes-tooltip", "data-tooltip-content": result })] }, result));
-                }) })), (0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: "item-detail-recipes-tooltip", className: "custom-theme-tooltip item-detail-tooltip", render: ({ content }) => ((0, jsx_runtime_1.jsx)(ItemDetailTooltipContent, { item: content, showItemCombinationsTooltip: false })) })] }));
+                }) })), showItemCombinationsTooltip && ((0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: "item-detail-recipes-tooltip", className: "custom-theme-tooltip item-detail-tooltip", render: ({ content }) => ((0, jsx_runtime_1.jsx)(ItemDetailTooltipContent, { item: content, showItemCombinationsTooltip: false })) }))] }));
 }
 function ItemDetailTooltip() {
     return ((0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: "item-detail-tooltip", className: "custom-theme-tooltip item-detail-tooltip", render: ({ content }) => ((0, jsx_runtime_1.jsx)(ItemDetailTooltipContent, { item: content })) }));

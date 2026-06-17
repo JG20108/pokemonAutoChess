@@ -13,7 +13,8 @@ const client_1 = __importDefault(require("react-dom/client"));
 const react_i18next_1 = require("react-i18next");
 const react_tooltip_1 = require("react-tooltip");
 const config_1 = require("../../../../../config");
-const dishes_1 = require("../../../../../core/dishes");
+const abilities_1 = require("../../../../../config/game/abilities");
+const dishes_1 = require("../../../../../config/game/dishes");
 const pokemon_factory_1 = __importDefault(require("../../../../../models/pokemon-factory"));
 const precomputed_pokemon_data_1 = require("../../../../../models/precomputed/precomputed-pokemon-data");
 const Ability_1 = require("../../../../../types/enum/Ability");
@@ -108,6 +109,8 @@ function GamePokemonDetail(props) {
         pokemon === null || pokemon === void 0 ? void 0 : pokemon.luck,
         props.origin
     ]);
+    const isEntity = (obj) => obj != null && obj.hasOwnProperty("simulation");
+    const isInFight = isEntity(props.pokemon);
     const getStatWithItemBonus = (stat) => {
         var _a;
         return (_a = pokemonStats.find((s) => s.stat === stat)) === null || _a === void 0 ? void 0 : _a.value;
@@ -163,7 +166,6 @@ function GamePokemonDetail(props) {
         if (!pokemon || pokemon.tm === Ability_1.Ability.DEFAULT)
             return null;
         let icon = "assets/item/TM.png";
-        console.log("TM", pokemon.tm, pokemon.skill);
         if (pokemon.tm === Ability_1.Ability.SKILL_SWAP &&
             pokemon.skill !== Ability_1.Ability.SKILL_SWAP) {
             icon = "assets/ui/SKILL_SWAP.png";
@@ -176,28 +178,39 @@ function GamePokemonDetail(props) {
         }
         return ((0, jsx_runtime_1.jsx)("img", { src: icon, className: "game-pokemon-detail-ability-icon", alt: t("tm") }));
     }, [pokemon === null || pokemon === void 0 ? void 0 : pokemon.tm, pokemon === null || pokemon === void 0 ? void 0 : pokemon.skill]);
+    const inimitableIcon = (0, react_1.useMemo)(() => {
+        if (!pokemon)
+            return null;
+        const skill = pokemon.tm !== Ability_1.Ability.DEFAULT ? pokemon.tm : pokemon.skill;
+        return abilities_1.InimitableAbilities.includes(skill) ? ((0, jsx_runtime_1.jsx)("img", { src: "assets/ui/inimitable.svg", className: "game-pokemon-detail-ability-icon", alt: t("inimitable"), title: t("technical_terms_definitions.INIMITABLE") })) : null;
+    }, [pokemon === null || pokemon === void 0 ? void 0 : pokemon.tm, pokemon === null || pokemon === void 0 ? void 0 : pokemon.skill]);
     if (!pokemon) {
         return null;
     }
+    const stars = pokemon.stars + (pokemon.items.has(Item_1.Item.STAR_PIECE) && !isInFight ? 1 : 0);
     return ((0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail", children: [(0, jsx_runtime_1.jsx)(pokemon_portrait_1.default, { className: "game-pokemon-detail-portrait", style: { borderColor: config_1.RarityColor[pokemon.rarity] }, portrait: {
                     index: pokemon.index,
                     shiny: (_a = props.shiny) !== null && _a !== void 0 ? _a : pokemon.shiny,
                     emotion: (_b = props.emotion) !== null && _b !== void 0 ? _b : pokemon.emotion
                 } }), pokemon.index === Pokemon_1.PkmIndex[Pokemon_1.Pkm.EGG] &&
                 "evolution" in pokemon &&
-                pokemon.evolution != null && ((0, jsx_runtime_1.jsx)("img", { className: "game-pokemon-detail-portrait-hint", src: (0, avatar_1.getPortraitSrc)(Pokemon_1.PkmIndex[pokemon.evolution]) })), (0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-entry", children: [(0, jsx_runtime_1.jsx)("p", { className: "game-pokemon-detail-entry-name", children: name }), (0, jsx_runtime_1.jsx)("p", { className: "game-pokemon-detail-entry-rarity", style: { color: config_1.RarityColor[pokemon.rarity] }, children: t(`rarity.${pokemon.rarity}`) }), (0, jsx_runtime_1.jsxs)("p", { className: "game-pokemon-detail-entry-tier", children: [Array.from({ length: pokemon.stars }, (_, index) => ((0, jsx_runtime_1.jsx)("img", { src: "assets/ui/star.svg", height: "16" }, index))), Array.from({ length: (0, precomputed_pokemon_data_1.getPokemonData)(pokemon.name).stages - pokemon.stars }, (_, index) => ((0, jsx_runtime_1.jsx)("img", { src: "assets/ui/star_empty.svg", height: "16" }, index)))] })] }), (0, jsx_runtime_1.jsx)("div", { className: "game-pokemon-detail-types", children: Array.from(pokemon.types.values()).map((type) => ((0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: type }, type))) }), (0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-bars", children: [(0, jsx_runtime_1.jsx)(game_tooltip_bar_1.GameTooltipBar, { type: props.isAlly === false ? "HP_ENEMY" : "HP_ALLY", value: hp, extraValue: shield, maxValue: props.origin === "team" ? hp : pokemon.maxHP, graduationStep: 10 }), (0, jsx_runtime_1.jsx)(game_tooltip_bar_1.GameTooltipBar, { type: "PP", value: pp, maxValue: pokemon.maxPP })] }), (0, jsx_runtime_1.jsx)("div", { className: "game-pokemon-detail-stats", children: pokemonStats.map(({ stat, value, baseValue, formatter }) => ((0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-stat-" + stat.toLowerCase(), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/icons/${stat}.png`, alt: stat, title: `${t(`stat.${stat}`)}${value !== baseValue ? ` (${baseValue} ${value > baseValue ? "+" : "-"} ${value - baseValue})` : ""}` }), (0, jsx_runtime_1.jsx)("span", { className: (0, jsx_1.cc)({
+                pokemon.evolution != null && ((0, jsx_runtime_1.jsx)("img", { className: "game-pokemon-detail-portrait-hint", src: (0, avatar_1.getPortraitSrc)(Pokemon_1.PkmIndex[pokemon.evolution]) })), (0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-entry", children: [(0, jsx_runtime_1.jsx)("p", { className: "game-pokemon-detail-entry-name", children: name }), (0, jsx_runtime_1.jsx)("p", { className: "game-pokemon-detail-entry-rarity", style: { color: config_1.RarityColor[pokemon.rarity] }, children: t(`rarity.${pokemon.rarity}`) }), (0, jsx_runtime_1.jsxs)("p", { className: "game-pokemon-detail-entry-tier", children: [Array.from({ length: stars }, (_, index) => ((0, jsx_runtime_1.jsx)("img", { src: "assets/ui/star.svg", height: "16" }, index))), Array.from({ length: (0, precomputed_pokemon_data_1.getPokemonData)(pokemon.name).stages - stars }, (_, index) => ((0, jsx_runtime_1.jsx)("img", { src: "assets/ui/star_empty.svg", height: "16" }, index)))] })] }), (0, jsx_runtime_1.jsx)("div", { className: "game-pokemon-detail-types", children: Array.from(pokemon.types.values()).map((type) => ((0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: type }, type))) }), (0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-bars", children: [(0, jsx_runtime_1.jsx)(game_tooltip_bar_1.GameTooltipBar, { type: props.isAlly === false ? "HP_ENEMY" : "HP_ALLY", value: hp, extraValue: shield, maxValue: props.origin === "team" ? hp : pokemon.maxHP, graduationStep: 10 }), (0, jsx_runtime_1.jsx)(game_tooltip_bar_1.GameTooltipBar, { type: "PP", value: pp, maxValue: pokemon.maxPP })] }), (0, jsx_runtime_1.jsx)("div", { className: "game-pokemon-detail-stats", children: pokemonStats.map(({ stat, value, baseValue, formatter }) => ((0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-stat-" + stat.toLowerCase(), children: [(0, jsx_runtime_1.jsx)("img", { src: `assets/icons/${stat}.png`, alt: stat, title: `${t(`stat.${stat}`)}${value !== baseValue ? ` (${baseValue} ${value > baseValue ? "+" : "-"} ${value - baseValue})` : ""}` }), (0, jsx_runtime_1.jsx)("span", { className: (0, jsx_1.cc)({
                                 buffed: value > baseValue,
                                 nerfed: value < baseValue
-                            }), children: formatter ? formatter(value) : value })] }, stat))) }), dish && ((0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-dish", children: [(0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-dish-name", children: [(0, jsx_runtime_1.jsx)("img", { src: "assets/ui/dish.svg", className: "dish-icon" }), (0, jsx_runtime_1.jsxs)("i", { children: [t("signature_dish"), ":"] }), " ", t(`item.${dish}`)] }), (0, jsx_runtime_1.jsx)("img", { src: `assets/item/${dish}.png`, className: "game-pokemon-detail-dish-icon", alt: dish, title: t(`item.${dish}`) }), (0, jsx_runtime_1.jsx)("p", { children: (0, descriptions_1.addIconsToDescription)(t(`item_description.${dish}`)) })] })), pokemon.passive !== Passive_1.Passive.NONE && ((0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-passive", children: [(0, jsx_runtime_1.jsx)("p", { children: (0, descriptions_1.addIconsToDescription)(t(`passive_description.${pokemon.passive}`), {
+                            }), children: formatter ? formatter(value) : value })] }, stat))) }), dish && ((0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-dish", children: [(0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-dish-name", children: [(0, jsx_runtime_1.jsx)("img", { src: "assets/ui/dish.svg", className: "dish-icon" }), (0, jsx_runtime_1.jsxs)("i", { children: [t("signature_dish"), ":"] }), " ", t(`item.${dish}`)] }), (0, jsx_runtime_1.jsx)("img", { src: `assets/item/${dish}.png`, className: "game-pokemon-detail-dish-icon", alt: dish, title: t(`item.${dish}`) }), (0, jsx_runtime_1.jsx)("p", { children: (0, descriptions_1.addIconsToDescription)(t(`item_description.${dish}`)) })] })), pokemon.passive !== Passive_1.Passive.NONE && ((0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-passive", children: [(0, jsx_runtime_1.jsx)("p", { children: (0, descriptions_1.addIconsToDescription)(t(`passive_description.${pokemon.passive}`, {
+                            stacks: pokemon.stacks
+                        }), {
                             ap: pokemon.ap,
                             luck: pokemon.luck,
-                            stars: pokemon.stars,
-                            stages: (0, precomputed_pokemon_data_1.getPokemonData)(pokemon.name).stages
-                        }) }), pokemon.stacksRequired > 0 && ((0, jsx_runtime_1.jsx)("div", { className: "game-pokemon-detail-passive-bar", children: (0, jsx_runtime_1.jsx)(game_tooltip_bar_1.GameTooltipBar, { type: "XP", value: pokemon.stacks, maxValue: pokemon.stacksRequired, graduationStep: 1 }) }))] })), pokemon.skill !== Ability_1.Ability.DEFAULT && ((0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-ult", children: [(0, jsx_runtime_1.jsxs)("div", { className: "ability-name", children: [tmIcon, t(`ability.${pokemon.skill}`)] }), (0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsx)(ability_tooltip_1.AbilityTooltip, { ability: pokemon.skill, stats: {
+                            stars,
+                            stages: (0, precomputed_pokemon_data_1.getPokemonData)(pokemon.name).stages,
+                            showAbilityTiers: props.origin === "wiki"
+                        }) }), pokemon.stacksRequired > 0 && ((0, jsx_runtime_1.jsx)("div", { className: "game-pokemon-detail-passive-bar", children: (0, jsx_runtime_1.jsx)(game_tooltip_bar_1.GameTooltipBar, { type: "XP", value: pokemon.stacks, maxValue: pokemon.stacksRequired, graduationStep: 1 }) }))] })), pokemon.skill !== Ability_1.Ability.DEFAULT && ((0, jsx_runtime_1.jsxs)("div", { className: "game-pokemon-detail-ult", children: [(0, jsx_runtime_1.jsxs)("div", { className: "ability-name", children: [(0, jsx_runtime_1.jsx)("span", { children: t(`ability.${pokemon.skill}`) }), tmIcon, inimitableIcon] }), (0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsx)(ability_tooltip_1.AbilityTooltip, { ability: pokemon.skill, stats: {
                                 ap: (_c = getStatWithItemBonus(Game_1.Stat.AP)) !== null && _c !== void 0 ? _c : pokemon.ap,
                                 luck: (_d = getStatWithItemBonus(Game_1.Stat.LUCK)) !== null && _d !== void 0 ? _d : pokemon.luck,
-                                stars: pokemon.stars,
-                                stages: (0, precomputed_pokemon_data_1.getPokemonData)(pokemon.name).stages
+                                stars,
+                                stages: (0, precomputed_pokemon_data_1.getPokemonData)(pokemon.name).stages,
+                                showAbilityTiers: props.origin === "wiki"
                             } }, pokemon.id) })] }))] }));
 }
 class GamePokemonDetailDOMWrapper extends phaser_1.GameObjects.DOMElement {

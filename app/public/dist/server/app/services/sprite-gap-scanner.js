@@ -233,7 +233,7 @@ function refreshSpriteGapDataInternal() {
     });
 }
 function refreshSpriteGapData() {
-    void refreshSpriteGapDataInternal();
+    refreshSpriteGapDataInternal();
 }
 function getCachedSpriteGapData() {
     const now = Date.now();

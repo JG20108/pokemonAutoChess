@@ -405,7 +405,7 @@ class Ditto extends Pokemon {
         this.speed = 40;
         this.def = 2;
         this.speDef = 2;
-        this.maxPP = 50;
+        this.maxPP = 10;
         this.range = 1;
         this.skill = Ability_1.Ability.TRANSFORM;
         this.passive = Passive_1.Passive.DITTO;
@@ -6409,7 +6409,7 @@ class Yveltal extends Pokemon {
         this.speDef = 12;
         this.maxPP = 100;
         this.range = 1;
-        this.skill = Ability_1.Ability.DEATH_WING;
+        this.skill = Ability_1.Ability.OBLIVION_WING;
     }
 }
 exports.Yveltal = Yveltal;
@@ -8621,7 +8621,7 @@ class PrimalKyogre extends Pokemon {
         this.speed = 54;
         this.def = 6;
         this.speDef = 6;
-        this.maxPP = 90;
+        this.maxPP = 100;
         this.range = 3;
         this.skill = Ability_1.Ability.ORIGIN_PULSE;
         this.passive = Passive_1.Passive.RAIN_OR_STORM;
@@ -9644,7 +9644,7 @@ class Regidrago extends Pokemon {
         this.speDef = 10;
         this.maxPP = 100;
         this.range = 1;
-        this.skill = Ability_1.Ability.DRACO_ENERGY;
+        this.skill = Ability_1.Ability.DRAGON_ENERGY;
     }
 }
 exports.Regidrago = Regidrago;
@@ -13943,7 +13943,7 @@ class Vespiquen extends Pokemon {
         this.speDef = 8;
         this.maxPP = 90;
         this.range = 3;
-        this.skill = Ability_1.Ability.HEAL_ORDER;
+        this.skill = Ability_1.Ability.VESPIQUEN_ORDERS;
         this.passive = Passive_1.Passive.VESPIQUEN;
     }
 }
@@ -19913,7 +19913,7 @@ class Litten extends Pokemon {
         this.speDef = 8;
         this.maxPP = 100;
         this.range = 1;
-        this.skill = Ability_1.Ability.DARK_LARIAT;
+        this.skill = Ability_1.Ability.DARKEST_LARIAT;
     }
 }
 exports.Litten = Litten;
@@ -19931,7 +19931,7 @@ class Torracat extends Pokemon {
         this.speDef = 12;
         this.maxPP = 100;
         this.range = 1;
-        this.skill = Ability_1.Ability.DARK_LARIAT;
+        this.skill = Ability_1.Ability.DARKEST_LARIAT;
     }
 }
 exports.Torracat = Torracat;
@@ -19948,7 +19948,7 @@ class Incineroar extends Pokemon {
         this.speDef = 16;
         this.maxPP = 100;
         this.range = 1;
-        this.skill = Ability_1.Ability.DARK_LARIAT;
+        this.skill = Ability_1.Ability.DARKEST_LARIAT;
     }
 }
 exports.Incineroar = Incineroar;
@@ -23718,8 +23718,11 @@ class HisuiAvalugg extends Pokemon {
         this.additional = true;
         this.regional = true;
     }
-    isInRegion(map) {
+    isInRegion(map, state) {
         var _a;
+        if (state && state.additionalPokemons.includes(Pokemon_1.Pkm.BERGMITE) === false) {
+            return false;
+        }
         const regionSynergies = (_a = config_1.RegionDetails[map]) === null || _a === void 0 ? void 0 : _a.synergies;
         return regionSynergies.includes(Synergy_1.Synergy.ROCK);
     }

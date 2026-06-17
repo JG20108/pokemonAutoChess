@@ -108,6 +108,7 @@ var Transfer;
     Transfer["OVERWRITE_BOARD"] = "OVERWRITE_BOARD";
     Transfer["NOTIFICATIONS"] = "NOTIFICATIONS";
     Transfer["NOTIFICATION_SEEN"] = "NOTIFICATION_SEEN";
+    Transfer["DEV"] = "DEV";
 })(Transfer || (exports.Transfer = Transfer = {}));
 var ReadWriteMode;
 (function (ReadWriteMode) {
@@ -211,5 +212,6 @@ var Title;
     Title["SURVEY_CORPS"] = "SURVEY_CORPS";
     Title["GUILDMASTER"] = "GUILDMASTER";
     Title["LEGIONNAIRE"] = "LEGIONNAIRE";
+    Title["FIVE_STARS"] = "FIVE_STARS";
 })(Title || (exports.Title = Title = {}));
 //# sourceMappingURL=index.js.map

@@ -32,6 +32,7 @@ const number_1 = require("../../utils/number");
 const profanity_filter_1 = require("../../utils/profanity-filter");
 const random_1 = require("../../utils/random");
 const schemas_1 = require("../../utils/schemas");
+const gadgets_1 = require("../../config/game/gadgets");
 class OnJoinCommand extends command_1.Command {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ client, options, auth }) {
@@ -78,6 +79,10 @@ class OnJoinCommand extends command_1.Command {
                             config_1.EloRankThreshold[this.state.maxRank] &&
                         !isAdmin) {
                         client.leave(CloseCodes_1.CloseCodes.USER_RANK_TOO_HIGH);
+                        return;
+                    }
+                    if (this.state.gameMode === Game_1.GameMode.RANKED && u.level < gadgets_1.GADGETS.certificate.levelRequired) {
+                        client.leave(CloseCodes_1.CloseCodes.USER_RANK_TOO_LOW);
                         return;
                     }
                     this.state.users.set(client.auth.uid, new game_user_1.GameUser(u.uid, u.displayName, u.elo, u.games, u.avatar, false, false, u.title, u.role, auth.email === undefined && auth.photoURL === undefined, (_b = u.twitchLogin) !== null && _b !== void 0 ? _b : "", (_c = u.twitchDisplayName) !== null && _c !== void 0 ? _c : ""));

@@ -53,7 +53,7 @@ export declare class OnStageStartEffect extends Effect {
 interface OnChangePositionEffectArgs {
     pokemon: Pokemon;
     player: Player;
-    state: GameState;
+    state?: GameState;
     oldX: number;
     oldY: number;
     newX: number;

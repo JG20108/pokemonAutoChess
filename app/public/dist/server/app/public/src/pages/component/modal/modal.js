@@ -46,6 +46,7 @@ function Modal(props) {
         }
     }, [show]);
     const handleKeyDown = (event) => {
+        event.stopPropagation();
         if (event.key === "Escape") {
             close();
         }

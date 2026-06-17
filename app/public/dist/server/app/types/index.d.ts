@@ -126,7 +126,8 @@ export declare enum Transfer {
     RECONNECT_PROMPT = "RECONNECT_PROMPT",
     OVERWRITE_BOARD = "OVERWRITE_BOARD",
     NOTIFICATIONS = "NOTIFICATIONS",
-    NOTIFICATION_SEEN = "NOTIFICATION_SEEN"
+    NOTIFICATION_SEEN = "NOTIFICATION_SEEN",
+    DEV = "DEV"
 }
 export declare enum ReadWriteMode {
     WRITE = "WRITE",
@@ -620,7 +621,8 @@ export declare enum Title {
     POSTMAN = "POSTMAN",
     SURVEY_CORPS = "SURVEY_CORPS",
     GUILDMASTER = "GUILDMASTER",
-    LEGIONNAIRE = "LEGIONNAIRE"
+    LEGIONNAIRE = "LEGIONNAIRE",
+    FIVE_STARS = "FIVE_STARS"
 }
 export interface IBoardEvent {
     simulationId: string;

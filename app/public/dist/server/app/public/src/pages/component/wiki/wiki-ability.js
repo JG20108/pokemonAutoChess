@@ -39,6 +39,7 @@ const react_1 = require("react");
 const react_i18next_1 = require("react-i18next");
 const react_virtualized_auto_sizer_1 = require("react-virtualized-auto-sizer");
 const react_window_1 = require("react-window");
+const abilities_1 = require("../../../../../config/game/abilities");
 const precomputed_ability_1 = require("../../../../../models/precomputed/precomputed-ability");
 const precomputed_pokemon_data_1 = require("../../../../../models/precomputed/precomputed-pokemon-data");
 const Ability_1 = require("../../../../../types/enum/Ability");
@@ -108,7 +109,7 @@ function AbilityRow({ index, style, abilities, columnCount, pokemonsPerAbility, 
                 gap: "0.5em"
             }, children: rowAbilities.map((ability) => {
                 var _a;
-                return ((0, jsx_runtime_1.jsxs)("div", { className: "my-box", style: { display: "flex", flexDirection: "column", gap: 5 }, children: [(0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)("h2", { children: t(`ability.${ability}`) }), (0, jsx_runtime_1.jsx)("p", { children: (0, descriptions_1.addIconsToDescription)(t(`ability_description.${ability}`)) })] }), (0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsxs)("ul", { children: [((_a = pokemonsPerAbility[ability]) !== null && _a !== void 0 ? _a : []).map((p) => ((0, jsx_runtime_1.jsx)("li", { children: (0, jsx_runtime_1.jsx)("div", { className: (0, jsx_1.cc)("pokemon-portrait", {
+                return ((0, jsx_runtime_1.jsxs)("div", { className: "my-box", style: { display: "flex", flexDirection: "column", gap: 5 }, children: [(0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)("h2", { children: t(`ability.${ability}`) }), abilities_1.InimitableAbilities.includes(ability) && ((0, jsx_runtime_1.jsx)("p", { style: { marginBottom: "0.5em" }, children: (0, descriptions_1.addIconsToDescription)("INIMITABLE") })), (0, jsx_runtime_1.jsx)("p", { children: (0, descriptions_1.addIconsToDescription)(t(`ability_description.${ability}`)) })] }), (0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsxs)("ul", { children: [((_a = pokemonsPerAbility[ability]) !== null && _a !== void 0 ? _a : []).map((p) => ((0, jsx_runtime_1.jsx)("li", { children: (0, jsx_runtime_1.jsx)("div", { className: (0, jsx_1.cc)("pokemon-portrait", {
                                                 additional: p.additional,
                                                 regional: p.regional
                                             }), "data-tooltip-id": "game-pokemon-detail-tooltip", "data-tooltip-content": p.name, children: (0, jsx_runtime_1.jsx)("img", { src: (0, avatar_1.getPortraitSrc)(p.index) }) }) }, p.name))), tmPerAbility[ability] && ((0, jsx_runtime_1.jsx)("li", { "data-tooltip-id": "item-detail-tooltip", "data-tooltip-content": tmPerAbility[ability], children: (0, jsx_runtime_1.jsx)("img", { src: `assets/item/${Item_1.TMsBronze.includes(tmPerAbility[ability]) ? "TM_BRONZE" : Item_1.TMsSilver.includes(tmPerAbility[ability]) ? "TM" : "TM_GOLD"}.png`, className: "item" }) }))] }) })] }, ability));

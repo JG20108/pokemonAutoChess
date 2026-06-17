@@ -16599,7 +16599,7 @@ export declare class HisuiAvalugg extends Pokemon {
     passive: Passive;
     additional: boolean;
     regional: boolean;
-    isInRegion(map: DungeonPMDO | "town"): boolean;
+    isInRegion(map: DungeonPMDO | "town", state?: GameState): boolean;
 }
 export declare class Karrablast extends Pokemon {
     types: SetSchema<Synergy>;

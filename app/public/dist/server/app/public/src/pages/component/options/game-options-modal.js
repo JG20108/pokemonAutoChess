@@ -45,11 +45,7 @@ function GameOptionsModal(props) {
                                     setPreferences({ disableAnimatedTilemap: checked });
                                     const gameScene = (0, game_1.getGameScene)();
                                     if (gameScene) {
-                                        const animatedTiles = (gameScene === null || gameScene === void 0 ? void 0 : gameScene.sys).animatedTiles;
-                                        if (checked)
-                                            animatedTiles.pause();
-                                        else
-                                            animatedTiles.resume();
+                                        gameScene.toggleTilesetAnimation(checked);
                                     }
                                 }, label: t("options.disable_animated_tilemap") }) }), (0, jsx_runtime_1.jsx)("p", { children: (0, jsx_runtime_1.jsx)(checkbox_1.Checkbox, { isDark: true, checked: preferences.disableCameraShake, onToggle: (checked) => {
                                     setPreferences({ disableCameraShake: checked });

@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchMetaItems = fetchMetaItems;
 function fetchMetaItems() {
     return __awaiter(this, void 0, void 0, function* () {
-        return fetch("/meta/items").then((res) => res.json());
+        return fetch(`/meta/items?t=${new Date().getUTCDate()}`).then((res) => res.json());
     });
 }
 //# sourceMappingURL=items-statistic-v2.js.map

@@ -27,7 +27,8 @@ class AttackingState extends pokemon_state_1.default {
             let target = board.getEntityOnCell(pokemon.targetX, pokemon.targetY);
             const previousTarget = pokemon.simulation.blueTeam.get(pokemon.targetEntityId) ||
                 pokemon.simulation.redTeam.get(pokemon.targetEntityId);
-            if (pokemon.effects.has(Effect_1.EffectEnum.MERCILESS)) {
+            if (pokemon.effects.has(Effect_1.EffectEnum.MERCILESS) &&
+                pokemon.pp < pokemon.maxPP) {
                 const candidates = this.getTargetsAtRange(pokemon, board);
                 let minLife = Infinity;
                 for (const candidate of candidates) {

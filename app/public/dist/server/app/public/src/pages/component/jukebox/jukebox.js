@@ -32,15 +32,22 @@ function Jukebox(props) {
         const gameScene = (0, game_1.getGameScene)();
         if (gameScene) {
             (_a = gameScene.music) === null || _a === void 0 ? void 0 : _a.destroy();
-            setLoading(true);
-            gameScene.cache.audio.events.on("add", (cache, key) => {
-                if (key === "music_" + name) {
-                    (0, audio_1.playMusic)(gameScene, name);
-                    setLoading(false);
-                }
-            });
-            (0, audio_1.preloadMusic)(gameScene, name);
-            gameScene.load.start();
+            const musicKey = "music_" + name;
+            if (gameScene.cache.audio.exists(musicKey)) {
+                (0, audio_1.playMusic)(gameScene, name);
+                setLoading(false);
+            }
+            else {
+                setLoading(true);
+                gameScene.cache.audio.events.on("add", (cache, key) => {
+                    if (key === musicKey) {
+                        (0, audio_1.playMusic)(gameScene, name);
+                        setLoading(false);
+                    }
+                });
+                (0, audio_1.preloadMusic)(gameScene, name);
+                gameScene.load.start();
+            }
         }
     }
     function handleVolumeChange(e) {

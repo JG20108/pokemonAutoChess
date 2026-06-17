@@ -13,6 +13,7 @@ const schema_1 = require("@colyseus/schema");
 const tools_1 = require("@colyseus/tools");
 const colyseus_1 = require("colyseus");
 const cron_1 = require("cron");
+const v8_1 = require("v8");
 const app_config_1 = require("./app.config");
 const metrics_1 = require("./metrics");
 const cronjobs_1 = require("./services/cronjobs");
@@ -20,6 +21,7 @@ const leaderboard_1 = require("./services/leaderboard");
 const meta_1 = require("./services/meta");
 const sprite_gap_scanner_1 = require("./services/sprite-gap-scanner");
 const twitch_1 = require("./services/twitch");
+const MaintenanceOrder_1 = require("./types/enum/MaintenanceOrder");
 schema_1.Encoder.BUFFER_SIZE = 512 * 1024;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -29,18 +31,19 @@ function main() {
             const port = ((_b = Number(process.env.PORT)) !== null && _b !== void 0 ? _b : 2569) + processNumber;
             (0, metrics_1.initializeMetrics)();
             yield (0, tools_1.listen)(app_config_1.server);
-            if (port === 2569) {
+            const isLobbyThread = port === 2569;
+            if (isLobbyThread) {
                 yield colyseus_1.matchMaker.createRoom("lobby", {});
                 checkLobby();
-                (0, cronjobs_1.initCronJobs)();
-                void (0, sprite_gap_scanner_1.warmupSpriteGapScanner)();
             }
+            (0, cronjobs_1.initCronJobs)(isLobbyThread);
+            (0, sprite_gap_scanner_1.warmupSpriteGapScanner)();
         }
         else {
             yield (0, tools_1.listen)(app_config_1.server, process.env.PORT ? parseInt(process.env.PORT) : 9000);
             yield colyseus_1.matchMaker.createRoom("lobby", {});
-            (0, cronjobs_1.initCronJobs)();
-            void (0, sprite_gap_scanner_1.warmupSpriteGapScanner)();
+            (0, cronjobs_1.initCronJobs)(true);
+            (0, sprite_gap_scanner_1.warmupSpriteGapScanner)();
         }
         colyseus_1.logger.info("Fetching leaderboards...");
         (0, leaderboard_1.fetchLeaderboards)();
@@ -54,6 +57,7 @@ function main() {
         setInterval(() => (0, twitch_1.refreshTwitchBlacklist)(), 1000 * 60);
         (0, twitch_1.refreshTwitchStreams)();
         setInterval(() => (0, twitch_1.refreshTwitchStreams)(), 1000 * 60 * 5);
+        listenForMaintenanceOrders();
     });
 }
 function checkLobby() {
@@ -82,6 +86,30 @@ function checkLobby() {
             }
         }),
         start: true
+    });
+}
+function listenForMaintenanceOrders() {
+    colyseus_1.matchMaker.presence.subscribe("maintenance", ({ order }) => {
+        if (order === MaintenanceOrder_1.MaintenanceOrder.HEAP_SNAPSHOT) {
+            colyseus_1.logger.info("Writing heap snapshot...");
+            (0, v8_1.writeHeapSnapshot)();
+            colyseus_1.logger.info("Heap snapshot written");
+        }
+        else if (order === MaintenanceOrder_1.MaintenanceOrder.FETCH_LEADERBOARDS) {
+            (0, leaderboard_1.fetchLeaderboards)();
+        }
+        else if (order === MaintenanceOrder_1.MaintenanceOrder.FETCH_META_REPORTS) {
+            (0, meta_1.fetchMetaReports)();
+        }
+        else if (order === MaintenanceOrder_1.MaintenanceOrder.REFRESH_SPRITE_GAP_DATA) {
+            (0, sprite_gap_scanner_1.refreshSpriteGapData)();
+        }
+        else if (order === MaintenanceOrder_1.MaintenanceOrder.REFRESH_TWITCH_STREAMS) {
+            (0, twitch_1.refreshTwitchStreams)();
+        }
+        else if (order === MaintenanceOrder_1.MaintenanceOrder.REFRESH_TWITCH_BLACKLIST) {
+            (0, twitch_1.refreshTwitchBlacklist)();
+        }
     });
 }
 main();

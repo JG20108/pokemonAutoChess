@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchMetadata = fetchMetadata;
 function fetchMetadata() {
     return __awaiter(this, void 0, void 0, function* () {
-        return fetch("/meta/metadata").then((res) => res.json());
+        return fetch(`/meta/metadata?t=${new Date().getUTCDate()}`).then((res) => res.json());
     });
 }
 //# sourceMappingURL=report-metadata.js.map

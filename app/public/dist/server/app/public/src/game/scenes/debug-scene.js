@@ -156,10 +156,6 @@ class DebugScene extends phaser_1.default.Scene {
                 (_a = this.map.createLayer("layer0", tileset, 0, 0)) === null || _a === void 0 ? void 0 : _a.setScale(2, 2);
                 (_b = this.map.createLayer("layer1", tileset, 0, 0)) === null || _b === void 0 ? void 0 : _b.setScale(2, 2);
                 (_c = this.map.createLayer("layer2", tileset, 0, 0)) === null || _c === void 0 ? void 0 : _c.setScale(2, 2);
-                const sys = this.sys;
-                if (sys.animatedTiles) {
-                    sys.animatedTiles.pause();
-                }
                 (0, audio_1.playMusic)(this, config_1.RegionDetails[mapName].music);
                 resolve();
             });
@@ -187,7 +183,6 @@ class DebugScene extends phaser_1.default.Scene {
                 const tileset = map.addTilesetImage(layer.name, mapName + "/" + layer.name);
                 (_a = map.createLayer(layer.name, tileset, 0, 0)) === null || _a === void 0 ? void 0 : _a.setScale(2, 2);
             });
-            this.sys.animatedTiles.init(map);
             (0, audio_1.playMusic)(this, config_1.RegionDetails[mapName].music);
         })
             .then(() => {

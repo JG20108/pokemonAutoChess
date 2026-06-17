@@ -474,10 +474,10 @@ class Board {
             });
         }
         else {
-            existingEffects.clear();
             if (entityOnCell) {
                 existingEffects.forEach((effect) => entityOnCell.effects.delete(effect));
             }
+            existingEffects.clear();
             simulation.room.broadcast(types_1.Transfer.CLEAR_BOARD_EVENT, {
                 simulationId: simulation.id,
                 effect: null,

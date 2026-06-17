@@ -1,9 +1,5 @@
-import type { HydratedDocument } from "mongoose";
 import { Emotion, type PkmWithCustom } from "../types";
-import type { Booster, BoosterCard } from "../types/Booster";
-import type { IPokemonCollectionItemClient, IPokemonCollectionItemMongo, IPokemonCollectionItemUnpacked, IUserMetadataMongo } from "../types/interfaces/UserMetadata";
-export declare function createBooster(user: IUserMetadataMongo): Booster;
-export declare function pickRandomPokemonBooster(user: IUserMetadataMongo, guaranteedUnique: boolean, godPack: boolean): BoosterCard;
+import type { IPokemonCollectionItemClient, IPokemonCollectionItemMongo, IPokemonCollectionItemUnpacked } from "../types/interfaces/UserMetadata";
 export declare class CollectionUtils {
     private static readonly EMOTION_VALUES;
     private static hasNodeBuffer;
@@ -24,10 +20,3 @@ export declare class CollectionUtils {
     private static setBit;
     private static getBit;
 }
-export declare function migrateShardsOfAltForms(mongoUser: HydratedDocument<IUserMetadataMongo>): Promise<(import("mongoose").Document<unknown, {}, IUserMetadataMongo, {}, import("mongoose").DefaultSchemaOptions> & IUserMetadataMongo & {
-    _id: import("mongoose").Types.ObjectId;
-} & {
-    __v: number;
-} & {
-    id: string;
-}) | undefined>;

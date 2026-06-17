@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = GameSpectatePlayerInfo;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_i18next_1 = require("react-i18next");
+const depths_1 = require("../../../game/depths");
 const hooks_1 = require("../../../hooks");
 const life_1 = require("../icons/life");
 const money_1 = require("../icons/money");
@@ -20,7 +21,8 @@ function GameSpectatePlayerInfo() {
     return (spectatedPlayer && ((0, jsx_runtime_1.jsxs)("div", { className: "game-spectate-player-info my-container", style: {
             display: "flex",
             gap: "1em",
-            alignItems: "center"
+            alignItems: "center",
+            zIndex: depths_1.DEPTH.SPECTATE_PLAYER_INFO
         }, children: [(0, jsx_runtime_1.jsx)(game_additional_pokemons_1.GameAdditionalPokemonsIcon, {}), (0, jsx_runtime_1.jsx)(game_regional_pokemons_1.GameRegionalPokemonsIcon, {}), (0, jsx_runtime_1.jsx)(pokemon_portrait_1.default, { avatar: spectatedPlayer.avatar }), (0, jsx_runtime_1.jsx)("span", { className: "player-name", children: t("spectating", { name: spectatedPlayer.name }) }), (0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsxs)("div", { style: {
                             display: "flex",
                             gap: "1em",

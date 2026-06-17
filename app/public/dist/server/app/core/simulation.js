@@ -34,13 +34,12 @@ const random_1 = require("../utils/random");
 const schemas_1 = require("../utils/schemas");
 const abilities_1 = require("./abilities/abilities");
 const board_2 = require("./board");
-const dishes_1 = require("./dishes");
 const dps_1 = __importDefault(require("./dps"));
+const dishes_1 = require("./effects/dishes");
 const effect_1 = require("./effects/effect");
 const passives_1 = require("./effects/passives");
 const synergies_3 = require("./effects/synergies");
 const pokemon_entity_1 = require("./pokemon-entity");
-const simulation_command_1 = require("./simulation-command");
 const unit_score_1 = require("./unit-score");
 class Simulation extends schema_1.Schema {
     constructor(id, room, bluePlayer, redPlayer, stageLevel, weather, isGhostBattle = false) {
@@ -397,57 +396,57 @@ class Simulation extends schema_1.Schema {
                 (0, synergies_3.cloneBugs)({ board, effects, teamIndex, player, simulation: this });
             }
             board.forEach((pokemon) => {
-                if (pokemon.items.has(Item_1.Item.WHITE_FLUTE) && !(0, board_1.isOnBench)(pokemon)) {
-                    const wilds = precomputed_types_1.PRECOMPUTED_POKEMONS_PER_TYPE[Synergy_1.Synergy.WILD].map((p) => (0, precomputed_pokemon_data_1.getPokemonData)(p));
+                if (pokemon.items.has(Item_1.Item.GOLD_MASK) && !(0, board_1.isOnBench)(pokemon)) {
+                    const candidates = (0, array_1.deduplicateArray)((0, schemas_1.schemaValues)(pokemon.types).flatMap((type) => { var _a; return (_a = precomputed_types_1.PRECOMPUTED_POKEMONS_PER_TYPE[type]) !== null && _a !== void 0 ? _a : []; })).map((p) => (0, precomputed_pokemon_data_1.getPokemonData)(p));
                     const spawns = [];
-                    const pickWild = (rarity, tier) => {
-                        const randomWild = (0, random_1.pickRandomIn)(wilds.filter((p) => p.rarity === rarity && p.stars === tier));
-                        if (randomWild) {
-                            spawns.push(randomWild);
+                    const pickSpawn = (rarity, tier) => {
+                        const randomSpawn = (0, random_1.pickRandomIn)(candidates.filter((p) => p.rarity === rarity && p.stars === tier));
+                        if (randomSpawn) {
+                            spawns.push(randomSpawn);
                         }
                         else {
                             logger_1.logger.info("no pokemon found for white flute call", rarity, tier);
                         }
                     };
                     if (this.stageLevel <= 5) {
-                        pickWild(Game_1.Rarity.COMMON, 1);
-                        pickWild(Game_1.Rarity.COMMON, 1);
-                        pickWild(Game_1.Rarity.COMMON, 1);
+                        pickSpawn(Game_1.Rarity.COMMON, 1);
+                        pickSpawn(Game_1.Rarity.COMMON, 1);
+                        pickSpawn(Game_1.Rarity.COMMON, 1);
                     }
                     else if (this.stageLevel <= 10) {
-                        pickWild(Game_1.Rarity.COMMON, 1);
-                        pickWild(Game_1.Rarity.COMMON, 1);
-                        pickWild(Game_1.Rarity.UNCOMMON, 1);
+                        pickSpawn(Game_1.Rarity.COMMON, 1);
+                        pickSpawn(Game_1.Rarity.COMMON, 1);
+                        pickSpawn(Game_1.Rarity.UNCOMMON, 1);
                     }
                     else if (this.stageLevel <= 15) {
-                        pickWild(Game_1.Rarity.UNCOMMON, 1);
-                        pickWild(Game_1.Rarity.UNCOMMON, 1);
-                        pickWild(Game_1.Rarity.RARE, 1);
+                        pickSpawn(Game_1.Rarity.UNCOMMON, 1);
+                        pickSpawn(Game_1.Rarity.UNCOMMON, 1);
+                        pickSpawn(Game_1.Rarity.RARE, 1);
                     }
                     else if (this.stageLevel <= 20) {
-                        pickWild(Game_1.Rarity.UNCOMMON, 1);
-                        pickWild(Game_1.Rarity.RARE, 1);
-                        pickWild(Game_1.Rarity.EPIC, 1);
+                        pickSpawn(Game_1.Rarity.UNCOMMON, 1);
+                        pickSpawn(Game_1.Rarity.RARE, 1);
+                        pickSpawn(Game_1.Rarity.EPIC, 1);
                     }
                     else if (this.stageLevel <= 25) {
-                        pickWild(Game_1.Rarity.UNCOMMON, 2);
-                        pickWild(Game_1.Rarity.RARE, 1);
-                        pickWild(Game_1.Rarity.EPIC, 1);
+                        pickSpawn(Game_1.Rarity.UNCOMMON, 3);
+                        pickSpawn(Game_1.Rarity.RARE, 2);
+                        pickSpawn(Game_1.Rarity.EPIC, 1);
                     }
                     else if (this.stageLevel <= 30) {
-                        pickWild(Game_1.Rarity.RARE, 2);
-                        pickWild(Game_1.Rarity.EPIC, 1);
-                        pickWild(Game_1.Rarity.EPIC, 1);
+                        pickSpawn(Game_1.Rarity.UNCOMMON, 3);
+                        pickSpawn(Game_1.Rarity.RARE, 3);
+                        pickSpawn(Game_1.Rarity.EPIC, 2);
                     }
                     else if (this.stageLevel <= 35) {
-                        pickWild(Game_1.Rarity.RARE, 2);
-                        pickWild(Game_1.Rarity.EPIC, 2);
-                        pickWild(Game_1.Rarity.UNIQUE, 3);
+                        pickSpawn(Game_1.Rarity.UNCOMMON, 3);
+                        pickSpawn(Game_1.Rarity.RARE, 3);
+                        pickSpawn(Game_1.Rarity.EPIC, 3);
                     }
                     else {
-                        pickWild(Game_1.Rarity.EPIC, 2);
-                        pickWild(Game_1.Rarity.UNIQUE, 3);
-                        pickWild(Game_1.Rarity.ULTRA, 2);
+                        pickSpawn(Game_1.Rarity.UNIQUE, 3);
+                        pickSpawn(Game_1.Rarity.ULTRA, 3);
+                        pickSpawn(Game_1.Rarity.LEGENDARY, 3);
                     }
                     spawns.forEach((spawn) => {
                         const coord = this.getClosestFreeCellToPokemon(pokemon, teamIndex);
@@ -516,42 +515,6 @@ class Simulation extends schema_1.Schema {
             });
         }
         for (const team of [this.blueTeam, this.redTeam]) {
-            team.forEach((pokemon) => {
-                if (pokemon.items.has(Item_1.Item.COMET_SHARD)) {
-                    pokemon.commands.push(new simulation_command_1.DelayedCommand(() => {
-                        const farthestCoordinate = this.board.getFarthestTargetCoordinateAvailablePlace(pokemon);
-                        if (farthestCoordinate) {
-                            const target = farthestCoordinate.target;
-                            pokemon.skydiveTo(farthestCoordinate.x, farthestCoordinate.y, this.board);
-                            pokemon.setTarget(target);
-                            pokemon.status.triggerProtect(2000);
-                            pokemon.commands.push(new simulation_command_1.DelayedCommand(() => {
-                                pokemon.simulation.room.broadcast(types_1.Transfer.ABILITY, {
-                                    id: pokemon.simulation.id,
-                                    skill: "COMET_CRASH",
-                                    positionX: farthestCoordinate.x,
-                                    positionY: farthestCoordinate.y,
-                                    targetX: target.positionX,
-                                    targetY: target.positionY
-                                });
-                            }, 500));
-                            pokemon.commands.push(new simulation_command_1.DelayedCommand(() => {
-                                if ((target === null || target === void 0 ? void 0 : target.hp) > 0) {
-                                    const crit = (0, random_1.chance)(pokemon.critChance / 100, pokemon);
-                                    target.handleSpecialDamage(3 * pokemon.atk, this.board, Game_1.AttackType.SPECIAL, pokemon, crit, false);
-                                    this.board
-                                        .getAdjacentCells(target.positionX, target.positionY)
-                                        .forEach((cell) => {
-                                        if (cell.value && cell.value.team !== pokemon.team) {
-                                            cell.value.handleSpecialDamage(pokemon.atk, this.board, Game_1.AttackType.SPECIAL, pokemon, crit, false);
-                                        }
-                                    });
-                                }
-                            }, 1000));
-                        }
-                    }, 100));
-                }
-            });
             const teamEffects = team === this.blueTeam ? this.blueEffects : this.redEffects;
             const opponentTeam = team === this.blueTeam ? Game_1.Team.RED_TEAM : Game_1.Team.BLUE_TEAM;
             if (teamEffects.has(Effect_1.EffectEnum.CURSE_OF_VULNERABILITY) ||
@@ -784,7 +747,7 @@ class Simulation extends schema_1.Schema {
                         pokemon.effectsSet.add(synergies_3.pounceWandEffect);
                     }
                     if (effect === Effect_1.EffectEnum.MOON_FORCE) {
-                        pokemon.addLuck(20, pokemon, 0, false);
+                        pokemon.addLuck(5, pokemon, 0, false);
                     }
                 }
                 break;
@@ -1198,17 +1161,19 @@ class Simulation extends schema_1.Schema {
                     : Game_1.BattleResult.DRAW;
             if (!isGhostPlayer) {
                 player.addBattleResult(player.opponentId, player.opponentName, battleResult, player.opponentAvatar, this.weather);
-                const previousBattleResult = player.history
-                    .filter((stage) => stage.id !== "pve" && stage.result !== Game_1.BattleResult.DRAW)
-                    .map((stage) => stage.result)
-                    .at(-2);
-                if (battleResult === Game_1.BattleResult.DRAW) {
-                }
-                else if (battleResult !== previousBattleResult) {
-                    player.streak = 0;
-                }
-                else {
-                    player.streak += 1;
+                if (!isPvE) {
+                    const previousBattleResult = player.history
+                        .filter((stage) => stage.id !== "pve" && stage.result !== Game_1.BattleResult.DRAW)
+                        .map((stage) => stage.result)
+                        .at(-2);
+                    if (battleResult === Game_1.BattleResult.DRAW) {
+                    }
+                    else if (battleResult !== previousBattleResult) {
+                        player.streak = 0;
+                    }
+                    else {
+                        player.streak += 1;
+                    }
                 }
             }
             const client = this.room.clients.find((cli) => cli.auth.uid === playerId);

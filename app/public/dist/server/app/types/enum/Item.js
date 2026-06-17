@@ -119,11 +119,11 @@ var Item;
     Item["RARE_CANDY"] = "RARE_CANDY";
     Item["EVIOLITE"] = "EVIOLITE";
     Item["RED_SCALE"] = "RED_SCALE";
-    Item["WHITE_FLUTE"] = "WHITE_FLUTE";
+    Item["GOLD_MASK"] = "GOLD_MASK";
     Item["GOLD_BOTTLE_CAP"] = "GOLD_BOTTLE_CAP";
     Item["ABSORB_BULB"] = "ABSORB_BULB";
     Item["SACRED_ASH"] = "SACRED_ASH";
-    Item["COMET_SHARD"] = "COMET_SHARD";
+    Item["STAR_PIECE"] = "STAR_PIECE";
     Item["REPEAT_BALL"] = "REPEAT_BALL";
     Item["GOLD_BOW"] = "GOLD_BOW";
     Item["DAMP_ROCK"] = "DAMP_ROCK";
@@ -623,11 +623,11 @@ exports.ShinyItems = [
     Item.SHINY_STONE,
     Item.RARE_CANDY,
     Item.EVIOLITE,
-    Item.WHITE_FLUTE,
+    Item.GOLD_MASK,
     Item.GOLD_BOTTLE_CAP,
     Item.ABSORB_BULB,
     Item.SACRED_ASH,
-    Item.COMET_SHARD,
+    Item.STAR_PIECE,
     Item.REPEAT_BALL,
     Item.GOLD_BOW,
     Item.RED_SCALE

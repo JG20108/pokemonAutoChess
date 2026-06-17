@@ -60,7 +60,6 @@ const mongoose_1 = require("mongoose");
 const path_1 = __importDefault(require("path"));
 const package_json_1 = __importDefault(require("../package.json"));
 const config_1 = require("./config");
-const collection_1 = require("./core/collection");
 const design_1 = require("./core/design");
 const game_record_1 = require("./models/colyseus-models/game-record");
 const chat_v2_1 = __importDefault(require("./models/mongo-models/chat-v2"));
@@ -74,7 +73,7 @@ const game_room_1 = __importDefault(require("./rooms/game-room"));
 const preparation_room_1 = __importDefault(require("./rooms/preparation-room"));
 const booster_1 = require("./services/booster");
 const bots_1 = require("./services/bots");
-const collection_2 = require("./services/collection");
+const collection_1 = require("./services/collection");
 const leaderboard_1 = require("./services/leaderboard");
 const meta_1 = require("./services/meta");
 const sprite_gap_scanner_1 = require("./services/sprite-gap-scanner");
@@ -661,7 +660,7 @@ exports.server = (0, colyseus_1.defineServer)(Object.assign(Object.assign({}, ga
                     res.status(400).json({ error: "shiny must be a boolean" });
                     return;
                 }
-                const result = yield (0, collection_2.changeSelectedEmotionForUser)(userAuth.uid, index, emotion, shiny);
+                const result = yield (0, collection_1.changeSelectedEmotionForUser)(userAuth.uid, index, emotion, shiny);
                 if (!result) {
                     res.status(409).json({ error: "Emotion is not unlocked" });
                     return;
@@ -694,7 +693,7 @@ exports.server = (0, colyseus_1.defineServer)(Object.assign(Object.assign({}, ga
                     res.status(400).json({ error: "shiny must be a boolean" });
                     return;
                 }
-                const result = yield (0, collection_2.buyEmotionForUser)(userAuth.uid, index, emotion, shiny);
+                const result = yield (0, collection_1.buyEmotionForUser)(userAuth.uid, index, emotion, shiny);
                 if (!result) {
                     res.status(409).json({ error: "Not enough dust or invalid state" });
                     return;

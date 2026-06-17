@@ -148,6 +148,11 @@ export declare class OnOverwriteBoardCommand extends Command<GameRoom> {
         board: IDetailledPokemon[];
     }): void;
 }
+export declare class OnDevCommand extends Command<GameRoom> {
+    execute(msg: {
+        action: string;
+    }): void;
+}
 export declare function onPokemonChangePosition({ pokemon, newX, newY, player, oldX, oldY, state, doNotRemoveItems }: {
     pokemon: Pokemon;
     newX: number;

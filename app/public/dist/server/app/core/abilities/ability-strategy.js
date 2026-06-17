@@ -5,7 +5,6 @@ const Game_1 = require("../../types/enum/Game");
 const number_1 = require("../../utils/number");
 class AbilityStrategy {
     constructor() {
-        this.copyable = true;
         this.requiresTarget = true;
         this.canCritByDefault = false;
     }

@@ -49,6 +49,7 @@ export default class GameScene extends Scene {
     }): void;
     preload(): void;
     startGame(): void;
+    toggleTilesetAnimation(paused: boolean): void;
     update(time: number, delta: number): void;
     setupCamera(): void;
     registerKeys(): void;

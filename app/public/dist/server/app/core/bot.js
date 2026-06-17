@@ -12,12 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const config_1 = require("../config");
 const bot_v2_1 = require("../models/mongo-models/bot-v2");
 const pokemon_factory_1 = __importDefault(require("../models/pokemon-factory"));
 const types_1 = require("../types");
 const Game_1 = require("../types/enum/Game");
+const Passive_1 = require("../types/enum/Passive");
 const Synergy_1 = require("../types/enum/Synergy");
 const logger_1 = require("../utils/logger");
+const random_1 = require("../utils/random");
+const effect_1 = require("./effects/effect");
+const passives_1 = require("./effects/passives");
 class Bot {
     constructor(player) {
         this.player = player;
@@ -31,6 +36,7 @@ class Bot {
                 const data = yield bot_v2_1.BotV2.findOne({ id: this.player.id }, ["steps"]);
                 if (data) {
                     this.scenario = data;
+                    this.player.fairyWands.push((0, random_1.pickRandomIn)(config_1.FAIRY_WANDS_BY_SYNERGY_LEVEL[0]), (0, random_1.pickRandomIn)(config_1.FAIRY_WANDS_BY_SYNERGY_LEVEL[1]), (0, random_1.pickRandomIn)(config_1.FAIRY_WANDS_BY_SYNERGY_LEVEL[2]), (0, random_1.pickRandomIn)(config_1.FAIRY_WANDS_BY_SYNERGY_LEVEL[3]));
                     this.updatePlayerTeam();
                 }
             }
@@ -51,6 +57,7 @@ class Bot {
         }
     }
     updatePlayerTeam() {
+        var _a, _b;
         this.player.board.forEach((pokemon, key) => {
             this.player.board.delete(key);
         });
@@ -65,6 +72,33 @@ class Bot {
                 });
                 pkm.positionX = stepTeam.board[i].x;
                 pkm.positionY = stepTeam.board[i].y;
+                if (pkm.passive !== Passive_1.Passive.NONE) {
+                    const hasLight = ((_a = this.player.synergies.get(Synergy_1.Synergy.LIGHT)) !== null && _a !== void 0 ? _a : 0) >=
+                        config_1.SynergyTriggers[Synergy_1.Synergy.LIGHT][0];
+                    const inSpotlight = hasLight &&
+                        ((pkm.positionX === this.player.lightX &&
+                            pkm.positionY === this.player.lightY) ||
+                            pkm.items.has(types_1.Item.SHINY_STONE));
+                    (_b = passives_1.PassiveEffects[pkm.passive]) === null || _b === void 0 ? void 0 : _b.forEach((effect) => {
+                        if (effect instanceof effect_1.OnChangePositionEffect) {
+                            effect.apply({
+                                pokemon: pkm,
+                                player: this.player,
+                                oldX: pkm.positionX,
+                                oldY: pkm.positionY,
+                                newX: pkm.positionX,
+                                newY: pkm.positionY
+                            });
+                        }
+                        if (effect instanceof effect_1.OnSpotlightChangeEffect) {
+                            effect.apply({
+                                pokemon: pkm,
+                                player: this.player,
+                                inSpotlight
+                            });
+                        }
+                    });
+                }
                 if (stepTeam.board[i].items) {
                     stepTeam.board[i].items.forEach((item) => {
                         if (types_1.TMs.includes(item)) {

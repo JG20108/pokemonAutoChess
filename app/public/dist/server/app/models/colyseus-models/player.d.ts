@@ -121,7 +121,7 @@ export default class Player extends Schema implements IPlayer {
     updateTms(previousSynergies: Map<Synergy, number>, updatedSynergies: Map<Synergy, number>): void;
     updateFishingRods(): void;
     updateChefsHats(): void;
-    updateFairyWands(previousSynergies: Map<Synergy, number>, updatedSynergies: Map<Synergy, number>): void;
+    updateFairyWands(): void;
     updatePillars(): void;
     updateRegionalPool(state: GameState, mapChanged: boolean, previousMap?: string): void;
     onLightChange(hasLightActive: boolean): void;

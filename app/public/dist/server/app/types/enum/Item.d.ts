@@ -113,11 +113,11 @@ export declare enum Item {
     RARE_CANDY = "RARE_CANDY",
     EVIOLITE = "EVIOLITE",
     RED_SCALE = "RED_SCALE",
-    WHITE_FLUTE = "WHITE_FLUTE",
+    GOLD_MASK = "GOLD_MASK",
     GOLD_BOTTLE_CAP = "GOLD_BOTTLE_CAP",
     ABSORB_BULB = "ABSORB_BULB",
     SACRED_ASH = "SACRED_ASH",
-    COMET_SHARD = "COMET_SHARD",
+    STAR_PIECE = "STAR_PIECE",
     REPEAT_BALL = "REPEAT_BALL",
     GOLD_BOW = "GOLD_BOW",
     DAMP_ROCK = "DAMP_ROCK",
@@ -357,7 +357,7 @@ export type Berry = (typeof Berries)[number];
 export declare const Tools: (Item.ELECTIRIZER | Item.MAGMARIZER | Item.MACHO_BRACE | Item.LIGHT_BALL | Item.DRAGON_SCALE | Item.METRONOME | Item.EXPLORER_KIT | Item.METAL_COAT | Item.AIR_BALLOON | Item.PROTECTOR | Item.INCENSE | Item.EXP_SHARE | Item.TERRAIN_EXTENDER | Item.POKERUS_VIAL | Item.SPELL_TAG | Item.SHED_SHELL | Item.BERSERK_GENE | Item.SURFBOARD | Item.COOKING_POT | Item.RUNNING_SHOES | Item.MAX_ELIXIR)[];
 export type Tool = (typeof Tools)[number];
 export declare const ArtificialItems: (Item.ELECTIRIZER | Item.MAGMARIZER | Item.MACHO_BRACE | Item.METAL_COAT | Item.EXP_SHARE | Item.TERRAIN_EXTENDER | Item.POKERUS_VIAL | Item.SPELL_TAG | Item.SHED_SHELL | Item.COOKING_POT | Item.MAX_ELIXIR)[];
-export declare const ShinyItems: (Item.DYNAMAX_BAND | Item.SHINY_STONE | Item.RARE_CANDY | Item.EVIOLITE | Item.RED_SCALE | Item.WHITE_FLUTE | Item.GOLD_BOTTLE_CAP | Item.ABSORB_BULB | Item.SACRED_ASH | Item.COMET_SHARD | Item.REPEAT_BALL | Item.GOLD_BOW)[];
+export declare const ShinyItems: (Item.DYNAMAX_BAND | Item.SHINY_STONE | Item.RARE_CANDY | Item.EVIOLITE | Item.RED_SCALE | Item.GOLD_MASK | Item.GOLD_BOTTLE_CAP | Item.ABSORB_BULB | Item.SACRED_ASH | Item.STAR_PIECE | Item.REPEAT_BALL | Item.GOLD_BOW)[];
 export type ShinyItem = (typeof ShinyItems)[number];
 export declare const WeatherRocks: (Item.DAMP_ROCK | Item.ICY_ROCK | Item.HEAT_ROCK | Item.SMOOTH_ROCK | Item.BLACK_AUGURITE | Item.FLOAT_STONE | Item.MIST_STONE | Item.ELECTRIC_QUARTZ | Item.BLOOD_STONE | Item.SMELLY_CLAY | Item.ODD_KEYSTONE | Item.SUN_STONE)[];
 export declare const WeatherRocksByWeather: Map<Weather, Item.DAMP_ROCK | Item.ICY_ROCK | Item.HEAT_ROCK | Item.SMOOTH_ROCK | Item.BLACK_AUGURITE | Item.FLOAT_STONE | Item.MIST_STONE | Item.ELECTRIC_QUARTZ | Item.BLOOD_STONE | Item.SMELLY_CLAY | Item.ODD_KEYSTONE | Item.SUN_STONE | null>;

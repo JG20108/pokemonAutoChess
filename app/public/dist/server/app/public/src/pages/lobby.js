@@ -18,6 +18,7 @@ const app_1 = __importDefault(require("firebase/compat/app"));
 const react_1 = require("react");
 const react_i18next_1 = require("react-i18next");
 const react_router_1 = require("react-router");
+const config_1 = require("../../../config");
 const types_1 = require("../../../types");
 const function_1 = require("../../../utils/function");
 const lobby_logic_1 = require("../game/lobby-logic");
@@ -73,7 +74,7 @@ function Lobby() {
                     idToken
                 });
                 store_1.localStore.set(store_1.LocalStoreKeys.RECONNECTION_GAME, { reconnectionToken: game.reconnectionToken, roomId: game.roomId }, 30);
-                (0, network_1.leaveRoom)("lobby", true);
+                (0, network_1.joinGame)(game, config_1.MAX_LOADING_TIME / 1000);
                 dispatch((0, LobbyStore_1.resetLobby)());
                 dispatch((0, BoostersStore_1.resetBoosters)());
                 navigate("/game");

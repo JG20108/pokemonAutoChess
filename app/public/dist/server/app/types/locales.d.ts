@@ -1307,10 +1307,9 @@ declare const resources: {
             ROCK_HEAD: string;
             CRABHAMMER: string;
             DIAMOND_STORM: string;
-            DRACO_ENERGY: string;
+            DRAGON_ENERGY: string;
             DYNAMAX_CANNON: string;
             DYNAMIC_PUNCH: string;
-            ELECTRO_BOOST: string;
             ELECTRO_WEB: string;
             MYSTICAL_FIRE: string;
             FLAME_CHARGE: string;
@@ -1376,7 +1375,7 @@ declare const resources: {
             PLASMA_FIST: string;
             SPECTRAL_THIEF: string;
             GEOMANCY: string;
-            DEATH_WING: string;
+            OBLIVION_WING: string;
             SLACK_OFF: string;
             DARK_VOID: string;
             OVERHEAT: string;
@@ -1384,6 +1383,7 @@ declare const resources: {
             MIMIC: string;
             HEX: string;
             GROWTH: string;
+            VESPIQUEN_ORDERS: string;
             HEAL_ORDER: string;
             DEFEND_ORDER: string;
             ATTACK_ORDER: string;
@@ -1652,7 +1652,7 @@ declare const resources: {
             HARDEN: string;
             COLUMN_CRUSH: string;
             WONDER_ROOM: string;
-            DARK_LARIAT: string;
+            DARKEST_LARIAT: string;
             BOLT_BEAK: string;
             FREEZE_DRY: string;
             DRAGON_PULSE: string;
@@ -1864,10 +1864,9 @@ declare const resources: {
             ROCK_HEAD: string;
             CRABHAMMER: string;
             DIAMOND_STORM: string;
-            DRACO_ENERGY: string;
+            DRAGON_ENERGY: string;
             DYNAMAX_CANNON: string;
             DYNAMIC_PUNCH: string;
-            ELECTRO_BOOST: string;
             ELECTRO_WEB: string;
             MYSTICAL_FIRE: string;
             FLAME_CHARGE: string;
@@ -1936,7 +1935,7 @@ declare const resources: {
             PLASMA_FIST: string;
             SPECTRAL_THIEF: string;
             GEOMANCY: string;
-            DEATH_WING: string;
+            OBLIVION_WING: string;
             SLACK_OFF: string;
             DARK_VOID: string;
             OVERHEAT: string;
@@ -1945,6 +1944,7 @@ declare const resources: {
             HEX: string;
             GROWTH: string;
             HEAL_ORDER: string;
+            VESPIQUEN_ORDERS: string;
             DEFEND_ORDER: string;
             ATTACK_ORDER: string;
             BUG_BITE: string;
@@ -2202,7 +2202,7 @@ declare const resources: {
             TOPSY_TURVY: string;
             COLUMN_CRUSH: string;
             WONDER_ROOM: string;
-            DARK_LARIAT: string;
+            DARKEST_LARIAT: string;
             BOLT_BEAK: string;
             FREEZE_DRY: string;
             DRAGON_PULSE: string;
@@ -2671,11 +2671,11 @@ declare const resources: {
             SHINY_STONE: string;
             RARE_CANDY: string;
             EVIOLITE: string;
-            WHITE_FLUTE: string;
+            GOLD_MASK: string;
             GOLD_BOTTLE_CAP: string;
             ABSORB_BULB: string;
             SACRED_ASH: string;
-            COMET_SHARD: string;
+            STAR_PIECE: string;
             REPEAT_BALL: string;
             GOLD_BOW: string;
             RED_SCALE: string;
@@ -3001,11 +3001,11 @@ declare const resources: {
             SHINY_STONE: string;
             RARE_CANDY: string;
             EVIOLITE: string;
-            WHITE_FLUTE: string;
+            GOLD_MASK: string;
             GOLD_BOTTLE_CAP: string;
             ABSORB_BULB: string;
             SACRED_ASH: string;
-            COMET_SHARD: string;
+            STAR_PIECE: string;
             REPEAT_BALL: string;
             GOLD_BOW: string;
             RED_SCALE: string;
@@ -3655,6 +3655,7 @@ declare const resources: {
             SURVEY_CORPS: string;
             GUILDMASTER: string;
             LEGIONNAIRE: string;
+            FIVE_STARS: string;
         };
         title_description: {
             NOVICE: string;
@@ -3752,6 +3753,7 @@ declare const resources: {
             SURVEY_CORPS: string;
             GUILDMASTER: string;
             LEGIONNAIRE: string;
+            FIVE_STARS: string;
         };
         weather: {
             NEUTRAL: string;
@@ -4194,7 +4196,9 @@ declare const resources: {
         tm: string;
         tm_short: string;
         special_items: string;
+        wands: string;
         shiny_items: string;
+        inimitable: string;
         news: string;
         full_patch_notes: string;
         patch_notes: string;
@@ -4616,6 +4620,7 @@ declare const resources: {
                 weather_label: string;
                 town_label: string;
                 dungeon_label: string;
+                glossary_label: string;
                 data_label: string;
             };
             faq: {
@@ -4759,6 +4764,18 @@ declare const resources: {
                 region_hint1: string;
                 region_hint2: string;
             };
+            glossary: {
+                damage_types: string;
+                SPECIAL: string;
+                PHYSICAL: string;
+                TRUE: string;
+                item_categories: string;
+                components: string;
+                craftable_items: string;
+                consumable_item: string;
+                unholdable_item: string;
+                removable_item: string;
+            };
             data: {
                 data_description: string;
                 tiers_by_level_title: string;
@@ -4830,18 +4847,25 @@ declare const resources: {
             number_to_draw: string;
         };
         technical_terms: {
-            STRONGEST: string;
+            title: string;
             ADJACENT: string;
             ADJACENT_IN_THE_SAME_ROW: string;
-            CONE: string;
             BOARD_EFFECT: string;
+            CONE: string;
+            INIMITABLE: string;
+            ON_HIT: string;
+            ON_ATTACK: string;
+            STRONGEST: string;
         };
         technical_terms_definitions: {
-            STRONGEST: string;
             ADJACENT: string;
             ADJACENT_IN_THE_SAME_ROW: string;
-            CONE: string;
             BOARD_EFFECT: string;
+            CONE: string;
+            INIMITABLE: string;
+            ON_HIT: string;
+            ON_ATTACK: string;
+            STRONGEST: string;
         };
         expeditions: {
             title: string;

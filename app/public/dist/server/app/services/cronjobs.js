@@ -27,41 +27,50 @@ const Game_1 = require("../types/enum/Game");
 const events_1 = require("../types/events");
 const logger_1 = require("../utils/logger");
 const number_1 = require("../utils/number");
+const booster_monitor_1 = require("./booster-monitor");
 const meta_1 = require("./meta");
 const notifications_1 = require("./notifications");
 const sprite_gap_scanner_1 = require("./sprite-gap-scanner");
-function initCronJobs() {
+function initCronJobs(isMainThread) {
     logger_1.logger.debug("init cron jobs");
-    cron_1.CronJob.from({
-        cronTime: "15 8 * * *",
-        timeZone: "Europe/Paris",
-        onTick: () => deleteOldHistory(),
-        start: true
-    });
-    cron_1.CronJob.from({
-        cronTime: "30 8 * * *",
-        timeZone: "Europe/Paris",
-        onTick: () => eloDecay(),
-        start: true
-    });
-    cron_1.CronJob.from({
-        cronTime: "45 8 * * *",
-        timeZone: "Europe/Paris",
-        onTick: () => titleStats(),
-        start: true
-    });
-    cron_1.CronJob.from({
-        cronTime: "50 8 * * *",
-        timeZone: "Europe/Paris",
-        onTick: () => notifications_1.notificationsService.cleanupOldNotifications(),
-        start: true
-    });
-    cron_1.CronJob.from({
-        cronTime: "0 0 1 * *",
-        timeZone: "UTC",
-        onTick: () => resetEventScores(),
-        start: true
-    });
+    if (isMainThread) {
+        cron_1.CronJob.from({
+            cronTime: "15 8 * * *",
+            timeZone: "Europe/Paris",
+            onTick: () => deleteOldHistory(),
+            start: true
+        });
+        cron_1.CronJob.from({
+            cronTime: "30 8 * * *",
+            timeZone: "Europe/Paris",
+            onTick: () => eloDecay(),
+            start: true
+        });
+        cron_1.CronJob.from({
+            cronTime: "45 8 * * *",
+            timeZone: "Europe/Paris",
+            onTick: () => titleStats(),
+            start: true
+        });
+        cron_1.CronJob.from({
+            cronTime: "50 8 * * *",
+            timeZone: "Europe/Paris",
+            onTick: () => notifications_1.notificationsService.cleanupOldNotifications(),
+            start: true
+        });
+        cron_1.CronJob.from({
+            cronTime: "10 0 * * *",
+            timeZone: "UTC",
+            onTick: () => (0, booster_monitor_1.logPreviousDayBoosterCreationStats)(),
+            start: true
+        });
+        cron_1.CronJob.from({
+            cronTime: "0 0 1 * *",
+            timeZone: "UTC",
+            onTick: () => resetEventScores(),
+            start: true
+        });
+    }
     cron_1.CronJob.from({
         cronTime: "0 9 * * *",
         timeZone: "UTC",

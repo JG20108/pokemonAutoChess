@@ -14,6 +14,7 @@ const Effect_1 = require("../../types/enum/Effect");
 const Game_1 = require("../../types/enum/Game");
 const Item_1 = require("../../types/enum/Item");
 const Passive_1 = require("../../types/enum/Passive");
+const Synergy_1 = require("../../types/enum/Synergy");
 const Weather_1 = require("../../types/enum/Weather");
 const array_1 = require("../../utils/array");
 const number_1 = require("../../utils/number");
@@ -990,11 +991,16 @@ class Status extends schema_1.Schema {
         var _a, _b;
         if (this.lockedCooldown - dt <= 0) {
             this.locked = false;
-            pokemon.range =
-                pokemon.baseRange +
-                    (pokemon.items.has(Item_1.Item.WIDE_LENS)
-                        ? ((_b = (_a = config_1.ItemStats[Item_1.Item.WIDE_LENS]) === null || _a === void 0 ? void 0 : _a[Game_1.Stat.RANGE]) !== null && _b !== void 0 ? _b : 0)
-                        : 0);
+            let range = pokemon.baseRange;
+            if (pokemon.items.has(Item_1.Item.WIDE_LENS)) {
+                range += (_b = (_a = config_1.ItemStats[Item_1.Item.WIDE_LENS]) === null || _a === void 0 ? void 0 : _a[Game_1.Stat.RANGE]) !== null && _b !== void 0 ? _b : 0;
+            }
+            if (pokemon.player &&
+                pokemon.player.items.includes(Item_1.Item.LONG_WAND) &&
+                pokemon.types.has(Synergy_1.Synergy.FAIRY)) {
+                range += 1;
+            }
+            pokemon.range = range;
             this.ccCooldown = Math.max(this.ccCooldown, config_1.CC_COOLDOWN);
         }
         else {

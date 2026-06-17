@@ -25,7 +25,6 @@ const avatar_1 = require("../../../../utils/avatar");
 const schemas_1 = require("../../../../utils/schemas");
 const atlas_json_1 = __importDefault(require("../../assets/atlas.json"));
 const audio_1 = require("../../pages/utils/audio");
-const animated_tiles_plugin_1 = __importDefault(require("../plugins/animated-tiles-plugin"));
 const game_scene_1 = __importDefault(require("../scenes/game-scene"));
 const pokemon_1 = require("./pokemon");
 class LoadingManager {
@@ -97,7 +96,6 @@ class LoadingManager {
                 preloadPortraits(this.scene, player);
             }
             (0, pokemon_1.loadCompressedAtlas)(scene, "0000");
-            scene.load.scenePlugin("animatedTiles", animated_tiles_plugin_1.default, "animatedTiles", "animatedTiles");
         });
     }
 }

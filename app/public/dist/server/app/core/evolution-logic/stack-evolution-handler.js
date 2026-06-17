@@ -4,15 +4,15 @@ exports.StackEvolutionHandler = void 0;
 const Item_1 = require("../../types/enum/Item");
 const evolution_handler_1 = require("./evolution-handler");
 class StackEvolutionHandler extends evolution_handler_1.EvolutionHandler {
-    canEvolve(pokemon, player, stacks) {
+    canEvolve(pokemon, player) {
         if (pokemon.items.has(Item_1.Item.EVIOLITE))
             return false;
         if (player.board.has(pokemon.id) === false)
             return false;
-        return stacks >= pokemon.stacksRequired;
+        return pokemon.stacks >= pokemon.stacksRequired;
     }
-    evolve(pokemon, player, stacks) {
-        const pokemonEvolutionName = this.getEvolution(pokemon, player, stacks);
+    evolve(pokemon, player) {
+        const pokemonEvolutionName = this.getEvolution(pokemon, player);
         const pokemonEvolved = player.transformPokemon(pokemon, pokemonEvolutionName);
         return pokemonEvolved;
     }

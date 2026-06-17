@@ -36,7 +36,7 @@ exports.ItemsStatistics = (0, mongoose_1.model)("ItemsStatistic", itemsStatistic
 exports.default = exports.ItemsStatistics;
 function fetchMetaItems() {
     return __awaiter(this, void 0, void 0, function* () {
-        return fetch("/meta/items").then((res) => res.json());
+        return fetch(`/meta/items?t=${new Date().getUTCDate()}`).then((res) => res.json());
     });
 }
 //# sourceMappingURL=items-statistic.js.map

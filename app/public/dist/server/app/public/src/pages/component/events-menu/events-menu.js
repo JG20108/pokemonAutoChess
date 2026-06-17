@@ -42,7 +42,7 @@ function EventsMenu() {
             return __awaiter(this, void 0, void 0, function* () {
                 var _a, _b;
                 try {
-                    const response = yield fetch("/twitch/streams");
+                    const response = yield fetch(`/twitch/streams?t=${Math.floor(Date.now() / 300000)}`);
                     const data = (yield response.json());
                     if (isMounted) {
                         setShowTwitchTab(((_b = (_a = data.streams) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0) > 0);

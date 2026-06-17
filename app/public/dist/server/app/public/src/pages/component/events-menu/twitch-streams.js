@@ -18,6 +18,7 @@ const hooks_1 = require("../../../hooks");
 const network_1 = require("../../../network");
 const remove_button_1 = require("../buttons/remove-button");
 const modal_1 = require("../modal/modal");
+require("./twitch-streams.css");
 function formatViewers(count) {
     if (count >= 1000) {
         return `${(count / 1000).toFixed(1).replace(/\.0$/, "")}k`;
@@ -48,7 +49,7 @@ function TwitchStreams() {
     const fetchStreams = (0, react_1.useCallback)(() => __awaiter(this, void 0, void 0, function* () {
         var _a;
         try {
-            const response = yield fetch("/twitch/streams");
+            const response = yield fetch(`/twitch/streams?t=${Math.floor(Date.now() / 300000)}`);
             const data = (yield response.json());
             setStreams((_a = data.streams) !== null && _a !== void 0 ? _a : []);
             setError(data.error);

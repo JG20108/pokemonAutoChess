@@ -5,14 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = SynergyComponent;
 const jsx_runtime_1 = require("react/jsx-runtime");
-const react_dom_1 = __importDefault(require("react-dom"));
 const react_i18next_1 = require("react-i18next");
-const react_tooltip_1 = require("react-tooltip");
 const config_1 = require("../../../../../config");
 const hooks_1 = require("../../../hooks");
 const game_1 = require("../../game");
 const synergy_icon_1 = __importDefault(require("../icons/synergy-icon"));
-const synergy_detail_component_1 = __importDefault(require("./synergy-detail-component"));
 function SynergyComponent(props) {
     const { t } = (0, react_i18next_1.useTranslation)();
     const levelReached = config_1.SynergyTriggers[props.type]
@@ -49,7 +46,6 @@ function SynergyComponent(props) {
             }
         });
     };
-    const tooltip = ((0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: "detail-" + props.type, className: "custom-theme-tooltip", place: "right-start", delayShow: 100, delayHide: 0, children: (0, jsx_runtime_1.jsx)(synergy_detail_component_1.default, { type: props.type, value: props.value }) }));
     return ((0, jsx_runtime_1.jsxs)("div", { style: {
             display: "grid",
             gridTemplateColumns: "40px 2ch 1fr",
@@ -65,13 +61,13 @@ function SynergyComponent(props) {
                 ? "var(--border-thin)"
                 : "none",
             cursor: "var(--cursor-hover)"
-        }, "data-tooltip-id": "detail-" + props.type, onMouseEnter: () => {
+        }, "data-tooltip-id": "detail-synergy", onMouseEnter: () => {
             highlightSynergy(props.type);
+            props.onMouseEnter();
         }, onMouseLeave: () => {
             removeHighlightSynergy(props.type);
-        }, children: [props.tooltipPortal
-                ? react_dom_1.default.createPortal(tooltip, document.body)
-                : tooltip, (0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: props.type }), (0, jsx_runtime_1.jsx)("span", { style: {
+            props.onMouseLeave();
+        }, children: [(0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: props.type }), (0, jsx_runtime_1.jsx)("span", { style: {
                     fontSize: "2em",
                     textShadow: "2px 2px 2px #000000c0",
                     textAlign: "center",

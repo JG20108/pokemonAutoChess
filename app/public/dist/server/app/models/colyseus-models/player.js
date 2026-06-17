@@ -275,7 +275,7 @@ class Player extends schema_1.Schema {
         }
         if (previousSynergies.get(Synergy_1.Synergy.FAIRY) !==
             updatedSynergies.get(Synergy_1.Synergy.FAIRY)) {
-            this.updateFairyWands(previousSynergies, updatedSynergies);
+            this.updateFairyWands();
         }
         if (this.specialGameRule === SpecialGameRule_1.SpecialGameRule.GYM_BADGE &&
             this.monotype !== undefined) {
@@ -466,28 +466,37 @@ class Player extends schema_1.Schema {
             }
         } while (newNbHats !== currentNbHats);
     }
-    updateFairyWands(previousSynergies, updatedSynergies) {
-        var _a, _b;
-        const previousFairyLevel = (0, synergies_1.getSynergyStep)(previousSynergies, Synergy_1.Synergy.FAIRY);
-        const newFairyLevel = (0, synergies_1.getSynergyStep)(updatedSynergies, Synergy_1.Synergy.FAIRY);
+    updateFairyWands() {
+        var _a;
+        const newFairyLevel = (0, synergies_1.getSynergyStep)(this.synergies, Synergy_1.Synergy.FAIRY);
         const nbWandsByLevel = [0, 1, 2, 3, 4];
-        const previousNbWands = (_a = nbWandsByLevel[previousFairyLevel]) !== null && _a !== void 0 ? _a : 0;
-        const newNbWands = (_b = nbWandsByLevel[newFairyLevel]) !== null && _b !== void 0 ? _b : 0;
+        const newNbWands = (_a = nbWandsByLevel[newFairyLevel]) !== null && _a !== void 0 ? _a : 0;
         const currentNbWands = this.items.filter((item) => (0, array_1.isIn)(Item_1.Wands, item)).length;
-        if (currentNbWands < newNbWands) {
-            const gainedWands = this.fairyWands.slice(previousNbWands, newNbWands);
-            if (gainedWands.length < newNbWands - currentNbWands &&
-                newFairyLevel - 1 in config_1.FAIRY_WANDS_BY_SYNERGY_LEVEL &&
-                this.choices.filter((c) => c.type === "wand").length === 0) {
-                this.choices.push(new player_choice_1.PlayerChoice({
-                    type: "wand",
-                    items: (0, random_1.pickNRandomIn)(config_1.FAIRY_WANDS_BY_SYNERGY_LEVEL[newFairyLevel - 1], 3)
-                }));
-            }
+        const pendingChoices = this.choices.filter((c) => c.type === "wand");
+        if (currentNbWands < newNbWands &&
+            currentNbWands < this.fairyWands.length) {
+            const gainedWands = this.fairyWands.slice(currentNbWands, newNbWands);
             this.items.push(...gainedWands);
         }
-        else if (newNbWands < previousNbWands) {
-            const lostWands = this.fairyWands.slice(newNbWands, previousNbWands);
+        if (this.fairyWands.length + pendingChoices.length < newNbWands) {
+            for (let i = this.fairyWands.length + pendingChoices.length; i < newNbWands; i++) {
+                if (i in config_1.FAIRY_WANDS_BY_SYNERGY_LEVEL) {
+                    this.choices.push(new player_choice_1.PlayerChoice({
+                        type: "wand",
+                        items: (0, random_1.pickNRandomIn)(config_1.FAIRY_WANDS_BY_SYNERGY_LEVEL[i], 3)
+                    }));
+                }
+            }
+        }
+        if (pendingChoices.length > 0 &&
+            newNbWands < currentNbWands + pendingChoices.length) {
+            const nbChoicesToCancel = (0, number_1.max)(pendingChoices.length)(currentNbWands + pendingChoices.length - newNbWands);
+            pendingChoices.slice(-nbChoicesToCancel).forEach((choiceToCancel) => {
+                this.choices.splice(this.choices.findIndex((c) => c.id === choiceToCancel.id), 1);
+            });
+        }
+        if (newNbWands < currentNbWands) {
+            const lostWands = this.fairyWands.slice(newNbWands, currentNbWands);
             lostWands.forEach((wand) => {
                 (0, array_1.removeInArray)(this.items, wand);
             });

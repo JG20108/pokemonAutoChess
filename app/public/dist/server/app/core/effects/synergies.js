@@ -368,6 +368,9 @@ function applyWandEffects(pokemon, target, attackDamage, crit) {
     var _a, _b;
     const board = pokemon.simulation.board;
     const wands = (_b = (_a = pokemon.player) === null || _a === void 0 ? void 0 : _a.items.filter((item) => (0, array_1.isIn)(Item_1.Wands, item))) !== null && _b !== void 0 ? _b : [];
+    if (wands.length === 0) {
+        return { takenDamage: 0, death: false };
+    }
     let specialDamageFactor = 0;
     for (const wand of wands) {
         specialDamageFactor += 0.2;
@@ -438,7 +441,7 @@ function applyWandEffects(pokemon, target, attackDamage, crit) {
                 const adjacentEnemies = board
                     .getAdjacentCells(pokemon.positionX, pokemon.positionY)
                     .filter((cell) => cell.value && cell.value.team !== pokemon.team);
-                specialDamageFactor += 0.1 * adjacentEnemies.length;
+                specialDamageFactor += 0.05 * adjacentEnemies.length;
                 break;
             }
             case Item_1.Item.TWO_EDGED_WAND: {
@@ -453,8 +456,10 @@ function applyWandEffects(pokemon, target, attackDamage, crit) {
         switch (wand) {
             case Item_1.Item.HP_SWAP_WAND: {
                 if ((0, random_1.chance)(0.2, pokemon)) {
-                    target.addMaxHP(-Math.floor(specialDamage), pokemon, 0, false);
-                    pokemon.addMaxHP(Math.floor(specialDamage), pokemon, 0, false);
+                    target.addMaxHP(-Math.floor(takenDamage), pokemon, 0, false);
+                    if (target.items.has(Item_1.Item.TWIST_BAND) === false) {
+                        pokemon.addMaxHP(Math.floor(takenDamage), pokemon, 0, false);
+                    }
                 }
                 break;
             }
@@ -529,7 +534,7 @@ function applyWandEffects(pokemon, target, attackDamage, crit) {
                     pokemon.broadcastAbility({ skill: "WHIRLWIND_WAND" });
                     (0, board_2.effectInLine)(board, pokemon, target, (cell) => {
                         if (cell.value && cell.value.team !== pokemon.team) {
-                            const freeCellInTheBack = board.getSafePlaceAwayFrom(cell.value.positionX, cell.value.positionY, cell.value.team, 3);
+                            const freeCellInTheBack = board.getSafePlaceAwayFrom(cell.value.positionX, cell.value.positionY, cell.value.team, 2);
                             if (freeCellInTheBack) {
                                 cell.value.moveTo(freeCellInTheBack.x, freeCellInTheBack.y, board, true);
                             }
@@ -595,7 +600,6 @@ const cloneBugs = ({ board, teamIndex, player, effects, simulation }) => {
         }
     });
     bugTeam.sort((a, b) => (0, unit_score_1.getUnitScore)(b) - (0, unit_score_1.getUnitScore)(a));
-    let numberOfClones = 1;
     let numberOfBugsToClone = 0;
     if (effects.has(Effect_1.EffectEnum.COCOON)) {
         numberOfBugsToClone = 1;
@@ -611,6 +615,7 @@ const cloneBugs = ({ board, teamIndex, player, effects, simulation }) => {
     }
     numberOfBugsToClone = Math.min(numberOfBugsToClone, bugTeam.length);
     for (let i = 0; i < numberOfBugsToClone; i++) {
+        let numberOfClones = 1;
         const pokemonCloned = bugTeam[i];
         let clonePkm = pokemonCloned.name;
         if (pokemonCloned.passive === Passive_1.Passive.VESPIQUEN) {

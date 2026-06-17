@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ItemEffects = exports.FishingRodEffect = exports.DojoTicketOnItemDroppedEffect = exports.RunningShoesOnMoveEffect = exports.GreenOrbEffect = exports.MachRibbonEffect = exports.SoulDewEffect = exports.loadedDiceOnAttackEffect = exports.blueOrbOnAttackEffect = void 0;
 const config_1 = require("../../config");
+const dishes_1 = require("../../config/game/dishes");
 const synergies_1 = require("../../models/colyseus-models/synergies");
 const pokemon_factory_1 = __importDefault(require("../../models/pokemon-factory"));
 const pve_stages_1 = require("../../models/pve-stages");
@@ -36,7 +37,6 @@ const number_1 = require("../../utils/number");
 const random_1 = require("../../utils/random");
 const schemas_1 = require("../../utils/schemas");
 const abilities_1 = require("../abilities/abilities");
-const dishes_1 = require("../dishes");
 const evolution_manager_1 = require("../evolution-logic/evolution-manager");
 const flower_pots_1 = require("../flower-pots");
 const simulation_command_1 = require("../simulation-command");
@@ -260,7 +260,10 @@ class DojoTicketOnItemDroppedEffect extends effect_1.OnItemDroppedEffect {
             const pokemonLeaving = player.getPokemonAt(pokemon.positionX, pokemon.positionY) || pokemon;
             substitute.id = pokemonLeaving.id;
             substitute.evolution = pokemonLeaving.name;
-            substitute.evolutionRule = { type: EvolutionRules_1.EvolutionRuleType.STATE, condition: () => false };
+            substitute.evolutionRule = {
+                type: EvolutionRules_1.EvolutionRuleType.STATE,
+                condition: () => false
+            };
             substitute.positionX = pokemonLeaving.positionX;
             substitute.positionY = pokemonLeaving.positionY;
             player.board.delete(pokemonLeaving.id);
@@ -1031,6 +1034,16 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
             room.checkEvolutionsAfterItemAcquired(player.id, pokemon, item);
             player.updateSynergies();
             return false;
+        })
+    ], [Item_1.Item.STAR_PIECE]: [
+        new effect_1.OnItemGainedEffect((pokemon) => {
+            pokemon.stars = (0, number_1.max)(5)(pokemon.stars + 1);
+            if (pokemon.stars === 5 && pokemon.player) {
+                pokemon.player.titles.add(types_1.Title.FIVE_STARS);
+            }
+        }),
+        new effect_1.OnItemRemovedEffect((pokemon) => {
+            pokemon.stars = (0, number_1.min)(1)(pokemon.stars - 1);
         })
     ], [Item_1.Item.OLD_ROD]: [new FishingRodEffect(Item_1.Item.OLD_ROD)], [Item_1.Item.GOOD_ROD]: [new FishingRodEffect(Item_1.Item.GOOD_ROD)], [Item_1.Item.SUPER_ROD]: [new FishingRodEffect(Item_1.Item.SUPER_ROD)], [Item_1.Item.RICH_MULCH]: [
         new effect_1.OnItemDroppedEffect(() => {

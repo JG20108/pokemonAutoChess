@@ -3,5 +3,6 @@ export default function SynergyComponent(props: {
     type: Synergy;
     value: number;
     index: number;
-    tooltipPortal: boolean;
+    onMouseEnter: () => void;
+    onMouseLeave: () => void;
 }): import("react/jsx-runtime").JSX.Element;

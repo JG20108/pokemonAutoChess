@@ -13,6 +13,7 @@ const Game_1 = require("../../types/enum/Game");
 const Item_1 = require("../../types/enum/Item");
 const Pokemon_1 = require("../../types/enum/Pokemon");
 const Synergy_1 = require("../../types/enum/Synergy");
+const array_1 = require("../../utils/array");
 const board_1 = require("../../utils/board");
 const number_1 = require("../../utils/number");
 const random_1 = require("../../utils/random");
@@ -27,15 +28,14 @@ class HiddenPowerStrategy extends ability_strategy_1.AbilityStrategy {
     constructor() {
         super(...arguments);
         this.requiresTarget = false;
-        this.copyable = false;
     }
-    process(unown, board, target, crit) {
-        super.process(unown, board, target, crit);
-        if (unown.player && !unown.isSpawn) {
-            unown.player.unownReminiscences++;
-            unown.player.board.delete(unown.refToBoardPokemon.id);
+    process(pokemon, board, target, crit) {
+        super.process(pokemon, board, target, crit);
+        if (pokemon.player && !pokemon.isSpawn && (0, array_1.isIn)(Pokemon_1.Unowns, pokemon.name)) {
+            pokemon.player.unownReminiscences++;
+            pokemon.player.board.delete(pokemon.refToBoardPokemon.id);
         }
-        unown.state.triggerDeath(unown, null, board, Game_1.AttackType.TRUE);
+        pokemon.state.triggerDeath(pokemon, null, board, Game_1.AttackType.TRUE);
     }
 }
 exports.HiddenPowerStrategy = HiddenPowerStrategy;

@@ -42,7 +42,7 @@ exports.ItemStats = {
         [Game_1.Stat.CRIT_CHANCE]: 10,
         [Game_1.Stat.CRIT_POWER]: 100
     },
-    [Item_1.Item.LOADED_DICE]: { [Game_1.Stat.SPEED]: 10, [Game_1.Stat.SPE_DEF]: 3, [Game_1.Stat.LUCK]: 30 },
+    [Item_1.Item.LOADED_DICE]: { [Game_1.Stat.SPEED]: 10, [Game_1.Stat.SPE_DEF]: 3, [Game_1.Stat.LUCK]: 20 },
     [Item_1.Item.PUNCHING_GLOVE]: { [Game_1.Stat.SPEED]: 10, [Game_1.Stat.ATK]: 3 },
     [Item_1.Item.MUSCLE_BAND]: { [Game_1.Stat.SPEED]: 10, [Game_1.Stat.DEF]: 3 },
     [Item_1.Item.STICKY_BARB]: { [Game_1.Stat.DEF]: 6, [Game_1.Stat.HP]: 15 },
@@ -89,7 +89,7 @@ exports.ItemStats = {
         [Game_1.Stat.LUCK]: 50,
         [Game_1.Stat.CRIT_CHANCE]: 30
     },
-    [Item_1.Item.COMET_SHARD]: { [Game_1.Stat.ATK]: 15 },
+    [Item_1.Item.STAR_PIECE]: {},
     [Item_1.Item.SHINY_STONE]: { [Game_1.Stat.AP]: 50 },
     [Item_1.Item.ABSORB_BULB]: { [Game_1.Stat.DEF]: 20, [Game_1.Stat.SPE_DEF]: 20 },
     [Item_1.Item.GOLD_BOW]: { [Game_1.Stat.SHIELD]: 50 },
@@ -101,7 +101,7 @@ exports.ItemStats = {
     [Item_1.Item.FRIEND_BOW]: { [Game_1.Stat.SHIELD]: 30 },
     [Item_1.Item.BLACK_BELT]: { [Game_1.Stat.SHIELD]: 15, [Game_1.Stat.CRIT_CHANCE]: 20 },
     [Item_1.Item.NULLIFY_BANDANNA]: { [Game_1.Stat.SHIELD]: 30 },
-    [Item_1.Item.LUCKY_RIBBON]: { [Game_1.Stat.SHIELD]: 15, [Game_1.Stat.AP]: 50, [Game_1.Stat.LUCK]: 30 },
+    [Item_1.Item.LUCKY_RIBBON]: { [Game_1.Stat.SHIELD]: 15, [Game_1.Stat.AP]: 50, [Game_1.Stat.LUCK]: 20 },
     [Item_1.Item.EXPLOSIVE_BAND]: { [Game_1.Stat.SHIELD]: 50, [Game_1.Stat.ATK]: 3 },
     [Item_1.Item.TWIST_BAND]: { [Game_1.Stat.SPE_DEF]: 20, [Game_1.Stat.SHIELD]: 50 },
     [Item_1.Item.BIG_EATER_BELT]: { [Game_1.Stat.HP]: 50, [Game_1.Stat.SHIELD]: 15 },

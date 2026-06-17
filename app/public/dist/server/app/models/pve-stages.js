@@ -115,7 +115,7 @@ exports.PVEStages = {
             [Game_1.Stat.DEF]: 5,
             [Game_1.Stat.SPE_DEF]: 5
         },
-        marowakItems: [[Item_1.Item.COMET_SHARD], [Item_1.Item.SACRED_ASH]],
+        marowakItems: [[Item_1.Item.STAR_PIECE], [Item_1.Item.SACRED_ASH]],
         rewards: Item_1.ItemComponentsNoFossilOrScarf,
         getRewards(player) {
             const componentsWeights = Item_1.ItemComponentsNoFossilOrScarf.reduce((o, i) => {

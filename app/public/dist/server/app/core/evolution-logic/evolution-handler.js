@@ -26,7 +26,6 @@ exports.EvolutionHandler = EvolutionHandler;
 function carryOverPermanentStats(pokemonEvolved, pokemonsBeforeEvolution) {
     var _a, _b;
     const permanentBuffStats = [
-        "hp",
         "maxHP",
         "atk",
         "def",
@@ -40,7 +39,6 @@ function carryOverPermanentStats(pokemonEvolved, pokemonsBeforeEvolution) {
     for (const stat of permanentBuffStats) {
         const sumOfPermaStatsModifier = (0, array_1.sum)(pokemonsBeforeEvolution.map((p) => p[stat] - baseData[stat]));
         const statMapping = {
-            hp: Game_1.Stat.HP,
             maxHP: Game_1.Stat.HP,
             atk: Game_1.Stat.ATK,
             def: Game_1.Stat.DEF,

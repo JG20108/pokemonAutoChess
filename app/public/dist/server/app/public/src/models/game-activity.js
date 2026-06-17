@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchGameActivity = fetchGameActivity;
 function fetchGameActivity() {
     return __awaiter(this, void 0, void 0, function* () {
-        const response = yield fetch("/meta/game-activity");
+        const response = yield fetch(`/meta/game-activity?t=${new Date().getUTCDate()}`);
         if (!response.ok) {
             throw new Error(`Failed to fetch game activity: ${response.status}`);
         }

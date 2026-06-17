@@ -45,7 +45,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OnOverwriteBoardCommand = exports.OnUpdatePhaseCommand = exports.OnUpdateCommand = exports.OnJoinCommand = exports.OnPickBerryCommand = exports.OnLevelUpCommand = exports.OnSpectateCommand = exports.OnLockCommand = exports.OnShopRerollCommand = exports.OnSellPokemonCommand = exports.OnDragDropItemCommand = exports.OnDragDropCombineCommand = exports.OnSwitchBenchAndBoardCommand = exports.OnDragDropPokemonCommand = exports.OnPokemonCatchCommand = exports.OnRemoveFromShopCommand = exports.OnBuyPokemonCommand = void 0;
+exports.OnDevCommand = exports.OnOverwriteBoardCommand = exports.OnUpdatePhaseCommand = exports.OnUpdateCommand = exports.OnJoinCommand = exports.OnPickBerryCommand = exports.OnLevelUpCommand = exports.OnSpectateCommand = exports.OnLockCommand = exports.OnShopRerollCommand = exports.OnSellPokemonCommand = exports.OnDragDropItemCommand = exports.OnDragDropCombineCommand = exports.OnSwitchBenchAndBoardCommand = exports.OnDragDropPokemonCommand = exports.OnPokemonCatchCommand = exports.OnRemoveFromShopCommand = exports.OnBuyPokemonCommand = void 0;
 exports.onPokemonChangePosition = onPokemonChangePosition;
 const command_1 = require("@colyseus/command");
 const schema_1 = require("@colyseus/schema");
@@ -1146,7 +1146,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
                                     evolution_manager_1.EvolutionManager.tryEvolve(pokemon, player, this.state);
                                 }
                                 else if (pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.STACK) {
-                                    evolution_manager_1.EvolutionManager.tryEvolve(pokemon, player, pokemon.stacks);
+                                    evolution_manager_1.EvolutionManager.tryEvolve(pokemon, player);
                                 }
                             });
                         }, 1000);
@@ -1242,7 +1242,8 @@ class OnUpdatePhaseCommand extends command_1.Command {
             const itemEffects = (_d = (_c = (0, schemas_1.schemaValues)(pokemon.items)
                 .flatMap((item) => items_1.ItemEffects[item])) === null || _c === void 0 ? void 0 : _c.filter((p) => p instanceof effect_1.OnStageStartEffect)) !== null && _d !== void 0 ? _d : [];
             itemEffects.forEach((effect) => effect.apply({ pokemon, player, room: this.room }));
-            if (pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.STATE) {
+            if (pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.STATE ||
+                pokemon.evolutionRule.type === EvolutionRules_1.EvolutionRuleType.STACK) {
                 evolution_manager_1.EvolutionManager.tryEvolve(pokemon, player, this.state);
             }
         });
@@ -1364,6 +1365,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
                         else {
                             this.state.shop.refillShop(player, this.state);
                             player.shopLocked = false;
+                            player.unownReminiscences = 0;
                         }
                     }
                 }
@@ -1658,8 +1660,31 @@ class OnOverwriteBoardCommand extends command_1.Command {
     }
 }
 exports.OnOverwriteBoardCommand = OnOverwriteBoardCommand;
+class OnDevCommand extends command_1.Command {
+    execute(msg) {
+        if (msg.action === "skipStage") {
+            this.room.state.time = 0;
+        }
+    }
+}
+exports.OnDevCommand = OnDevCommand;
 function onPokemonChangePosition({ pokemon, newX, newY, player, oldX, oldY, state, doNotRemoveItems = false }) {
     var _a, _b;
+    if (newY === 0 && !doNotRemoveItems) {
+        const itemsToRemove = (0, schemas_1.schemaValues)(pokemon.items).filter((item) => {
+            return ((0, array_1.isIn)(types_1.RemovableItems, item) ||
+                ((state === null || state === void 0 ? void 0 : state.specialGameRule) === SpecialGameRule_1.SpecialGameRule.SLAMINGO &&
+                    item !== Item_1.Item.RARE_CANDY));
+        });
+        player.items.push(...itemsToRemove);
+        pokemon.removeItems(itemsToRemove, player);
+        if (pokemon.tm && types_1.TMPerAbility.has(pokemon.tm)) {
+            player.items.push(types_1.TMPerAbility.get(pokemon.tm));
+            pokemon.tm = Ability_1.Ability.DEFAULT;
+            pokemon.skill = pokemon.baseSkill;
+            pokemon.maxPP = pokemon.baseMaxPP;
+        }
+    }
     if (pokemon.passive !== Passive_1.Passive.NONE) {
         const hasLight = ((_a = player.synergies.get(Synergy_1.Synergy.LIGHT)) !== null && _a !== void 0 ? _a : 0) >=
             config_1.SynergyTriggers[Synergy_1.Synergy.LIGHT][0];
@@ -1692,21 +1717,6 @@ function onPokemonChangePosition({ pokemon, newX, newY, player, oldX, oldY, stat
             if (pokemon.name === Pokemon_1.Pkm.MANTYKE) {
                 evolution_manager_1.EvolutionManager.tryEvolve(pokemon, player, player.board);
             }
-        }
-    }
-    if (newY === 0 && !doNotRemoveItems) {
-        const itemsToRemove = (0, schemas_1.schemaValues)(pokemon.items).filter((item) => {
-            return ((0, array_1.isIn)(types_1.RemovableItems, item) ||
-                ((state === null || state === void 0 ? void 0 : state.specialGameRule) === SpecialGameRule_1.SpecialGameRule.SLAMINGO &&
-                    item !== Item_1.Item.RARE_CANDY));
-        });
-        player.items.push(...itemsToRemove);
-        pokemon.removeItems(itemsToRemove, player);
-        if (pokemon.tm && types_1.TMPerAbility.has(pokemon.tm)) {
-            player.items.push(types_1.TMPerAbility.get(pokemon.tm));
-            pokemon.tm = Ability_1.Ability.DEFAULT;
-            pokemon.skill = pokemon.baseSkill;
-            pokemon.maxPP = pokemon.baseMaxPP;
         }
     }
 }

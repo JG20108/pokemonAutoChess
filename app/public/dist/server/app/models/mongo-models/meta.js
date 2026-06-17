@@ -49,7 +49,7 @@ const metaSchema = new mongoose_1.Schema({
 exports.default = (0, mongoose_1.model)("Meta", metaSchema, "meta");
 function fetchMeta() {
     return __awaiter(this, void 0, void 0, function* () {
-        return fetch("/meta").then((res) => res.json());
+        return fetch(`/meta?t=${new Date().getUTCDate()}`).then((res) => res.json());
     });
 }
 //# sourceMappingURL=meta.js.map

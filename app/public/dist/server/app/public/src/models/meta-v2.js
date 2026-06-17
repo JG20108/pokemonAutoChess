@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchMetaV2 = fetchMetaV2;
 function fetchMetaV2() {
     return __awaiter(this, void 0, void 0, function* () {
-        return fetch("/meta-v2").then((res) => res.json());
+        return fetch(`/meta-v2?t=${new Date().getUTCDate()}`).then((res) => res.json());
     });
 }
 //# sourceMappingURL=meta-v2.js.map

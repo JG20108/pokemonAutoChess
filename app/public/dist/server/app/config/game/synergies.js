@@ -260,11 +260,11 @@ exports.GoldenEggItems = [
     Item_1.Item.SHINY_STONE,
     Item_1.Item.RARE_CANDY,
     Item_1.Item.EVIOLITE,
-    Item_1.Item.WHITE_FLUTE,
+    Item_1.Item.GOLD_MASK,
     Item_1.Item.GOLD_BOTTLE_CAP,
     Item_1.Item.ABSORB_BULB,
     Item_1.Item.SACRED_ASH,
-    Item_1.Item.COMET_SHARD,
+    Item_1.Item.STAR_PIECE,
     Item_1.Item.REPEAT_BALL,
     Item_1.Item.GOLD_BOW
 ];
