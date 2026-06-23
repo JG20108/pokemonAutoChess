@@ -217,6 +217,15 @@ export const loadedDiceOnAttackEffect = new OnAttackEffect(
   }
 )
 
+export const pokemonomiconOnDamageEffect = new OnDamageDealtEffect(
+  ({ attackType, target, pokemon }) => {
+    if (attackType === AttackType.SPECIAL) {
+      target.status.triggerBurn(3000, target, pokemon)
+      target.addSpecialDefense(-1, pokemon, 0, false)
+    }
+  }
+)
+
 export class SoulDewEffect extends PeriodicEffect {
   constructor() {
     super(
@@ -367,7 +376,7 @@ export class DojoTicketOnItemDroppedEffect extends OnItemDroppedEffect {
       player.pokemonsTrainingInDojo.push({
         pokemon: pokemonLeaving,
         ticketLevel,
-        returnStage: room.state.stageLevel + ([3, 4, 5][ticketLevel - 1] ?? 5)
+        returnStage: room.state.stageLevel + 3
       })
       removeInArray(player.items, item)
       player.updateSynergies()
@@ -959,6 +968,8 @@ export const ItemEffects: { [i in Item]?: (Effect | (() => Effect))[] } = {
   ],
 
   [Item.BLUE_ORB]: [blueOrbOnAttackEffect],
+
+  [Item.POKEMONOMICON]: [pokemonomiconOnDamageEffect],
 
   [Item.LOADED_DICE]: [loadedDiceOnAttackEffect],
 

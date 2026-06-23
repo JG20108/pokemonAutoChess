@@ -412,14 +412,6 @@ export class PokemonEntity extends Schema implements IPokemonEntity {
         const reductionFactor = 1 - 0.1 * nbBlackAugurite
         specialDamage *= attacker.critPower * reductionFactor
       }
-      if (
-        attacker &&
-        attacker.items.has(Item.POKEMONOMICON) &&
-        attackType === AttackType.SPECIAL
-      ) {
-        this.status.triggerBurn(3000, this, attacker)
-        this.addSpecialDefense(-1, attacker, 0, false)
-      }
 
       const damageResult = this.state.handleDamage({
         target: this,
@@ -1707,6 +1699,10 @@ export class PokemonEntity extends Schema implements IPokemonEntity {
 
     if (this.effects.has(EffectEnum.BERRY_JUICE)) {
       this.addShield(100, this, 0, false)
+    }
+
+    if (this.effects.has(EffectEnum.OVERGROW)) {
+      this.addAbilityPower(50, this, 0, false)
     }
   }
 

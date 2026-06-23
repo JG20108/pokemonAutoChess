@@ -43,7 +43,10 @@ import { canSell, PokemonEntity } from "../../core/pokemon-entity"
 import Simulation from "../../core/simulation"
 import { getLevelUpCost } from "../../models/colyseus-models/experience-manager"
 import type Player from "../../models/colyseus-models/player"
-import { PlayerChoice } from "../../models/colyseus-models/player-choice"
+import {
+  PlayerChoice,
+  type PlayerChoiceType
+} from "../../models/colyseus-models/player-choice"
 import {
   type Pokemon,
   PokemonClasses
@@ -461,7 +464,8 @@ export class OnDragDropPokemonCommand extends Command<
         oldX,
         oldY,
         player,
-        state: this.state
+        state: this.state,
+        room: this.room
       })
     }
     const oldX = pokemon.positionX
@@ -475,7 +479,8 @@ export class OnDragDropPokemonCommand extends Command<
       oldX,
       oldY,
       player,
-      state: this.state
+      state: this.state,
+      room: this.room
     })
   }
 }
@@ -536,7 +541,8 @@ export class OnSwitchBenchAndBoardCommand extends Command<
           oldX,
           oldY,
           player,
-          state: this.state
+          state: this.state,
+          room: this.room
         })
       }
     } else {
@@ -554,7 +560,8 @@ export class OnSwitchBenchAndBoardCommand extends Command<
           oldX: oldX,
           oldY: oldY,
           player,
-          state: this.state
+          state: this.state,
+          room: this.room
         })
       }
     }
@@ -1666,7 +1673,8 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
                 oldX,
                 oldY,
                 player,
-                state: this.state
+                state: this.state,
+                room: this.room
               })
             }
           }
@@ -1682,13 +1690,15 @@ export class OnUpdatePhaseCommand extends Command<GameRoom> {
   stopPickingPhase() {
     this.state.players.forEach((player) => {
       // auto pick choices if player did not choose in time
+      const autoPickChoices: PlayerChoiceType[] = [
+        "addPick",
+        "item",
+        "starter",
+        "unique",
+        "legendary"
+      ]
       player.choices
-        .filter(
-          (choice) =>
-            choice.type === "addPick" ||
-            choice.type === "item" ||
-            choice.type === "unique"
-        )
+        .filter((choice) => autoPickChoices.includes(choice.type))
         .forEach((choice) => {
           const randomPick = randomBetween(
             0,
@@ -2199,6 +2209,7 @@ export function onPokemonChangePosition({
   oldX,
   oldY,
   state,
+  room,
   doNotRemoveItems = false
 }: {
   pokemon: Pokemon
@@ -2208,6 +2219,7 @@ export function onPokemonChangePosition({
   oldX: number
   oldY: number
   state: GameState
+  room: GameRoom
   doNotRemoveItems?: boolean
 }) {
   // called after manually changing position of the pokemon on board
@@ -2246,6 +2258,7 @@ export function onPokemonChangePosition({
           pokemon,
           player,
           state,
+          room,
           oldX,
           oldY,
           newX,

@@ -608,10 +608,6 @@ export default abstract class PokemonState {
         pokemon.physicalDamageReduced += min(0)(damage - reducedDamage)
       } else if (attackType === AttackType.SPECIAL) {
         pokemon.specialDamageReduced += min(0)(damage - reducedDamage)
-
-        if (attacker && attacker.items.has(Item.POKEMONOMICON)) {
-          pokemon.status.triggerBurn(3000, pokemon, attacker)
-        }
       }
 
       if (isNaN(reducedDamage)) {
@@ -701,7 +697,9 @@ export default abstract class PokemonState {
         SynergyEffects[Synergy.FOSSIL].forEach((e) => {
           pokemon.effects.delete(e)
         })
-      } else if (
+      }
+      
+      if (
         pokemon.hp - residualDamage <= 0 &&
         pokemon.items.has(Item.COVER_BAND) === false
       ) {
@@ -976,7 +974,14 @@ export default abstract class PokemonState {
   }
 
   updateEachSecond(pokemon: PokemonEntity, board: Board) {
-    pokemon.addPP(10, pokemon, 0, false)
+    let passivePPGain = 10
+    if(pokemon.simulation.weather === Weather.RAIN){
+      passivePPGain += 3
+    } else if(pokemon.simulation.weather === Weather.DROUGHT){
+      passivePPGain -= 3
+    }
+    
+    pokemon.addPP(passivePPGain, pokemon, 0, false)
     if (pokemon.effects.has(EffectEnum.RAIN_DANCE)) {
       pokemon.addPP(4, pokemon, 0, false)
     }
@@ -988,7 +993,6 @@ export default abstract class PokemonState {
     }
 
     if (pokemon.simulation.weather === Weather.RAIN) {
-      pokemon.addPP(3, pokemon, 0, false)
       const nbDampRocks = pokemon.player
         ? count(pokemon.player.items, Item.DAMP_ROCK)
         : 0
