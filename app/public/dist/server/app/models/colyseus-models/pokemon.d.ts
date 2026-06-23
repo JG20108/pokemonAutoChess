@@ -11265,6 +11265,7 @@ export declare class Stoutland extends Pokemon {
     maxPP: number;
     range: number;
     skill: Ability;
+    passive: Passive;
 }
 export declare class Pheromosa extends Pokemon {
     types: SetSchema<Synergy>;

@@ -108,10 +108,9 @@ class Pokemon extends schema_1.Schema {
         this.baseSkill = this.skill;
     }
     get final() {
-        return (!this.hasEvolution ||
-            (this.evolutionRule.type !== EvolutionRules_1.EvolutionRuleType.COUNT &&
-                this.passive !== Passive_1.Passive.CORSOLA &&
-                this.passive !== Passive_1.Passive.AVALUGG));
+        if (this.passive === Passive_1.Passive.CORSOLA || this.passive === Passive_1.Passive.AVALUGG)
+            return false;
+        return (!this.hasEvolution || this.evolutionRule.type !== EvolutionRules_1.EvolutionRuleType.COUNT);
     }
     get canBePlaced() {
         return ![Pokemon_1.Pkm.EGG].includes(this.name);
@@ -4182,7 +4181,7 @@ class Venipede extends Pokemon {
         this.speed = 72;
         this.def = 6;
         this.speDef = 4;
-        this.maxPP = 100;
+        this.maxPP = 85;
         this.range = 1;
         this.skill = Ability_1.Ability.STEAMROLLER;
     }
@@ -4200,7 +4199,7 @@ class Whirlipede extends Pokemon {
         this.speed = 72;
         this.def = 10;
         this.speDef = 8;
-        this.maxPP = 100;
+        this.maxPP = 85;
         this.range = 1;
         this.skill = Ability_1.Ability.STEAMROLLER;
     }
@@ -4217,7 +4216,7 @@ class Scolipede extends Pokemon {
         this.speed = 72;
         this.def = 14;
         this.speDef = 12;
-        this.maxPP = 100;
+        this.maxPP = 85;
         this.range = 1;
         this.skill = Ability_1.Ability.STEAMROLLER;
     }
@@ -12553,7 +12552,7 @@ class Nosepass extends Pokemon {
         this.speed = 38;
         this.def = 6;
         this.speDef = 6;
-        this.maxPP = 90;
+        this.maxPP = 100;
         this.range = 2;
         this.skill = Ability_1.Ability.MAGNET_RISE;
         this.additional = true;
@@ -12563,7 +12562,11 @@ exports.Nosepass = Nosepass;
 class Probopass extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.ROCK, Synergy_1.Synergy.STEEL]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.ROCK,
+            Synergy_1.Synergy.STEEL,
+            Synergy_1.Synergy.ELECTRIC
+        ]);
         this.rarity = Game_1.Rarity.UNCOMMON;
         this.stars = 2;
         this.hp = 140;
@@ -12571,7 +12574,7 @@ class Probopass extends Pokemon {
         this.speed = 38;
         this.def = 16;
         this.speDef = 16;
-        this.maxPP = 90;
+        this.maxPP = 100;
         this.range = 2;
         this.skill = Ability_1.Ability.MAGNET_RISE;
         this.additional = true;
@@ -16118,6 +16121,7 @@ class Stoutland extends Pokemon {
         this.maxPP = 100;
         this.range = 1;
         this.skill = Ability_1.Ability.RETALIATE;
+        this.passive = Passive_1.Passive.STOUTLAND_SEARCH;
     }
 }
 exports.Stoutland = Stoutland;
@@ -23540,7 +23544,11 @@ exports.Toxapex = Toxapex;
 class Dondozo extends Pokemon {
     constructor() {
         super(...arguments);
-        this.types = new schema_1.SetSchema([Synergy_1.Synergy.WATER, Synergy_1.Synergy.GOURMET]);
+        this.types = new schema_1.SetSchema([
+            Synergy_1.Synergy.WATER,
+            Synergy_1.Synergy.GOURMET,
+            Synergy_1.Synergy.MONSTER
+        ]);
         this.rarity = Game_1.Rarity.UNIQUE;
         this.stars = 3;
         this.hp = 250;

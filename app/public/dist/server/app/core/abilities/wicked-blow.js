@@ -4,6 +4,10 @@ exports.WickedBlowStrategy = void 0;
 const Game_1 = require("../../types/enum/Game");
 const ability_strategy_1 = require("./ability-strategy");
 class WickedBlowStrategy extends ability_strategy_1.AbilityStrategy {
+    constructor() {
+        super(...arguments);
+        this.canCritByDefault = true;
+    }
     process(pokemon, board, target, crit) {
         var _a;
         super.process(pokemon, board, target, true);

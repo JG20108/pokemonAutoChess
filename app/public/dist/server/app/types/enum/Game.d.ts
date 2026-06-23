@@ -66,11 +66,13 @@ export declare enum BattleResult {
     DRAW = "DRAW"
 }
 export declare enum BotDifficulty {
-    EASY = 0,
-    MEDIUM = 1,
-    HARD = 2,
-    EXTREME = 3,
-    CUSTOM = 4
+    BEGINNER = 0,
+    EASY = 1,
+    MEDIUM = 2,
+    HARD = 3,
+    EXTREME = 4,
+    MASTER = 5,
+    CUSTOM = 6
 }
 export declare enum PokemonTint {
     NORMAL = "Normal",

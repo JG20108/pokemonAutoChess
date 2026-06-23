@@ -429,8 +429,12 @@ function Game() {
             room.onMessage(types_1.Transfer.DISPLAY_TEXT, (message) => {
                 var _a, _b, _c, _d, _e;
                 const g = getGameScene();
-                if (((_b = (_a = g === null || g === void 0 ? void 0 : g.battle) === null || _a === void 0 ? void 0 : _a.simulation) === null || _b === void 0 ? void 0 : _b.id) === message.id && message.text) {
-                    const coordinates = (0, utils_1.transformEntityCoordinates)(message.x, message.y, (_c = g === null || g === void 0 ? void 0 : g.battle) === null || _c === void 0 ? void 0 : _c.flip);
+                const isInBattle = ((_b = (_a = g === null || g === void 0 ? void 0 : g.battle) === null || _a === void 0 ? void 0 : _a.simulation) === null || _b === void 0 ? void 0 : _b.id) === message.id;
+                if ((isInBattle || message.id === uid) && message.text) {
+                    const flip = isInBattle && ((_c = g === null || g === void 0 ? void 0 : g.battle) === null || _c === void 0 ? void 0 : _c.flip) === true;
+                    const coordinates = isInBattle
+                        ? (0, utils_1.transformEntityCoordinates)(message.x, message.y, flip)
+                        : (0, utils_1.transformBoardCoordinates)(message.x, message.y);
                     (_e = (_d = gameContainer.gameScene) === null || _d === void 0 ? void 0 : _d.board) === null || _e === void 0 ? void 0 : _e.displayText(coordinates[0], coordinates[1], t(message.text).toUpperCase(), true);
                 }
             });
@@ -739,6 +743,6 @@ function Game() {
         connectToGame,
         leave
     ]);
-    return ((0, jsx_runtime_1.jsxs)("main", { id: "game-wrapper", onContextMenu: (e) => e.preventDefault(), children: [(0, jsx_runtime_1.jsx)("div", { id: "game", ref: container }), loaded ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(main_sidebar_1.MainSidebar, { page: "game", leave: leave, leaveLabel: t("leave_game") }), (0, jsx_runtime_1.jsx)(game_final_rank_1.default, { rank: finalRank, hide: spectateTillTheEnd, leave: leave, visible: finalRankVisibility === FinalRankVisibility.VISIBLE }), spectate ? (0, jsx_runtime_1.jsx)(game_spectate_player_info_1.default, {}) : (0, jsx_runtime_1.jsx)(game_shop_1.default, {}), (0, jsx_runtime_1.jsx)(game_stage_info_1.default, {}), (0, jsx_runtime_1.jsx)(game_players_1.default, { click: (id) => playerClick(id) }), (0, jsx_runtime_1.jsx)(game_synergies_1.default, {}), (0, jsx_runtime_1.jsx)(game_choice_1.default, {}), (0, jsx_runtime_1.jsx)(game_dps_meter_1.default, {}), (0, jsx_runtime_1.jsx)(game_toasts_1.default, {}), currentGameEvent === events_1.GameEvent.EXPEDITIONS && !spectate && (0, jsx_runtime_1.jsx)(game_expeditions_1.default, {})] })) : ((0, jsx_runtime_1.jsx)(game_loading_screen_1.default, { connectError: connectError })), (0, jsx_runtime_1.jsx)(connection_status_notification_1.ConnectionStatusNotification, {})] }));
+    return ((0, jsx_runtime_1.jsxs)("main", { id: "game-wrapper", onContextMenu: (e) => e.preventDefault(), children: [(0, jsx_runtime_1.jsx)("div", { id: "game", ref: container }), loaded ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(main_sidebar_1.MainSidebar, { page: "game", leave: leave, leaveLabel: t("leave_game") }), (0, jsx_runtime_1.jsx)(game_final_rank_1.default, { rank: finalRank, hide: spectateTillTheEnd, leave: leave, visible: finalRankVisibility === FinalRankVisibility.VISIBLE }), spectate ? (0, jsx_runtime_1.jsx)(game_spectate_player_info_1.default, {}) : (0, jsx_runtime_1.jsx)(game_shop_1.default, {}), (0, jsx_runtime_1.jsx)(game_stage_info_1.default, {}), (0, jsx_runtime_1.jsx)(game_players_1.default, { click: (id) => playerClick(id) }), (0, jsx_runtime_1.jsx)(game_synergies_1.default, {}), (0, jsx_runtime_1.jsx)(game_choice_1.default, {}), (0, jsx_runtime_1.jsx)(game_dps_meter_1.default, {}), (0, jsx_runtime_1.jsx)(game_toasts_1.default, {}), currentGameEvent === events_1.GameEvent.EXPEDITIONS && !spectate && ((0, jsx_runtime_1.jsx)(game_expeditions_1.default, {}))] })) : ((0, jsx_runtime_1.jsx)(game_loading_screen_1.default, { connectError: connectError })), (0, jsx_runtime_1.jsx)(connection_status_notification_1.ConnectionStatusNotification, {})] }));
 }
 //# sourceMappingURL=game.js.map

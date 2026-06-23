@@ -787,17 +787,26 @@ class BoardManager {
         });
         return benchSize;
     }
-    showEmote(playerId, emote) {
+    showEmote(playerOrPokemonId, emote) {
         const avatars = [
             this.playerAvatar,
             this.opponentAvatar,
             ...this.scoutingAvatars
         ];
-        const player = avatars.find((a) => (a === null || a === void 0 ? void 0 : a.playerId) === playerId);
+        const player = avatars.find((a) => (a === null || a === void 0 ? void 0 : a.playerId) === playerOrPokemonId);
         if (player) {
             this.animationManager.play(player, pokemon_animations_1.PokemonAnimations[player.name].emote);
             if (emote) {
                 player.drawSpeechBubble(emote, player === this.opponentAvatar);
+            }
+        }
+        else {
+            const pokemonSprite = this.pokemons.get(playerOrPokemonId);
+            if (pokemonSprite) {
+                this.animationManager.play(pokemonSprite, pokemon_animations_1.PokemonAnimations[pokemonSprite.name].emote);
+                if (emote) {
+                    pokemonSprite.drawSpeechBubble(emote, player === this.opponentAvatar);
+                }
             }
         }
     }

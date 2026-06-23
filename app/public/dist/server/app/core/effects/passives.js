@@ -17,6 +17,7 @@ const pokemon_factory_1 = __importDefault(require("../../models/pokemon-factory"
 const types_1 = require("../../types");
 const Ability_1 = require("../../types/enum/Ability");
 const Effect_1 = require("../../types/enum/Effect");
+const Emotion_1 = require("../../types/enum/Emotion");
 const Game_1 = require("../../types/enum/Game");
 const Item_1 = require("../../types/enum/Item");
 const Passive_1 = require("../../types/enum/Passive");
@@ -25,6 +26,7 @@ const SpecialGameRule_1 = require("../../types/enum/SpecialGameRule");
 const Synergy_1 = require("../../types/enum/Synergy");
 const Weather_1 = require("../../types/enum/Weather");
 const array_1 = require("../../utils/array");
+const avatar_1 = require("../../utils/avatar");
 const board_1 = require("../../utils/board");
 const distance_1 = require("../../utils/distance");
 const number_1 = require("../../utils/number");
@@ -1294,6 +1296,23 @@ exports.PassiveEffects = {
     [Passive_1.Passive.ORTHWORM]: [
         new effect_1.OnGroundDiggingEffect(({ pokemon }) => {
             pokemon.addMaxHP(5);
+        })
+    ],
+    [Passive_1.Passive.STOUTLAND_SEARCH]: [
+        new effect_1.OnChangePositionEffect(({ newX, newY, pokemon, player, room }) => {
+            const index = (newY - 1) * config_1.BOARD_WIDTH + newX;
+            if (room && player.buriedItems[index] && player.groundHoles[index] < 5) {
+                room.broadcast(types_1.Transfer.SHOW_EMOTE, {
+                    id: pokemon.id,
+                    emote: (0, avatar_1.getAvatarString)(pokemon.index, pokemon.shiny, Emotion_1.Emotion.JOYOUS)
+                });
+                room.broadcast(types_1.Transfer.DISPLAY_TEXT, {
+                    id: player.id,
+                    text: "bark",
+                    x: pokemon.positionX,
+                    y: pokemon.positionY
+                });
+            }
         })
     ]
 };

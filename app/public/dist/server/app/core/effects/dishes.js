@@ -12,18 +12,18 @@ const schemas_1 = require("../../utils/schemas");
 const abilities_1 = require("./../abilities/abilities");
 const effect_1 = require("./../effects/effect");
 exports.DishEffects = {
-    BERRY_JUICE: [
+    [Item_1.Item.BERRY_JUICE]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.addShield(100, entity, 0, false);
             entity.effects.add(Effect_1.EffectEnum.BERRY_JUICE);
         })
     ],
-    BIG_MUSHROOM: [
+    [Item_1.Item.BIG_MUSHROOM]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.addMaxHP(0.3 * entity.baseHP, entity, 0, false);
         })
     ],
-    BALM_MUSHROOM: [
+    [Item_1.Item.BALM_MUSHROOM]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.status.triggerRuneProtect(30000, entity, entity);
             entity.addSpeed(30, entity, 0, false);
@@ -33,8 +33,8 @@ exports.DishEffects = {
             }, Item_1.Item.BALM_MUSHROOM, 1000));
         })
     ],
-    BERRIES: [],
-    BINDING_MOCHI: [
+    [Item_1.Item.BERRIES]: [],
+    [Item_1.Item.BINDING_MOCHI]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.effects.add(Effect_1.EffectEnum.BINDING_MOCHI);
         }),
@@ -45,7 +45,7 @@ exports.DishEffects = {
             }
         })
     ],
-    BLACK_SLUDGE: [
+    [Item_1.Item.BLACK_SLUDGE]: [
         new effect_1.OnSpawnEffect((entity) => {
             if (entity.types.has(Synergy_1.Synergy.POISON)) {
                 entity.effectsSet.add(new effect_1.PeriodicEffect((entity) => {
@@ -57,7 +57,7 @@ exports.DishEffects = {
             }
         })
     ],
-    CASTELIACONE: [
+    [Item_1.Item.CASTELIACONE]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.effects.add(Effect_1.EffectEnum.CASTELIACONE);
         }),
@@ -68,17 +68,17 @@ exports.DishEffects = {
             }
         })
     ],
-    CURRY: [
+    [Item_1.Item.CURRY]: [
         new effect_1.OnSpawnEffect((entity) => {
-            entity.status.triggerRage(4000, entity);
+            entity.status.triggerRage(3000, entity);
         })
     ],
-    FRUIT_JUICE: [
+    [Item_1.Item.FRUIT_JUICE]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.addSpeed(50, entity, 0, false);
         })
     ],
-    HEARTY_STEW: [
+    [Item_1.Item.HEARTY_STEW]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.addMaxHP(0.3 * entity.baseHP, entity, 0, false);
             if (entity.items.has(Item_1.Item.COOKING_POT)) {
@@ -86,34 +86,34 @@ exports.DishEffects = {
             }
         })
     ],
-    HERBA_MYSTICA: [],
-    HERBA_MYSTICA_SWEET: [
+    [Item_1.Item.HERBA_MYSTICA]: [],
+    [Item_1.Item.HERBA_MYSTICA_SWEET]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.status.addFairyField(entity);
         })
     ],
-    HERBA_MYSTICA_SPICY: [
+    [Item_1.Item.HERBA_MYSTICA_SPICY]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.status.addPsychicField(entity);
         })
     ],
-    HERBA_MYSTICA_SOUR: [
+    [Item_1.Item.HERBA_MYSTICA_SOUR]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.status.addElectricField(entity);
         })
     ],
-    HERBA_MYSTICA_BITTER: [
+    [Item_1.Item.HERBA_MYSTICA_BITTER]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.status.addGrassField(entity);
         })
     ],
-    HERBA_MYSTICA_SALTY: [
+    [Item_1.Item.HERBA_MYSTICA_SALTY]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.status.triggerRuneProtect(config_1.FIGHTING_PHASE_DURATION, entity, entity);
         })
     ],
-    HONEY: [],
-    LARGE_LEEK: [
+    [Item_1.Item.HONEY]: [],
+    [Item_1.Item.LARGE_LEEK]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.effects.add(Effect_1.EffectEnum.ABILITY_CRIT);
             entity.addCritPower(100, entity, 0, false);
@@ -122,7 +122,7 @@ exports.DishEffects = {
             }
         })
     ],
-    LEEK: [
+    [Item_1.Item.LEEK]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.effects.add(Effect_1.EffectEnum.ABILITY_CRIT);
             entity.addCritChance(50, entity, 0, false);
@@ -131,26 +131,26 @@ exports.DishEffects = {
             }
         })
     ],
-    LEFTOVERS: [],
-    MOOMOO_MILK: [
+    [Item_1.Item.LEFTOVERS]: [],
+    [Item_1.Item.MOOMOO_MILK]: [
         new effect_1.OnDishConsumedEffect(({ entity }) => {
             entity === null || entity === void 0 ? void 0 : entity.addMaxHP(15, entity, 0, false, true);
         })
     ],
-    MUSHROOMS: [],
-    NUTRITIOUS_EGG: [
+    [Item_1.Item.MUSHROOMS]: [],
+    [Item_1.Item.NUTRITIOUS_EGG]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.addAttack(0.5 * entity.baseAtk, entity, 0, false);
             entity.addDefense(0.5 * entity.baseDef, entity, 0, false);
             entity.addSpecialDefense(0.5 * entity.baseSpeDef, entity, 0, false);
         })
     ],
-    OLIVE_OIL: [
+    [Item_1.Item.OLIVE_OIL]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.addDodgeChance(0.2, entity, 0, false);
         })
     ],
-    POFFIN: [
+    [Item_1.Item.POFFIN]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.addShield(100, entity, 0, false);
             if (entity.player &&
@@ -166,18 +166,18 @@ exports.DishEffects = {
             });
         })
     ],
-    RAGE_CANDY_BAR: [
+    [Item_1.Item.RAGE_CANDY_BAR]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.addAttack(10, entity, 0, false);
         })
     ],
-    ROCK_SALT: [
+    [Item_1.Item.ROCK_SALT]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.status.triggerRuneProtect(10000, entity, entity);
             entity.addShield(0.15 * entity.maxHP, entity, 0, false);
         })
     ],
-    SANDWICH: [
+    [Item_1.Item.SANDWICH]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.types.forEach((type) => {
                 switch (type) {
@@ -236,7 +236,7 @@ exports.DishEffects = {
             });
         })
     ],
-    SMOKED_FILET: [
+    [Item_1.Item.SMOKED_FILET]: [
         new effect_1.OnDishConsumedEffect(({ pokemon, entity, player }) => {
             if (entity) {
                 entity.addMaxHP(-5, entity, 0, false, true);
@@ -245,7 +245,7 @@ exports.DishEffects = {
             }
         })
     ],
-    SPINDA_COCKTAIL: [
+    [Item_1.Item.SPINDA_COCKTAIL]: [
         new effect_1.OnSpawnEffect((entity) => {
             if ((0, random_1.chance)(0.8, entity)) {
                 entity.addAttack(10, entity, 0, false);
@@ -270,35 +270,35 @@ exports.DishEffects = {
             }
         })
     ],
-    SIRUPY_APPLE: [
+    [Item_1.Item.SIRUPY_APPLE]: [
         new effect_1.OnHitEffect(({ attacker, target }) => {
             if ((0, random_1.chance)(0.3, attacker)) {
                 target.status.triggerParalysis(3000, target, attacker);
             }
         })
     ],
-    SWEET_APPLE: [
+    [Item_1.Item.SWEET_APPLE]: [
         new effect_1.OnHitEffect(({ attacker, target }) => {
             target.addSpecialDefense(-2, attacker, 0, false);
         })
     ],
-    TART_APPLE: [
+    [Item_1.Item.TART_APPLE]: [
         new effect_1.OnHitEffect(({ attacker, target }) => {
             target.addDefense(-2, attacker, 0, false);
         })
     ],
-    TEA: [
+    [Item_1.Item.TEA]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.addPP(60, entity, 0, false);
         })
     ],
-    TINY_MUSHROOM: [
+    [Item_1.Item.TINY_MUSHROOM]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.addMaxHP(-0.3 * entity.baseHP, entity, 0, false);
             entity.addSpeed(30, entity, 0, false);
         })
     ],
-    WHIPPED_DREAM: [
+    [Item_1.Item.WHIPPED_DREAM]: [
         new effect_1.OnSpawnEffect((entity) => {
             entity.effects.add(Effect_1.EffectEnum.WHIPPED_DREAM);
         }),
@@ -309,43 +309,43 @@ exports.DishEffects = {
             }
         })
     ],
-    SWEETS: [],
-    STRAWBERRY_SWEET: [
+    [Item_1.Item.SWEETS]: [],
+    [Item_1.Item.STRAWBERRY_SWEET]: [
         new effect_1.OnDishConsumedEffect(({ pokemon, entity, player }) => {
             entity === null || entity === void 0 ? void 0 : entity.addAttack(3, entity, 0, false, true);
         })
     ],
-    LOVE_SWEET: [
+    [Item_1.Item.LOVE_SWEET]: [
         new effect_1.OnDishConsumedEffect(({ pokemon, entity, player }) => {
             entity === null || entity === void 0 ? void 0 : entity.addDefense(3, entity, 0, false, true);
         })
     ],
-    BERRY_SWEET: [
+    [Item_1.Item.BERRY_SWEET]: [
         new effect_1.OnDishConsumedEffect(({ pokemon, entity, player }) => {
             entity === null || entity === void 0 ? void 0 : entity.addMaxHP(15, entity, 0, false, true);
         })
     ],
-    CLOVER_SWEET: [
+    [Item_1.Item.CLOVER_SWEET]: [
         new effect_1.OnDishConsumedEffect(({ pokemon, entity, player }) => {
             entity === null || entity === void 0 ? void 0 : entity.addLuck(10, entity, 0, false, true);
         })
     ],
-    FLOWER_SWEET: [
+    [Item_1.Item.FLOWER_SWEET]: [
         new effect_1.OnDishConsumedEffect(({ pokemon, entity, player }) => {
             entity === null || entity === void 0 ? void 0 : entity.addSpeed(10, entity, 0, false, true);
         })
     ],
-    STAR_SWEET: [
+    [Item_1.Item.STAR_SWEET]: [
         new effect_1.OnDishConsumedEffect(({ pokemon, entity, player }) => {
             entity === null || entity === void 0 ? void 0 : entity.addAbilityPower(10, entity, 0, false, true);
         })
     ],
-    RIBBON_SWEET: [
+    [Item_1.Item.RIBBON_SWEET]: [
         new effect_1.OnDishConsumedEffect(({ pokemon, entity, player }) => {
             entity === null || entity === void 0 ? void 0 : entity.addSpecialDefense(3, entity, 0, false, true);
         })
     ],
-    RICE: [
+    [Item_1.Item.RICE]: [
         new effect_1.OnDishConsumedEffect(({ pokemon, entity, player }) => {
             entity === null || entity === void 0 ? void 0 : entity.addShield(80, entity, 0, false);
             if (!player)

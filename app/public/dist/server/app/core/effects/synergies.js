@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cloneBugs = exports.pounceWandEffect = exports.normalShieldEffect = exports.wildBerserkEffect = exports.overgrowEffect = exports.onFlowerMonDeath = exports.fightingTrainingEffect = exports.FightingKnockbackEffect = exports.FlyingProtectionEffect = exports.OnFieldDeathEffect = exports.humanHealEffect = exports.SoundCryEffect = exports.electricTripleAttackEffect = exports.FireHitEffect = exports.GroundHoleEffect = exports.MonsterKillEffect = void 0;
+exports.cloneBugs = exports.pounceWandEffect = exports.normalShieldEffect = exports.wildBerserkEffect = exports.onFlowerMonDeath = exports.fightingTrainingEffect = exports.FightingKnockbackEffect = exports.FlyingProtectionEffect = exports.OnFieldDeathEffect = exports.humanHealEffect = exports.SoundCryEffect = exports.electricTripleAttackEffect = exports.FireHitEffect = exports.GroundHoleEffect = exports.MonsterKillEffect = void 0;
 exports.applyWandEffects = applyWandEffects;
 const config_1 = require("../../config");
 const synergies_1 = require("../../config/game/synergies");
@@ -316,12 +316,6 @@ exports.onFlowerMonDeath = new effect_1.OnDeathEffect(({ pokemon, board }) => {
             entity.cooldown = 1000;
             pokemon.player.pokemonsPlayed.add(flowerToSpawn.name);
         }
-    }
-});
-exports.overgrowEffect = new effect_1.OnDamageReceivedEffect(({ pokemon }) => {
-    if (pokemon.hp > 0 && pokemon.hp < 0.3 * pokemon.maxHP) {
-        pokemon.addAbilityPower(50, pokemon, 0, false);
-        pokemon.effectsSet.delete(exports.overgrowEffect);
     }
 });
 exports.wildBerserkEffect = new effect_1.OnDamageReceivedEffect(({ pokemon }) => {

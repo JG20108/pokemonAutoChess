@@ -9,6 +9,7 @@ import { GamePokemonDetailDOMWrapper } from "../../pages/component/game/game-pok
 import type { DebugScene } from "../scenes/debug-scene";
 import type GameScene from "../scenes/game-scene";
 import DraggableObject from "./draggable-object";
+import { EmoteBubble } from "./emote-bubble";
 import type { GameDialog } from "./game-dialog";
 import ItemsContainer from "./items-container";
 import Lifebar from "./life-bar";
@@ -71,6 +72,7 @@ export default class PokemonSprite extends DraggableObject {
     floatingTween?: Phaser.Tweens.Tween;
     troopers?: PokemonSprite[];
     isTeleporting: boolean;
+    emoteBubble: EmoteBubble | null;
     constructor(scene: GameScene | DebugScene, x: number, y: number, pokemon: IPokemonEntity | IPokemon, playerId: string, inBattle: boolean, flip: boolean);
     get positionX(): number;
     get positionY(): number;
@@ -168,6 +170,7 @@ export default class PokemonSprite extends DraggableObject {
     removeFloatingAnimation(): void;
     addFlowerTrick(): void;
     displayBoost(stat: Stat, debug?: boolean): void;
+    drawSpeechBubble(emoteAvatar: string, isOpponent: boolean): void;
 }
 export declare const isEntity: (pokemon: IPokemon | IPokemonEntity) => pokemon is IPokemonEntity;
 export declare function loadCompressedAtlas(scene: Phaser.Scene, index: string): Promise<void>;

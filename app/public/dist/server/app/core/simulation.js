@@ -594,9 +594,6 @@ class Simulation extends schema_1.Schema {
             case Effect_1.EffectEnum.OVERGROW:
                 if (types.has(Synergy_1.Synergy.GRASS)) {
                     pokemon.effects.add(effect);
-                    if (effect === Effect_1.EffectEnum.OVERGROW) {
-                        pokemon.effectsSet.add(synergies_3.overgrowEffect);
-                    }
                 }
                 break;
             case Effect_1.EffectEnum.RAIN_DANCE:

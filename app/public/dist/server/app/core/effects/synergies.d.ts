@@ -51,7 +51,6 @@ export declare class FightingKnockbackEffect extends OnDamageReceivedEffect {
 }
 export declare const fightingTrainingEffect: OnBenchedDuringFightEffect;
 export declare const onFlowerMonDeath: OnDeathEffect;
-export declare const overgrowEffect: OnDamageReceivedEffect;
 export declare const wildBerserkEffect: OnDamageReceivedEffect;
 export declare const normalShieldEffect: OnSimulationStartEffect;
 export declare function applyWandEffects(pokemon: PokemonEntity, target: PokemonEntity, attackDamage: number, crit: boolean): {

@@ -213,7 +213,9 @@ exports.server = (0, colyseus_1.defineServer)(Object.assign(Object.assign({}, ga
                         "https://uruwhy.online",
                         "https://koala-pac.com",
                         "https://pokev9.52kx.net",
-                        "https://www.john-auto-chess.com/"
+                        "https://www.john-auto-chess.com",
+                        "https://pokemon-auto-spire.com",
+                        "https://www.pokemon-auto-legacy.com"
                     ],
                     scriptSrc: [
                         "'self'",

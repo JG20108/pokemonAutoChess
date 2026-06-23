@@ -16,8 +16,6 @@ exports.default = TierListMaker;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const react_i18next_1 = require("react-i18next");
-const types_1 = require("../../../../../types");
-const Pokemon_1 = require("../../../../../types/enum/Pokemon");
 const export_image_1 = require("../../../../../utils/export-image");
 const store_1 = require("../../utils/store");
 const item_picker_1 = __importDefault(require("../bot-builder/item-picker"));
@@ -39,11 +37,6 @@ function TierListMaker() {
             ]
         };
     }
-    const [selection, setSelection] = (0, react_1.useState)({
-        name: Pokemon_1.Pkm.MAGIKARP,
-        shiny: false,
-        emotion: types_1.Emotion.NORMAL
-    });
     const [tierList, setTierList] = (0, react_1.useState)((_a = store_1.localStore.get(store_1.LocalStoreKeys.TIER_LIST)) !== null && _a !== void 0 ? _a : getInitialTierList());
     (0, react_1.useEffect)(() => {
         store_1.localStore.set(store_1.LocalStoreKeys.TIER_LIST, tierList);

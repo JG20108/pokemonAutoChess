@@ -1,7 +1,8 @@
 import { type FishingRod, Item } from "../../types/enum/Item";
-import { type Effect, OnAttackEffect, OnItemDroppedEffect, OnMoveEffect, OnStageStartEffect, PeriodicEffect } from "./effect";
+import { type Effect, OnAttackEffect, OnDamageDealtEffect, OnItemDroppedEffect, OnMoveEffect, OnStageStartEffect, PeriodicEffect } from "./effect";
 export declare const blueOrbOnAttackEffect: OnAttackEffect;
 export declare const loadedDiceOnAttackEffect: OnAttackEffect;
+export declare const pokemonomiconOnDamageEffect: OnDamageDealtEffect;
 export declare class SoulDewEffect extends PeriodicEffect {
     constructor();
 }

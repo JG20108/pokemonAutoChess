@@ -2,6 +2,7 @@ import type Phaser from "phaser";
 import { GameObjects } from "phaser";
 import { type Emotion, type IPokemonAvatar } from "../../../../types";
 import type GameScene from "../scenes/game-scene";
+import { EmoteBubble } from "./emote-bubble";
 import EmoteMenu from "./emote-menu";
 import PokemonSprite from "./pokemon";
 export default class PokemonAvatar extends PokemonSprite {
@@ -24,8 +25,4 @@ export default class PokemonAvatar extends PokemonSprite {
     sendEmote(emotion: Emotion): void;
     playAnimation(): void;
     onPointerDown(pointer: Phaser.Input.Pointer, event: any): void;
-}
-export declare class EmoteBubble extends GameObjects.DOMElement {
-    dom: HTMLDivElement;
-    constructor(scene: Phaser.Scene, emoteAvatar: string, isOpponent: boolean);
 }

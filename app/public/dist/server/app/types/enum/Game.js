@@ -116,11 +116,13 @@ var BattleResult;
 })(BattleResult || (exports.BattleResult = BattleResult = {}));
 var BotDifficulty;
 (function (BotDifficulty) {
-    BotDifficulty[BotDifficulty["EASY"] = 0] = "EASY";
-    BotDifficulty[BotDifficulty["MEDIUM"] = 1] = "MEDIUM";
-    BotDifficulty[BotDifficulty["HARD"] = 2] = "HARD";
-    BotDifficulty[BotDifficulty["EXTREME"] = 3] = "EXTREME";
-    BotDifficulty[BotDifficulty["CUSTOM"] = 4] = "CUSTOM";
+    BotDifficulty[BotDifficulty["BEGINNER"] = 0] = "BEGINNER";
+    BotDifficulty[BotDifficulty["EASY"] = 1] = "EASY";
+    BotDifficulty[BotDifficulty["MEDIUM"] = 2] = "MEDIUM";
+    BotDifficulty[BotDifficulty["HARD"] = 3] = "HARD";
+    BotDifficulty[BotDifficulty["EXTREME"] = 4] = "EXTREME";
+    BotDifficulty[BotDifficulty["MASTER"] = 5] = "MASTER";
+    BotDifficulty[BotDifficulty["CUSTOM"] = 6] = "CUSTOM";
 })(BotDifficulty || (exports.BotDifficulty = BotDifficulty = {}));
 var PokemonTint;
 (function (PokemonTint) {

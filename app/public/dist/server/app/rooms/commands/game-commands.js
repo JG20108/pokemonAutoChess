@@ -352,7 +352,8 @@ class OnDragDropPokemonCommand extends command_1.Command {
                 oldX,
                 oldY,
                 player,
-                state: this.state
+                state: this.state,
+                room: this.room
             });
         }
         const oldX = pokemon.positionX;
@@ -366,7 +367,8 @@ class OnDragDropPokemonCommand extends command_1.Command {
             oldX,
             oldY,
             player,
-            state: this.state
+            state: this.state,
+            room: this.room
         });
     }
 }
@@ -409,7 +411,8 @@ class OnSwitchBenchAndBoardCommand extends command_1.Command {
                     oldX,
                     oldY,
                     player,
-                    state: this.state
+                    state: this.state,
+                    room: this.room
                 });
             }
         }
@@ -427,7 +430,8 @@ class OnSwitchBenchAndBoardCommand extends command_1.Command {
                     oldX: oldX,
                     oldY: oldY,
                     player,
-                    state: this.state
+                    state: this.state,
+                    room: this.room
                 });
             }
         }
@@ -1281,7 +1285,8 @@ class OnUpdatePhaseCommand extends command_1.Command {
                                 oldX,
                                 oldY,
                                 player,
-                                state: this.state
+                                state: this.state,
+                                room: this.room
                             });
                         }
                     }
@@ -1295,10 +1300,15 @@ class OnUpdatePhaseCommand extends command_1.Command {
     }
     stopPickingPhase() {
         this.state.players.forEach((player) => {
+            const autoPickChoices = [
+                "addPick",
+                "item",
+                "starter",
+                "unique",
+                "legendary"
+            ];
             player.choices
-                .filter((choice) => choice.type === "addPick" ||
-                choice.type === "item" ||
-                choice.type === "unique")
+                .filter((choice) => autoPickChoices.includes(choice.type))
                 .forEach((choice) => {
                 const randomPick = (0, random_1.randomBetween)(0, choice.pokemons
                     ? choice.pokemons.length - 1
@@ -1668,7 +1678,7 @@ class OnDevCommand extends command_1.Command {
     }
 }
 exports.OnDevCommand = OnDevCommand;
-function onPokemonChangePosition({ pokemon, newX, newY, player, oldX, oldY, state, doNotRemoveItems = false }) {
+function onPokemonChangePosition({ pokemon, newX, newY, player, oldX, oldY, state, room, doNotRemoveItems = false }) {
     var _a, _b;
     if (newY === 0 && !doNotRemoveItems) {
         const itemsToRemove = (0, schemas_1.schemaValues)(pokemon.items).filter((item) => {
@@ -1697,6 +1707,7 @@ function onPokemonChangePosition({ pokemon, newX, newY, player, oldX, oldY, stat
                     pokemon,
                     player,
                     state,
+                    room,
                     oldX,
                     oldY,
                     newX,

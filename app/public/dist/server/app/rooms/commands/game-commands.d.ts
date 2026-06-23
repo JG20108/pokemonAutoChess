@@ -153,7 +153,7 @@ export declare class OnDevCommand extends Command<GameRoom> {
         action: string;
     }): void;
 }
-export declare function onPokemonChangePosition({ pokemon, newX, newY, player, oldX, oldY, state, doNotRemoveItems }: {
+export declare function onPokemonChangePosition({ pokemon, newX, newY, player, oldX, oldY, state, room, doNotRemoveItems }: {
     pokemon: Pokemon;
     newX: number;
     newY: number;
@@ -161,5 +161,6 @@ export declare function onPokemonChangePosition({ pokemon, newX, newY, player, o
     oldX: number;
     oldY: number;
     state: GameState;
+    room: GameRoom;
     doNotRemoveItems?: boolean;
 }): void;

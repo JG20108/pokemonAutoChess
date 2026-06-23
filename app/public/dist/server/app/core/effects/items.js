@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ItemEffects = exports.FishingRodEffect = exports.DojoTicketOnItemDroppedEffect = exports.RunningShoesOnMoveEffect = exports.GreenOrbEffect = exports.MachRibbonEffect = exports.SoulDewEffect = exports.loadedDiceOnAttackEffect = exports.blueOrbOnAttackEffect = void 0;
+exports.ItemEffects = exports.FishingRodEffect = exports.DojoTicketOnItemDroppedEffect = exports.RunningShoesOnMoveEffect = exports.GreenOrbEffect = exports.MachRibbonEffect = exports.SoulDewEffect = exports.pokemonomiconOnDamageEffect = exports.loadedDiceOnAttackEffect = exports.blueOrbOnAttackEffect = void 0;
 const config_1 = require("../../config");
 const dishes_1 = require("../../config/game/dishes");
 const synergies_1 = require("../../models/colyseus-models/synergies");
@@ -152,6 +152,12 @@ exports.loadedDiceOnAttackEffect = new effect_1.OnAttackEffect(({ pokemon, targe
         }
     }
 });
+exports.pokemonomiconOnDamageEffect = new effect_1.OnDamageDealtEffect(({ attackType, target, pokemon }) => {
+    if (attackType === Game_1.AttackType.SPECIAL) {
+        target.status.triggerBurn(3000, target, pokemon);
+        target.addSpecialDefense(-1, pokemon, 0, false);
+    }
+});
 class SoulDewEffect extends effect_1.PeriodicEffect {
     constructor() {
         super((pokemon) => {
@@ -251,7 +257,6 @@ const ogerponMaskEffect = new effect_1.OnItemDroppedEffect(({ pokemon, player, i
 class DojoTicketOnItemDroppedEffect extends effect_1.OnItemDroppedEffect {
     constructor(ticketLevel) {
         super(({ pokemon, player, room, item }) => {
-            var _a;
             if (Pokemon_1.NonPkm.includes(pokemon.name))
                 return false;
             const substitute = pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pkm.SUBSTITUTE, player);
@@ -271,7 +276,7 @@ class DojoTicketOnItemDroppedEffect extends effect_1.OnItemDroppedEffect {
             player.pokemonsTrainingInDojo.push({
                 pokemon: pokemonLeaving,
                 ticketLevel,
-                returnStage: room.state.stageLevel + ((_a = [3, 4, 5][ticketLevel - 1]) !== null && _a !== void 0 ? _a : 5)
+                returnStage: room.state.stageLevel + 3
             });
             (0, array_1.removeInArray)(player.items, item);
             player.updateSynergies();
@@ -739,7 +744,7 @@ exports.ItemEffects = Object.assign(Object.assign(Object.assign(Object.assign(Ob
                 pokemon.addCritPower(-50, pokemon, 0, false);
             }
         })
-    ], [Item_1.Item.BLUE_ORB]: [exports.blueOrbOnAttackEffect], [Item_1.Item.LOADED_DICE]: [exports.loadedDiceOnAttackEffect], [Item_1.Item.STICKY_BARB]: [
+    ], [Item_1.Item.BLUE_ORB]: [exports.blueOrbOnAttackEffect], [Item_1.Item.POKEMONOMICON]: [exports.pokemonomiconOnDamageEffect], [Item_1.Item.LOADED_DICE]: [exports.loadedDiceOnAttackEffect], [Item_1.Item.STICKY_BARB]: [
         new effect_1.OnAttackReceivedEffect(({ pokemon, attacker }) => {
             if (attacker &&
                 attacker.items.has(Item_1.Item.PROTECTIVE_PADS) === false &&

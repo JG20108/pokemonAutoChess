@@ -3413,6 +3413,7 @@ declare const resources: {
             COMATOSE: string;
             WALL_OF_STONE: string;
             VESPIQUEN: string;
+            STOUTLAND_SEARCH: string;
         };
         stat: {
             ATK: string;
@@ -4220,11 +4221,15 @@ declare const resources: {
         make_room_public_hint: string;
         change_room_name: string;
         add_bot: string;
-        easy_bot: string;
-        normal_bot: string;
-        hard_bot: string;
-        extreme_bot: string;
-        custom_bot: string;
+        bot_difficulty: {
+            BEGINNER: string;
+            EASY: string;
+            MEDIUM: string;
+            HARD: string;
+            EXTREME: string;
+            MASTER: string;
+            CUSTOM: string;
+        };
         room_leader: string;
         room_password: string;
         ready: string;
@@ -4249,6 +4254,7 @@ declare const resources: {
         fully_grown: string;
         already_held: string;
         caught: string;
+        bark: string;
         drop_here_to_sell: string;
         for_price_gold: string;
         buy_xp: string;
@@ -4852,6 +4858,7 @@ declare const resources: {
             ADJACENT_IN_THE_SAME_ROW: string;
             BOARD_EFFECT: string;
             CONE: string;
+            FLY_AWAY: string;
             INIMITABLE: string;
             ON_HIT: string;
             ON_ATTACK: string;
@@ -4862,6 +4869,7 @@ declare const resources: {
             ADJACENT_IN_THE_SAME_ROW: string;
             BOARD_EFFECT: string;
             CONE: string;
+            FLY_AWAY: string;
             INIMITABLE: string;
             ON_HIT: string;
             ON_ATTACK: string;
@@ -4948,6 +4956,7 @@ declare const resources: {
             move_row_up: string;
             move_row_down: string;
             delete_row: string;
+            symbols: string;
         };
         game_modes: {
             CLASSIC: string;

@@ -54,6 +54,7 @@ interface OnChangePositionEffectArgs {
     pokemon: Pokemon;
     player: Player;
     state?: GameState;
+    room?: GameRoom;
     oldX: number;
     oldY: number;
     newX: number;

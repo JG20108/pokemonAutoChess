@@ -275,12 +275,6 @@ class PokemonEntity extends schema_1.Schema {
                 const reductionFactor = 1 - 0.1 * nbBlackAugurite;
                 specialDamage *= attacker.critPower * reductionFactor;
             }
-            if (attacker &&
-                attacker.items.has(Item_1.Item.POKEMONOMICON) &&
-                attackType === Game_1.AttackType.SPECIAL) {
-                this.status.triggerBurn(3000, this, attacker);
-                this.addSpecialDefense(-1, attacker, 0, false);
-            }
             const damageResult = this.state.handleDamage({
                 target: this,
                 damage: specialDamage,
@@ -1201,6 +1195,9 @@ class PokemonEntity extends schema_1.Schema {
         }
         if (this.effects.has(Effect_1.EffectEnum.BERRY_JUICE)) {
             this.addShield(100, this, 0, false);
+        }
+        if (this.effects.has(Effect_1.EffectEnum.OVERGROW)) {
+            this.addAbilityPower(50, this, 0, false);
         }
     }
     broadcastAbility({ skill = this.skill, ap = this.ap, positionX = this.positionX, positionY = this.positionY, orientation = this.orientation, targetX = this.targetX, targetY = this.targetY, delay } = {}) {

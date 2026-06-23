@@ -11,6 +11,7 @@ const ability_strategy_1 = require("./ability-strategy");
 class MountainGaleStrategy extends ability_strategy_1.AbilityStrategy {
     process(pokemon, board, target, crit) {
         var _a, _b, _c, _d;
+        const isFirstCast = pokemon.count.ult === 0;
         super.process(pokemon, board, target, crit, true);
         const damage = 40;
         const targets = board
@@ -21,7 +22,7 @@ class MountainGaleStrategy extends ability_strategy_1.AbilityStrategy {
             targets.push(target);
         }
         const nbHits = (_a = [1, 3, 5, 10][pokemon.stars - 1]) !== null && _a !== void 0 ? _a : 10;
-        const nbBergmites = pokemon.count.ult === 0
+        const nbBergmites = isFirstCast
             ? (0, number_1.max)((_b = config_1.MaxTroopersPerPkm[pokemon.name]) !== null && _b !== void 0 ? _b : 0)((_d = (_c = [...pokemon.effectsSet.values()].find((e) => e instanceof bergmite_on_back_1.BergmiteOnBackEffect)) === null || _c === void 0 ? void 0 : _c.stacks) !== null && _d !== void 0 ? _d : 0)
             : 0;
         for (let i = 0; i < nbHits + nbBergmites; i++) {

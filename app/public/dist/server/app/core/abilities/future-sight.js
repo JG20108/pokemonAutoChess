@@ -11,10 +11,10 @@ class FutureSightStrategy extends ability_strategy_1.AbilityStrategy {
         this.requiresTarget = false;
     }
     process(pokemon, board, target, crit) {
-        var _a;
+        var _a, _b;
         super.process(pokemon, board, target, crit, true);
-        const damage = (_a = [15, 30, 60, 120][pokemon.stars - 1]) !== null && _a !== void 0 ? _a : 120;
-        const count = 5;
+        const damage = (_a = [20, 30, 50, 80][pokemon.stars - 1]) !== null && _a !== void 0 ? _a : 80;
+        const count = (_b = [3, 4, 5, 6][pokemon.stars - 1]) !== null && _b !== void 0 ? _b : 6;
         const enemies = board.cells.filter((p) => p !== undefined && p.team !== pokemon.team);
         const targets = (0, random_1.pickNRandomIn)(enemies, count);
         for (const tg of targets) {

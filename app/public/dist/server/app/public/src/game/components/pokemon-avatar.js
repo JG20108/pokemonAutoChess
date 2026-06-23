@@ -3,7 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EmoteBubble = void 0;
 const phaser_1 = require("phaser");
 const pokemon_factory_1 = __importDefault(require("../../../../models/pokemon-factory"));
 const types_1 = require("../../../../types");
@@ -15,6 +14,7 @@ const audio_1 = require("../../pages/utils/audio");
 const preferences_1 = require("../../preferences");
 const stores_1 = __importDefault(require("../../stores"));
 const depths_1 = require("../depths");
+const emote_bubble_1 = require("./emote-bubble");
 const emote_menu_1 = __importDefault(require("./emote-menu"));
 const life_bar_1 = __importDefault(require("./life-bar"));
 const pokemon_1 = __importDefault(require("./pokemon"));
@@ -139,7 +139,7 @@ class PokemonAvatar extends pokemon_1.default {
             this.emoteMenu.destroy();
             this.emoteMenu = null;
         }
-        this.emoteBubble = new EmoteBubble(this.scene, emoteAvatar, isOpponent);
+        this.emoteBubble = new emote_bubble_1.EmoteBubble(this.scene, emoteAvatar, isOpponent);
         this.add(this.emoteBubble);
         const x = isOpponent ? -40 : +40;
         const y = isOpponent ? +100 : -120;
@@ -205,17 +205,4 @@ class PokemonAvatar extends pokemon_1.default {
     }
 }
 exports.default = PokemonAvatar;
-class EmoteBubble extends phaser_1.GameObjects.DOMElement {
-    constructor(scene, emoteAvatar, isOpponent) {
-        super(scene, 0, 0);
-        this.dom = document.createElement("div");
-        this.dom.className =
-            "game-emote-bubble " + (isOpponent ? "opponent" : "current");
-        const emoteImg = document.createElement("img");
-        emoteImg.src = (0, avatar_1.getAvatarSrc)(emoteAvatar);
-        this.dom.appendChild(emoteImg);
-        this.setElement(this.dom);
-    }
-}
-exports.EmoteBubble = EmoteBubble;
 //# sourceMappingURL=pokemon-avatar.js.map

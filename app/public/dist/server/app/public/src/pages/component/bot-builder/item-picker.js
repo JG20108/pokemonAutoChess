@@ -4,10 +4,12 @@ exports.default = ItemPicker;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const i18next_1 = require("i18next");
 const react_tabs_1 = require("react-tabs");
+const types_1 = require("../../../../../types");
 const Item_1 = require("../../../../../types/enum/Item");
 const array_1 = require("../../../../../utils/array");
 const item_detail_1 = require("../../../game/components/item-detail");
 const jsx_1 = require("../../utils/jsx");
+const tier_list_symbols_1 = require("../tier-list/tier-list-symbols");
 function ItemPicker(props) {
     function handleOnDragStart(e, item) {
         e.stopPropagation();
@@ -19,13 +21,7 @@ function ItemPicker(props) {
         {
             label: (0, i18next_1.t)("food"),
             key: "food",
-            items: [
-                ...Item_1.Berries,
-                Item_1.Item.TART_APPLE,
-                Item_1.Item.SWEET_APPLE,
-                Item_1.Item.SIRUPY_APPLE,
-                Item_1.Item.CHEF_HAT
-            ]
+            items: [Item_1.Item.CHEF_HAT, ...Item_1.Berries, ...types_1.Dishes]
         },
         { label: (0, i18next_1.t)("tools"), key: "tools", items: Item_1.Tools },
         {
@@ -55,6 +51,12 @@ function ItemPicker(props) {
                 Item_1.Item.HEARTHFLAME_MASK,
                 ...Item_1.MemoryDiscs
             ]
+        },
+        {
+            label: (0, i18next_1.t)("tier_list.symbols"),
+            key: "symbols",
+            items: tier_list_symbols_1.TierListSymbols,
+            hidden: props.origin !== "tier-list"
         }
     ].filter((tab) => !tab.hidden);
     if (props.origin !== "tier-list") {
@@ -64,8 +66,15 @@ function ItemPicker(props) {
             }
         });
     }
-    return ((0, jsx_runtime_1.jsxs)(react_tabs_1.Tabs, { className: "my-box", id: "item-picker", children: [(0, jsx_runtime_1.jsx)(react_tabs_1.TabList, { children: tabs.map((t) => ((0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t.label }, t.key))) }), tabs.map((t) => ((0, jsx_runtime_1.jsx)(react_tabs_1.TabPanel, { children: t.items.map((item) => ((0, jsx_runtime_1.jsx)("img", { src: "assets/item/" + Item_1.Item[item] + ".png", className: (0, jsx_1.cc)("item", {
-                        selected: item === props.selected
-                    }), "data-tooltip-id": "item-detail-tooltip", "data-tooltip-content": item, onClick: () => { var _a; return (_a = props.selectEntity) === null || _a === void 0 ? void 0 : _a.call(props, item); }, draggable: true, onDragStart: (e) => handleOnDragStart(e, item) }, item))) }, t.key))), (0, jsx_runtime_1.jsx)(item_detail_1.ItemDetailTooltip, {})] }));
+    return ((0, jsx_runtime_1.jsxs)(react_tabs_1.Tabs, { className: "my-box", id: "item-picker", children: [(0, jsx_runtime_1.jsx)(react_tabs_1.TabList, { children: tabs.map((t) => ((0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t.label }, t.key))) }), tabs.map((t) => ((0, jsx_runtime_1.jsx)(react_tabs_1.TabPanel, { children: t.items.map((item) => {
+                    if ((0, array_1.isIn)(tier_list_symbols_1.TierListSymbols, item)) {
+                        return ((0, jsx_runtime_1.jsx)("img", { src: "assets/ui/" + item.toLowerCase() + ".svg", className: "symbol", draggable: true, onDragStart: (e) => handleOnDragStart(e, item) }, item));
+                    }
+                    else {
+                        return ((0, jsx_runtime_1.jsx)("img", { src: "assets/item/" + Item_1.Item[item] + ".png", className: (0, jsx_1.cc)("item", {
+                                selected: item === props.selected
+                            }), "data-tooltip-id": "item-detail-tooltip", "data-tooltip-content": item, onClick: () => { var _a; return (_a = props.selectEntity) === null || _a === void 0 ? void 0 : _a.call(props, item); }, draggable: true, onDragStart: (e) => handleOnDragStart(e, item) }, item));
+                    }
+                }) }, t.key))), (0, jsx_runtime_1.jsx)(item_detail_1.ItemDetailTooltip, {})] }));
 }
 //# sourceMappingURL=item-picker.js.map

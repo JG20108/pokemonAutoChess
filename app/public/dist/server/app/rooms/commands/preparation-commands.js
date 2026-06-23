@@ -18,6 +18,7 @@ const promises_1 = require("node:timers/promises");
 const command_1 = require("@colyseus/command");
 const colyseus_1 = require("colyseus");
 const config_1 = require("../../config");
+const gadgets_1 = require("../../config/game/gadgets");
 const pending_game_manager_1 = require("../../core/pending-game-manager");
 const game_user_1 = require("../../models/colyseus-models/game-user");
 const bot_v2_1 = require("../../models/mongo-models/bot-v2");
@@ -32,7 +33,6 @@ const number_1 = require("../../utils/number");
 const profanity_filter_1 = require("../../utils/profanity-filter");
 const random_1 = require("../../utils/random");
 const schemas_1 = require("../../utils/schemas");
-const gadgets_1 = require("../../config/game/gadgets");
 class OnJoinCommand extends command_1.Command {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ client, options, auth }) {
@@ -81,7 +81,8 @@ class OnJoinCommand extends command_1.Command {
                         client.leave(CloseCodes_1.CloseCodes.USER_RANK_TOO_HIGH);
                         return;
                     }
-                    if (this.state.gameMode === Game_1.GameMode.RANKED && u.level < gadgets_1.GADGETS.certificate.levelRequired) {
+                    if (this.state.gameMode === Game_1.GameMode.RANKED &&
+                        u.level < gadgets_1.GADGETS.certificate.levelRequired) {
                         client.leave(CloseCodes_1.CloseCodes.USER_RANK_TOO_LOW);
                         return;
                     }
@@ -582,17 +583,23 @@ class OnAddBotCommand extends command_1.Command {
                     const difficulty = type;
                     let elo;
                     switch (difficulty) {
+                        case Game_1.BotDifficulty.BEGINNER:
+                            elo = { $lt: 850 };
+                            break;
                         case Game_1.BotDifficulty.EASY:
-                            elo = { $lt: 800 };
+                            elo = { $gte: 850, $lt: 999 };
                             break;
                         case Game_1.BotDifficulty.MEDIUM:
-                            elo = { $gte: 800, $lt: 1100 };
+                            elo = { $gte: 1000, $lt: 1149 };
                             break;
                         case Game_1.BotDifficulty.HARD:
-                            elo = { $gte: 1100, $lt: 1400 };
+                            elo = { $gte: 1150, $lt: 1299 };
                             break;
                         case Game_1.BotDifficulty.EXTREME:
-                            elo = { $gte: 1400 };
+                            elo = { $gte: 1300, $lt: 1449 };
+                            break;
+                        case Game_1.BotDifficulty.MASTER:
+                            elo = { $gte: 1450 };
                             break;
                     }
                     const existingBots = new Array();

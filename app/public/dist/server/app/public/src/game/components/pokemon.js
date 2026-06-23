@@ -61,6 +61,7 @@ const preferences_1 = require("../../preferences");
 const depths_1 = require("../depths");
 const abilities_animations_1 = require("./abilities-animations");
 const draggable_object_1 = __importDefault(require("./draggable-object"));
+const emote_bubble_1 = require("./emote-bubble");
 const items_container_1 = __importDefault(require("./items-container"));
 const life_bar_1 = __importDefault(require("./life-bar"));
 const pokemon_animations_1 = require("./pokemon-animations");
@@ -93,6 +94,7 @@ class PokemonSprite extends draggable_object_1.default {
         this.id = pokemon.id;
         this.targetX = null;
         this.targetY = null;
+        this.emoteBubble = null;
         this.attackSprite =
             (_b = (_a = pokemon_animations_1.PokemonAnimations[pokemon.name]) === null || _a === void 0 ? void 0 : _a.attackSprite) !== null && _b !== void 0 ? _b : pokemon_animations_1.DEFAULT_POKEMON_ANIMATION_CONFIG.attackSprite;
         this.inBattle = inBattle;
@@ -1269,6 +1271,19 @@ class PokemonSprite extends draggable_object_1.default {
     }
     displayBoost(stat, debug) {
         (0, abilities_animations_1.displayBoost)(this, stat, 0, 0, debug);
+    }
+    drawSpeechBubble(emoteAvatar, isOpponent) {
+        this.emoteBubble = new emote_bubble_1.EmoteBubble(this.scene, emoteAvatar, isOpponent);
+        this.add(this.emoteBubble);
+        const x = isOpponent ? -40 : +40;
+        const y = isOpponent ? +100 : -120;
+        this.emoteBubble.setPosition(x, y);
+        setTimeout(() => {
+            if (this.emoteBubble) {
+                this.emoteBubble.destroy();
+                this.emoteBubble = null;
+            }
+        }, 3000);
     }
 }
 exports.default = PokemonSprite;

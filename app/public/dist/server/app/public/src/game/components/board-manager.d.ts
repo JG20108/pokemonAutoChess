@@ -80,7 +80,7 @@ export default class BoardManager {
     changePokemon<F extends NonFunctionPropNames<IPokemon>>(pokemon: IPokemon, field: F, value: IPokemon[F], previousValue?: IPokemon[F]): void;
     closeTooltips(): void;
     getBenchSize(): number;
-    showEmote(playerId: string, emote?: string): void;
+    showEmote(playerOrPokemonId: string, emote?: string): void;
     addSmeargle(specialGameRule: SpecialGameRule): void;
     addPvePokemons(pveStage: PVEStage, immediately: boolean): void;
     addPortal(): void;

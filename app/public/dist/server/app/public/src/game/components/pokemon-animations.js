@@ -2233,22 +2233,22 @@ exports.PokemonAnimations = {
     },
     [Pokemon_1.Pkm.BUDEW]: {
         attack: Animation_1.AnimationType.Shoot,
-        ability: Animation_1.AnimationType.Swing,
-        emote: Animation_1.AnimationType.Shoot,
+        ability: Animation_1.AnimationType.DeepBreath,
+        emote: Animation_1.AnimationType.Pose,
         attackSprite: Animation_1.AttackSprite.GRASS_RANGE,
         hitSprite: Animation_1.HitSprite.GRASS_HIT
     },
     [Pokemon_1.Pkm.ROSELIA]: {
         attack: Animation_1.AnimationType.Shoot,
-        ability: Animation_1.AnimationType.Swing,
-        emote: Animation_1.AnimationType.Shoot,
+        ability: Animation_1.AnimationType.SpAttack,
+        emote: Animation_1.AnimationType.Pose,
         attackSprite: Animation_1.AttackSprite.GRASS_RANGE,
         hitSprite: Animation_1.HitSprite.GRASS_HIT
     },
     [Pokemon_1.Pkm.ROSERADE]: {
         attack: Animation_1.AnimationType.Shoot,
-        ability: Animation_1.AnimationType.Swing,
-        emote: Animation_1.AnimationType.Shoot,
+        ability: Animation_1.AnimationType.SpAttack,
+        emote: Animation_1.AnimationType.Pose,
         attackSprite: Animation_1.AttackSprite.GRASS_RANGE,
         hitSprite: Animation_1.HitSprite.GRASS_HIT
     },

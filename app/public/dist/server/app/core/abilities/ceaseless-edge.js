@@ -5,6 +5,10 @@ const Effect_1 = require("../../types/enum/Effect");
 const Game_1 = require("../../types/enum/Game");
 const ability_strategy_1 = require("./ability-strategy");
 class CeaselessEdgeStrategy extends ability_strategy_1.AbilityStrategy {
+    constructor() {
+        super(...arguments);
+        this.canCritByDefault = true;
+    }
     process(pokemon, board, target, crit) {
         var _a;
         super.process(pokemon, board, target, crit, true);

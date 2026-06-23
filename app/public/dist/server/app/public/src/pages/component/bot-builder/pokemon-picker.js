@@ -160,19 +160,15 @@ function PokemonPickerTab(props) {
         }
         return pokemonsPerRarity;
     }, [filteredPokemons]);
-    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsxs)("div", { className: "filters", style: { display: "flex", justifyContent: "end", gap: "1em" }, children: [ingame && ((0, jsx_runtime_1.jsx)(checkbox_1.Checkbox, { checked: preferences.filterAvailableAddsAndRegionals, onToggle: (checked) => {
+    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsxs)("div", { className: "filters", style: {
+                    display: "flex",
+                    justifyContent: "end",
+                    gap: "1em",
+                    float: "right",
+                    marginLeft: "1em"
+                }, children: [ingame && ((0, jsx_runtime_1.jsx)(checkbox_1.Checkbox, { checked: preferences.filterAvailableAddsAndRegionals, onToggle: (checked) => {
                             setPreferences({ filterAvailableAddsAndRegionals: checked });
-                        }, label: t("show_only_available_picks"), isDark: true })), (0, jsx_runtime_1.jsx)(pokemon_filters_1.PokemonFilters, {}), props.type !== "none" && ((0, jsx_runtime_1.jsx)(synergy_overlaps_1.SynergyOverlaps, { type: props.type, pokemons: filteredPokemons, overlap: overlap, setOverlap: setOverlap }))] }), (0, jsx_runtime_1.jsx)("dl", { id: "rarity-grid", children: [
-                    Game_1.Rarity.COMMON,
-                    Game_1.Rarity.UNIQUE,
-                    Game_1.Rarity.UNCOMMON,
-                    Game_1.Rarity.LEGENDARY,
-                    Game_1.Rarity.RARE,
-                    Game_1.Rarity.HATCH,
-                    Game_1.Rarity.EPIC,
-                    Game_1.Rarity.SPECIAL,
-                    Game_1.Rarity.ULTRA
-                ].map((rarity) => {
+                        }, label: t("show_only_available_picks"), isDark: true })), (0, jsx_runtime_1.jsx)(pokemon_filters_1.PokemonFilters, {}), props.type !== "none" && ((0, jsx_runtime_1.jsx)(synergy_overlaps_1.SynergyOverlaps, { type: props.type, pokemons: filteredPokemons, overlap: overlap, setOverlap: setOverlap }))] }), (0, jsx_runtime_1.jsx)("dl", { children: Object.values(Game_1.Rarity).map((rarity) => {
                     var _a;
                     return ((0, jsx_runtime_1.jsxs)(react_1.default.Fragment, { children: [(0, jsx_runtime_1.jsx)("dt", { style: {
                                     color: config_1.RarityColor[rarity],

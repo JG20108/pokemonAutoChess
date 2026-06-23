@@ -7,6 +7,7 @@ var TechnicalTerm;
     TechnicalTerm["ADJACENT_IN_THE_SAME_ROW"] = "ADJACENT_IN_THE_SAME_ROW";
     TechnicalTerm["BOARD_EFFECT"] = "BOARD_EFFECT";
     TechnicalTerm["CONE"] = "CONE";
+    TechnicalTerm["FLY_AWAY"] = "FLY_AWAY";
     TechnicalTerm["INIMITABLE"] = "INIMITABLE";
     TechnicalTerm["ON_HIT"] = "ON_HIT";
     TechnicalTerm["ON_ATTACK"] = "ON_ATTACK";

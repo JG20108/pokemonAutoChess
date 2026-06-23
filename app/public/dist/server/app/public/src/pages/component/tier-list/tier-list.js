@@ -43,8 +43,10 @@ const react_i18next_1 = require("react-i18next");
 const types_1 = require("../../../../../types");
 const Pokemon_1 = require("../../../../../types/enum/Pokemon");
 const Synergy_1 = require("../../../../../types/enum/Synergy");
+const array_1 = require("../../../../../utils/array");
 const avatar_1 = require("../../../../../utils/avatar");
 const synergy_icon_1 = __importDefault(require("../icons/synergy-icon"));
+const tier_list_symbols_1 = require("./tier-list-symbols");
 require("./tier-list.css");
 function TierList(props) {
     const { t } = (0, react_i18next_1.useTranslation)();
@@ -219,7 +221,10 @@ function TierList(props) {
             Object.values(Synergy_1.Synergy).includes(item));
     }
     function renderItemImage(item) {
-        if (isPokemon(item)) {
+        if ((0, array_1.isIn)(tier_list_symbols_1.TierListSymbols, item)) {
+            return ((0, jsx_runtime_1.jsx)("img", { src: "assets/ui/" + item.toLowerCase() + ".svg", className: "tier-list-symbol-icon" }));
+        }
+        else if (isPokemon(item)) {
             const pokemon = item;
             return ((0, jsx_runtime_1.jsx)("img", { src: (0, avatar_1.getPortraitSrc)(Pokemon_1.PkmIndex[pokemon.name], pokemon.shiny, pokemon.emotion), alt: pokemon.name, className: "tier-list-pokemon-icon" }));
         }

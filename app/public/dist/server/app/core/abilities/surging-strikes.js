@@ -5,6 +5,10 @@ const Game_1 = require("../../types/enum/Game");
 const simulation_command_1 = require("../simulation-command");
 const ability_strategy_1 = require("./ability-strategy");
 class SurgingStrikesStrategy extends ability_strategy_1.AbilityStrategy {
+    constructor() {
+        super(...arguments);
+        this.canCritByDefault = true;
+    }
     process(pokemon, board, target, crit) {
         var _a;
         super.process(pokemon, board, target, true);

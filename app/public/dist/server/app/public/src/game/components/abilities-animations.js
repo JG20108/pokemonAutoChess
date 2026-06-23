@@ -613,7 +613,41 @@ exports.AbilitiesAnimations = {
         scale: 1,
         positionOffset: [0, -20]
     }),
-    [Ability_1.Ability.PETAL_DANCE]: onCasterScale2,
+    [Ability_1.Ability.PETAL_DANCE]: [
+        onCaster({ scale: 2, positionOffset: [0, -40] }),
+        ({ scene, positionX, positionY, flip, ap }) => {
+            var _a, _b;
+            const [x, y] = (0, utils_1.transformEntityCoordinates)(positionX, positionY, flip);
+            const petalCount = 5;
+            for (const r of [64, 96]) {
+                const petalGroup = scene.add.group();
+                const circle = new phaser_1.default.Geom.Circle(x, y, 48);
+                for (let i = 0; i < petalCount; i++) {
+                    const petalSprite = (_a = scene.add
+                        .sprite(0, 0, "abilities", `PETAL_DANCE_PROJECTILE/000.png`)) === null || _a === void 0 ? void 0 : _a.setScale(2 * (1 + ap / 200));
+                    petalSprite.anims.play({
+                        key: "PETAL_DANCE_PROJECTILE",
+                        frameRate: 8
+                    });
+                    petalGroup.add(petalSprite);
+                    (_b = scene.abilitiesVfxGroup) === null || _b === void 0 ? void 0 : _b.add(petalSprite);
+                }
+                phaser_1.default.Actions.PlaceOnCircle(petalGroup.getChildren(), circle);
+                scene.tweens.add({
+                    targets: circle,
+                    radius: r,
+                    ease: phaser_1.default.Math.Easing.Quartic.Out,
+                    duration: 1200,
+                    onUpdate: function (tween) {
+                        phaser_1.default.Actions.RotateAroundDistance(petalGroup.getChildren(), { x, y }, (r === 96 ? 1 : -1) * 0.04, circle.radius);
+                    },
+                    onComplete: function () {
+                        petalGroup.destroy(true, true);
+                    }
+                });
+            }
+        }
+    ],
     [Ability_1.Ability.AROMATHERAPY]: onCasterScale2,
     [Ability_1.Ability.BOUNCE]: onCasterScale2,
     [Ability_1.Ability.BRICK_BREAK]: onTargetScale2,

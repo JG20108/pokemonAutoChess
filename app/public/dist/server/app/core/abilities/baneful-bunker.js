@@ -20,7 +20,7 @@ class BanefulBunkerStrategy extends ability_strategy_1.AbilityStrategy {
             if ((0, distance_1.distanceC)(pokemon.positionX, pokemon.positionY, attacker.positionX, attacker.positionY) === 1) {
                 const damage = (_a = [10, 20, 30, 50][pokemon.stars - 1]) !== null && _a !== void 0 ? _a : 50;
                 attacker.handleSpecialDamage(damage, board, Game_1.AttackType.SPECIAL, pokemon, false);
-                pokemon.status.triggerPoison(3000, attacker, pokemon);
+                attacker.status.triggerPoison(3000, attacker, pokemon);
             }
         });
         pokemon.effectsSet.add(bunkerEffect);

@@ -462,9 +462,6 @@ class PokemonState {
             }
             else if (attackType === Game_1.AttackType.SPECIAL) {
                 pokemon.specialDamageReduced += (0, number_1.min)(0)(damage - reducedDamage);
-                if (attacker && attacker.items.has(Item_1.Item.POKEMONOMICON)) {
-                    pokemon.status.triggerBurn(3000, pokemon, attacker);
-                }
             }
             if (isNaN(reducedDamage)) {
                 reducedDamage = 0;
@@ -531,7 +528,7 @@ class PokemonState {
                     pokemon.effects.delete(e);
                 });
             }
-            else if (pokemon.hp - residualDamage <= 0 &&
+            if (pokemon.hp - residualDamage <= 0 &&
                 pokemon.items.has(Item_1.Item.COVER_BAND) === false) {
                 const coverAlly = board
                     .getAdjacentCells(pokemon.positionX, pokemon.positionY)
@@ -754,7 +751,14 @@ class PokemonState {
         }
     }
     updateEachSecond(pokemon, board) {
-        pokemon.addPP(10, pokemon, 0, false);
+        let passivePPGain = 10;
+        if (pokemon.simulation.weather === Weather_1.Weather.RAIN) {
+            passivePPGain += 3;
+        }
+        else if (pokemon.simulation.weather === Weather_1.Weather.DROUGHT) {
+            passivePPGain -= 3;
+        }
+        pokemon.addPP(passivePPGain, pokemon, 0, false);
         if (pokemon.effects.has(Effect_1.EffectEnum.RAIN_DANCE)) {
             pokemon.addPP(4, pokemon, 0, false);
         }
@@ -765,7 +769,6 @@ class PokemonState {
             pokemon.addPP(12, pokemon, 0, false);
         }
         if (pokemon.simulation.weather === Weather_1.Weather.RAIN) {
-            pokemon.addPP(3, pokemon, 0, false);
             const nbDampRocks = pokemon.player
                 ? (0, array_1.count)(pokemon.player.items, Item_1.Item.DAMP_ROCK)
                 : 0;
